@@ -1,0 +1,36 @@
+baseURL = "/"
+
+languageCode = "en-us"
+title = "Yunion Onecloud Documentation"
+theme = "hugo-theme-learn"
+
+hasCJKLanguage = true
+metaDataFormat = "yaml"
+
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+PygmentsStyle = "native"
+
+defaultContentLanguage = "zh"
+defaultContentLanguageInSubdir= false
+enableMissingTranslationPlaceholders = false
+
+
+[params]
+
+  editURL = "https://github.com/yunionio/docs/edit/master/content"
+  description = "Documentation for onecloud"
+  showVisitedLinks = true
+  disableBreadcrumb = false
+  disableNextPrev = false
+  themeVariant = "blue"
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[Language]
+[[Languages.zh.menu.shortcuts]]
+name = "<i class='fab fa-fw fa-github'></i> GitHub repo"
+identifier = "ds"
+url = "https://github.com/yunionio/onecloud"
+weight = 10
