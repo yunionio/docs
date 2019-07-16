@@ -9,7 +9,7 @@
 ## 查看文档
 
 ```bash
-$ git clone https://github.com/yunionio/docs
+$ git clone https://github.com/yunionio/docs --recursive
 $ cd docs
 # 使用 hugo 生成文档的 web 界面
 $ hugo serve -D
@@ -28,4 +28,11 @@ $ hugo new chapter0/section0.md
 $ ls content/chapter0/section0.md
 
 # 用编辑器编辑 content/chapter0/section0.md 文档即可
+```
+
+## 更新 submodule
+
+```bash
+$ git submodule init
+$ git submodule update
 ```
