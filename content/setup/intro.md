@@ -2,7 +2,6 @@
 title: "组件概览"
 date: 2019-07-09T14:43:03+08:00
 weight: 1
-draft: true
 ---
 
 OneCloud 目前仅支持在 Centos 7 上运行，待部署组件/服务如下:

@@ -2,7 +2,6 @@
 title: "开发贡献"
 date: 2019-07-11T11:45:03+08:00
 weight: 2
-draft: true
 ---
 
 ## 安装 Go

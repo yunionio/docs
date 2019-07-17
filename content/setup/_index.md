@@ -3,7 +3,6 @@ title: "安装部署"
 date: 2019-07-09T15:11:09+08:00
 weight: 1
 chapter: true
-draft: true
 ---
 
 # 安装部署

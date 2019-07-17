@@ -18,7 +18,7 @@ enableMissingTranslationPlaceholders = false
 
 [params]
 
-  editURL = "https://github.com/yunionio/docs/edit/master/content"
+  editURL = "https://github.com/yunionio/docs/edit/master/content/"
   description = "Documentation for onecloud"
   showVisitedLinks = true
   disableBreadcrumb = false

@@ -2,7 +2,6 @@
 title: "控制节点"
 date: 2019-04-13T13:01:57+08:00
 weight: 2
-draft: true
 description: "Showcase: Lessons learned from taking letsencrypt.org to Hugo."
 ---
 
