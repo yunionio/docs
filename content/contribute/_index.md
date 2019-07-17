@@ -105,3 +105,57 @@ $ git am --continue
 ## 部署
 
 TODO
+
+## 调试
+
+首先确保您已经完成部署并在本地clone了一份代码。
+
+所有的组件均在cmd文件夹下，其中有一部分是客户端shell组件，可以通过他们向服务端发送一些命令，这部分组件的调试可以在goland中配置，下面是huaweicli组件的调试配置示例，配置好文件和参数即可：
+
+![](images/huaweicli_debug.png)
+
+对于在服务器端的组件的调试过程，我们主要是借助delve和goland进行远程调试，下面以region组件为例：
+
+- 在make编译的时候设置环境变量
+
+```bash
+DLV=1 make cmd/region
+```
+
+  这样生成在`_output/bin`下的二进制文件会添加debug info，可以被delve调试
+
+- 将新的可执行文件部署到服务器上去
+
+  备份之前的region组件，通过scp命令将新的region文件上传到指定服务器中去，
+
+```bash
+mv /opt/yunion/bin/region  /opt/yunion/bin/region_backup
+scp {your region path}/region  {your sever}:/opt/yunion/bin/region
+```
+
+- 停止之前的region服务，并使用dlv手动启动新的服务
+
+```bash
+systemctl stop yunion-region2.service
+
+# 这是最关键的一步，这里的端口 2345 可以自定义，region.conf的位置也视实际情况
+dlv --listen=:2345 --headless=true --api-version=2 exec /opt/yunion/bin/region -- --config /etc/yunion/region.conf
+```
+
+  如果成功的话就会显示下面一行：
+
+```bash
+API server listening at: [::]:2345
+```
+
+- 在goland上配置远程调试，配置如下为例：
+
+![](images/goland_remote.png)
+
+  其中的Port要和在服务端配置的一样，Host就是服务端的IP
+
+- 在region的代码里设置断点，然后点击菜单栏 Run——debug 'dlv'
+
+通过使用shell组件climc可以向服务端发送各种命令，就可以对相应的代码进行调试
+
+其他的服务端组件调试类似。
