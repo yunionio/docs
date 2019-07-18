@@ -133,13 +133,19 @@ mv /opt/yunion/bin/region  /opt/yunion/bin/region_backup
 scp {your region path}/region  {your sever}:/opt/yunion/bin/region
 ```
 
-- 停止之前的region服务，并使用dlv手动启动新的服务
+- 在服务器上安装Go以及delve
+
+  Go可以直接使用yum或者apt安装，或者参考[Install doc](https://golang.org/doc/install)
+
+  delve的安装参考[Install delve in Linux](https://github.com/go-delve/delve/blob/master/Documentation/installation/linux/install.md)
+
+- 停止之前的region服务，并使用dlv命令手动启动新的服务
 
 ```bash
 systemctl stop yunion-region2.service
 
 # 这是最关键的一步，这里的端口 2345 可以自定义，region.conf的位置也视实际情况
-dlv --listen=:2345 --headless=true --api-version=2 exec /opt/yunion/bin/region -- --config /etc/yunion/region.conf
+$GOPATH/bin/dlv --listen=:2345 --headless=true --api-version=2 exec /opt/yunion/bin/region -- --config /etc/yunion/region.conf
 ```
 
   如果成功的话就会显示下面一行：
