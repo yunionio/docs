@@ -55,7 +55,7 @@ $ yum install -y \
   libaio jq libusb lvm2 lxcfs lz4 nc ntfs-3g_ntfsprogs zerofree \
   oniguruma parted pciutils spice spice-protocol sshpass sysstat \
   tcpdump telegraf usbredir vmware-vddk xfsprogs \
-  yunion-qemu-2.12.1 yunion-host host-image yunion-sdnagent \
+  yunion-qemu-2.12.1 yunion-host yunion-host-image yunion-sdnagent \
   kernel-3.10.0-862.14.4.el7.yn20190116 \
   kernel-devel-3.10.0-862.14.4.el7.yn20190116 \
   kernel-headers-3.10.0-862.14.4.el7.yn20190116 \
@@ -146,78 +146,6 @@ block_io_scheduler = 'cfq'
 enable_template_backing = True
 
 default_qemu_version = '2.12.1'
-EOF
-
-$ cat <<EOF >/etc/systemd/system/yunion-host.service
-[Unit]
-Description=Yunion Cloud Host Agent server
-Documentation=https://docs.yunion.cn
-After=network-online.target
-Wants=network-online.target
-After=network.target 
-
-[Service]
-Type=simple
-User=root
-Group=root
-ExecStart=/opt/yunion/bin/host --config /etc/yunion/host.conf
-WorkingDirectory=/opt/yunion/bin
-KillMode=process
-Restart=always
-RestartSec=30
-LimitNOFILE=500000
-LimitNPROC=500000
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-$ cat <<EOF >/etc/systemd/system/yunion-host-sdnagent.service
-[Unit]
-Description=Yunion Cloud Host SDN Agent server
-Documentation=https://docs.yunion.cn
-After=network-online.target
-Wants=network-online.target
-After=network.target 
-
-[Service]
-Type=simple
-User=root
-Group=root
-ExecStart=/opt/yunion/bin/sdnagent
-WorkingDirectory=/opt/yunion
-KillMode=process
-Restart=always
-RestartSec=30
-LimitNOFILE=500000
-LimitNPROC=500000
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-$ cat <<EOF >/etc/systemd/system/yunion-host-image.service
-[Unit]
-Description=Yunion Host Image Server
-Documentation=https://docs.yunion.cn
-After=network-online.target
-Wants=network-online.target
-After=network.target
-
-[Service]
-Type=simple
-User=root
-Group=root
-ExecStart=/opt/yunion/bin/host-image --config /etc/yunion/host.conf
-WorkingDirectory=/opt/yunion/bin
-KillMode=process
-Restart=always
-RestartSec=30
-LimitNOFILE=500000
-LimitNPROC=500000
-
-[Install]
-WantedBy=multi-user.target
 EOF
 ```
 

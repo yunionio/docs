@@ -1,8 +1,7 @@
 ---
-title: "Onecloud 简介"
+title: "OneCloud 简介"
 date: 2019-07-11T18:13:47+08:00
 weight: 1
-draft: true
 ---
 
 OneCloud具备以下特性：
