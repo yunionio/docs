@@ -67,7 +67,7 @@ $ git push origin feature/implement-x # push 分支到自己的 repo
 
 - 在GitHub的Web界面完成提交PR的流程
 
-  ![](images/submitPR.png)
+![](images/submitPR.png)
 
 - 提完 PR 后请求相关开发人员 review，并设置Labels来表明提交的代码属于哪一个模块或者哪几个模块
 

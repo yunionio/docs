@@ -95,8 +95,6 @@ $ climc server-list
 
 注意: 如果执行 climc 时出现 *Error: Missing OS_AUTH_URL* 的错误提示时，请 source 或设置认证云平台的环境变量。
 
-### 查看版本号
-
 可以通过查看 climc 的版本号来获取构建的信息。
 
 ```bash
@@ -164,6 +162,32 @@ CRUD 举例:
 - host-ipmi: ipmi 表示查询宿主机的 IPMI 信息
 
 想要知道资源有哪些操作，可以进入交互模式补全查询。
+
+### 使用帮助 help
+
+climc 的子命令有很多参数，参数分为必填参数和可选参数，使用 `climc help <subcommand>` 这种格式，**help** 子命令会获取 <subcommand> 提供的参数和各个参数的解释。
+
+比如我要查看 `image-upload` 命令的参数和解释:
+
+```bash
+$ climc help image-upload
+...
+Upload a local image
+
+Positional arguments:
+    <NAME>
+        Image Name
+    <FILE>
+        The local image filename to Upload
+
+Optional arguments:
+    [--private]
+        Make image private
+    [--format {raw,qcow2,iso,vmdk,docker,vhd}]
+        Image format
+    [--protected]
+...
+```
 
 ### 高级过滤 filter
 

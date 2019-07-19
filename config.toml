@@ -12,9 +12,8 @@ pygmentsUseClasses = true
 PygmentsStyle = "native"
 
 defaultContentLanguage = "zh"
-defaultContentLanguageInSubdir= false
+defaultContentLanguageInSubdir = false
 enableMissingTranslationPlaceholders = false
-
 
 [params]
 
