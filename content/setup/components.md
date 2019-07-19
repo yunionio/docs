@@ -8,11 +8,7 @@ date: 2019-07-09T15:55:31+08:00
 
 ## 组件部署在控制节点
 
-可以把所有组件都部署在已有的控制节点，命令如下:
-
-```bash
-$ ocadm component install all
-```
+可以把所有组件都部署在已有的控制节点，参考: [组件安装](/setup/components/#组件安装)
 
 ## 组件部署到其它节点
 
@@ -42,15 +38,21 @@ This node has joined the cluster:
 Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 ```
 
-- 部署对应的组件
+## 组件安装
+
+`ocadm component install` 可以安装全部的组件，或者根据选择将不同的组件安装到不同的节点。
+
+全部安装之前需要安装各个组件的依赖，目前只有 baremetal 依赖 baremetal-pxerom，这个包里面有物理机 pxe 启动时需要的引导文件、kernel 和 initramfs。
 
 ```bash
+# 安装依赖
+$ yum install -y https://iso.yunion.cn/yumrepo-2.10/baremetal/baremetal-pxerom-1.1.0-19061318.x86_64.rpm
+# 全部安装
+$ ocadm component install all
+
 # 安装 glance
 $ ocadm component install glance
 
-# 安装 baremetal
+# 安装 baremetal，如果没有安装 baremetal-pxerom 需要通过 yum 安装
 $ ocadm component install baremetal
-
-# 或者全部安装
-$ ocadm component install all
 ```

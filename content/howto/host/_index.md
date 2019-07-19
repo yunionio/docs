@@ -9,6 +9,7 @@ weight: 20
 |    类型    |          平台          |
 |:----------:|:----------------------:|
 | hypervisor |  onecloud 私有云宿主机 |
+| baremetal |  onecloud 私有云物理机 |
 |    esxi    |      vmware 宿主机     |
 |  openstack | openstack 私有云宿主机 |
 |   zstack   |   zstack 私有云宿主机  |

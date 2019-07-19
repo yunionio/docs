@@ -101,7 +101,3 @@ $ git am --continue
 ```
 
 去 upstream 的 [PR 页面](https://github.com/yunionio/onecloud/pulls), 就能看到自动生成的 cherry-pick PR，上面操作的PR的标题前缀就应该为：`Automated cherry pick of #8`，然后重复 PR review 流程合并到 release
-
-## 部署
-
-TODO
