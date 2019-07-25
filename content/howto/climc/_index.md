@@ -4,11 +4,11 @@ date: 2019-07-11T20:39:39+08:00
 weight: 1
 ---
 
-云平台的命令行管理工具叫 `climc`, 可以通过该工具向后端各个服务发送请求, 操作各种资源。
+云平台的命令行管理工具是 `climc`, 可以通过该工具向后端各个服务发送API请求, 实现对资源的操控。
 
 ## 安装
 
-可以通过 yum 或者源码编译的方式安装。
+可以通过 yum 或者源码编译的方式安装climc。
 
 ### RPM 安装
 
@@ -76,10 +76,14 @@ climc 请求云平台后端服务的流程如下:
 $ cat <<EOF > ~/test_rc_admin
 # 用户名
 export OS_USERNAME=sysadmin
+# 用户所属域名称(如果为Default域,可以省略)
+export OS_DOMAIN_NAME=Default
 # 用户密码
 export OS_PASSWORD=***
-# 用户所属项目
+# 用户所属项目名称
 export OS_PROJECT_NAME=system
+# 项目所属域名称(如果为Default域,可以省略)
+export OS_PROJECT_DOMAIN=Default
 # keystone 认证地址
 export OS_AUTH_URL=https://192.168.0.246:5000/v3
 # 对应的 region
@@ -89,7 +93,7 @@ EOF
 # source 认证环境变量
 $ source ~/test_rc_admin
 
-# 查看虚拟机列表
+# 执行climc。例如，查看虚拟机列表
 $ climc server-list
 ```
 
@@ -212,3 +216,17 @@ climc --debug <Resource>-<Action>
 - Request 使用黄色
 - CURL 使用蓝绿色
 - 根据状态码显示不同颜色，可参考代码: https://github.com/yunionio/onecloud/blob/master/pkg/util/httputils/httputils.go#L234
+
+#### 在bash或zsh下的命令行参数提示补全
+climc支持bash或zsh的命令行参数自动提示补全。
+
+下面以bash为例说明，在使用climc之前，执行如下命令初始化环境。
+
+```bash
+# 启用bash命令行参数自动补全
+source <(climc --completion bash)
+```
+
+之后在bash中可以在输入climc命令后，通过tab获得命令行参数的提示。
+
+为了方便使用，推荐将该命令放到$HOME/.bashrc或$HOME/.bash_profile中自动初始化环境。
