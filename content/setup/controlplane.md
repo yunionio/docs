@@ -10,13 +10,18 @@ description: "Showcase: Lessons learned from taking letsencrypt.org to Hugo."
 OneCloud 相关的组件运行在 kubernetes 之上，环境以及相关的软件依赖如下:
 
 - 操作系统: Centos 7.x
-- 数据库: mariadb
+- 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
 - docker: ce-18.09.1
 - kubernetes: v1.14.3
 
 ### 安装配置 mariadb
 
-mariadb 作为服务数据持久化的数据库，可以部署在其它节点或者使用单独维护的。下面假设还没有部署 mariadb，在控制节点上安装设置 mariadb.
+mariadb 作为服务数据持久化的数据库，可以部署在其它节点或者使用单独维护的。下面假设还没有部署 mariadb，在控制节点上安装设置 mariadb。
+
+为了方便运行维护，mariadb推荐打开两个参数设施：
+
+* skip_name_resolve：取消域名解析
+* expire_logs_days=30：设置binlog的超时时间为30天，超过30天的binglog自动删除
 
 ```bash
 $ MYSQL_PASSWD='your-sql-passwd'
@@ -34,7 +39,10 @@ symbolic-links=0
 # If you need to run mysqld under a different user or group,
 # customize your systemd unit file for mariadb according to the
 # instructions in http://fedoraproject.org/wiki/Systemd
+# skip domain name resolve
 skip_name_resolve
+# auto delete binlog older than 30 days
+expire_logs_days=30
 
 [mysqld_safe]
 log-error=/var/log/mariadb/mariadb.log
