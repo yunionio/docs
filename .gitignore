@@ -11,3 +11,9 @@ $RECYCLE.BIN/
 
 # OSX
 .DS_Store
+
+# npm
+node_modules
+
+# web storm
+.idea

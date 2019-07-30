@@ -1,35 +1,135 @@
 baseURL = "/"
-
-languageCode = "en-us"
 title = "Yunion Onecloud Documentation"
-theme = "hugo-theme-learn"
 
-hasCJKLanguage = true
-metaDataFormat = "yaml"
+enableRobotsTXT = true
 
-pygmentsCodeFences = true
-pygmentsUseClasses = true
-PygmentsStyle = "native"
+# Hugo allows theme composition (and inheritance). The precedence is from left to right.
+theme = ["docsy"]
 
+# Will give values to .Lastmod etc.
+enableGitInfo = true
+
+# Language settings
+contentDir = "content/zh"
 defaultContentLanguage = "zh"
 defaultContentLanguageInSubdir = false
-enableMissingTranslationPlaceholders = false
+# Useful when translating.
+enableMissingTranslationPlaceholders = true
+
+disableKinds = ["taxonomy", "taxonomyTerm"]
+
+# Highlighting config
+pygmentsCodeFences = true
+pygmentsUseClasses = false
+# Use the new Chroma Go highlighter in Hugo.
+pygmentsUseClassic = false
+#pygmentsOptions = "linenos=table"
+# See https://help.farbox.com/pygments.html
+pygmentsStyle = "tango"
+
+ # First one is picked as the Twitter card image if not set on page.
+ #images = ["images/project-illustration.png"]
+
+# Configure how URLs look like per section.
+[permalinks]
+blog = "/:section/:year/:month/:day/:slug/"
+
+## Configuration for BlackFriday markdown parser: https://github.com/russross/blackfriday
+[blackfriday]
+plainIDAnchors = true
+hrefTargetBlank = true
+angledQuotes = false
+latexDashes = true
+
+# Image processing configuration.
+[imaging]
+resampleFilter = "CatmullRom"
+quality = 75
+anchor = "smart"
+
+[services]
+[services.googleAnalytics]
+# Comment out the next line to disable GA tracking. Also disables the feature described in [params.ui.feedback].
+id = "UA-00000000-0"
+
+# Language configuration
+
+[languages]
+[languages.zh]
+title = "Yunion Onecloud Documentation"
+description = "Documentation for onecloud"
+languageName ="Chinese"
+contentDir = "content/zh"
+time_format_default = "02.01.2006"
+time_format_blog = "02.01.2006"
+
+
+# Everything below this are Site Params
 
 [params]
+copyright = "Copyright 2017 - 2019 | 北京云联万维技术有限公司 京ICP备17065753号"
+github_repo = "https://github.com/yunionio"
+RSSLink = "/index.xml"
+author = "yunionio.org" # add your company name
+github = "yunionio" # add your github profile name
+twitter = "yunionio" # add your twitter profile
+#email = "myemail@myaddress.xxx"
 
-  editURL = "https://github.com/yunionio/docs/edit/master/content/"
-  description = "Documentation for onecloud"
-  showVisitedLinks = true
-  disableBreadcrumb = false
-  disableNextPrev = false
-  themeVariant = "blue"
+# Menu title if your navbar has a versions selector to access old versions of your site.
+# This menu appears only if you have at least one [params.versions] set.
+version_menu = "Releases"
 
-[outputs]
-home = ["HTML", "RSS", "JSON"]
+# Google Custom Search Engine ID. Remove or comment out to disable search.
+gcs_engine_id = "011737558837375720776:fsdu1nryfng"
 
-[Language]
-[[Languages.zh.menu.shortcuts]]
-name = "<i class='fab fa-fw fa-github'></i> GitHub repo"
-identifier = "ds"
-url = "https://github.com/yunionio/onecloud"
-weight = 10
+# User interface configuration
+[params.ui]#
+# Enable to show the side bar menu in its compact state.
+sidebar_menu_compact = false
+#  Set to true to disable breadcrumb navigation.
+breadcrumb_disable = false
+#  Set to true to hide the sidebar search box (the top nav search box will still be displayed if search is enabled)
+sidebar_search_disable = false
+#  Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top nav bar
+navbar_logo = true
+
+# Adds a H2 section titled "Feedback" to the bottom of each doc. The responses are sent to Google Analytics as events.
+# This feature depends on [services.googleAnalytics] and will be disabled if "services.googleAnalytics.id" is not set.
+# If you want this feature, but occasionally need to remove the "Feedback" section from a single page,
+# add "hide_feedback: true" to the page's front matter.
+[params.ui.feedback]
+enable = true
+# The responses that the user sees after clicking "yes" (the page was helpful) or "no" (the page was not helpful).
+yes = 'Glad to hear it! Please <a href="https://github.com/USERNAME/REPOSITORY/issues/new">tell us how we can improve</a>.'
+no = 'Sorry to hear that. Please <a href="https://github.com/USERNAME/REPOSITORY/issues/new">tell us how we can improve</a>.'
+
+[params.links]
+# Docsy: "User" links will show on left side of footer and in the community page if you have one.
+[[params.links.user]]
+	name ="Twitter"
+	url = "https://twitter.com/kubeflow"
+	icon = "fab fa-twitter"
+        desc = "Follow us on Twitter to get the latest news"
+[[params.links.user]]
+	name = "GitHub"
+	url = "https://github.com/kubeflow/kubeflow"
+	icon = "fab fa-github"
+        desc = "Development takes place here!"
+[[params.links.user]]
+	name = "Slack"
+	url = "https://join.slack.com/t/kubeflow/shared_invite/enQtNDg5MTM4NTQyNjczLWUyZGI1ZmExZWExYWY4YzlkOWI4NjljNjJhZjhjMjEwNGFjNmVkNjg2NTg4M2I0ZTM5NDExZWI5YTIyMzVmNzM"
+	icon = "fab fa-slack"
+        desc = "Chat with other project contributors"
+[[params.links.user]]
+	name = "Mailing list"# Site params
+	url = "https://groups.google.com/forum/#!forum/kubeflow-discuss"
+	icon = "fa fa-envelope"
+        desc = "Discussion and help from your fellow users"
+[[params.links.user]]
+	name = "Calendar"
+	url = "https://calendar.google.com/calendar/embed?src=kubeflow.org_7l5vnbn8suj2se10sen81d9428%40group.calendar.google.com&ctz=America%2FLos_Angeles"
+	icon = "fa fa-calendar"
+        desc = "Discussion and help from your fellow users"
+
+
+editURL="asdasda"

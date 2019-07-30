@@ -1,0 +1,79 @@
+/*
+
+Add styles or override variables from the theme here.
+
+*/
+
+$primary: #1688f7 !default;
+$dark:#fff !default;
+
+.card-img-top{
+  max-width: 70%;
+}
+ .td-outer{
+   padding-left: 0 !important;
+   padding-right: 0 !important;
+}
+
+ .td-navbar .navbar-brand svg{
+  height: 50px !important;
+  width: 50px !important;
+  margin: 0 !important;
+}
+.td-main{
+  >section.row{
+      margin: 0;
+  }
+  .container-fluid{
+    padding: 0 !important;
+  }
+
+  .td-cover-block{
+    padding: 0;
+  }
+
+  .td-cover-block--height-full{
+    min-height: auto;
+  }
+  .flex-xl-nowrap{
+     margin: 0;
+  }
+}
+
+footer.d-print-none{
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin: 0;
+  min-height: 50px;
+  line-height: 50px;
+  font-size: 12px;
+  .container-fluid{
+    background:$primary ;
+    margin: 0 !important;
+    text-align: center;
+    padding: 0;
+  }
+
+  .col-6{
+    width: 0px !important;
+    overflow: hidden;
+  }
+}
+
+
+.td-default {
+  main {
+    section:first-of-type {
+      padding-top: 4rem !important;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+#td-sidebar-menu{
+  .td-sidebar__search{
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+}
+
