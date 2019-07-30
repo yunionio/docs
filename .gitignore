@@ -16,4 +16,4 @@ $RECYCLE.BIN/
 node_modules
 
 # web storm
-.idea
+.idea/
