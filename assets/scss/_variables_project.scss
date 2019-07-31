@@ -8,14 +8,14 @@ $primary: #1688f7 !default;
 $dark:#fff !default;
 
 .card-img-top{
-  max-width: 70%;
+
 }
- .td-outer{
+.td-outer{
    padding-left: 0 !important;
    padding-right: 0 !important;
 }
 
- .td-navbar .navbar-brand svg{
+.td-navbar .navbar-brand svg{
   height: 50px !important;
   width: 50px !important;
   margin: 0 !important;
@@ -75,5 +75,11 @@ footer.d-print-none{
     margin-right: 0px;
     margin-left: 0px;
   }
+}
+
+
+
+.navbar-light .navbar-nav .nav-link{
+  color: #fff !important;
 }
 
