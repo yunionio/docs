@@ -1,16 +1,18 @@
 {{ $cover := .HasShortcode "blocks/cover" }}
-<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar" style="padding: 0 20px">
-	<div class="container" style="max-width: 100%">
-		<a href="/" class="logo flex-shrink-0 navbar-brand">
-			<span>{{ if .Site.Params.ui.navbar_logo }}{{ with resources.Get "icons/logo.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}{{ end }}</span>
-		</a>
-		<div class="d-flex ml-md-auto mx-1 px-2 ">
-			<a class="btn btn-sm btn-primary  mr-3" href="/docs">
-			文档  <i class="fas fa-arrow-alt-circle-right ml-2"></i>
-			</a>
-			<a class="btn btn-sm btn-secondary" target="_blank" href="https://github.com/yunionio/docs">
-				Download <i class="fab fa-github ml-2 "></i>
-			</a>
-		</div>
+<nav class="js-navbar-scroll navbar navbar-expand navbar-light {{ if not $cover }} nav-shadow {{ end }}flex-column flex-md-row td-navbar">
+
+	<a href="/" class="logo flex-shrink-0 navbar-brand">
+		<span>{{ if .Site.Params.ui.navbar_logo }}{{ with resources.Get "icons/logo.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}{{ end }}</span>
+	</a>
+
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				<a class="nav-link" href="/docs">文档</a>
+			</li>
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				<a class="nav-link" href="{{ .Site.Params.github_repo }}">Github</a>
+			</li>
+		</ul>
 	</div>
 </nav>

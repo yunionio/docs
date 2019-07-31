@@ -14,6 +14,7 @@ $RECYCLE.BIN/
 
 # npm
 node_modules
+package-lock.json
 
 # web storm
 .idea
