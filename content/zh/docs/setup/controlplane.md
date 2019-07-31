@@ -1,8 +1,9 @@
 ---
-title: "控制节点"
+title: "部署集群"
 date: 2019-04-13T13:01:57+08:00
 weight: 2
-description: "Showcase: Lessons learned from taking letsencrypt.org to Hugo."
+description: >
+  部署 kubernetes 和 onecloud 服务，创建第一个控制节点
 ---
 
 ## 环境准备
@@ -123,7 +124,9 @@ EOF
 $ sysctl -p
 ```
 
-## 部署控制节点
+## 部署集群
+
+### 安装部署工具
 
 先安装部署工具 ocadm 和云平台的命令行工具 climc:
 
@@ -135,11 +138,13 @@ $ yum install -y yunion-climc
 $ echo 'export PATH=$PATH:/opt/yunion/bin' >> ~/.bashrc && source ~/.bashrc
 
 # 安装 ocadm
-$ wget https://github.com/Zexi/ocadm/releases/download/v0.1.0/ocadm -P /opt/yunion/bin
+$ wget https://github.com/Zexi/ocadm/releases/download/v0.0.1/ocadm -P /opt/yunion/bin
 $ chmod a+x /opt/yunion/bin/ocadm
 ```
 
-接下来会现在当前节点启动 v1.14.3 的 kubernetes 服务，然后将 keystone, region, scheduler 作为控制节点必须的服务启动起来。
+### 部署 kubernetes 集群
+
+接下来会现在当前节点启动 v1.14.3 的 kubernetes 服务，然后部署 OneCloud 控制节点相关的服务到 kubernetes 集群。
 
 ```bash
 # 假设 mariadb 部署在本地，如果是使用已有的数据库，请改变对应的 ip
@@ -148,37 +153,96 @@ $ MYSQL_HOST=$(ip route get 1 | awk '{print $NF;exit}')
 # 拉取必要的 docker 镜像
 $ ocadm config images pull
 
-# 开始部署 kubernetes 以及 onecloud 必要的控制服务，稍等 3 分钟左右，kubernetes 和 onecloud 控制服务都会运行起来
+# 开始部署 kubernetes 以及 onecloud 必要的控制服务，稍等 3 分钟左右，kubernetes 集群会部署完成
 $ ocadm init --mysql-host $MYSQL_HOST --mysql-user root --mysql-password $MYSQL_PASSWD
 ...
 Your Kubernetes and Onecloud control-plane has initialized successfully!
 ...
 ```
 
-### 环境检查
-
-当控制节点部署完成后，云平台的管理员认证信息会保存在 /etc/yunion/rc_admin , 这些认证信息在使用 climc 控制云平台资源时会用到。
+kubernetes 集群部署完成后，通过以下命令来确保相关的 pod (容器) 都已经启动, 变成 running 的状态。
 
 ```bash
-$ source /etc/yunion/rc_admin
+$ export KUBECONFIG=/etc/kubernetes/admin.conf
+$ kubectl get pods --all-namespaces
+NAMESPACE            NAME                                       READY   STATUS    RESTARTS   AGE
+kube-system          calico-kube-controllers-648bb4447c-57gjb   1/1     Running   0          5h1m
+kube-system          calico-node-j89jg                          1/1     Running   0          5h1m
+kube-system          coredns-69845f69f6-f6wnv                   1/1     Running   0          5h1m
+kube-system          coredns-69845f69f6-sct6n                   1/1     Running   0          5h1m
+kube-system          etcd-lzx-ocadm-test2                       1/1     Running   0          5h
+kube-system          kube-apiserver-lzx-ocadm-test2             1/1     Running   0          5h
+kube-system          kube-controller-manager-lzx-ocadm-test2    1/1     Running   0          5h
+kube-system          kube-proxy-2fwgf                           1/1     Running   0          5h1m
+kube-system          kube-scheduler-lzx-ocadm-test2             1/1     Running   0          5h
+kube-system          traefik-ingress-controller-qwkfb           1/1     Running   0          5h1m
+local-path-storage   local-path-provisioner-5978cff7b7-7h8df    1/1     Running   0          5h1m
+onecloud             onecloud-operator-6d4bddb8c4-tkjkh         1/1     Running   0          3h37m
 ```
 
-用 climc 命令行工具查看添加到云平台的网络，这里会创建一个默认 adm0 的网络，start_ip 和 end_ip 都为当前控制节点的默认ip。
+### 创建 onecloud 集群
+
+当 kubernetes 集群部署完成后，就可以通过 `ocadm cluster create` 创建 onecloud 集群，该集群由 onecloud namespace 里面 **onecloud-operator** deployment 自动部署和维护。
 
 ```bash
-$ climc network-list
-+--------------------------------------+------+----------------+----------------+---------------+--------------------------------------+-----------+--------------+---------------+-------------+-----------+
-|                  ID                  | Name | Guest_ip_start |  Guest_ip_end  | Guest_ip_mask |               wire_id                | is_public | public_scope | guest_gateway | server_type |  Status   |
-+--------------------------------------+------+----------------+----------------+---------------+--------------------------------------+-----------+--------------+---------------+-------------+-----------+
-| 375d75ed-2d96-44e9-85c9-854025ebfcf3 | adm0 | 10.168.222.216 | 10.168.222.216 | 24            | a18aa192-1199-4744-8777-300ded3397e7 | false     | none         | 10.168.222.1  | baremetal   | available |
-+--------------------------------------+------+----------------+----------------+---------------+--------------------------------------+-----------+--------------+---------------+-------------+-----------+
+# 创建集群
+$ ocadm cluster create
+```
+
+执行完 `ocadm cluster create` 命令后，**onecloud-operator** 会自动创建各个服务组件对应的 pod，等待一段时间后，确保 onecloud namespace 里面的 keystone, region 和 glance 等 pod 都处于 running 状态。
+
+```bash
+$ kubectl get pods --namespace onecloud
+NAME                                  READY   STATUS    RESTARTS   AGE
+default-climc-6c4888fb55-9729z        1/1     Running   0          132m
+default-glance-59449b8c8d-bhwgf       1/1     Running   0          132m
+default-influxdb-5cd895746c-5w5s9     1/1     Running   0          132m
+default-keystone-5d59bf668f-8j9wv     1/1     Running   0          133m
+default-logger-69cfb8dc85-qwmhs       1/1     Running   0          132m
+default-region-69dbbbb487-s9knd       1/1     Running   0          132m
+default-scheduler-6fd8c979bd-wqd6v    1/1     Running   0          132m
+default-webconsole-6ff98d4f8b-p7h8v   1/1     Running   0          132m
+onecloud-operator-6d4bddb8c4-tkjkh    1/1     Running   0          3h43m
+```
+
+### 环境检查
+
+当控制节点部署完成后，云平台的管理员认证信息由 `ocadm cluster rcadmin` 命令可以得到 , 这些认证信息在使用 climc 控制云平台资源时会用到。
+
+```bash
+# 获取连接 onecloud 集群的环境变量
+$ ocadm cluster rcadmin
+export OS_AUTH_URL=https://10.168.222.218:35357/v3
+export OS_USERNAME=sysadmin
+export OS_PASSWORD=3hV3qAhvxck84srk
+export OS_PROJECT_NAME=system
+export YUNION_INSECURE=true
+export OS_REGION_NAME=region0
+export OS_ENDPOINT_TYPE=publicURL
+
+# 测试链接
+$ source <(ocadm cluster rcadmin)
+$ climc endpoint-list
++----------------------------------+-----------+----------------------------------+----------------------------------+-----------+---------+
+|                ID                | Region_ID |            Service_ID            |               URL                | Interface | Enabled |
++----------------------------------+-----------+----------------------------------+----------------------------------+-----------+---------+
+| aa266549bbd743f4882fa1b1e98e409a | region0   | 106f7cf2410b4187879d4a44a737df0b | https://default-influxdb:8086    | internal  | true    |
+| ba59f23951e6452984b9d2036d303ade | region0   | 106f7cf2410b4187879d4a44a737df0b | https://10.168.222.218:8086      | public    | true    |
+| 5b2981d751624c6b86a757e30676c528 | region0   | ee302d70e261452282ca66c86f85f2f7 | https://default-webconsole:8899  | internal  | true    |
+| 81c79509449f4f4581140adc030e5e57 | region0   | ee302d70e261452282ca66c86f85f2f7 | https://10.168.222.218:8899      | public    | true    |
+| 9623a61a904e4ea78347b05afa08f239 | region0   | 7716623b738d4a3282fc076e46f96627 | https://default-glance:9292/v1   | internal  | true    |
+| a7ee01e0f4a94f908fc68e2de5990065 | region0   | 7716623b738d4a3282fc076e46f96627 | https://10.168.222.218:9292/v1   | public    | true    |
+| 28f7a82402d847308dd7b09dbc4faead | region0   | 8c0c3b14e9904d7485b986836334fbbb | https://10.168.222.218:8897      | public    | true    |
+| 83405b6973354e4287e9b61c1f2af668 | region0   | 8c0c3b14e9904d7485b986836334fbbb | https://default-scheduler:8897   | internal  | true    |
+| 6a08a98f8071492287976ac788e2f424 | region0   | acc01b6df2ed442280e9f8f716bd006f | https://10.168.222.218:8889      | public    | true    |
+...
 ```
 
 ### 删除环境
 
-如果安装过程中失败，或者想清理环境，可执行以下命令删除 kubernetes 集群和 onecloud 数据库
+如果安装过程中失败，或者想清理环境，可执行以下命令删除 kubernetes 集群。
 
 ```bash
-$ ocadm reset -f
+$ ocadm reset --force
 ```
 
