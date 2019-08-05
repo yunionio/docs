@@ -68,11 +68,12 @@ time_format_blog = "02.01.2006"
 
 [params]
 copyright = "Copyright 2017 - 2019 | 北京云联万维技术有限公司 京ICP备17065753号"
-github_repo = "https://github.com/yunionio/docs"
 RSSLink = "/index.xml"
 author = "yunionio.org" # add your company name
 github = "yunionio" # add your github profile name
 twitter = "yunionio" # add your twitter profile
+github_repo = "https://github.com/yunionio/docs"
+github_project_repo = "https://github.com/yunionio/onecloud"
 #email = "myemail@myaddress.xxx"
 
 # Menu title if your navbar has a versions selector to access old versions of your site.
@@ -100,8 +101,5 @@ navbar_logo = true
 [params.ui.feedback]
 enable = true
 # The responses that the user sees after clicking "yes" (the page was helpful) or "no" (the page was not helpful).
-yes = 'Glad to hear it! Please <a href="https://github.com/USERNAME/REPOSITORY/issues/new">tell us how we can improve</a>.'
-no = 'Sorry to hear that. Please <a href="https://github.com/USERNAME/REPOSITORY/issues/new">tell us how we can improve</a>.'
-
-
-
+yes = 'Glad to hear it! Please <a href="https://github.com/yunionio/docs/issues/new">tell us how we can improve</a>.'
+no = 'Sorry to hear that. Please <a href="https://github.com/yunionio/docs/issues/new">tell us how we can improve</a>.'
