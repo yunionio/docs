@@ -12,7 +12,7 @@ enableGitInfo = true
 # Language settings
 contentDir = "content/zh"
 defaultContentLanguage = "zh"
-defaultContentLanguageInSubdir = false
+defaultContentLanguageInSubdir = true
 # Useful when translating.
 enableMissingTranslationPlaceholders = true
 
@@ -68,7 +68,7 @@ time_format_blog = "02.01.2006"
 
 [params]
 copyright = "Copyright 2017 - 2019 | 北京云联万维技术有限公司 京ICP备17065753号"
-github_repo = "https://github.com/yunionio"
+github_repo = "https://github.com/yunionio/docs"
 RSSLink = "/index.xml"
 author = "yunionio.org" # add your company name
 github = "yunionio" # add your github profile name
@@ -103,33 +103,5 @@ enable = true
 yes = 'Glad to hear it! Please <a href="https://github.com/USERNAME/REPOSITORY/issues/new">tell us how we can improve</a>.'
 no = 'Sorry to hear that. Please <a href="https://github.com/USERNAME/REPOSITORY/issues/new">tell us how we can improve</a>.'
 
-[params.links]
-# Docsy: "User" links will show on left side of footer and in the community page if you have one.
-[[params.links.user]]
-	name ="Twitter"
-	url = "https://twitter.com/kubeflow"
-	icon = "fab fa-twitter"
-        desc = "Follow us on Twitter to get the latest news"
-[[params.links.user]]
-	name = "GitHub"
-	url = "https://github.com/kubeflow/kubeflow"
-	icon = "fab fa-github"
-        desc = "Development takes place here!"
-[[params.links.user]]
-	name = "Slack"
-	url = "https://join.slack.com/t/kubeflow/shared_invite/enQtNDg5MTM4NTQyNjczLWUyZGI1ZmExZWExYWY4YzlkOWI4NjljNjJhZjhjMjEwNGFjNmVkNjg2NTg4M2I0ZTM5NDExZWI5YTIyMzVmNzM"
-	icon = "fab fa-slack"
-        desc = "Chat with other project contributors"
-[[params.links.user]]
-	name = "Mailing list"# Site params
-	url = "https://groups.google.com/forum/#!forum/kubeflow-discuss"
-	icon = "fa fa-envelope"
-        desc = "Discussion and help from your fellow users"
-[[params.links.user]]
-	name = "Calendar"
-	url = "https://calendar.google.com/calendar/embed?src=kubeflow.org_7l5vnbn8suj2se10sen81d9428%40group.calendar.google.com&ctz=America%2FLos_Angeles"
-	icon = "fa fa-calendar"
-        desc = "Discussion and help from your fellow users"
 
 
-editURL="asdasda"
