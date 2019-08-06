@@ -35,5 +35,6 @@ $ ls content/chapter0/section0.md
 ## 更新 submodule
 
 ```bash
-$ git submodule update --init --recursive
+$ git submodule update --recursive
+$ git pull --recurse-submodules
 ```

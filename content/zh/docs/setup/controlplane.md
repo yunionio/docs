@@ -61,11 +61,17 @@ $ mysql -uroot -p$MYSQL_PASSWD \
 
 ### 安装配置 docker
 
+安装 docker
+
 ```bash
 $ yum install -y yum-utils
 $ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 $ yum install -y docker-ce-18.09.1 docker-ce-cli-18.09.1 containerd.io
+```
 
+配置 docker
+
+```bash
 $ mkdir /etc/docker
 $ cat <<EOF >/etc/docker/daemon.json
 {
@@ -91,10 +97,17 @@ $ cat <<EOF >/etc/docker/daemon.json
   "storage-driver": "overlay2"
 }
 EOF
+```
+
+启动 docker
+
+```bash
 $ systemctl enable --now docker
 ```
 
 ### 安装配置 kubelet
+
+从 aliyun 的 yum 源安装 kubernetes 1.14.3，并设置 kubelet 开机自启动
 
 ```bash
 $ cat <<EOF >/etc/yum.repos.d/kubernetes.repo
@@ -106,8 +119,16 @@ gpgcheck=0
 repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
-$ yum install --assumeyes bridge-utils conntrack-tools jq kubelet-1.14.3-0 kubectl-1.14.3-0 kubeadm-1.14.3-0
+$ yum install -y bridge-utils ipvsadm conntrack-tools jq kubelet-1.14.3-0 kubectl-1.14.3-0 kubeadm-1.14.3-0
 $ systemctl enable kubelet
+```
+
+安装完 kubernetes 相关的二进制后，还需要对系统做一些配置并启用 ipvs 作为 kube-proxy 内部的 service 负载均衡
+
+```bash
+# 禁用 swap
+$ swapoff -a
+# 如果设置了自动挂载 swap，需要去 /etc/fstab 里面注释掉挂载 swap 那一行
 
 # 做一些 sysctl 的配置, kubernetes 要求
 $ cat <<EOF > /etc/sysctl.d/bridge.conf
@@ -115,13 +136,27 @@ net.bridge.bridge-nf-call-iptables=1
 net.bridge.bridge-nf-call-ip6tables=1
 EOF
 
-$ sudo modprobe br_netfilter
+$ modprobe br_netfilter
 
 $ cat <<EOF > /etc/sysctl.d/ip_forward.conf
 net.ipv4.ip_forward=1
 EOF
 
 $ sysctl -p
+
+# 配置并开启 ipvs
+$ cat <<EOF > /etc/sysconfig/modules/ipvs.modules
+#!/bin/bash
+ipvs_modules="ip_vs ip_vs_lc ip_vs_wlc ip_vs_rr ip_vs_wrr ip_vs_lblc ip_vs_lblcr ip_vs_dh ip_vs_sh ip_vs_fo ip_vs_nq ip_vs_sed ip_vs_ftp nf_conntrack_ipv4"
+for kernel_module in \${ipvs_modules}; do
+    /sbin/modinfo -F filename \${kernel_module} > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        /sbin/modprobe \${kernel_module}
+    fi
+done
+EOF
+
+$ chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules && lsmod | grep ip_vs
 ```
 
 ## 部署集群
@@ -138,7 +173,7 @@ $ yum install -y yunion-climc
 $ echo 'export PATH=$PATH:/opt/yunion/bin' >> ~/.bashrc && source ~/.bashrc
 
 # 安装 ocadm
-$ wget https://github.com/Zexi/ocadm/releases/download/v0.0.1/ocadm -P /opt/yunion/bin
+$ wget https://github.com/yunionio/ocadm/releases/download/v0.0.1/ocadm -P /opt/yunion/bin
 $ chmod a+x /opt/yunion/bin/ocadm
 ```
 
@@ -192,18 +227,31 @@ $ ocadm cluster create
 执行完 `ocadm cluster create` 命令后，**onecloud-operator** 会自动创建各个服务组件对应的 pod，等待一段时间后，确保 onecloud namespace 里面的 keystone, region 和 glance 等 pod 都处于 running 状态。
 
 ```bash
-$ kubectl get pods --namespace onecloud
-NAME                                  READY   STATUS    RESTARTS   AGE
-default-climc-6c4888fb55-9729z        1/1     Running   0          132m
-default-glance-59449b8c8d-bhwgf       1/1     Running   0          132m
-default-influxdb-5cd895746c-5w5s9     1/1     Running   0          132m
-default-keystone-5d59bf668f-8j9wv     1/1     Running   0          133m
-default-logger-69cfb8dc85-qwmhs       1/1     Running   0          132m
-default-region-69dbbbb487-s9knd       1/1     Running   0          132m
-default-scheduler-6fd8c979bd-wqd6v    1/1     Running   0          132m
-default-webconsole-6ff98d4f8b-p7h8v   1/1     Running   0          132m
-onecloud-operator-6d4bddb8c4-tkjkh    1/1     Running   0          3h43m
+# 可以通过 watch 的方式查看各个服务 pod 的创建过程
+$ kubectl get pods --namespace onecloud -w
+
+# 当发现 web 相关的 pod 创建完成后，就可通过前端 web 界面访问云平台了
+$ kubectl get pods --namespace onecloud | egrep 'apigateway|web'
+default-apigateway-f657c55c8-9tzpm     2/2     Running   0          118m
+default-web-7778d95cb8-2xv6n           1/1     Running   0          118m
+default-webconsole-5855c8b64f-jtqwn    1/1     Running   0          119m
 ```
+
+等待 **default-web-** 相关的 pod 状态变为 Running 后，就可以通过访问 'https://本机IP:443' 登入前端界面。
+
+```bash
+# 获取本机 IP
+$ ip route get 1 | awk '{print $NF;exit}'
+10.168.222.218
+
+# 测试连通性
+$ curl -k https://10.168.222.218
+```
+
+用浏览器访问 'https://本机IP' 会跳转到 web 界面，如果是第一次访问需要注册设置 cloudadmin 用户的密码，注册完成后登录的界面如下:
+
+![nnn](../images/web.png)
+
 
 ### 环境检查
 
@@ -230,11 +278,6 @@ $ climc endpoint-list
 | ba59f23951e6452984b9d2036d303ade | region0   | 106f7cf2410b4187879d4a44a737df0b | https://10.168.222.218:8086      | public    | true    |
 | 5b2981d751624c6b86a757e30676c528 | region0   | ee302d70e261452282ca66c86f85f2f7 | https://default-webconsole:8899  | internal  | true    |
 | 81c79509449f4f4581140adc030e5e57 | region0   | ee302d70e261452282ca66c86f85f2f7 | https://10.168.222.218:8899      | public    | true    |
-| 9623a61a904e4ea78347b05afa08f239 | region0   | 7716623b738d4a3282fc076e46f96627 | https://default-glance:9292/v1   | internal  | true    |
-| a7ee01e0f4a94f908fc68e2de5990065 | region0   | 7716623b738d4a3282fc076e46f96627 | https://10.168.222.218:9292/v1   | public    | true    |
-| 28f7a82402d847308dd7b09dbc4faead | region0   | 8c0c3b14e9904d7485b986836334fbbb | https://10.168.222.218:8897      | public    | true    |
-| 83405b6973354e4287e9b61c1f2af668 | region0   | 8c0c3b14e9904d7485b986836334fbbb | https://default-scheduler:8897   | internal  | true    |
-| 6a08a98f8071492287976ac788e2f424 | region0   | acc01b6df2ed442280e9f8f716bd006f | https://10.168.222.218:8889      | public    | true    |
 ...
 ```
 

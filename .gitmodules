@@ -3,5 +3,4 @@
 	url = https://github.com/google/docsy.git
 [submodule "public"]
 	path = public
-	url = git@github.com:yunionio/yunionio.github.io.git
-	branch = master
+	url = https://github.com/yunionio/yunionio.github.io.git
