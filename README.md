@@ -11,6 +11,8 @@
 ```bash
 $ git clone https://github.com/yunionio/docs --recursive
 $ cd docs
+# 安装 npm 相关的包
+$ npm install
 # 使用 hugo 生成文档的 web 界面
 $ hugo serve -D
 # 访问 http://localhost:1313 查看文档
@@ -33,6 +35,6 @@ $ ls content/chapter0/section0.md
 ## 更新 submodule
 
 ```bash
-$ git submodule init
-$ git submodule update
+$ git submodule update --recursive
+$ git pull --recurse-submodules
 ```

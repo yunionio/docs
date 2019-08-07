@@ -1,10 +1,7 @@
 ---
 title: "安装部署"
-date: 2019-07-09T15:11:09+08:00
+linkTitle: "安装部署"
 weight: 1
-chapter: true
+description: >
+  介绍如何部署 onecloud 后端服务组件
 ---
-
-# 安装部署
-
-介绍如何部署 onecloud 后端服务组件
