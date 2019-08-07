@@ -1,7 +1,9 @@
 ---
 title: "组件概览"
-date: 2019-07-09T14:43:03+08:00
+linkTitle: "组件概览"
 weight: 1
+description: >
+  了解各个组件的用途和部署运行方式
 ---
 
 OneCloud 目前仅支持在 Centos 7 上运行，待部署组件/服务如下:
@@ -11,13 +13,15 @@ OneCloud 目前仅支持在 Centos 7 上运行，待部署组件/服务如下:
 |  mariadb  |     关系型数据库    |       rpm      |  systemd  |
 |   docker  |      容器运行时     |       rpm      |  systemd  |
 |  kubelet  | 管理 kubernetes pod |       rpm      |  systemd  |
-|  keystone |       认证服务      | kubernetes pod | container |
-|   region  |      api 控制器     | kubernetes pod | container |
-| scheduler |       调度服务      | kubernetes pod | container |
-|   glance  |       镜像存储      | kubernetes pod | container |
+|  keystone |       认证服务      | k8s deployment | container |
+|   region  |      api 控制器     | k8s deployment | container |
+| scheduler |       调度服务      | k8s deployment | container |
+|   glance  |       镜像存储      | k8s deployment | container |
+|   webconsole  |       虚拟机访问界面      | k8s deployment | container |
+|   influxdb  |       监控数据库      | k8s deployment | container |
 |    host   |      管理虚拟机     |       rpm      |  systemd  |
 |  sdnagent |    管理虚拟机网络   |       rpm      |  systemd  |
-| baremetal |      管理物理机     | kubernetes pod | container |
+| baremetal |      管理物理机     | kubernetes deployment | container |
 |   climc   |      命令行工具     |       rpm      |   shell   |
 |   ocadm   |   部署服务管理工具  |       rpm      |   shell   |
 
