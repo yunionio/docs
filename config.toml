@@ -69,6 +69,7 @@ time_format_blog = "02.01.2006"
 [params]
 copyright = "Copyright 2017 - 2019 | 北京云联万维技术有限公司 京ICP备17065753号"
 github_repo = "https://github.com/yunionio/docs"
+quick_url = "https://docs.yunion.io/docs/setup/controlplane/"
 RSSLink = "/index.xml"
 author = "yunionio.org" # add your company name
 github = "yunionio" # add your github profile name

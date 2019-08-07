@@ -1,4 +1,6 @@
+
 $(function(){
+	$('.home-footer').hide();
 	$('input.search-input').keyup(function(){
 	     var t= $(this), v = t.val().toLowerCase();
 	     $('.collapse').each(function(){
@@ -20,4 +22,5 @@ $(function(){
              }
 		})
     })
+
 });

@@ -7,23 +7,50 @@ Add styles or override variables from the theme here.
 $primary: #1688f7 !default;
 $dark:#fff !default;
 
-.card-img-top{
-
-}
 .td-outer{
    padding-left: 0 !important;
    padding-right: 0 !important;
 }
+.td-navbar{
+  .navbar-brand{
+    display: flex;
+    align-items: center;
+    svg{
+      height: 50px !important;
+      width: 50px !important;
+      margin: 0 !important;
+    }
+    >b{
+      color:#fff;
+      font-size: 2rem;
+      padding-left: 5px;
+    }
+  }
+  a.nav-link{
+    font-size: 1.4rem !important;
+    font-weight: 600;
+  }
+}
 
-.td-navbar .navbar-brand svg{
-  height: 50px !important;
-  width: 50px !important;
+
+.td-home .td-default main section:first-of-type{
   margin: 0 !important;
+  padding: 0 !important;
+}
+.td-home{
+  height: 100vh;
+  overflow: hidden;
+  .navbar{
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
 }
 .td-main{
   >section.row{
-      margin: 0;
+
   }
+
   .container-fluid{
     padding: 0 !important;
   }
@@ -137,8 +164,105 @@ footer.d-print-none{
 
     border-radius: 1rem;
 
-
     font-family: "Font Awesome 5 Free";
   }
 }
 
+.home-content{
+  display: flex;
+  align-items: center;
+  height:100vh;
+  box-sizing: border-box;
+  padding: 6rem 10vw 15rem 10vw;
+  overflow: hidden;
+  .describe{
+    flex:1;
+    text-align: left;
+    margin-bottom: 2rem;
+    color: #333333;
+    h4{
+      font-size: 1.5vw;
+      font-weight: 600;
+      margin-bottom: 1.8rem;
+    }
+    h5{
+      font-size:1.2vw ;
+    }
+  }
+  .flex-1{
+    flex:2;
+    height: 100%;
+    padding: 2rem 0;
+    .card-img-top{
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+.home-footer{
+  height: 7vh;
+  background-color: rgb(96, 146, 254 );
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  .items{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color:#fff;
+    >div{
+      flex:1;
+      color:#fff;
+      display: -webkit-flex;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3vw;
+    }
+    span{
+      font-size: 1.5vw;
+      padding: 0 .1rem;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .home-content{
+    padding-top: 9rem;
+    display: block;
+    .describe{
+      margin-bottom: 5rem;
+      h4{
+        font-size: 2.5vw;
+        font-weight: 600;
+        margin-bottom: 2vw;
+      }
+      h5{
+        font-size:2vw ;
+        p{
+          margin-bottom: 1.5vw;
+        }
+      }
+    }
+    .flex-1{
+      padding:0;
+      .card-img-top{
+        height: auto;
+        width: 100%;
+      }
+    }
+  }
+  .home-footer{
+    .items{
+      >div{
+        font-size: 2vw;
+      }
+      span{
+        font-size: 2.5vw;
+      }
+    }
+  }
+}
