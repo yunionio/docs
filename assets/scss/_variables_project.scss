@@ -12,6 +12,9 @@ $dark:#fff !default;
    padding-right: 0 !important;
 }
 .td-navbar{
+  #main_navbar{
+    margin-top: 0 !important;
+  }
   .navbar-brand{
     display: flex;
     align-items: center;
@@ -181,7 +184,7 @@ footer.d-print-none{
     margin-bottom: 2rem;
     color: #333333;
     h4{
-      font-size: 1.5vw;
+      font-size: 2vw;
       font-weight: 600;
       margin-bottom: 1.8rem;
     }
@@ -234,14 +237,14 @@ footer.d-print-none{
     padding-top: 9rem;
     display: block;
     .describe{
-      margin-bottom: 5rem;
+      margin-bottom: 7vw;
       h4{
-        font-size: 2.5vw;
+        font-size: 1.5rem;
         font-weight: 600;
         margin-bottom: 2vw;
       }
       h5{
-        font-size:2vw ;
+        font-size:1.2rem ;
         p{
           margin-bottom: 1.5vw;
         }
