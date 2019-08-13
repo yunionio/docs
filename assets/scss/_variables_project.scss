@@ -395,9 +395,12 @@ footer.d-print-none {
     .provider-item {
       display: inline-block;
       text-align: center;
-      border: .0625rem solid #f5f7fc;
+      // border: .0625rem solid #f5f7fc;
       padding: .625rem;
-      margin: .2rem;
+      margin: .5rem;
+      img{
+       // height: 30px;
+      }
     }
   }
 }
