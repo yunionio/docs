@@ -161,6 +161,10 @@ $ chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/i
 
 ## 部署集群
 
+{{% alert title="提示" %}}
+> 如果要部署高可用集群，请先搭建负载均衡集群，参考 [部署 HA 环境](/docs/setup/controlplane-ha)。
+{{% /alert %}}
+
 ### 安装部署工具
 
 先安装部署工具 ocadm 和云平台的命令行工具 climc:
@@ -181,19 +185,37 @@ $ chmod a+x /opt/yunion/bin/ocadm
 
 接下来会现在当前节点启动 v1.14.3 的 kubernetes 服务，然后部署 OneCloud 控制节点相关的服务到 kubernetes 集群。
 
+拉取必要的 docker 镜像
+
+```bash
+$ ocadm config images pull
+```
+
+使用 ocadm 部署 kubernetes 集群
+
+{{% alert title="提示" %}}
+> 如果要进行高可用部署，并已经搭建好了负载均衡集群，需要在 `ocadm init` 命令加上 `--control-plane-endpoint <vip>:6443` 参数，告诉 kubernetes 集群前端的 LoadBalancer vip，之后生成的配置就会都用这个 vip 当做控制节点的入口。
+{{% /alert %}}
+
 ```bash
 # 假设 mariadb 部署在本地，如果是使用已有的数据库，请改变对应的 ip
 $ MYSQL_HOST=$(ip route get 1 | awk '{print $NF;exit}')
 
-# 拉取必要的 docker 镜像
-$ ocadm config images pull
+# 如果是高可用部署，记得在设置 EXTRA_OPT=' --control-plane-endpoint 10.168.222.18:6443'
+$ EXTRA_OPT=""
+$ #EXTRA_OPT=' --control-plane-endpoint 10.168.222.18:6443'
 
 # 开始部署 kubernetes 以及 onecloud 必要的控制服务，稍等 3 分钟左右，kubernetes 集群会部署完成
-$ ocadm init --mysql-host $MYSQL_HOST --mysql-user root --mysql-password $MYSQL_PASSWD
+$ ocadm init --mysql-host $MYSQL_HOST --mysql-user root --mysql-password $MYSQL_PASSWD $EXTRA_OPT
+
 ...
 Your Kubernetes and Onecloud control-plane has initialized successfully!
 ...
 ```
+
+{{% alert title="提示" %}}
+> kubernetes 高可用部署需要 3 个节点，主要是 etcd 需要至少 3 个节点组成高可用集群。如果是高可用部署，请在另外两个节点执行 `ocadm join --control-plane <vip>:6443` 部署控制服务，join 的另外两个节点会自动和当前的控制节点组成高可用集群。参考: [加入控制节点](/docs/setup/components/#%E5%8A%A0%E5%85%A5-controlplane)
+{{% /alert %}}
 
 kubernetes 集群部署完成后，通过以下命令来确保相关的 pod (容器) 都已经启动, 变成 running 的状态。
 
@@ -267,8 +289,15 @@ export OS_PROJECT_NAME=system
 export YUNION_INSECURE=true
 export OS_REGION_NAME=region0
 export OS_ENDPOINT_TYPE=publicURL
+```
 
-# 测试链接
+{{% alert title="提示" %}}
+> 如果是高可用部署，这些 endpoint 的 public url 会是 vip，如果要在 kubernetes 集群外访问需要到 haproxy 节点上添加对应的 frontend 和 backend，其中frontend的端口对应 endpoint 里面的端口，backend 对应 3 个 controlplane node 的 ip 和对应端口。
+{{% /alert %}}
+
+测试链接
+
+```bash
 $ source <(ocadm cluster rcadmin)
 $ climc endpoint-list
 +----------------------------------+-----------+----------------------------------+----------------------------------+-----------+---------+
