@@ -7,6 +7,13 @@ Add styles or override variables from the theme here.
 $primary: #1688f7 !default;
 $dark: #fff !default;
 
+h2.title {
+  font-size: 2vw;
+  font-weight: 600;
+  margin-bottom: 2vw;
+  margin-top: 30px;
+}
+
 .td-outer {
   padding-left: 0 !important;
   padding-right: 0 !important;
@@ -34,7 +41,7 @@ $dark: #fff !default;
   }
   a.nav-link {
     font-weight: 600;
-   // font-size: 1.2vw;
+    // font-size: 1.2vw;
   }
 }
 
@@ -44,8 +51,6 @@ $dark: #fff !default;
 }
 
 .td-home {
-  height: 100vh;
-  overflow: hidden;
   .navbar {
     position: fixed;
     top: 0;
@@ -174,9 +179,8 @@ footer.d-print-none {
 .home-content {
   display: flex;
   align-items: center;
-  height: 100vh;
   box-sizing: border-box;
-  padding: 6rem 10vw 15rem 10vw;
+  padding: 6rem 7vw 10rem 10vw;
   overflow: hidden;
   .describe {
     flex: 1;
@@ -205,12 +209,13 @@ footer.d-print-none {
 }
 
 .home-footer {
-  height: 7vh;
+  padding: 0.5rem 1rem;
+  height: 7vw;
   z-index: 1;
   background-color: rgb(96, 146, 254);
   display: flex;
   align-items: center;
-  position: fixed;
+  // position: fixed;
   bottom: 0;
   width: 100%;
   .items {
@@ -219,7 +224,8 @@ footer.d-print-none {
     align-items: center;
     color: #fff;
     > div {
-      flex: 1;
+      // flex: 1;
+      white-space: nowrap;
       color: #fff;
       display: -webkit-flex;
       display: flex;
@@ -230,35 +236,97 @@ footer.d-print-none {
     span {
       font-size: 2vw;
       padding: 0 .1rem;
+      margin: 0 3.06%;
     }
+  }
+}
+
+@media (max-width: 690px) {
+  .home-footer {
+    min-height: 26vw;
+    padding: 1rem 4vw !important;
+    .items {
+      display: inline-block;
+      > div:first-child {
+        min-height: 26vw;
+      }
+      > span.first {
+        min-height: 26vw;
+        line-height: 26vw;
+      }
+
+      div {
+        height: 13vw;
+        overflow: hidden;
+        float: left;
+        font-size: 3vw !important;
+        padding-top: 1vw;
+        text-align: left;
+      }
+      span {
+        float: left;
+        height: 13vw;
+        line-height: 14vw;
+        overflow: hidden;
+        font-size: 3vw !important;
+        margin: 0 2% !important;
+      }
+    }
+  }
+  .td-navbar {
+    //padding: .3rem !important;
+    .navbar-brand {
+      > b {
+        color: #fff;
+        padding-left: 5px;
+        font-size: 1.2rem;
+      }
+    }
+    .logo > img {
+      width: 8vw !important;
+    }
+
   }
 }
 
 @media (max-width: 765px) {
   .home-content {
     // padding-top: 9rem;
-    padding: 8rem 5vw 10rem 5vw !important;
+    padding:5rem 5vw 2rem 5vw !important
   }
+  .nav-link {
+    padding: 0 !important;
+    margin: .7rem 0 0 0;
+  }
+
+  .home-time {
+    h4 {
+      height: 18vw;
+      line-height: 18vw;
+    }
+  }
+
+
 }
 
 @media (max-width: 991.98px) {
   .home-content {
     // padding-top: 9rem;
     display: block;
-    padding: 6rem 5vw 10rem 5vw;
+    padding: 6rem 5vw 7rem 5vw;
     .describe {
+      margin-bottom: 4rem;
       h4 {
-        font-size: 2vw;
+        font-size: 3vw;
         font-weight: 600;
         margin-bottom: 2vw;
       }
       h5 {
-        font-size: 1.5vw;
+        font-size: 2.8vw;
         p {
           margin-bottom: 1.5vw;
         }
       }
-      margin-bottom: 2vw;
     }
     .flex-1 {
       padding: 0;
@@ -271,30 +339,81 @@ footer.d-print-none {
     }
   }
   .home-footer {
-    min-height: 100px;
+    // min-height: 100px;
+    padding: 0.5rem 1vw;
     .items {
       > div {
-        font-size: 2vw;
+        font-size: 1.7vw;
       }
       span {
         font-size: 2vw;
+        margin: 0 3%;
       }
     }
+
   }
   .td-navbar {
     //padding: .3rem !important;
     .navbar-brand {
-
       > b {
         color: #fff;
-        font-size: 2.8vw;
         padding-left: 5px;
+        font-size: 1.2rem;
       }
     }
     .logo > img {
-      width: 4vw;
+      width: 6vw;
     }
 
   }
+
+  .framework-image {
+    margin: 2vw !important;
+
+    > div > img {
+      width: 100% !important;
+    }
+  }
 }
 
+.framework-image {
+  margin: 4vw;
+  text-align: center;
+  h2.title {
+    text-align: center;
+  }
+  > div > img {
+    display: inline-block;
+    width: 90%;
+  }
+}
+
+.home-provider {
+  margin: 4vw;
+  .provider-items {
+    text-align: center;
+    .provider-item {
+      display: inline-block;
+      text-align: center;
+      border: .0625rem solid #f5f7fc;
+      padding: .625rem;
+      margin: .2rem;
+    }
+  }
+}
+
+.home-time {
+  background-color: $primary;
+  h4 {
+    font-size: 14px;
+    margin: 0;
+    height: 100px;
+    line-height: 100px;
+  }
+  color: #fff;
+}
+
+.home-hr {
+  margin: 4vw 0;
+  border: 3px solid $primary
+}
