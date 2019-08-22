@@ -57,33 +57,35 @@ $ yum install -y \
   oniguruma parted pciutils spice spice-protocol sshpass sysstat \
   tcpdump telegraf usbredir vmware-vddk xfsprogs \
   yunion-qemu-2.12.1 yunion-host yunion-host-image yunion-sdnagent \
-  kernel-3.10.0-862.14.4.el7.yn20190116 \
-  kernel-devel-3.10.0-862.14.4.el7.yn20190116 \
-  kernel-headers-3.10.0-862.14.4.el7.yn20190116 \
-  kmod-openvswitch-2.9.3-1.el7 \
-  openvswitch-2.9.3-1
+  kernel-3.10.0-862.14.4.el7.yn20190712 \
+  kernel-devel-3.10.0-862.14.4.el7.yn20190712 \
+  kernel-headers-3.10.0-862.14.4.el7.yn20190712 \
+  kmod-openvswitch-2.9.5-1.el7 \
+  openvswitch-2.9.5-1
 
 # 安装完成后需要重启进入我们的内核
 $ reboot
 
 # 重启完成后，查看当前节点内核信息，确保为 yn 内核
 $ uname -r
-3.10.0-862.14.4.el7.yn20190116.x86_64
+3.10.0-862.14.4.el7.yn20190712.x86_64
 ```
 
 ## 控制节点操作
 
+以下操作在控制节点进行。
+
 ### 创建 host 服务的认证用户
 
 ```bash
-$ source /etc/yunion/rc_admin
-
-$ cat /etc/yunion/rc_admin
+$ ocadm cluster rcadmin
 # 这个是云平台 keystone 的认证地址，后面配置会用到
 export OS_AUTH_URL=https://10.168.222.216:5000/v3
 ...
 # 这个 region0 也会在配置中用到
 export OS_REGION_NAME=region0
+
+$ source <(ocadm cluster rcadmin)
 
 # 这里记住自己的用户密码，后面配置会用到
 $ climc user-create --enabled --password hostadminpasswd hostadmin
