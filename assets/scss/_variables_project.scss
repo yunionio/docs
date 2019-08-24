@@ -20,23 +20,24 @@ h2.title {
 }
 
 .td-navbar {
+  min-height: 2vw !important;
+  min-height: 70px;
   #main_navbar {
     margin-top: 0 !important;
   }
-  min-height: 2vw !important;
   .navbar-brand {
     display: flex;
     align-items: center;
     padding: 0;
     > b {
       color: #fff;
-      font-size: 1.8vw;
+      font-size: 25px;
       padding-left: 5px;
     }
   }
   .logo {
     img {
-      width: 3vw;
+      width: 50px
     }
   }
   a.nav-link {
@@ -178,10 +179,10 @@ footer.d-print-none {
 
 .home-content {
   display: flex;
+  position: relative;
   align-items: center;
   box-sizing: border-box;
   padding: 6rem 7vw 10rem 10vw;
-  overflow: hidden;
   .describe {
     flex: 1;
     text-align: left;
@@ -204,6 +205,18 @@ footer.d-print-none {
     .card-img-top {
       height: 100%;
       width: 100%;
+    }
+  }
+  .down{
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    margin-left: -45px;
+    a.btn-link{
+      color: #1688f7;
+      .fa-chevron-circle-down{
+        font-size: 60px
+      }
     }
   }
 }
@@ -268,28 +281,42 @@ footer.d-print-none {
         height: 13vw;
         line-height: 14vw;
         overflow: hidden;
-        font-size: 3vw !important;
-        margin: 0 2% !important;
+        //font-size: 3vw !important;
+        //margin: 0 2% !important;
       }
     }
   }
   .td-navbar {
+    height: auto;
     //padding: .3rem !important;
     .navbar-brand {
       > b {
         color: #fff;
         padding-left: 5px;
-        font-size: 1.2rem;
+        // font-size: 1.2rem;
       }
     }
     .logo > img {
-      width: 8vw !important;
+      // width: 8vw !important;
     }
 
   }
 }
 
 @media (max-width: 765px) {
+  #td-block-1{
+    padding-top: 100px !important
+  }
+  .down{
+    bottom: -40px !important;;
+    margin-left: -23px !important;
+    a.btn-link{
+      color: #1688f7;
+      .fa-chevron-circle-down{
+        font-size: 30px !important;
+      }
+    }
+  }
   .home-content {
     // padding-top: 9rem;
     padding:5rem 5vw 2rem 5vw !important
@@ -310,6 +337,7 @@ footer.d-print-none {
 }
 
 @media (max-width: 991.98px) {
+
   .home-content {
     // padding-top: 9rem;
     display: block;
@@ -358,11 +386,11 @@ footer.d-print-none {
       > b {
         color: #fff;
         padding-left: 5px;
-        font-size: 1.2rem;
+       // font-size: 1.2rem;
       }
     }
     .logo > img {
-      width: 6vw;
+      // width: 6vw;
     }
 
   }
@@ -419,4 +447,9 @@ footer.d-print-none {
 .home-hr {
   margin: 4vw 0;
   border: 3px solid $primary
+}
+
+
+#td-block-1{
+  padding-top: 65px;
 }
