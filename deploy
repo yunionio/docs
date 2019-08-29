@@ -6,4 +6,4 @@ DIR=/var/www/doc-os/
 
 rm -rf ./public
 
-hugo && rsync -avz --delete public/ $USER@$HOST:$DIR
+EXIT_AFTER_BUILD=1 ./scripts/build.sh && rsync -avz --delete public/ $USER@$HOST:$DIR

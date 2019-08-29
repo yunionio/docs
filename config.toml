@@ -1,5 +1,5 @@
-baseURL = "/"
-title = "Yunion Onecloud Documentation"
+baseURL = "http://localhost:1313/"
+title = "OneCloud"
 
 enableRobotsTXT = true
 
@@ -47,6 +47,18 @@ resampleFilter = "CatmullRom"
 quality = 75
 anchor = "smart"
 
+# Additional menu items
+
+[[menu.main]]
+    name = "快速开始"
+    weight = -100
+    url = "docs/setup/controlplane/"
+
+[[menu.main]]
+    name = "Github"
+    weight = 50
+    url = "https://github.com/yunionio/onecloud"
+
 [services]
 [services.googleAnalytics]
 # Comment out the next line to disable GA tracking. Also disables the feature described in [params.ui.feedback].
@@ -56,7 +68,7 @@ id = "UA-00000000-0"
 
 [languages]
 [languages.zh]
-title = "Yunion Onecloud Documentation"
+version_menu = "版本"
 description = "Documentation for onecloud"
 languageName ="Chinese"
 contentDir = "content/zh"
@@ -72,7 +84,6 @@ RSSLink = "/index.xml"
 author = "yunionio.org" # add your company name
 github = "yunionio" # add your github profile name
 twitter = "yunionio" # add your twitter profile
-quick_url = "/docs/setup/controlplane/"
 github_repo = "https://github.com/yunionio/docs"
 github_project_repo = "https://github.com/yunionio/onecloud"
 #email = "myemail@myaddress.xxx"
@@ -80,6 +91,7 @@ github_project_repo = "https://github.com/yunionio/onecloud"
 # Menu title if your navbar has a versions selector to access old versions of your site.
 # This menu appears only if you have at least one [params.versions] set.
 version_menu = "Releases"
+multi_versions = false
 
 # Google Custom Search Engine ID. Remove or comment out to disable search.
 gcs_engine_id = "011737558837375720776:fsdu1nryfng"
