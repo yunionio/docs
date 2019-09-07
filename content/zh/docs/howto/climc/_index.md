@@ -69,7 +69,14 @@ climc 请求云平台后端服务的流程如下:
 2. token 中包含了后端服务的 endpoint 地址
 3. climc 将对应资源的 CURD 请求发往所属的后端服务
 
-所以在操作资源前，我们需要通过环境变量告诉 climc 想要操作的云平台。
+所以在操作资源前，我们需要通过环境变量告诉 climc 想要操作的云平台和认证信息。
+
+目前climc支持两种认证方式：
+
+- 通过用户名／密码认证
+- 通过Access Key／Secret认证（从2.11开始支持） 
+
+以下为用户名／密码认证的配置文件模板，通过OS_USERNAME, OS_DOMAIN_NAME, OS_PASSWORD, OS_PROJECT_NAME, OS_PROJECT_DOMAIN等字段指定用户的信息和项目的信息。
 
 ```bash
 # 将认证信息保存到文件中，方便 source 使用
@@ -89,6 +96,25 @@ export OS_AUTH_URL=https://192.168.0.246:5000/v3
 # 对应的 region
 export OS_REGION_NAME=Beijing
 EOF
+
+以下为Access Key/Secret认证的配置文件模板，通过OS_ACCESS_KEY, OS_SECRET_KEY等两个字段指定用户的Access Key/secret。
+
+```bash
+# 将认证信息保存到文件中，方便 source 使用
+$ cat <<EOF > ~/test_rc_admin
+# Access Key
+export OS_ACCESS_KEY=0eaef71c5e804b468215982b11dcb4d3
+# Secret
+export OS_SECRET_KEY=RV******6bXo=
+# keystone 认证地址
+export OS_AUTH_URL=https://192.168.0.246:5000/v3
+# 对应的 region
+export OS_REGION_NAME=Beijing
+EOF
+
+获取用户在一个项目中的Access Key/Secret的方式有两种：
+1. 在web控制台，选择用户的Access Key管理页面新建
+2. 通过climc credential-create-aksk创建
 
 # source 认证环境变量
 $ source ~/test_rc_admin
