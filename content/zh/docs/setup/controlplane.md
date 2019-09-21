@@ -171,15 +171,11 @@ $ chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/i
 先安装部署工具 ocadm 和云平台的命令行工具 climc:
 
 ```bash
-# 安装 climc 云平台命令行工具
+# 安装 climc 云平台命令行工具 和 ocadm 部署工具
 $ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-2.10/yunion.repo
-$ yum install -y yunion-climc
+$ yum install -y yunion-climc yunion-ocadm
 # climc 在 /opt/yunion/bin 目录下，根据自己的需要加到 bash 或者 zsh 配置文件里面
 $ echo 'export PATH=$PATH:/opt/yunion/bin' >> ~/.bashrc && source ~/.bashrc
-
-# 安装 ocadm
-$ wget https://github.com/yunionio/ocadm/releases/download/v0.0.2/ocadm -P /opt/yunion/bin
-$ chmod a+x /opt/yunion/bin/ocadm
 ```
 
 ### 部署 kubernetes 集群
