@@ -178,7 +178,7 @@ $ yum install -y yunion-climc
 $ echo 'export PATH=$PATH:/opt/yunion/bin' >> ~/.bashrc && source ~/.bashrc
 
 # 安装 ocadm
-$ wget https://github.com/yunionio/ocadm/releases/download/v0.0.1/ocadm -P /opt/yunion/bin
+$ wget https://github.com/yunionio/ocadm/releases/download/v0.0.2/ocadm -P /opt/yunion/bin
 $ chmod a+x /opt/yunion/bin/ocadm
 ```
 
