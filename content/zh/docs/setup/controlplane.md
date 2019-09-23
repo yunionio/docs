@@ -217,7 +217,9 @@ Your Kubernetes and Onecloud control-plane has initialized successfully!
 kubernetes 集群部署完成后，通过以下命令来确保相关的 pod (容器) 都已经启动, 变成 running 的状态。
 
 ```bash
-$ export KUBECONFIG=/etc/kubernetes/admin.conf
+$ mkdir -p $HOME/.kube
+$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 $ kubectl get pods --all-namespaces
 NAMESPACE            NAME                                       READY   STATUS    RESTARTS   AGE
 kube-system          calico-kube-controllers-648bb4447c-57gjb   1/1     Running   0          5h1m
@@ -258,23 +260,9 @@ default-webconsole-5855c8b64f-jtqwn    1/1     Running   0          119m
 
 等待 **default-web-** 相关的 pod 状态变为 Running 后，就可以通过访问 'https://本机IP:443' 登入前端界面。
 
-```bash
-# 获取本机 IP
-$ ip route get 1 | awk '{print $NF;exit}'
-10.168.222.218
+### 创建登录用户
 
-# 测试连通性
-$ curl -k https://10.168.222.218
-```
-
-用浏览器访问 'https://本机IP' 会跳转到 web 界面，如果是第一次访问需要注册设置 cloudadmin 用户的密码，注册完成后登录的界面如下:
-
-![nnn](../images/web.png)
-
-
-### 环境检查
-
-当控制节点部署完成后，云平台的管理员认证信息由 `ocadm cluster rcadmin` 命令可以得到 , 这些认证信息在使用 climc 控制云平台资源时会用到。
+当控制节点部署完成后，需要创建一个用于前端登录的用户。云平台的管理员认证信息由 `ocadm cluster rcadmin` 命令可以得到 , 这些认证信息在使用 climc 控制云平台资源时会用到。
 
 ```bash
 # 获取连接 onecloud 集群的环境变量
@@ -292,20 +280,40 @@ export OS_ENDPOINT_TYPE=publicURL
 > 如果是高可用部署，这些 endpoint 的 public url 会是 vip，如果要在 kubernetes 集群外访问需要到 haproxy 节点上添加对应的 frontend 和 backend，其中frontend的端口对应 endpoint 里面的端口，backend 对应 3 个 controlplane node 的 ip 和对应端口。
 {{% /alert %}}
 
-测试链接
+创建用户
 
 ```bash
+# 初始化连接集群的管理员认证信息
 $ source <(ocadm cluster rcadmin)
-$ climc endpoint-list
-+----------------------------------+-----------+----------------------------------+----------------------------------+-----------+---------+
-|                ID                | Region_ID |            Service_ID            |               URL                | Interface | Enabled |
-+----------------------------------+-----------+----------------------------------+----------------------------------+-----------+---------+
-| aa266549bbd743f4882fa1b1e98e409a | region0   | 106f7cf2410b4187879d4a44a737df0b | https://default-influxdb:8086    | internal  | true    |
-| ba59f23951e6452984b9d2036d303ade | region0   | 106f7cf2410b4187879d4a44a737df0b | https://10.168.222.218:8086      | public    | true    |
-| 5b2981d751624c6b86a757e30676c528 | region0   | ee302d70e261452282ca66c86f85f2f7 | https://default-webconsole:8899  | internal  | true    |
-| 81c79509449f4f4581140adc030e5e57 | region0   | ee302d70e261452282ca66c86f85f2f7 | https://10.168.222.218:8899      | public    | true    |
-...
+
+# 设置想要创建的用户名和密码
+$ OC_USERNAME=demo
+$ OC_PASSWORD=demo
+
+# 创建指定的用户
+$ climc user-create --password $OC_PASSWORD --enabled $OC_USERNAME
+
+# 将用户加入 system 项目并赋予 admin 角色
+$ climc project-add-user system $OC_USERNAME admin
 ```
+
+
+### 访问前端
+
+```bash
+# 获取本机 IP
+$ ip route get 1 | awk '{print $NF;exit}'
+10.168.222.218
+
+# 测试连通性
+$ curl -k https://10.168.222.218
+```
+
+用浏览器访问 'https://本机IP' 会跳转到 web 界面，使用 [创建登录用户](/docs/setup/controlplane/#创建登录用户) 里面指定的用户名和密码登录后，界面如下:
+
+![登录页](../images/web-login.png)
+
+![首页](../images/web-dashboard.png)
 
 ### 删除环境
 
