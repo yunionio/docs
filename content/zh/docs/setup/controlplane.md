@@ -297,7 +297,6 @@ $ climc user-create --password $OC_PASSWORD --enabled $OC_USERNAME
 $ climc project-add-user system $OC_USERNAME admin
 ```
 
-
 ### 访问前端
 
 ```bash
@@ -323,3 +322,6 @@ $ curl -k https://10.168.222.218
 $ ocadm reset --force
 ```
 
+## 后续
+
+当控制节点搭建完成后，可以参考 [计算节点](/docs/setup/host/) 一节的内容，添加计算节点，组建一套私有云集群。
