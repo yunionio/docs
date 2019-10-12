@@ -324,4 +324,58 @@ $ ocadm reset --force
 
 ## 后续
 
+如果没有意外，现在应该已经部署好了 onecloud on kubernetes 的集群，以下是一些后续的环节说明，可以根据自己的需要来进行额外的操作。
+
+### 添加计算节点
+
 当控制节点搭建完成后，可以参考 [计算节点](/docs/setup/host/) 一节的内容，添加计算节点，组建一套私有云集群。
+
+### 切换企业版前端
+
+默认情况下使用的 web 前端是开源版的，我们也提供企业版的 web 前端，可以使用 `ocadm component web` 命令来切换前端:
+
+```bash
+# 切换到企业版的 web 前端
+$ ocadm component web use-ee
+
+# 切换到开源版的 web 前端
+$ ocadm component web use-ce
+```
+
+`ocadm component web use-ee/use-ce` 命令会更新替换当前的 default-web deployment，执行该命令后等到新的 pod 启动后，重新刷新前端页面，即可进入(开源版/企业版)前端。
+
+### 额外插件
+
+onecloud 系统有一些非核心的额外组件可以通过 `ocadm component` 命令来启用或者禁用，对应组件列表说明如下:
+
+| 名称          | 功能               |
+|---------------|--------------------|
+| cloudmon      | 多云监控组件       |
+| cloudwatcher  | 优化建议组件       |
+| itsm          | 流程工单组件       |
+| meter         | 计费组件           |
+| meter-cloud   | 计费组件           |
+| meter-service | 计费组件           |
+| meter-traffic | 计费组件           |
+| meteralert    | 计费组件           |
+
+这些组件并不是必需的，如果有需要，可以使用下面命令来管理:
+
+
+{{% alert title="注意" color="warning" %}}
+这些额外插件大部分是 java 编写，每个组件以 pod 的方式启动，会占用 1g 以上的内存，如果要启用，建议先参考 [添加节点](/docs/setup/components/) 添加更多的 kubernetes node 节点然后再启用这些组件。
+{{% /alert %}}
+
+```bash
+# 启用所有组件，会占用更多 cpu/memory 的资源
+$ ocadm component enable all
+
+# 禁用所有组件
+$ ocadm component disable all
+
+# 启用某个组件，以 cloudmon 为例
+$ ocadm component enable cloudmon
+
+# 禁用某个组件，以 cloudwatcher 为例
+$ ocadm component disable cloudwatcher
+```
