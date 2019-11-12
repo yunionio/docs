@@ -131,6 +131,18 @@ $ systemctl enable kubelet
 $ swapoff -a
 # 如果设置了自动挂载 swap，需要去 /etc/fstab 里面注释掉挂载 swap 那一行
 
+# 关闭 selinux
+$ setenforce  0
+$ sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+
+# 禁用 firewalld
+$ systemctl stop firewalld
+$ systemctl disable firewalld
+
+# 禁用 NetworkManager
+$ systemctl stop NetworkManager
+$ systemctl disable NetworkManager
+
 # 做一些 sysctl 的配置, kubernetes 要求
 $ cat <<EOF > /etc/sysctl.d/bridge.conf
 net.bridge.bridge-nf-call-iptables=1
@@ -288,7 +300,7 @@ $ source <(ocadm cluster rcadmin)
 
 # 设置想要创建的用户名和密码
 $ OC_USERNAME=demo
-$ OC_PASSWORD=demo
+$ OC_PASSWORD=demo@123
 
 # 创建指定的用户
 $ climc user-create --password $OC_PASSWORD --enabled $OC_USERNAME
