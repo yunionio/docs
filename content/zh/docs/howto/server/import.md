@@ -1,7 +1,6 @@
 ---
 title: "libvirt管理虚机导入"
 date: 2019-11-26T16:57:43+08:00
-draft: true
 weight: 40
 ---
 
