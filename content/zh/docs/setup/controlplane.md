@@ -16,6 +16,15 @@ OneCloud 相关的组件运行在 kubernetes 之上，环境以及相关的软�
 - docker: ce-18.09.1
 - kubernetes: v1.14.3
 
+需要能访问如下网址，如果企业有外网隔离规则，则需要打开相应白名单：
+
+- CentOS YUM网络安装源
+- http://mirrors.aliyun.com
+- https://iso.yunion.cn/
+- https://registry.cn-beijing.aliyuncs.com
+- https://meta.yunion.cn
+- https://yunionmeta.oss-cn-beijing.aliyuncs.com
+
 ### 安装配置 mariadb
 
 mariadb 作为服务数据持久化的数据库，可以部署在其它节点或者使用单独维护的。下面假设还没有部署 mariadb，在控制节点上安装设置 mariadb。
