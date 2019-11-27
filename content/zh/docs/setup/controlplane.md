@@ -58,6 +58,8 @@ EOF
 
 $ mysql -uroot -p$MYSQL_PASSWD \
   -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY '$MYSQL_PASSWD' with grant option; FLUSH PRIVILEGES;"
+
+$ systemctl restart mariadb
 ```
 
 ### 安装配置 docker
