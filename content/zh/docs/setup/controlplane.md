@@ -84,14 +84,14 @@ $ yum install -y docker-ce-18.09.1 docker-ce-cli-18.09.1 containerd.io
 配置 docker
 
 ```bash
-$ mkdir /etc/docker
+$ mkdir -p /etc/docker
 $ cat <<EOF >/etc/docker/daemon.json
 {
   "bridge": "none",
   "iptables": false,
   "exec-opts":
     [
-      "native.cgroupdriver=cgroupfs"
+      "native.cgroupdriver=systemd"
     ],
   "data-root": "/opt/docker",
   "live-restore": true,
