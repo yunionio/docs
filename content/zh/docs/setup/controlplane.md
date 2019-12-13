@@ -76,7 +76,7 @@ $ systemctl restart mariadb
 安装 docker
 
 ```bash
-$ yum install -y yum-utils
+$ yum install -y yum-utils bash-completion
 $ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 $ yum install -y docker-ce-18.09.1 docker-ce-cli-18.09.1 containerd.io
 ```
@@ -132,6 +132,8 @@ repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 $ yum install -y bridge-utils ipvsadm conntrack-tools jq kubelet-1.14.3-0 kubectl-1.14.3-0 kubeadm-1.14.3-0
+$ echo 'source <(kubectl completion bash)' >> ~/.bashrc && source ~/.bashrc
+$ source /etc/profile
 $ systemctl enable kubelet
 ```
 
@@ -155,14 +157,11 @@ $ systemctl stop NetworkManager
 $ systemctl disable NetworkManager
 
 # 做一些 sysctl 的配置, kubernetes 要求
-$ cat <<EOF > /etc/sysctl.d/bridge.conf
-net.bridge.bridge-nf-call-iptables=1
-net.bridge.bridge-nf-call-ip6tables=1
-EOF
-
 $ modprobe br_netfilter
 
-$ cat <<EOF > /etc/sysctl.d/ip_forward.conf
+$ cat <<EOF >> /etc/sysctl.conf
+net.bridge.bridge-nf-call-iptables=1
+net.bridge.bridge-nf-call-ip6tables=1
 net.ipv4.ip_forward=1
 EOF
 
