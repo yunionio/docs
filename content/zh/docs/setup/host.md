@@ -9,7 +9,8 @@ description: >
 
 |     组件    |           用途           | 安装方式 | 运行方式 |
 |:-----------:|:------------------------:|:--------:|:--------:|
-|     host    |   管理 kvm 虚拟机和存储  |    rpm   |  systemd |
+|     host    |   管理 kvm 虚拟机和存储  |    -   |  docker |
+| host-deployer    |   虚拟机部署服务  |    -   |  docker |
 |   sdnagent  |  管理虚拟机网络和安全组  |    rpm   |  systemd |
 | openvswitch | 虚拟机网络端口和流表配置 |    rpm   |  systemd |
 |     qemu    |        运行虚拟机        |    rpm   |  process |
@@ -20,7 +21,7 @@ description: >
 - 操作系统: Centos 7.x
 - 硬件要求:
 	- Virtualization: CPU 要支持虚拟化，用于虚拟机 KVM 加速
-	- 打开 iommu，VT-d: 用于 GPU 透传
+	- 打开 iommu，VT-d: 用于 GPU 透传(不用GPU可以不开)
 - 网络:
 	- 当前可用的网段: 虚拟机可以直接使用和计算节点所在的扁平网段，需要预先划分保留对应端给云平台虚拟机使用，防止被其它设备占用，最后 IP 冲突
 
@@ -29,7 +30,7 @@ description: >
 
 ## 安装依赖
 
-计算节点所有的服务都以 rpm 的方式安装，因为虚拟机会用到内核 vfio 和 nbd 等特性，所以没有容器化部署。
+计算节点所需的依赖以 rpm 的方式安装
 
 ```bash
 # 添加 yum 源
@@ -52,16 +53,16 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 
 ```bash
 $ yum install -y \
-  epel-release chntpw dosfstools ethtool fetchclient fuse fuse-devel fuse-libs gdisk \
-  libaio jq libusb lvm2 lxcfs nc ntfs-3g_ntfsprogs zerofree \
-  oniguruma parted pciutils spice spice-protocol sshpass sysstat \
-  tcpdump telegraf usbredir vmware-vddk xfsprogs \
-  yunion-qemu-2.12.1 yunion-host yunion-host-deployer yunion-host-image yunion-sdnagent \
-  kernel-3.10.0-862.14.4.el7.yn20190712 \
-  kernel-devel-3.10.0-862.14.4.el7.yn20190712 \
-  kernel-headers-3.10.0-862.14.4.el7.yn20190712 \
-  kmod-openvswitch-2.9.5-1.el7 \
-  openvswitch-2.9.5-1
+  epel-release libaio jq libusb lvm2 nc \
+  oniguruma pciutils spice spice-protocol sysstat tcpdump telegraf usbredir \
+  yunion-qemu-2.12.1 yunion-host-image yunion-sdnagent yunion-executor-server \
+  kernel-3.10.0-1062.4.3.el7.yn20191203 \
+  kernel-devel-3.10.0-1062.4.3.el7.yn20191203 \
+  kernel-headers-3.10.0-1062.4.3.el7.yn20191203 \
+  kmod-openvswitch-2.9.6-1.el7 \
+  openvswitch-2.9.6-1.el7
+
+$ systemctl enable --now yunion-host-sdnagent yunion-executor yunion-host-image
 
 # 安装完成后需要重启进入我们的内核
 $ reboot
@@ -71,26 +72,13 @@ $ uname -r
 3.10.0-862.14.4.el7.yn20190712.x86_64
 ```
 
+### 安装 docker 和 kubelet
+
+参考 ["部署集群/环境准备"](/docs/setup/controlplane/#安装配置-docker) 的流程，安装好 docker 和 kubelet。
+
 ## 控制节点操作
 
 以下操作在控制节点进行。
-
-### 创建 host 服务的认证用户
-
-```bash
-$ ocadm cluster rcadmin
-# 这个是云平台 keystone 的认证地址，后面配置会用到
-export OS_AUTH_URL=https://10.168.222.218:5000/v3
-...
-# 这个 region0 也会在配置中用到
-export OS_REGION_NAME=region0
-
-$ source <(ocadm cluster rcadmin)
-
-# 这里记住自己的用户密码，后面配置会用到
-$ climc user-create --enabled --password hostadminpasswd hostadmin
-$ climc project-add-user system hostadmin admin
-```
 
 ### 创建计算节点所在的网段
 
@@ -104,7 +92,7 @@ $ climc project-add-user system hostadmin admin
 # 查看当前环境的 zone
 $ climc zone-list
 +--------------------------------------+-------+--------+----------------+
-| ID | Name | Status | Cloudregion_ID |
+| ID                                   | Name  | Status | Cloudregion_ID |
 +--------------------------------------+-------+--------+----------------+
 | f73a2120-1206-45fa-8d43-de374ab0f494 | zone0 | enable | default        |
 +--------------------------------------+-------+--------+----------------+
@@ -122,64 +110,20 @@ $ climc network-create --gateway 10.168.222.1 --server-type baremetal bcast0 inf
 
 ### 配置 host 服务
 
+参考 ["添加节点/获取加入集群token"](/docs/setup/components/#获取加入集群-token) 的流程获取join所需的信息
+
 ```bash
+# 使用 ocadm join 来创建一台计算节点
+# 可选参数 --host-networks: 配置host服务的网络，example: 'eth0/br0/10.168.222.140', eth0是物理网卡，br0是网桥名称，10.168.222.140是宿主机的ip
 # 获取计算节点 IP
 $ host_addr=$(ip route get 1 | awk '{print $NF;exit}')
 $ echo $host_addr
 10.168.222.140
+# 可选参数 --host-local-image-path: 配置host服务磁盘的存储路径，example: '/opt/cloud/workspace/disks'
+# 可选参数 --host-hostname: 配置宿主机的hostname, example: 'node1'
+$ ./ocadm join $api_server_addr --token $token --discovery-token-ca-cert-hash $token_hash --enable-host-agent
 
-$ mkdir -p /etc/yunion
-
- # 记得把这些认证信息参考控制节点的 rc_amdin 配置对应过来
-$ cat <<EOF >/etc/yunion/host.conf
-region = 'region0'
-address =  '$host_addr' # 计算节点服务监听的地址
-port = 8885
-auth_uri = 'https://10.168.222.218:5000/v3' # 控制节点 keystone 服务的认证地址
-admin_user = 'hostadmin'  # 计算节点认证用户
-admin_password = 'hostadminpasswd' # 计算节点认证用户密码
-admin_tenant_name = 'system' # 计算节点用户所在的项目
-networks = ['eth0/br0/$host_addr']  # 计算节点网桥配置
-hostname = '$(hostname -s)'
-
-bridge_driver = 'openvswitch'
-
-servers_path = '/opt/cloud/workspace/servers'
-snapshot_path = '/opt/cloud/workspace/disks/snapshots'
-
-local_image_path = ['/opt/cloud/workspace/disks']
-image_cache_path = '/opt/cloud/workspace/disks/image_cache'
-agent_temp_path = '/opt/cloud/workspace/disks/agent_tmp'
-
-rack  = 'rack0'
-slots = 'slot0'
-
-linux_default_root_user = True
-allow_inter_tenant_broadcast = True
-allow_inter_tenant_multicast = True
-allow_inter_tenant_unicast = True
-
-block_io_scheduler = 'cfq'
-
-enable_template_backing = True
-
-default_qemu_version = '2.12.1'
-EOF
-```
-
-### 启动 host
-
-配置完成后就可以使用 systemctl 启动 host 服务了，命令如下:
-
-```bash
-# 启动
-$ systemctl enable yunion-host yunion-host-deployer --now
-
-# 观察启动日志
-$ journalctl -u yunion-host -f
-...
-Jul 09 18:23:34 lzx-ocadm-test2 host[4216]: [I 190709 18:23:34 metadata.StartService(metadatahandler.go:268)] Host Metadata Start listen on http://10.168.222.140:9885
-# 出现上述信息表示 host 已经成功注册到了控制节点
+# 然后等待宿主机上的host pod和host-deployer pod为running状态
 ```
 
 ## 控制节点启用 host
