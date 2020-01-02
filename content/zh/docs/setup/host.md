@@ -53,7 +53,7 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 
 ```bash
 $ yum install -y \
-  epel-release libaio jq libusb lvm2 nc \
+  epel-release libaio jq libusb lvm2 nc ntp \
   oniguruma pciutils spice spice-protocol sysstat tcpdump telegraf usbredir \
   yunion-qemu-2.12.1 yunion-host-image yunion-sdnagent yunion-executor-server \
   kernel-3.10.0-1062.4.3.el7.yn20191203 \
@@ -120,6 +120,7 @@ $ host_addr=$(ip route get 1 | awk '{print $NF;exit}')
 $ echo $host_addr
 10.168.222.140
 # 可选参数 --host-local-image-path: 配置host服务磁盘的存储路径，example: '/opt/cloud/workspace/disks'
+# 注意：容器部署的host服务只会挂载/opt/cloud目录，如果有其他挂载点需要bind mount到/opt/cloud下，可在fstab中添加一行如'/src /opt/cloud/dst none defaults,bind 0 0'
 # 可选参数 --host-hostname: 配置宿主机的hostname, example: 'node1'
 $ ./ocadm join $api_server_addr --token $token --discovery-token-ca-cert-hash $token_hash --enable-host-agent
 
