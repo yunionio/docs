@@ -264,6 +264,7 @@ onecloud             onecloud-operator-6d4bddb8c4-tkjkh         1/1     Running 
 
 ```bash
 # 创建集群
+# 如果要部署企业版的组件可以在 cluster create 的时候加上 --use-ee 参数
 $ ocadm cluster create
 ```
 
@@ -354,17 +355,17 @@ $ ocadm reset --force
 
 ### 切换企业版前端
 
-默认情况下使用的 web 前端是开源版的，我们也提供企业版的 web 前端，可以使用 `ocadm component web` 命令来切换前端:
+默认情况下使用的 web 前端是开源版的，我们也提供企业版的 web 前端，可以使用 `ocadm cluster update` 命令来切换前端:
 
 ```bash
-# 切换到企业版的 web 前端
-$ ocadm component web use-ee
+# 切换到企业版
+$ ocadm cluster update use-ee
 
 # 切换到开源版的 web 前端
-$ ocadm component web use-ce
+$ ocadm cluster update use-ce
 ```
 
-`ocadm component web use-ee/use-ce` 命令会更新替换当前的 default-web deployment，执行该命令后等到新的 pod 启动后，重新刷新前端页面，即可进入(开源版/企业版)前端。
+`ocadm cluster update use-ee/use-ce` 命令会更新替换当前的 default-web deployment，执行该命令后等到新的 pod 启动后，重新刷新前端页面，即可进入(开源版/企业版)前端。
 
 ### 额外插件
 
