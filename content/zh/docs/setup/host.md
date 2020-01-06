@@ -37,7 +37,7 @@ description: >
 $ cat <<EOF >/etc/yum.repos.d/yunion.repo
 [yunion]
 name=Packages for Yunion Multi-Cloud Platform
-baseurl=https://iso.yunion.cn/yumrepo-2.10
+baseurl=https://iso.yunion.cn/yumrepo-2.13
 sslverify=0
 failovermethod=priority
 enabled=1
@@ -55,14 +55,14 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 $ yum install -y \
   epel-release libaio jq libusb lvm2 nc ntp \
   oniguruma pciutils spice spice-protocol sysstat tcpdump telegraf usbredir \
-  yunion-qemu-2.12.1 yunion-host-image yunion-sdnagent yunion-executor-server \
+  yunion-qemu-2.12.1 yunion-sdnagent yunion-executor-server \
   kernel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-devel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-headers-3.10.0-1062.4.3.el7.yn20191203 \
   kmod-openvswitch-2.9.6-1.el7 \
   openvswitch-2.9.6-1.el7
 
-$ systemctl enable --now yunion-host-sdnagent yunion-executor yunion-host-image
+$ systemctl enable --now yunion-host-sdnagent yunion-executor
 
 # 安装完成后需要重启进入我们的内核
 $ reboot
@@ -101,7 +101,7 @@ $ climc zone-list
 $ climc wire-create zone0 bcast0 1000
 
 # 在 wire bcast0 之上创建一个计算节点的网络，计算节点的 host 服务注册会用到，如果 host 注册时没有在云平台找到对应的网络，将会注册失败
-$ climc network-create --gateway 10.168.222.1 --server-type baremetal bcast0 inf0 10.168.222.140 10.168.222.140 24
+$ climc network-create --gateway 10.168.222.1 --server-type baremetal bcast0 adm0 10.168.222.140 10.168.222.140 24
 ```
 
 ## 计算节点(host)操作
