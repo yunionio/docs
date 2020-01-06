@@ -194,7 +194,7 @@ $ chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/i
 
 ```bash
 # 安装 climc 云平台命令行工具 和 ocadm 部署工具
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-2.10/yunion.repo
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-2.13/yunion.repo
 $ yum install -y yunion-climc yunion-ocadm
 # climc 在 /opt/yunion/bin 目录下，根据自己的需要加到 bash 或者 zsh 配置文件里面
 $ echo 'export PATH=$PATH:/opt/yunion/bin' >> ~/.bashrc && source ~/.bashrc
@@ -265,23 +265,10 @@ onecloud             onecloud-operator-6d4bddb8c4-tkjkh         1/1     Running 
 ```bash
 # 创建集群
 # 如果要部署企业版的组件可以在 cluster create 的时候加上 --use-ee 参数
-$ ocadm cluster create
+$ ocadm cluster create --wait
 ```
 
-执行完 `ocadm cluster create` 命令后，**onecloud-operator** 会自动创建各个服务组件对应的 pod，等待一段时间后，确保 onecloud namespace 里面的 keystone, region 和 glance 等 pod 都处于 running 状态。
-
-```bash
-# 可以通过 watch 的方式查看各个服务 pod 的创建过程
-$ kubectl get pods --namespace onecloud -w
-
-# 当发现 web 相关的 pod 创建完成后，就可通过前端 web 界面访问云平台了
-$ kubectl get pods --namespace onecloud | egrep 'apigateway|web'
-default-apigateway-f657c55c8-9tzpm     2/2     Running   0          118m
-default-web-7778d95cb8-2xv6n           1/1     Running   0          118m
-default-webconsole-5855c8b64f-jtqwn    1/1     Running   0          119m
-```
-
-等待 **default-web-** 相关的 pod 状态变为 Running 后，就可以通过访问 'https://本机IP:443' 登入前端界面。
+执行完 `ocadm cluster create --wait` 命令后，**onecloud-operator** 会自动创建各个服务组件对应的 pod，等待一段该命令执行完毕， 就可以通过访问 'https://本机IP:443' 登入前端界面。
 
 ### 创建登录用户
 
@@ -359,13 +346,13 @@ $ ocadm reset --force
 
 ```bash
 # 切换到企业版
-$ ocadm cluster update use-ee
+$ ocadm cluster update --use-ee
 
 # 切换到开源版的 web 前端
-$ ocadm cluster update use-ce
+$ ocadm cluster update --use-ce
 ```
 
-`ocadm cluster update use-ee/use-ce` 命令会更新替换当前的 default-web deployment，执行该命令后等到新的 pod 启动后，重新刷新前端页面，即可进入(开源版/企业版)前端。
+`ocadm cluster update --use-ee/--use-ce` 命令会更新替换当前的 default-web deployment，执行该命令后等到新的 pod 启动后，重新刷新前端页面，即可进入(开源版/企业版)前端。
 
 ### 额外插件
 
@@ -376,10 +363,6 @@ onecloud 系统有一些非核心的额外组件可以通过 `ocadm component` �
 | cloudmon      | 多云监控组件       |
 | cloudwatcher  | 优化建议组件       |
 | itsm          | 流程工单组件       |
-| meter         | 计费组件           |
-| meter-cloud   | 计费组件           |
-| meter-service | 计费组件           |
-| meter-traffic | 计费组件           |
 | meteralert    | 计费组件           |
 
 这些组件并不是必需的，如果有需要，可以使用下面命令来管理:
