@@ -53,7 +53,7 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 
 ```bash
 $ yum install -y \
-  epel-release libaio jq libusb lvm2 nc ntp \
+  epel-release libaio jq libusb lvm2 nc ntp fetchclient fuse fuse-devel fuse-libs \
   oniguruma pciutils spice spice-protocol sysstat tcpdump telegraf usbredir \
   yunion-qemu-2.12.1 yunion-host-image yunion-sdnagent yunion-executor-server \
   kernel-3.10.0-1062.4.3.el7.yn20191203 \
@@ -85,7 +85,7 @@ $ uname -r
 我的环境**计算节点**的 ip 为 10.168.222.140，就创建一个对应的 **计算节点(host)网段**。
 
 {{% alert title="提示" %}}
-需要根据自己的计算节点环境创建对应的网段，如果不创建该网段，计算节点就没发注册进来。
+需要根据自己的计算节点环境创建对应的网段，如果不创建该网段，计算节点就没法注册进来。
 {{% /alert %}}
 
 ```bash
