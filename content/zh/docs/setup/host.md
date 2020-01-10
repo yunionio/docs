@@ -37,7 +37,7 @@ description: >
 $ cat <<EOF >/etc/yum.repos.d/yunion.repo
 [yunion]
 name=Packages for Yunion Multi-Cloud Platform
-baseurl=https://iso.yunion.cn/yumrepo-2.13
+baseurl=https://iso.yunion.cn/yumrepo-3.0
 sslverify=0
 failovermethod=priority
 enabled=1
