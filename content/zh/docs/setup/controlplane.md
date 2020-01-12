@@ -340,6 +340,33 @@ $ ocadm reset --force
 
 当控制节点搭建完成后，可以参考 [计算节点](/docs/setup/host/) 一节的内容，添加计算节点，组建一套私有云集群。
 
+### 控制节点作为计算节点
+
+默认情况下 `ocadm init` 创建的节点是控制节点，不会运行 onecloud 计算节点的服务。如果需要把控制节点也作为计算节点，需要执行以下步骤:
+
+1. 安装计算节点需要的依赖，参考 ["计算节点/安装依赖"](/docs/setup/host/#安装依赖)，这里主要是要安装我们的内核和运行虚拟机的 qemu 等软件。
+
+2. 在控制节点启用该节点作为计算节点，命令如下:
+
+```bash
+# 用 kubectl get nodes 拿到当前的节点名称
+$ kubectl get nodes
+NAME                  STATUS   ROLES    AGE    VERSION
+controller01   Ready    master   116d   v1.14.3
+controller02   Ready    master   40d    v1.14.3
+node01         Ready    <none>   25d    v1.14.3
+
+# 假设我要把 controller01 和 controller02 作为计算节点
+$ ocadm node enable-host-agent \
+  --node controller01 \
+  --node controller02
+
+# 等待并查看运行在 controller01/02 上的计算节点服务
+$ kubectl get pods -n onecloud -o wide | grep host
+default-host-7b5cr  2/2     Running    218        18h     192.168.222.4 controller01
+default-host-ctx5s  2/2     Running    218        18h     192.168.222.5 controller02
+```
+
 ### 切换企业版前端
 
 默认情况下使用的 web 前端是开源版的，我们也提供企业版的 web 前端，可以使用 `ocadm cluster update` 命令来切换前端:
