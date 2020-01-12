@@ -270,32 +270,6 @@ $ ocadm cluster create --wait
 
 执行完 `ocadm cluster create --wait` 命令后，**onecloud-operator** 会自动创建各个服务组件对应的 pod，等待一段该命令执行完毕， 就可以通过访问 'https://本机IP:443' 登入前端界面。
 
-#### 启用baremetal-agent(可选)
-
-如果要使用物理机管理服务, 则需要在集群准备完毕后指定node来部署baremetal-agent服务。
-
-baremetal-agent只会处理来自dhcp relay服务器的请求, 所以你需要事先在交换机配置dhcp relay或者使用host服务的dhcp relay功能。
-
-```bash
-# 启用host服务的dhcp relay:
-# 登录到已经部署好计算节点的服务器上修改 /etc/yunion/host.conf，添加dhcp_relay配置项：
-dhcp_relay:
-- 10.168.222.198 # baremetal agent dhcp服务监听地址
-- 67             # baremetal agent dhcp服务监听端口
-# 然后重启host服务
-```
-
-然后选择node启用baremetal-agent。
-```bash
-# $listen_interface指的是baremetal-agent监听的网卡名称
-ocadm baremetal enable --node $node_name --listen-interface $listen_interface
-```
-
-也可以在启用baremetal-agent的节点中选择节点禁止baremetal-agent调度到该节点。
-```bash
-ocadm baremetal disable --node $node_name
-```
-
 ### 创建登录用户
 
 当控制节点部署完成后，需要创建一个用于前端登录的用户。云平台的管理员认证信息由 `ocadm cluster rcadmin` 命令可以得到 , 这些认证信息在使用 climc 控制云平台资源时会用到。
@@ -303,7 +277,7 @@ ocadm baremetal disable --node $node_name
 ```bash
 # 获取连接 onecloud 集群的环境变量
 $ ocadm cluster rcadmin
-export OS_AUTH_URL=https://10.168.222.218:35357/v3
+export OS_AUTH_URL=https://10.168.222.218:30357/v3
 export OS_USERNAME=sysadmin
 export OS_PASSWORD=3hV3qAhvxck84srk
 export OS_PROJECT_NAME=system
@@ -372,10 +346,10 @@ $ ocadm reset --force
 
 ```bash
 # 切换到企业版
-$ ocadm cluster update --use-ee
+$ ocadm cluster update --use-ee --wait
 
 # 切换到开源版的 web 前端
-$ ocadm cluster update --use-ce
+$ ocadm cluster update --use-ce --wait
 ```
 
 `ocadm cluster update --use-ee/--use-ce` 命令会更新替换当前的 default-web deployment，执行该命令后等到新的 pod 启动后，重新刷新前端页面，即可进入(开源版/企业版)前端。
