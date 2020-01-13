@@ -117,6 +117,28 @@ EOF
 $ systemctl enable --now docker
 ```
 
+### 安装 onecloud 依赖内核
+
+这里需要安装我们编译的内核，这个内核是基于上游 Centos 3.10.0-1062 编译的，默认添加了 nbd 模块，nbd 模块用于镜像相关的操作。
+
+```bash
+# 添加 yunion onecloud rpm 源
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.0/yunion.repo
+# 安装内核
+$ yum install -y \
+  kernel-3.10.0-1062.4.3.el7.yn20191203 \
+  kernel-devel-3.10.0-1062.4.3.el7.yn20191203 \
+  kernel-headers-3.10.0-1062.4.3.el7.yn20191203
+
+# 重启系统进入内核
+$ reboot
+
+# 重启完成后，查看当前节点内核信息
+# 确保为 3.10.0-1062.4.3.el7.yn20191203.x86_64
+$ uname -r
+3.10.0-1062.4.3.el7.yn20191203.x86_64
+```
+
 ### 安装配置 kubelet
 
 从 aliyun 的 yum 源安装 kubernetes 1.14.3，并设置 kubelet 开机自启动
@@ -131,7 +153,8 @@ gpgcheck=0
 repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
-$ yum install -y bridge-utils ipvsadm conntrack-tools jq kubelet-1.14.3-0 kubectl-1.14.3-0 kubeadm-1.14.3-0
+$ yum install -y bridge-utils ipvsadm conntrack-tools \
+    jq kubelet-1.14.3-0 kubectl-1.14.3-0 kubeadm-1.14.3-0
 $ echo 'source <(kubectl completion bash)' >> ~/.bashrc && source ~/.bashrc
 $ source /etc/profile
 $ systemctl enable kubelet
@@ -194,7 +217,6 @@ $ chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/i
 
 ```bash
 # 安装 climc 云平台命令行工具 和 ocadm 部署工具
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.0/yunion.repo
 $ yum install -y yunion-climc yunion-ocadm
 # climc 在 /opt/yunion/bin 目录下，根据自己的需要加到 bash 或者 zsh 配置文件里面
 $ echo 'export PATH=$PATH:/opt/yunion/bin' >> ~/.bashrc && source ~/.bashrc
@@ -225,7 +247,9 @@ $ EXTRA_OPT=""
 $ #EXTRA_OPT=' --control-plane-endpoint 10.168.222.18:6443'
 
 # 开始部署 kubernetes 以及 onecloud 必要的控制服务，稍等 3 分钟左右，kubernetes 集群会部署完成
-$ ocadm init --mysql-host $MYSQL_HOST --mysql-user root --mysql-password $MYSQL_PASSWD $EXTRA_OPT
+$ ocadm init --mysql-host $MYSQL_HOST \
+    --mysql-user root --mysql-password $MYSQL_PASSWD \
+    --onecloud-version v3.0.0-20200113.0 $EXTRA_OPT
 
 ...
 Your Kubernetes and Onecloud control-plane has initialized successfully!
@@ -380,6 +404,19 @@ $ ocadm cluster update --use-ce --wait
 ```
 
 `ocadm cluster update --use-ee/--use-ce` 命令会更新替换当前的 default-web deployment，执行该命令后等到新的 pod 启动后，重新刷新前端页面，即可进入(开源版/企业版)前端。
+
+### 升级/回滚组件版本
+
+`ocadm init` 的时候使用 `--onecloud-version` 选项设置了组件的版本，可以使用 `ocadm cluster update` 命令升级组件到指定的版本，保持更新。
+
+```bash
+# 查看现在 onecloud cluster 的版本
+$ kubectl get oc -n onecloud default  -o jsonpath='{.spec.version}'
+v3.0.0-20200112.0
+
+# 升级到 v3.0.0-20200113.0
+$ ocadm cluster update --version v3.0.0-20200113.0 --wait
+```
 
 ### 额外插件
 
