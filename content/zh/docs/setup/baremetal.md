@@ -1,12 +1,12 @@
 ---
-title: "物理机节点"
+title: "物理机管理服务"
 weight: 11
 description: >
-  如果要运行 onecloud 私有云物理机，需要添加对应的物理机管理节点，本节介绍如何部署相应组件
+  如果要使用 onecloud 私有云物理机管理功能，需要启用物理机管理服务(baremetal-agent)，本节介绍如何部署相应组件
 draft: true
 ---
 
-#### 启用baremetal-agent(可选)
+## 启用 baremetal-agent
 
 如果要使用物理机管理服务, 则需要在集群准备完毕后指定node来部署baremetal-agent服务。
 

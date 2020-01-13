@@ -1,5 +1,5 @@
 ---
-title: "计算节点"
+title: "添加计算节点"
 weight: 10
 description: >
   如果要运行 onecloud 私有云虚拟机，需要添加对应的计算节点，本节介绍如何部署相应组件
@@ -114,15 +114,20 @@ $ climc network-create --gateway 10.168.222.1 --server-type baremetal bcast0 adm
 
 ```bash
 # 使用 ocadm join 来创建一台计算节点
-# 可选参数 --host-networks: 配置host服务的网络，example: 'eth0/br0/10.168.222.140', eth0是物理网卡，br0是网桥名称，10.168.222.140是宿主机的ip
+# 可选参数 --host-networks: 配置host服务的网络，比如: 'eth0/br0/10.168.222.140', eth0是物理网卡，br0是网桥名称，10.168.222.140是宿主机的ip
 # 获取计算节点 IP
 $ host_addr=$(ip route get 1 | awk '{print $NF;exit}')
 $ echo $host_addr
 10.168.222.140
-# 可选参数 --host-local-image-path: 配置host服务磁盘的存储路径，example: '/opt/cloud/workspace/disks'
-# 注意：容器部署的host服务只会挂载/opt/cloud目录，如果有其他挂载点需要bind mount到/opt/cloud下，可在fstab中添加一行如'/src /opt/cloud/dst none defaults,bind 0 0'
-# 可选参数 --host-hostname: 配置宿主机的hostname, example: 'node1'
-$ ./ocadm join $api_server_addr --token $token --discovery-token-ca-cert-hash $token_hash --enable-host-agent
+
+# 可选参数 --host-local-image-path: 配置host服务磁盘的存储路径，比如: '/opt/cloud/workspace/disks'
+# 注意：容器部署的host服务只会挂载/opt/cloud目录
+# 如果有其他挂载点需要bind mount到/opt/cloud下，可在fstab中添加一行如'/src /opt/cloud/dst none defaults,bind 0 0'
+# 可选参数 --host-hostname: 配置宿主机的hostname, 比如: 'node1'
+$ ./ocadm join $api_server_addr \
+    --enable-host-agent \
+    --token $token \
+    --discovery-token-unsafe-skip-ca-verification
 
 # 然后等待宿主机上的host pod和host-deployer pod为running状态
 ```
