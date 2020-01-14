@@ -105,8 +105,7 @@ $ cat <<EOF >/etc/docker/daemon.json
       "https://lje6zxpk.mirror.aliyuncs.com",
       "https://lms7sxqp.mirror.aliyuncs.com",
       "https://registry.docker-cn.com"
-    ],
-  "storage-driver": "overlay2"
+    ]
 }
 EOF
 ```
