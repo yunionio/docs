@@ -14,7 +14,7 @@ OneCloud 相关的组件运行在 kubernetes 之上，环境以及相关的软�
 - 最低配置要求: 4核4G
 - 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
 - docker: ce-18.09.1
-- kubernetes: v1.14.3
+- kubernetes: v1.15.8
 
 需要能访问如下网址，如果企业有外网隔离规则，则需要打开相应白名单：
 
@@ -140,7 +140,7 @@ $ uname -r
 
 ### 安装配置 kubelet
 
-从 aliyun 的 yum 源安装 kubernetes 1.14.3，并设置 kubelet 开机自启动
+从 aliyun 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
 
 ```bash
 $ cat <<EOF >/etc/yum.repos.d/kubernetes.repo
@@ -153,7 +153,7 @@ repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 $ yum install -y bridge-utils ipvsadm conntrack-tools \
-    jq kubelet-1.14.3-0 kubectl-1.14.3-0 kubeadm-1.14.3-0
+    jq kubelet-1.15.8-0 kubectl-1.15.8-0 kubeadm-1.15.8-0
 $ echo 'source <(kubectl completion bash)' >> ~/.bashrc && source ~/.bashrc
 $ source /etc/profile
 $ systemctl enable kubelet
@@ -223,7 +223,7 @@ $ echo 'export PATH=$PATH:/opt/yunion/bin' >> ~/.bashrc && source ~/.bashrc
 
 ### 部署 kubernetes 集群
 
-接下来会现在当前节点启动 v1.14.3 的 kubernetes 服务，然后部署 OneCloud 控制节点相关的服务到 kubernetes 集群。
+接下来会现在当前节点启动 v1.15.8 的 kubernetes 服务，然后部署 OneCloud 控制节点相关的服务到 kubernetes 集群。
 
 拉取必要的 docker 镜像
 
@@ -374,10 +374,10 @@ $ ocadm reset --force
 ```bash
 # 用 kubectl get nodes 拿到当前的节点名称
 $ kubectl get nodes
-NAME                  STATUS   ROLES    AGE    VERSION
-controller01   Ready    master   116d   v1.14.3
-controller02   Ready    master   40d    v1.14.3
-node01         Ready    <none>   25d    v1.14.3
+NAME           STATUS   ROLES    AGE 
+controller01   Ready    master   116d
+controller02   Ready    master   40d 
+node01         Ready    <none>   25d 
 
 # 假设我要把 controller01 和 controller02 作为计算节点
 $ ocadm node enable-host-agent \
