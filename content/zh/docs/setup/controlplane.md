@@ -10,8 +10,8 @@ description: >
 
 OneCloud 相关的组件运行在 kubernetes 之上，环境以及相关的软件依赖如下:
 
-- 操作系统: Centos 7.x
-- 最低配置要求: 4核4G
+- 操作系统: Centos 7.6
+- 最低配置要求: CPU 4核, 内存 8G, 存储 100G
 - 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
 - docker: ce-18.09.1
 - kubernetes: v1.15.8
@@ -122,7 +122,7 @@ $ systemctl enable --now docker
 
 ```bash
 # 添加 yunion onecloud rpm 源
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.0/yunion.repo
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.1/yunion.repo
 # 安装内核
 $ yum install -y \
   kernel-3.10.0-1062.4.3.el7.yn20191203 \
@@ -247,8 +247,7 @@ $ #EXTRA_OPT=' --control-plane-endpoint 10.168.222.18:6443'
 
 # 开始部署 kubernetes 以及 onecloud 必要的控制服务，稍等 3 分钟左右，kubernetes 集群会部署完成
 $ ocadm init --mysql-host $MYSQL_HOST \
-    --mysql-user root --mysql-password $MYSQL_PASSWD \
-    --onecloud-version v3.0.0-20200113.0 $EXTRA_OPT
+    --mysql-user root --mysql-password $MYSQL_PASSWD $EXTRA_OPT
 
 ...
 Your Kubernetes and Onecloud control-plane has initialized successfully!

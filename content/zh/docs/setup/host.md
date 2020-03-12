@@ -11,7 +11,7 @@ description: >
 |:-----------:|:------------------------:|:--------:|:--------:|
 |     host    |   管理 kvm 虚拟机和存储  |    -   |  docker |
 | host-deployer    |   虚拟机部署服务  |    -   |  docker |
-|   sdnagent  |  管理虚拟机网络和安全组  |    rpm   |  systemd |
+|   sdnagent  |  管理虚拟机网络和安全组  |    -   |  docker |
 | openvswitch | 虚拟机网络端口和流表配置 |    rpm   |  systemd |
 |     qemu    |        运行虚拟机        |    rpm   |  process |
 |    kernel   |    onecloud 提供的内核   |    rpm   |     -    |
@@ -37,7 +37,7 @@ description: >
 $ cat <<EOF >/etc/yum.repos.d/yunion.repo
 [yunion]
 name=Packages for Yunion Multi-Cloud Platform
-baseurl=https://iso.yunion.cn/yumrepo-3.0
+baseurl=https://iso.yunion.cn/yumrepo-3.1
 sslverify=0
 failovermethod=priority
 enabled=1
@@ -55,14 +55,14 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 $ yum install -y \
   epel-release libaio jq libusb lvm2 nc ntp fetchclient fuse fuse-devel fuse-libs \
   oniguruma pciutils spice spice-protocol sysstat tcpdump telegraf usbredir \
-  yunion-qemu-2.12.1 yunion-sdnagent yunion-executor-server \
+  yunion-qemu-2.12.1 yunion-executor-server \
   kernel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-devel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-headers-3.10.0-1062.4.3.el7.yn20191203 \
   kmod-openvswitch-2.9.6-1.el7 \
   openvswitch-2.9.6-1.el7 net-tools
 
-$ systemctl enable --now yunion-host-sdnagent yunion-executor
+$ systemctl enable --now yunion-executor
 
 # 安装完成后需要重启进入我们的内核
 $ reboot
