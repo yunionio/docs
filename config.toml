@@ -52,7 +52,7 @@ anchor = "smart"
 [[menu.main]]
     name = "快速开始"
     weight = -100
-    url = "docs/setup/controlplane/"
+    url = "docs/quickstart/"
 
 [[menu.main]]
     name = "Github"
