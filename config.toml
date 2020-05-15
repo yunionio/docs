@@ -1,5 +1,5 @@
-baseURL = "https://docs.yunion.io/"
-title = "OneCloud"
+baseURL = "/"
+title = "OneCloud Documentation"
 
 enableRobotsTXT = true
 
@@ -68,6 +68,7 @@ id = "UA-00000000-0"
 
 [languages]
 [languages.zh]
+title = "OneCloud Documentation"
 version_menu = "版本"
 description = "Documentation for onecloud"
 languageName ="Chinese"
