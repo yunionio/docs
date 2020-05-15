@@ -1,5 +1,5 @@
 baseURL = "/"
-title = "Yunion Onecloud Documentation"
+title = "Onecloud Documentation"
 
 enableRobotsTXT = true
 
@@ -56,7 +56,7 @@ id = "UA-00000000-0"
 
 [languages]
 [languages.zh]
-title = "Yunion Onecloud Documentation"
+title = "Onecloud Documentation"
 description = "Documentation for onecloud"
 languageName ="Chinese"
 contentDir = "content/zh"
