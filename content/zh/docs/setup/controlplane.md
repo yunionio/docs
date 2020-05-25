@@ -13,7 +13,7 @@ OneCloud 相关的组件运行在 kubernetes 之上，环境以及相关的软�
 - 操作系统: Centos 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 100G
 - 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
-- docker: ce-18.09.1
+- docker: ce-19.03.9
 - kubernetes: v1.15.8
 
 需要能访问如下网址，如果企业有外网隔离规则，则需要打开相应白名单：
@@ -78,7 +78,7 @@ $ systemctl restart mariadb
 ```bash
 $ yum install -y yum-utils bash-completion
 $ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-$ yum install -y docker-ce-18.09.1 docker-ce-cli-18.09.1 containerd.io
+$ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
 ```
 
 配置 docker
