@@ -11,6 +11,24 @@ Golang 版本要求 1.12 以上
 
 安装go环境参考: [Install doc](https://golang.org/doc/install)
 
+## 安装 ceph 依赖
+
+On rpm based systems (dnf, yum, etc):
+```sh
+sudo rpm --import https://download.ceph.com/keys/release.asc
+sudo yum install -y https://download.ceph.com/rpm-luminous/el7/noarch/ceph-release-1-1.el7.noarch.rpm
+sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo yum install -y libcephfs-devel librbd-devel librados-devel
+```
+
+On debian systems (apt):
+```sh
+wget -q -O- 'https://download.ceph.com/keys/release.asc' | sudo apt-key add -
+echo deb https://download.ceph.com/debian-luminous/ $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list
+apt-get update && apt-get install -y libcephfs-dev librbd-dev librados-dev
+```
+
+
 ## 编译 onecloud 组件
 
 ### Fork 仓库
