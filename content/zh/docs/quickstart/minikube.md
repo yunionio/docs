@@ -45,12 +45,12 @@ kubectl apply -f local-path-storage.yaml
 ### 部署onecloud k8s operator
 onecloud k8s operator地址： https://github.com/yunionio/onecloud-operator
 ```bash
-wget https://github.com/yunionio/onecloud-operator/blob/master/manifests/onecloud-operator.yaml -O onecloud-operator.yaml
+wget https://raw.githubusercontent.com/yunionio/onecloud-operator/master/manifests/onecloud-operator.yaml -O onecloud-operator.yaml
 kubectl apply -f onecloud-operator.yaml
 ```
 ### 部署onecloud 集群
 ```bash
-wget https://github.com/yunionio/onecloud-operator/blob/master/manifests/example-onecloud-cluster.yaml -O onecloud-cluster.yaml
+wget https://raw.githubusercontent.com/yunionio/onecloud-operator/master/manifests/example-onecloud-cluster.yaml -O onecloud-cluster.yaml
 vim onecloud-cluster.yaml
 ```
 - 修改onecloud-cluster.yaml mysql相关配额
@@ -60,10 +60,7 @@ vim onecloud-cluster.yaml
     username: "$MYSQL_USERNAME"
     password: "$MYSQL_PASSWD"
 ```
-- 增加imageRepository相关配置
-```
-  imageRepository: "registry.cn-beijing.aliyuncs.com/yunionio"
-```
+
 - 其他集群配置请参考： [OnecloudClusterSpec](https://github.com/yunionio/onecloud-operator/blob/4c871ae1d3d6774a827834464c480287b7b8b433/pkg/apis/onecloud/v1alpha1/types.go#L97)::
 - 启动onecloud集群
 ```bash
@@ -80,7 +77,7 @@ $ climc user-create demo --password demo123A --system-account --enabled
 
 登陆webUI
 ```bash
-kubectl -n onecloud port-forward `kubectl -n onecloud get pods  | grep "example-onecloud-cluster-web"| cut -f1 -d" "` 9999:443
+kubectl -n onecloud port-forward `kubectl -n onecloud get pods  | grep "example-onecloud-cluster-web"| cut -f1 -d" "` 9999:443 --address=0.0.0.0
 ```
 打开浏览器：https://localhost:9999 
 
