@@ -5,6 +5,7 @@
 ## 安装 hugo
 
 文档使用 [hugo](https://github.com/gohugoio/hugo) 生成，安装 hugo 参考链接: https://gohugo.io/getting-started/installing/
+> hugo使用v0.55.5版，git使用最新版
 
 ## 查看文档
 
