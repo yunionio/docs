@@ -64,6 +64,87 @@ $ make cmd/region cmd/host
 $ ls _output/bin
 region host
 ```
+## 本地开发调试
+
+3.0 版本后我们的服务都已经容器化运行在 k8s 集群中，快速开发调试并不方便。
+通过Telepresence 提供远程k8s上下文，可以在本地开发调试。
+
+### 安装
+
+确保有一个已部署的onecloud k8s集群，参考[安装部署](/docs/setup/)。
+这里介绍Centos7的本地环境安装，其他发行版可参考官方文档：[Installing Telepresence](https://www.telepresence.io/reference/install)。
+
+> 不建议k8s集群的部署和开发在同一个环境，使用Telepresence会有端口冲突。
+
+```bash
+# 安装依赖
+$ yum install -y python3 sshfs conntrack iptables torsocks sshuttle sudo yum-utils
+# 安装 kubectl 用于连接 k8s 集群
+$ cat <<EOF >/etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
+repo_gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+$ yum install -y kubectl-1.15.8-0
+# 需要自行配置kubctl config
+# 测试kubctl可以访问之前部署的k8s集群
+$ kubctl version
+# 源码安装 telepresence 到 /usr/local/bin/telepresence
+$ git clone https://github.com/telepresenceio/telepresence
+$ cd telepresence
+$ sudo env PREFIX=/usr/local ./install.sh
+```
+
+### 使用
+利用 telepresence 本地连通远端 k8s 的特性，我们就可以做到在本地编译运行 region，keystone 等服务，同时又能访问远端 k8s 其它服务的环境。
+
+比如以下是本地编译运行 region 服务的流程：
+```bash
+# 切换到 onecloud 代码目录
+$ cd $GOPATH/src/yunion.io/x/onecloud
+ 
+# 编译 region 服务
+$ make cmd/region
+ 
+# 使用 telepresence 替换 k8s 里面的 default-region deployment
+# 该命令在 k8s 集群中启动一个 deployment 替换掉原来的 default-regoin
+# 然后把流量的访问导向本地
+# 如果想要使用特定的 shell，比如 zsh，可以在后面加上"--run /bin/zsh"
+$ telepresence --swap-deployment default-region --namespace onecloud
+```
+到这里已经进入到 telepresence 隔离的 namespace 里面了，
+$TELEPRESENCE_ROOT 这个目录 是通过 sshfs 挂载的远端 k8s pod 的文件系统。
+接下来我们就可以在这个 namespace 里面运行 region 服务了：
+```bash
+# 设置 max_user_namespaces
+$ cat /proc/sys/user/max_user_namespaces
+0
+# 如果 max_user_namespaces 为 0，需要设置下 user_namespaces
+$ echo 640 > /proc/sys/user/max_user_namespaces
+ 
+# 启动一个新的 namespace , 但不共享 mount namespace，这样接下来的 mount bind 操作就不会影响到宿主机
+$ unshare --map-root-user --mount
+# bind k8s /var/run/secrets
+$ mount --bind $TELEPRESENCE_ROOT/var/run /var/run
+$ ls /var/run/
+secrets
+# bind onecloud config
+$ mkdir /etc/yunion
+$ mount --bind $TELEPRESENCE_ROOT/etc/yunion /etc/yunion
+$ ls /etc/yunion/
+pki  region.conf
+ 
+# 启动 region 服务
+$ ./_output/bin/region --config /etc/yunion/region.conf
+# 这个时候如果我们在外部调用 climc
+$ climc server-list
+# 就会发现相关的请求已经被转发到本地开发机启动 region 服务了
+```
+更多用法，以及 telepresence 的原理请参考[官方文档](https://www.telepresence.io/discussion/overview)。
 
 ## 开发流程
 
