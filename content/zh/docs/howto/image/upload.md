@@ -17,24 +17,24 @@ weight: 1
 
 ### 制作镜像
 
-参考: [制作镜像](/howto/image/create/)
+参考: [制作镜像](../create/)
 
 ## 上传
 
-下载或者制作完镜像后，使用 `climc image-upload` 上传到云平台的 glance 服务，下面以下载 ubuntu 提供的 xenial-server-cloudimg 举例:
+下载或者制作完镜像后，使用 `climc image-upload` 上传到云平台的 glance 服务，下面以下载 CentOS 提供的 CentOS-7-x86_64-GenericCloud-1711 举例:
 
 ```bash
-# 下载 ubuntu xenial-server-cloudimg-amd64-disk1.img 
-$ wget https://cloud-images.ubuntu.com/xenial/20190716/xenial-server-cloudimg-amd64-disk1.img
+# 下载 CentOS-7-x86_64-GenericCloud-1711.qcow2 
+$ wget wget http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1711.qcow2
 
-# 上传镜像到云平台并名为 ubuntu-xenial-server.qcow2
-$ climc image-upload --format qcow2 --os-type Linux --os-arch x86_64 --public ubuntu-xenial-server.qcow2 ./xenial-server-cloudimg-amd64-disk1.img
+# 上传镜像到云平台并名为 CentOS-7-x86_64-GenericCloud-1711.qcow2
+$ climc image-upload --format qcow2 --os-type Linux --os-arch x86_64 --standard CentOS-7-x86_64-GenericCloud-1711.qcow2 ./CentOS-7-x86_64-GenericCloud-1711.qcow2
 ```
 
-上传时间长短取决于网络环境和镜像大小，上传完成后需要查询镜像的状态，当状态变为 'active' 时，就可以拿来使用了。( 更多的关于镜像的查询参考: [镜像查询](/howto/image/query/) )
+上传时间长短取决于网络环境和镜像大小，上传完成后需要查询镜像的状态，当状态变为 'active' 时，就可以拿来使用了。( 更多的关于镜像的查询参考: [镜像查询](../query/) )
 
 ```bash
-$ climc image-show ubuntu-xenial-server.qcow2 | grep status
+$ climc image-show CentOS-7-x86_64-GenericCloud-1711.qcow2 | grep status
 | status          | active |
 ```
 
