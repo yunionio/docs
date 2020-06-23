@@ -11,7 +11,7 @@ description: >
 OneCloud 相关的组件运行在 kubernetes 之上，环境以及相关的软件依赖如下:
 
 - 操作系统: Centos 7.6
-- 最低配置要求: CPU 4核, 内存 8G, 存储 100G
+- 最低配置要求: CPU 4核, 内存 8G, 存储 150G
 - 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
 - docker: ce-19.03.9
 - kubernetes: v1.15.8
@@ -19,7 +19,6 @@ OneCloud 相关的组件运行在 kubernetes 之上，环境以及相关的软�
 需要能访问如下网址，如果企业有外网隔离规则，则需要打开相应白名单：
 
 - CentOS YUM网络安装源
-- http://mirrors.aliyun.com
 - https://iso.yunion.cn/
 - https://registry.cn-beijing.aliyuncs.com
 - https://meta.yunion.cn
@@ -77,7 +76,8 @@ $ systemctl restart mariadb
 
 ```bash
 $ yum install -y yum-utils bash-completion
-$ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+# 添加 yunion onecloud rpm 源
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.1/yunion.repo
 $ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
 ```
 
@@ -121,8 +121,6 @@ $ systemctl enable --now docker
 这里需要安装我们编译的内核，这个内核是基于上游 Centos 3.10.0-1062 编译的，默认添加了 nbd 模块，nbd 模块用于镜像相关的操作。
 
 ```bash
-# 添加 yunion onecloud rpm 源
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.1/yunion.repo
 # 安装内核
 $ yum install -y \
   kernel-3.10.0-1062.4.3.el7.yn20191203 \
@@ -140,18 +138,9 @@ $ uname -r
 
 ### 安装配置 kubelet
 
-从 aliyun 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
+从 yunion onecloud rpm 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
 
 ```bash
-$ cat <<EOF >/etc/yum.repos.d/kubernetes.repo
-[kubernetes]
-name=Kubernetes
-baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
-enabled=1
-gpgcheck=0
-repo_gpgcheck=0
-gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
-EOF
 $ yum install -y bridge-utils ipvsadm conntrack-tools \
     jq kubelet-1.15.8-0 kubectl-1.15.8-0 kubeadm-1.15.8-0
 $ echo 'source <(kubectl completion bash)' >> ~/.bashrc && source ~/.bashrc
@@ -414,36 +403,4 @@ v3.0.0-20200112.0
 
 # 升级到 v3.0.0-20200113.0
 $ ocadm cluster update --version v3.0.0-20200113.0 --wait
-```
-
-### 额外插件
-
-onecloud 系统有一些非核心的额外组件可以通过 `ocadm component` 命令来启用或者禁用，对应组件列表说明如下:
-
-| 名称          | 功能               |
-|---------------|--------------------|
-| cloudmon      | 多云监控组件       |
-| cloudwatcher  | 优化建议组件       |
-| itsm          | 流程工单组件       |
-| meteralert    | 计费组件           |
-
-这些组件并不是必需的，如果有需要，可以使用下面命令来管理:
-
-
-{{% alert title="注意" color="warning" %}}
-这些额外插件大部分是 java 编写，每个组件以 pod 的方式启动，会占用 1g 以上的内存，如果要启用，建议先参考 [添加节点](/docs/setup/components/) 添加更多的 kubernetes node 节点然后再启用这些组件。
-{{% /alert %}}
-
-```bash
-# 启用所有组件，会占用更多 cpu/memory 的资源
-$ ocadm component enable all
-
-# 禁用所有组件
-$ ocadm component disable all
-
-# 启用某个组件，以 cloudmon 为例
-$ ocadm component enable cloudmon
-
-# 禁用某个组件，以 cloudwatcher 为例
-$ ocadm component disable cloudwatcher
 ```
