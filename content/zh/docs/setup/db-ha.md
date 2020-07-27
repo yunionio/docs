@@ -67,6 +67,8 @@ symbolic-links=0
 skip_name_resolve
 # auto delete binlog older than 30 days
 expire_logs_days=30
+innodb_file_per_table=ON
+max_connections = 300
  
 server-id = 1
 auto_increment_offset = 1
@@ -115,6 +117,8 @@ symbolic-links=0
 skip_name_resolve
 # auto delete binlog older than 30 days
 expire_logs_days=30
+innodb_file_per_table=ON
+max_connections = 300
  
 server-id = 2
 auto_increment_offset = 2
