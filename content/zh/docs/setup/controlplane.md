@@ -208,6 +208,8 @@ $ chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/i
 $ yum install -y yunion-climc yunion-ocadm
 # climc 在 /opt/yunion/bin 目录下，根据自己的需要加到 bash 或者 zsh 配置文件里面
 $ echo 'export PATH=$PATH:/opt/yunion/bin' >> ~/.bashrc && source ~/.bashrc
+# 安装必要的服务，并启动和设置为开机自启
+$ yum install -y yunion-executor-server && systemctl enable --now yunion-executor
 ```
 
 ### 部署 kubernetes 集群
