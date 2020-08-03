@@ -5,7 +5,7 @@
 GREEN='\033[32;1m'
 RESET='\033[0m'
 
-HOST=https://docs.yunion.io
+HOST=https://opensource.yunion.cn
 
 # TODO - Maybe get list of released versions from Github API and filter
 # those which have docs.
@@ -14,9 +14,8 @@ HOST=https://docs.yunion.io
 # append '(latest)' to the version string, and build script can place the
 # artifact in an appropriate location
 VERSION_ARRAY=(
-'master'
-'v2.12'
-'v2.11'
+'v3.3'
+'v3.2'
 )
 
 join_versions() {
