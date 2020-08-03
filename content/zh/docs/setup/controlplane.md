@@ -77,7 +77,7 @@ $ systemctl restart mariadb
 ```bash
 $ yum install -y yum-utils bash-completion
 # 添加 yunion onecloud rpm 源
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.1/yunion.repo
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.2/yunion.repo
 $ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
 ```
 
