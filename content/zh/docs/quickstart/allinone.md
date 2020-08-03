@@ -58,7 +58,7 @@ $ ssh root@10.168.26.216 "hostname"
 $ pip install ansible
 
 # 下载 ocboot 工具到本地
-$ git clone https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.3 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
 ### 编写部署配置
