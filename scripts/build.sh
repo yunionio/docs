@@ -60,7 +60,7 @@ branch_updated() {
     LOCAL=$(git rev-parse "@")
 
     if [ "$LOCAL" != "$UPSTREAM" ]; then
-        git merge -q origin/"$branch"
+        git merge -q upstream/"$branch"
         return 0
     else
         return 1
@@ -87,7 +87,7 @@ check_and_update() {
     fi
 
     if branch_updated "$branch"; then
-        git merge -q origin/"$branch"
+        git merge -q upstream/"$branch"
         rebuild "$branch" "$version"
     fi
 
