@@ -52,15 +52,15 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 安装 rpm 包
 
 ```bash
-$ yum install -y \
+$ yum --disablerepo='*' --enablerepo='yunion*' install -y \
   epel-release libaio jq libusb lvm2 nc ntp fetchclient fuse fuse-devel fuse-libs \
-  oniguruma pciutils spice spice-protocol sysstat tcpdump telegraf usbredir \
+  oniguruma pciutils spice spice-protocol sysstat tcpdump usbredir \
   yunion-qemu-2.12.1 yunion-executor-server \
   kernel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-devel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-headers-3.10.0-1062.4.3.el7.yn20191203 \
-  kmod-openvswitch-2.9.6-1.el7 \
-  openvswitch-2.9.6-1.el7 net-tools
+  kmod-openvswitch \
+  openvswitch net-tools
 
 $ systemctl enable --now yunion-executor
 
