@@ -380,20 +380,6 @@ default-host-7b5cr  2/2     Running    218        18h     192.168.222.4 controll
 default-host-ctx5s  2/2     Running    218        18h     192.168.222.5 controller02
 ```
 
-### 切换企业版前端
-
-默认情况下使用的 web 前端是开源版的，我们也提供企业版的 web 前端，可以使用 `ocadm cluster update` 命令来切换前端:
-
-```bash
-# 切换到企业版
-$ ocadm cluster update --use-ee --wait
-
-# 切换到开源版的 web 前端
-$ ocadm cluster update --use-ce --wait
-```
-
-`ocadm cluster update --use-ee/--use-ce` 命令会更新替换当前的 default-web deployment，执行该命令后等到新的 pod 启动后，重新刷新前端页面，即可进入(开源版/企业版)前端。
-
 ### 升级/回滚组件版本
 
 `ocadm init` 的时候使用 `--onecloud-version` 选项设置了组件的版本，可以使用 `ocadm cluster update` 命令升级组件到指定的版本，保持更新。
