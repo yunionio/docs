@@ -36,6 +36,7 @@ ocadm 和 climc 这些命令行工具是以 yum rpm 包的方式安装，所以�
 $ sed -i 's|baseurl.*|baseurl=https://iso.yunion.cn/3.2|g' /etc/yum.repos.d/yunion.repo
 
 # 更新 yunion-ocadm, yunion-climc
+$ yum clean all
 $ yum install -y yunion-ocadm yunion-climc
 
 # 查看 ocadm 版本
