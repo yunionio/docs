@@ -16,7 +16,7 @@ OneCloud 相关的组件运行在MiniKube之上，环境以及相关的软件依
 
 - 操作系统: Centos 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 100G
-- 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
+- 数据库: mariadb Ver 15.1 Distrib 5.5.56-MariaDB
 
 安装MySQL开启远程访问
 ```
@@ -63,12 +63,13 @@ vim onecloud-cluster.yaml
 
 - 其他集群配置请参考： [OnecloudClusterSpec](https://github.com/yunionio/onecloud-operator/blob/4c871ae1d3d6774a827834464c480287b7b8b433/pkg/apis/onecloud/v1alpha1/types.go#L97)::
 - 启动onecloud集群
-```bash
+```
 kubectl apply -f onecloud-cluster.yaml
 ```
 打开K8s Dashboard确认相关服务正常启动完成
 
-### 创建账号登陆webUI
+### 创建账号登录WebUI
+
 创建账号
 ```bash
 kubectl exec -n onecloud `kubectl -n onecloud get pods  | grep "example-onecloud-cluster-climc"| cut -f1 -d" "` -c climc  -i -t -- /bin/bash -il
@@ -81,7 +82,7 @@ kubectl -n onecloud port-forward `kubectl -n onecloud get pods  | grep "example-
 ```
 打开浏览器：https://localhost:9999 
 
-### 带解决的问题
+### 待解决的问题
 4类Pod启动失败，问题还在分析中，但不影响体验onecloud
 
 - example-onecloud-cluster-notify
