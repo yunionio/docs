@@ -14,15 +14,12 @@ description: >
 
 ## 环境准备
 
-OneCloud 相关的组件运行在 kubernetes 之上，环境以及相关的软件依赖如下:
+OneCloud 相关的组件运行在 kubernetes 之上。
+
+### 服务器配置要求
 
 - 操作系统: Centos 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 100G
-- 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
-- docker: ce-18.09.1
-- kubernetes: v1.15.8
-- ssh: 开启 ssh 免密登录
-- 本地环境安装部署 ansbile
 
 以下为待部署机器的环境:
 
@@ -34,7 +31,20 @@ OneCloud 相关的组件运行在 kubernetes 之上，环境以及相关的软�
 > 10.168.26.216 是本次测试环境 ip，请根据自己的环境做相应修改。
 {{% /alert %}}
 
-### 配置 ssh 免密登录
+### OneCloud相关软件依赖
+
+- 数据库: mariadb Ver 15.1 Distrib 5.5.56-MariaDB
+- docker: ce-19.03.9
+- kubernetes: v1.15.8
+
+### 本地环境配置要求
+
+本地环境即用户进行实际操作部署的环境。本次测试的本地环境为MAC操作系统的笔记本，也可在待部署机器上进行操作。
+
+- ssh: 开启 ssh 免密登录
+- 本地环境安装部署 ansbile，Windows操作系统不支持安装 ansible
+
+#### 配置 ssh 免密登录
 
 ```bash
 # 生成本机的 ssh 秘钥 (如果本地已有 ~/.ssh/id_rsa 则跳过此步骤)
@@ -49,7 +59,7 @@ $ ssh root@10.168.26.216 "hostname"
 
 ## 开始部署
 
-部署的工具是 https://github.com/yunionio/ocboot , 然后根据需要部署机器的配置， 利用 ansbile 远程登录到待部署的机器安装配置 onecloud 服务，以下是操作步骤:
+部署的工具是 https://github.com/yunionio/ocboot , 然后根据需要部署机器的配置， 利用 ansbile 远程登录到待部署的机器安装配置 onecloud 服务，以下操作都在本地环境上进行操作。操作步骤如下:
 
 ### 下载 ocboot
 
