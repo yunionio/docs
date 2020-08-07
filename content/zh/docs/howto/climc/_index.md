@@ -40,7 +40,7 @@ $ ls -alh /opt/yunion/bin/climc
 
 ### 源码编译安装
 
-首先需要搭建 go 的开发环境，然后 clone 代码，参考: [开发贡献](/contribute/)
+首先需要搭建 go 的开发环境，然后 clone 代码，参考: [开发贡献](../../contribute/contrib)
 
 
 ```bash

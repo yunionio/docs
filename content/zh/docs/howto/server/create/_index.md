@@ -11,7 +11,7 @@ date: 2019-07-19T15:22:33+08:00
 
 ### OneCloud 虚拟机
 
-OneCloud 提供自研的 kvm 虚拟机私有云管理平台，创建 kvm 虚拟机时需要有相应的宿主机，如果还没有添加 kvm 宿主机，请参考 [安装部署/计算节点](/setup/host/) 注册对应的宿主机到云平台。
+OneCloud 提供自研的 kvm 虚拟机私有云管理平台，创建 kvm 虚拟机时需要有相应的宿主机，如果还没有添加 kvm 宿主机，请参考 [安装部署/计算节点](../../../setup/host/) 注册对应的宿主机到云平台。
 
 ### VMware ESXI 虚拟机
 
@@ -58,7 +58,7 @@ TODO
 **注意以下几点:**
 
 1. 名称、内存或者套餐类型在创建主机时必须使用;
-2. 系统盘的镜像通过 `image-list` 或者 `cached-image-list`，公有云的镜像列表通过 `cached-image-list` 接口查询，参考: [查询镜像](/howto/image/query/);
+2. 系统盘的镜像通过 `image-list` 或者 `cached-image-list`，公有云的镜像列表通过 `cached-image-list` 接口查询，参考: [查询镜像](../howto/image/query/);
 
 下面以举例的方式创建机器：
 
