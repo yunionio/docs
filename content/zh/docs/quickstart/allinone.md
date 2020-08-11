@@ -47,11 +47,11 @@ OneCloud 相关的组件运行在 kubernetes 之上。
 #### 配置 ssh 免密登录
 
 ```bash
-# 生成本机的 ssh 秘钥 (如果本地已有 ~/.ssh/id_rsa 则跳过此步骤)
+# 生成本机的 ssh 秘钥 (如果本地已有 ~/.ssh/id_rsa.pub 则跳过此步骤)
 $ ssh-keygen
 
-# 将生成的 ~/.ssh/id_rsa 拷贝到待部署机器
-$ ssh-copy-id -i ~/.ssh/id_rsa root@10.168.26.216
+# 将生成的 ~/.ssh/id_rsa.pub 公钥拷贝到待部署机器
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.168.26.216
 
 # 尝试免密登录待部署机器，应该不需要输入登录密码即可拿到部署机器的 hostname
 $ ssh root@10.168.26.216 "hostname"
