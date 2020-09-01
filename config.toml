@@ -1,5 +1,5 @@
 baseURL = "/"
-title = "OneCloud Documentation"
+title = "Documentation"
 
 enableRobotsTXT = true
 
@@ -73,9 +73,9 @@ id = "UA-00000000-0"
 
 [languages]
 [languages.zh]
-title = "OneCloud Documentation"
+title = "云联壹云"
 version_menu = "版本"
-description = "Documentation for onecloud"
+description = "云联壹云文档"
 languageName ="Chinese"
 contentDir = "content/zh"
 time_format_default = "02.01.2006"
