@@ -3,12 +3,12 @@ title: "部署集群"
 date: 2019-04-13T13:01:57+08:00
 weight: 4
 description: >
-  部署 kubernetes 和 onecloud 服务，创建第一个控制节点
+  部署 kubernetes 和 云联壹云 服务，创建第一个控制节点
 ---
 
 ## 环境准备
 
-OneCloud 相关的组件运行在 kubernetes 之上，环境以及相关的软件依赖如下:
+云联壹云 相关的组件运行在 kubernetes 之上，环境以及相关的软件依赖如下:
 
 - 操作系统: Centos 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 150G
@@ -76,8 +76,8 @@ $ systemctl restart mariadb
 
 ```bash
 $ yum install -y yum-utils bash-completion
-# 添加 yunion onecloud rpm 源
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.3/yunion.repo
+# 添加 yunion 云联壹云 rpm 源
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.4/yunion.repo
 $ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
 ```
 
@@ -116,7 +116,7 @@ EOF
 $ systemctl enable --now docker
 ```
 
-### 安装 onecloud 依赖内核
+### 安装 云联壹云 依赖内核
 
 这里需要安装我们编译的内核，这个内核是基于上游 Centos 3.10.0-1062 编译的，默认添加了 nbd 模块，nbd 模块用于镜像相关的操作。
 
@@ -138,7 +138,7 @@ $ uname -r
 
 ### 安装配置 kubelet
 
-从 yunion onecloud rpm 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
+从 云联壹云 rpm 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
 
 ```bash
 $ yum install -y bridge-utils ipvsadm conntrack-tools \
@@ -166,7 +166,8 @@ $ systemctl disable firewalld
 # 禁用 NetworkManager
 $ systemctl stop NetworkManager
 $ systemctl disable NetworkManager
-
+$ ps -ef|grep dhcp | awk '{print $2}' |xargs kill -9
+ 
 # 做一些 sysctl 的配置, kubernetes 要求
 $ modprobe br_netfilter
 
@@ -214,7 +215,7 @@ $ yum install -y yunion-executor-server && systemctl enable --now yunion-executo
 
 ### 部署 kubernetes 集群
 
-接下来会现在当前节点启动 v1.15.8 的 kubernetes 服务，然后部署 OneCloud 控制节点相关的服务到 kubernetes 集群。
+接下来会现在当前节点启动 v1.15.8 的 kubernetes 服务，然后部署 云联壹云 控制节点相关的服务到 kubernetes 集群。
 
 拉取必要的 docker 镜像
 
@@ -236,12 +237,12 @@ $ MYSQL_HOST=$(ip route get 1 | awk '{print $NF;exit}')
 $ EXTRA_OPT=""
 $ #EXTRA_OPT=' --control-plane-endpoint 10.168.222.18:6443'
 
-# 开始部署 kubernetes 以及 onecloud 必要的控制服务，稍等 3 分钟左右，kubernetes 集群会部署完成
+# 开始部署 kubernetes 以及 云联壹云 必要的控制服务，稍等 3 分钟左右，kubernetes 集群会部署完成
 $ ocadm init --mysql-host $MYSQL_HOST \
     --mysql-user root --mysql-password $MYSQL_PASSWD $EXTRA_OPT
 
 ...
-Your Kubernetes and Onecloud control-plane has initialized successfully!
+Your Kubernetes and control-plane has initialized successfully!
 ...
 ```
 
@@ -271,9 +272,9 @@ local-path-storage   local-path-provisioner-5978cff7b7-7h8df    1/1     Running 
 onecloud             onecloud-operator-6d4bddb8c4-tkjkh         1/1     Running   0          3h37m
 ```
 
-### 创建 onecloud 集群
+### 创建 云联壹云 集群
 
-当 kubernetes 集群部署完成后，就可以通过 `ocadm cluster create` 创建 onecloud 集群，该集群由 onecloud namespace 里面 **onecloud-operator** deployment 自动部署和维护。
+当 kubernetes 集群部署完成后，就可以通过 `ocadm cluster create` 创建 云联壹云 集群，该集群由 onecloud namespace 里面 **onecloud-operator** deployment 自动部署和维护。
 
 ```bash
 # 创建集群
@@ -288,7 +289,7 @@ $ ocadm cluster create --wait
 当控制节点部署完成后，需要创建一个用于前端登录的用户。云平台的管理员认证信息由 `ocadm cluster rcadmin` 命令可以得到 , 这些认证信息在使用 climc 控制云平台资源时会用到。
 
 ```bash
-# 获取连接 onecloud 集群的环境变量
+# 获取连接 云联壹云 集群的环境变量
 $ ocadm cluster rcadmin
 export OS_AUTH_URL=https://10.168.222.218:30357/v3
 export OS_USERNAME=sysadmin
@@ -347,7 +348,7 @@ $ ocadm reset --force
 
 ## 后续
 
-如果没有意外，现在应该已经部署好了 onecloud on kubernetes 的集群，以下是一些后续的环节说明，可以根据自己的需要来进行额外的操作。
+如果没有意外，现在应该已经部署好了 云联壹云 on kubernetes 的集群，以下是一些后续的环节说明，可以根据自己的需要来进行额外的操作。
 
 ### 添加计算节点
 
@@ -357,9 +358,21 @@ $ ocadm reset --force
 
 默认情况下 `ocadm init` 创建的节点是控制节点，不会运行 onecloud 计算节点的服务。如果需要把控制节点也作为计算节点，需要执行以下步骤:
 
-1. 安装计算节点需要的依赖，参考 ["计算节点/安装依赖"](/docs/setup/host/#安装依赖)，这里主要是要安装我们的内核和运行虚拟机的 qemu 等软件。
+- 安装计算节点需要的依赖，参考 ["计算节点/安装依赖"](/docs/setup/host/#安装依赖)，这里主要是要安装我们的内核和运行虚拟机的 qemu 等软件。
 
-2. 在控制节点启用该节点作为计算节点，命令如下:
+```bash
+# 安装rpm包
+$ yum --disablerepo='*' --enablerepo='yunion*' install -y \
+  epel-release libaio jq libusb lvm2 nc ntp fetchclient fuse fuse-devel fuse-libs \
+  oniguruma pciutils spice spice-protocol sysstat tcpdump usbredir \
+  yunion-qemu-2.12.1 yunion-executor-server \
+  kmod-openvswitch \
+  openvswitch net-tools
+
+$ systemctl enable --now yunion-executor
+```
+
+- 在控制节点启用该节点作为计算节点，命令如下:
 
 ```bash
 # 用 kubectl get nodes 拿到当前的节点名称
@@ -385,7 +398,7 @@ default-host-ctx5s  2/2     Running    218        18h     192.168.222.5 controll
 `ocadm init` 的时候使用 `--onecloud-version` 选项设置了组件的版本，可以使用 `ocadm cluster update` 命令升级组件到指定的版本，保持更新。
 
 ```bash
-# 查看现在 onecloud cluster 的版本
+# 查看现在 云联壹云 cluster 的版本
 $ kubectl get oc -n onecloud default  -o jsonpath='{.spec.version}'
 v3.0.0-20200112.0
 
