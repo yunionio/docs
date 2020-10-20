@@ -22,7 +22,7 @@ keystone, region, glance 等后端服务，都是用的同一套后端服务框�
 
 - Task: 后台处理异步耗时任务的模块，会通过更新 Model 的状态来更新任务的执行结果。
 
-## onecloud 代码结构
+## 云联壹云 代码结构
 
 - [build](https://github.com/yunionio/onecloud/tree/master/build): 打包rpm脚本
 - [cmd](https://github.com/yunionio/onecloud/tree/master/cmd): 可执行binary入口程序
