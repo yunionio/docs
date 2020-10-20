@@ -2,7 +2,7 @@
 title: "添加计算节点"
 weight: 10
 description: >
-  如果要运行 onecloud 私有云虚拟机，需要添加对应的计算节点，本节介绍如何部署相应组件
+  如果要运行 云联壹云 私有云虚拟机，需要添加对应的计算节点，本节介绍如何部署相应组件
 ---
 
 如果需要构建内部私有云，就需要部署计算节点(宿主机)。计算节点主要负责虚拟机、网络和存储的管理，需要安装的组件如下:
@@ -14,7 +14,7 @@ description: >
 |   sdnagent  |  管理虚拟机网络和安全组  |    -   |  docker |
 | openvswitch | 虚拟机网络端口和流表配置 |    rpm   |  systemd |
 |     qemu    |        运行虚拟机        |    rpm   |  process |
-|    kernel   |    onecloud 提供的内核   |    rpm   |     -    |
+|    kernel   |    云联壹云 提供的内核   |    rpm   |     -    |
 
 ## 环境
 
@@ -37,7 +37,7 @@ description: >
 $ cat <<EOF >/etc/yum.repos.d/yunion.repo
 [yunion]
 name=Packages for Yunion Multi-Cloud Platform
-baseurl=https://iso.yunion.cn/yumrepo-3.3
+baseurl=https://iso.yunion.cn/yumrepo-3.4
 sslverify=0
 failovermethod=priority
 enabled=1
@@ -75,6 +75,111 @@ $ uname -r
 ### 安装 docker 和 kubelet
 
 参考 ["部署集群/环境准备"](/docs/setup/controlplane/#安装配置-docker) 的流程，安装好 docker 和 kubelet。
+
+#### 安装配置 docker
+
+安装 docker
+
+```bash
+$ yum install -y yum-utils bash-completion
+# 添加 yunion 云联壹云 rpm 源
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.4/yunion.repo
+$ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
+```
+
+配置 docker
+
+```bash
+$ mkdir -p /etc/docker
+$ cat <<EOF >/etc/docker/daemon.json
+{
+  "bridge": "none",
+  "iptables": false,
+  "exec-opts":
+    [
+      "native.cgroupdriver=systemd"
+    ],
+  "data-root": "/opt/docker",
+  "live-restore": true,
+  "log-driver": "json-file",
+  "log-opts":
+    {
+      "max-size": "100m"
+    },
+  "registry-mirrors":
+    [
+      "https://lje6zxpk.mirror.aliyuncs.com",
+      "https://lms7sxqp.mirror.aliyuncs.com",
+      "https://registry.docker-cn.com"
+    ]
+}
+EOF
+```
+
+启动 docker
+
+```bash
+$ systemctl enable --now docker
+```
+
+#### 安装配置 kubelet
+
+从 云联壹云 rpm 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
+
+```bash
+$ yum install -y bridge-utils ipvsadm conntrack-tools \
+    jq kubelet-1.15.8-0 kubectl-1.15.8-0 kubeadm-1.15.8-0
+$ echo 'source <(kubectl completion bash)' >> ~/.bashrc && source ~/.bashrc
+$ source /etc/profile
+$ systemctl enable kubelet
+```
+
+安装完 kubernetes 相关的二进制后，还需要对系统做一些配置并启用 ipvs 作为 kube-proxy 内部的 service 负载均衡
+
+```bash
+# 禁用 swap
+$ swapoff -a
+# 如果设置了自动挂载 swap，需要去 /etc/fstab 里面注释掉挂载 swap 那一行
+
+# 关闭 selinux
+$ setenforce  0
+$ sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+
+# 禁用 firewalld
+$ systemctl stop firewalld
+$ systemctl disable firewalld
+
+# 禁用 NetworkManager
+$ systemctl stop NetworkManager
+$ systemctl disable NetworkManager
+$ ps -ef|grep dhcp | awk '{print $2}' |xargs kill -9
+ 
+# 做一些 sysctl 的配置, kubernetes 要求
+$ modprobe br_netfilter
+
+$ cat <<EOF >> /etc/sysctl.conf
+net.bridge.bridge-nf-call-iptables=1
+net.bridge.bridge-nf-call-ip6tables=1
+net.ipv4.ip_forward=1
+EOF
+
+$ sysctl -p
+
+# 配置并开启 ipvs
+$ cat <<EOF > /etc/sysconfig/modules/ipvs.modules
+#!/bin/bash
+ipvs_modules="ip_vs ip_vs_lc ip_vs_wlc ip_vs_rr ip_vs_wrr ip_vs_lblc ip_vs_lblcr ip_vs_dh ip_vs_sh ip_vs_fo ip_vs_nq ip_vs_sed ip_vs_ftp nf_conntrack_ipv4"
+for kernel_module in \${ipvs_modules}; do
+    /sbin/modinfo -F filename \${kernel_module} > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        /sbin/modprobe \${kernel_module}
+    fi
+done
+EOF
+
+$ chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules && lsmod | grep ip_vs
+```
+
 
 ## 控制节点操作
 

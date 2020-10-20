@@ -3,16 +3,16 @@ title: "MiniKube 安装"
 linkTitle: "MiniKube 安装"
 weight: 1
 description: >
-  使用MiniKube,快速部署体验单机版本的OneCloud服务
+  使用MiniKube,快速部署体验单机版本的云联壹云服务
 ---
 
 ## 前提
 {{% alert title="注意" color="warning" %}}
-本章内容是方便快速体验OneCloud, 通过MiniKube快速搭建OneCloud服务，如果想了解部署的细节或者部署高可用环境请参考: [安装部署](/docs/setup/) 。
+本章内容是方便快速体验云联壹云, 通过MiniKube快速搭建云联壹云服务，如果想了解部署的细节或者部署高可用环境请参考: [安装部署](/docs/setup/) 。
 {{% /alert %}}
 
 ## 环境准备
-OneCloud 相关的组件运行在MiniKube之上，环境以及相关的软件依赖如下:
+云联壹云 相关的组件运行在MiniKube之上，环境以及相关的软件依赖如下:
 
 - 操作系统: Centos 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 100G
@@ -42,13 +42,13 @@ wget https://raw.githubusercontent.com/rancher/local-path-provisioner/master/dep
 kubectl apply -f local-path-storage.yaml 
 ```
 
-### 部署onecloud k8s operator
-onecloud k8s operator地址： https://github.com/yunionio/onecloud-operator
+### 部署云联壹云 k8s operator
+云联壹云 k8s operator地址： https://github.com/yunionio/onecloud-operator
 ```bash
 wget https://raw.githubusercontent.com/yunionio/onecloud-operator/master/manifests/onecloud-operator.yaml -O onecloud-operator.yaml
 kubectl apply -f onecloud-operator.yaml
 ```
-### 部署onecloud 集群
+### 部署云联壹云 集群
 ```bash
 wget https://raw.githubusercontent.com/yunionio/onecloud-operator/master/manifests/example-onecloud-cluster.yaml -O onecloud-cluster.yaml
 vim onecloud-cluster.yaml
@@ -62,7 +62,7 @@ vim onecloud-cluster.yaml
 ```
 
 - 其他集群配置请参考： [OnecloudClusterSpec](https://github.com/yunionio/onecloud-operator/blob/4c871ae1d3d6774a827834464c480287b7b8b433/pkg/apis/onecloud/v1alpha1/types.go#L97)::
-- 启动onecloud集群
+- 启动云联壹云集群
 ```
 kubectl apply -f onecloud-cluster.yaml
 ```
@@ -83,7 +83,7 @@ kubectl -n onecloud port-forward `kubectl -n onecloud get pods  | grep "example-
 打开浏览器：https://localhost:9999 
 
 ### 待解决的问题
-4类Pod启动失败，问题还在分析中，但不影响体验onecloud
+4类Pod启动失败，问题还在分析中，但不影响体验云联壹云
 
 - example-onecloud-cluster-notify
 - example-onecloud-cluster-host-deployer
