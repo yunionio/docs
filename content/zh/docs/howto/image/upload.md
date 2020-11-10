@@ -25,7 +25,7 @@ weight: 1
 
 ```bash
 # 下载 CentOS-7-x86_64-GenericCloud-1711.qcow2 
-$ wget wget http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1711.qcow2
+$ wget http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1711.qcow2
 
 # 上传镜像到云平台并名为 CentOS-7-x86_64-GenericCloud-1711.qcow2
 $ climc image-upload --format qcow2 --os-type Linux --os-arch x86_64 --standard CentOS-7-x86_64-GenericCloud-1711.qcow2 ./CentOS-7-x86_64-GenericCloud-1711.qcow2
