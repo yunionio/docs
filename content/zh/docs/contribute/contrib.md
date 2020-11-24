@@ -69,7 +69,20 @@ region host
 3.0 版本后我们的服务都已经容器化运行在 k8s 集群中，快速开发调试并不方便。
 通过Telepresence 提供远程k8s上下文，可以在本地开发调试。
 
-### 安装
+### 安装配置 kubectl
+
+需要在本地安装 [kubectl](https://kubernetes.io/zh/docs/tasks/tools/install-kubectl/)。
+
+需要在本地配置好集群信息，以通过 kubectl 访问；将云联壹云控制节点上的`$KUBECONFIG`文件拷贝到本地`~/.kube/config`;
+如果本地已经有此文件，参考 [配置多集群访问](https://kubernetes.io/zh/docs/tasks/access-application-cluster/configure-access-multiple-clusters/) 进行合并。
+
+### 安装配置 climc
+
+climc 的本地安装参考 [源码编译安装](../../howto/climc/#源码编译安装)
+
+climc 的本地配置参考 [非控制节点认证配置](../../howto/climc/#非控制节点认证配置)
+
+### 安装 telepresence
 
 确保有一个已部署的云联壹云 k8s集群，参考[安装部署](/docs/setup/)。
 这里介绍Centos7的本地环境安装，其他发行版可参考官方文档：[Installing Telepresence](https://www.telepresence.io/reference/install)。
@@ -102,7 +115,59 @@ $ sudo env PREFIX=/usr/local ./install.sh
 ### 使用
 利用 telepresence 本地连通远端 k8s 的特性，我们就可以做到在本地编译运行 region，keystone 等服务，同时又能访问远端 k8s 其它服务的环境。
 
-比如以下是本地编译运行 region 服务的流程：
+
+**macOS中或Linux中本地编译运行 region 服务**
+
+```bash
+# 切换到 云联壹云 代码目录
+$ cd $GOPATH/src/yunion.io/x/onecloud
+ 
+# 编译 region 服务
+$ make cmd/region
+ 
+# 使用 telepresence 替换 k8s 里面的 default-region deployment
+# 该命令在 k8s 集群中启动一个 deployment 替换掉原来的 default-regoin
+# 然后把流量的访问导向本地
+# 如果想要使用特定的 shell，比如 zsh，可以在后面加上"--run /bin/zsh"
+$ telepresence --swap-deployment default-region --namespace onecloud
+```
+到这里已经进入到 telepresence 隔离的 namespace 里面了，
+$TELEPRESENCE_ROOT 这个目录 是通过 sshfs 挂载的远端 k8s pod 的文件系统。
+接下来我们就可以在这个 namespace 里面运行 region 服务了：
+```bash
+$ sudo chmod 777 /etc
+ 
+# 将 $TELEPRESENCE_ROOT/etc/yunion 链接到本地的 /etc
+$ ln -s $TELEPRESENCE_ROOT/etc/yunion /etc
+ 
+# 启动 region 服务
+$ ./_output/bin/region --config /etc/yunion/region.conf
+```
+
+这个时候如果我们在外部调用 climc 就会发现相关的请求已经被转发到本地开发机启动 region 服务了。
+
+```bash
+$ climc network-list
+```
+
+调试完成后需要进行清理操作
+
+```bash
+# 退出 telepresence
+$ exit
+# 会看到类似下面的输出
+T: Your process exited with return code 127.
+T: Exit cleanup in progress
+T: Cleaning up Pod
+
+# 删除链接文件
+$ rm /etc/yunion
+```
+
+**Linux系统中本地编译运行 region 服务**
+
+这种方式相比上一种方式，更加干净；但是相对复杂
+
 ```bash
 # 切换到 云联壹云 代码目录
 $ cd $GOPATH/src/yunion.io/x/onecloud
@@ -141,9 +206,10 @@ pki  region.conf
 # 启动 region 服务
 $ ./_output/bin/region --config /etc/yunion/region.conf
 # 这个时候如果我们在外部调用 climc
-$ climc server-list
+$ climc network-list
 # 就会发现相关的请求已经被转发到本地开发机启动 region 服务了
 ```
+
 更多用法，以及 telepresence 的原理请参考[官方文档](https://www.telepresence.io/discussion/overview)。
 
 ## 开发流程
@@ -201,4 +267,20 @@ $ git am --continue
 ```
 
 去 upstream 的 [PR 页面](https://github.com/yunionio/onecloud/pulls), 就能看到自动生成的 cherry-pick PR，上面操作的PR的标题前缀就应该为：`Automated cherry pick of #8`，然后重复 PR review 流程合并到 release
+
+## FAQ
+
+### 1. 本地调试启动 region 服务，报以下错误
+![](../images/region_error.png)
+
+使用`climc service-config-edit region2`编辑 region 服务的配置，修改参数：
+>     fetch_etcd_service_info_and_use_etcd_lock: false 
+>     enable_host_health_check: false  
+
+
+### 2. 使用 telepresence 时，上次未正常退出，再次使用一直报错
+
+尝试手动清理: 
+1. 使用 kubectl 删除 onecloud namespace 下除 default-region-dns-xxxxx 外，所有以 default-region 开头的Pod；
+2. 使用`kubectl edit deployment default-region -n onecloud`，将 spec 下的 replicas 从0改为1.
 
