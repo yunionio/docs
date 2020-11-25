@@ -158,6 +158,20 @@ $ reboot
 
 ![多云管理](../images/cloudaccount.png)
 
-### 3. 其它问题？
+### 3. 修改节点的 hostname ，有些服务启动失败
+
+k8s 管理节点，依赖于 hostname，请改回去。
+
+### 4. 如何重装
+
+1. 重新运行 ocboot 的脚本
+
+2. 等待运行完毕，使用`kubectl edit deployment onecloud-operator -n onecloud`加入下列参数，然后保存关闭。
+
+![](../images/oo_syncuser.png)
+
+3. 第2步的修改，会影响 onecloud-operator 的性能，所以等所有服务启动，可以将第2步的参数恢复。
+
+### 5. 其它问题？
 
 其它问题欢迎在 云联壹云 github issues 界面提交: https://github.com/yunionio/onecloud/issues , 我们会尽快回复。
