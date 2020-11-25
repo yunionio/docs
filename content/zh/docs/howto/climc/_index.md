@@ -102,7 +102,8 @@ $ source <(ocadm cluster rcadmin)
 
 #### 非控制节点认证配置
 
-在非控制节点做认证配置上首先需要在对应的控制节点上获取相关参数，并将认证信息保存到文件中，通过source命令认证配置。
+在非控制节点做认证配置上首先需要在对应的控制节点上执行`ocadm cluster rcadmin`；
+将输出的认证信息保存到本地的文件中，通过source命令认证配置。
 
 以下为用户名／密码认证的配置文件模板，通过OS_USERNAME, OS_DOMAIN_NAME, OS_PASSWORD, OS_PROJECT_NAME, OS_PROJECT_DOMAIN等字段指定用户的信息和项目的信息。
 
