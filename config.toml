@@ -60,6 +60,11 @@ anchor = "smart"
     url = "https://github.com/yunionio/onecloud"
 
 [[menu.main]]
+    name = "CHANGELOG"
+    weight = 59
+    url = "docs/changelog"
+
+[[menu.main]]
     name = "联系我们"
     weight = 60
     url = "docs/contact"
