@@ -1,11 +1,14 @@
 {{ $cover := .HasShortcode "blocks/cover" }}
 <nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
-        <!--<a class="navbar-brand" href="{{ .Site.Home.RelPermalink }}">-->
-		<!--<span class="navbar-logo">{{ if .Site.Params.ui.navbar_logo }}{{ with resources.Get "icons/logo.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}{{ end }}</span><span class="font-weight-bold">{{ .Site.Title }}</span>-->
-	<!--</a>-->
+  <!--
+     - <a class="navbar-brand" href="{{ .Site.Home.RelPermalink }}">
+     -   <span class="navbar-logo">
+     -     {{ if .Site.Params.ui.navbar_logo }}{{ with resources.Get "icons/logo.svg" }}{{ ( . | minify).Content | safeHTML }}{{ end }}{{ end }}
+     -   </span>
+     - </a>
+     -->
   <a href="{{ .Site.Home.RelPermalink }}" class="logo flex-shrink-0 navbar-brand">
-    <!-- <img src="https://www.yunion.cn/assets/img/logo.7ca5f4b59.png" alt=""> -->
-    <!-- <b>{{.Site.Title}}</b> -->
+    <img src="{{ .Site.BaseURL }}/images/logo.svg" />
   </a>
 
 	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
