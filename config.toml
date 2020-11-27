@@ -12,7 +12,7 @@ enableGitInfo = true
 # Language settings
 contentDir = "content/zh"
 defaultContentLanguage = "zh"
-defaultContentLanguageInSubdir = true
+defaultContentLanguageInSubdir = false
 # Useful when translating.
 enableMissingTranslationPlaceholders = true
 
@@ -26,9 +26,6 @@ pygmentsUseClassic = false
 #pygmentsOptions = "linenos=table"
 # See https://help.farbox.com/pygments.html
 pygmentsStyle = "tango"
-
- # First one is picked as the Twitter card image if not set on page.
- #images = ["images/project-illustration.png"]
 
 # Configure how URLs look like per section.
 [permalinks]
@@ -47,23 +44,6 @@ resampleFilter = "CatmullRom"
 quality = 75
 anchor = "smart"
 
-# Additional menu items
-
-[[menu.main]]
-    name = "快速开始"
-    weight = -100
-    url = "docs/quickstart/"
-
-[[menu.main]]
-    name = "Github"
-    weight = 50
-    url = "https://github.com/yunionio/onecloud"
-
-[[menu.main]]
-    name = "联系我们"
-    weight = 60
-    url = "docs/contact"
-
 [services]
 [services.googleAnalytics]
 # Comment out the next line to disable GA tracking. Also disables the feature described in [params.ui.feedback].
@@ -81,11 +61,29 @@ contentDir = "content/zh"
 time_format_default = "02.01.2006"
 time_format_blog = "02.01.2006"
 
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+      # See a complete list of available styles at https://xyproto.github.io/splash/docs/all.html
+      style = "tango"
+      # Uncomment if you want chosen highlight style used for code blocks without a specified language
+      # guessSyntax = "true"
 
-# Everything below this are Site Params
+### Everything below this are Site Params ###
 
 [params]
-copyright = "Copyright 2017 - 2019 | 北京云联万维技术有限公司 京ICP备17065753号"
+copyright = "Copyright 2017 - 2020 | 北京云联万维技术有限公司 京ICP备17065753号"
+
+# First one is picked as the Twitter card image if not set on page.
+# images = ["images/project-illustration.png"]
+
+# Menu title if your navbar has a versions selector to access old versions of your site.
+# This menu appears only if you have at least one [params.versions] set.
+version_menu = "Releases"
+multi_versions = true
+
 RSSLink = "/index.xml"
 author = "yunionio.org" # add your company name
 github = "yunionio" # add your github profile name
@@ -94,13 +92,14 @@ github_repo = "https://github.com/yunionio/docs"
 github_project_repo = "https://github.com/yunionio/onecloud"
 #email = "myemail@myaddress.xxx"
 
-# Menu title if your navbar has a versions selector to access old versions of your site.
-# This menu appears only if you have at least one [params.versions] set.
-version_menu = "Releases"
-multi_versions = true
-
 # Google Custom Search Engine ID. Remove or comment out to disable search.
-gcs_engine_id = "011737558837375720776:fsdu1nryfng"
+# gcs_engine_id = "011737558837375720776:fsdu1nryfng"
+
+# Enable Lunr.js offline search
+offlineSearch = false
+
+# Enable syntax highlighting and copy buttons on code blocks with Prism
+prism_syntax_highlighting = false
 
 # User interface configuration
 [params.ui]
@@ -112,6 +111,8 @@ breadcrumb_disable = false
 sidebar_search_disable = false
 #  Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top nav bar
 navbar_logo = true
+# Set to true to disable the About link in the site footer
+footer_about_disable = false
 
 # Adds a H2 section titled "Feedback" to the bottom of each doc. The responses are sent to Google Analytics as events.
 # This feature depends on [services.googleAnalytics] and will be disabled if "services.googleAnalytics.id" is not set.
@@ -122,3 +123,25 @@ enable = true
 # The responses that the user sees after clicking "yes" (the page was helpful) or "no" (the page was not helpful).
 yes = 'Glad to hear it! Please <a href="https://github.com/yunionio/docs/issues/new">tell us how we can improve</a>.'
 no = 'Sorry to hear that. Please <a href="https://github.com/yunionio/docs/issues/new">tell us how we can improve</a>.'
+
+# Adds a reading time to the top of each doc.
+# If you want this feature, but occasionally need to remove the Reading time from a single page,
+# add "hide_readingtime: true" to the page's front matter
+[params.ui.readingtime]
+enable = false
+
+# Additional menu items
+[[menu.main]]
+    name = "快速开始"
+    weight = -100
+    url = "docs/quickstart/"
+
+[[menu.main]]
+    name = "Github"
+    weight = 50
+    url = "https://github.com/yunionio/onecloud"
+
+[[menu.main]]
+    name = "联系我们"
+    weight = 60
+    url = "docs/contact"
