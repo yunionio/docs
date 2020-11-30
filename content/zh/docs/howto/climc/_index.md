@@ -109,7 +109,7 @@ $ source <(ocadm cluster rcadmin)
 
 ```bash
 # 在控制节点上获取认证所需要的配置信息。
-# ocadm cluster rcadmin
+$ ocadm cluster rcadmin
 export OS_AUTH_URL=https://192.168.0.246:5000/v3
 export OS_USERNAME=sysadmin
 export OS_PASSWORD=3hV3***84srk
@@ -118,41 +118,28 @@ export YUNION_INSECURE=true
 export OS_REGION_NAME=region0
 export OS_ENDPOINT_TYPE=publicURL
 
-# 将认证信息保存到文件中，方便 source 使用
+# 将上述认证信息保存到文件中，方便 source 使用
 $ cat <<EOF > ~/test_rc_admin
-# 用户名
-export OS_USERNAME=sysadmin
-# 用户所属域名称(如果为Default域,可以省略)
-export OS_DOMAIN_NAME=Default
-# 用户密码
-export OS_PASSWORD=***
-# 用户所属项目名称
-export OS_PROJECT_NAME=system
-# 项目所属域名称(如果为Default域,可以省略)
-export OS_PROJECT_DOMAIN=Default
 # keystone 认证地址
 export OS_AUTH_URL=https://192.168.0.246:5000/v3
+# 用户名
+export OS_USERNAME=sysadmin
+# 用户密码
+export OS_PASSWORD=3hV3***84srk
+# 用户所属项目名称
+export OS_PROJECT_NAME=system
+# 允许 insecure https 连接
+export YUNION_INSECURE=true
 # 对应的 region
-export OS_REGION_NAME=Beijing
+export OS_REGION_NAME=region0
+# endpoint 类型为 public
+export OS_ENDPOINT_TYPE=publicURL
 EOF
-
 ```
 
 以下为Access Key/Secret认证的配置文件模板，通过OS_ACCESS_KEY, OS_SECRET_KEY等两个字段指定用户的Access Key/secret。
 
 ```bash
-# 将认证信息保存到文件中，方便 source 使用
-$ cat <<EOF > ~/test_rc_admin
-# Access Key
-export OS_ACCESS_KEY=0d184a3c9c484e4c892f4855935e37e7  
-# Secret
-export OS_SECRET_KEY=VG***5mUXM=
-# keystone 认证地址
-export OS_AUTH_URL=https://192.168.0.246:5000/v3
-# 对应的 region
-export OS_REGION_NAME=Beijing
-EOF
-
 # 在控制节点上获取用户在一个项目中的Access Key/Secret
 
 # 生成 Secret Key
@@ -176,12 +163,28 @@ $ climc credential-list
 +-----------------------+------------+------------+-----------------------+---------+---------+-----------+---------+-----------------------+-------------+--------------+-----------------------+------+-----------------------+----------------------+----------+----------------------+
 ***  Total: 1 Pages: 1 Limit: 2048 Offset: 0 Page: 1  ***
 
+# 将认证信息保存到文件中，方便 source 使用
+$ cat <<EOF > ~/test_rc_aksk
+# Access Key
+export OS_ACCESS_KEY=0d184a3c9c484e4c892f4855935e37e7  
+# Secret
+export OS_SECRET_KEY=VG***5mUXM=
+# 允许 insecure https 连接
+export YUNION_INSECURE=true
+# keystone 认证地址
+export OS_AUTH_URL=https://192.168.0.246:5000/v3
+# 对应的 region
+export OS_REGION_NAME=region0
+EOF
 ```
+
 模板配置完成后，通过以下名称认证环境变量。
 
 ```bash
 # source 认证环境变量
 $ source ~/test_rc_admin
+# 或者想要使用 Access Key/Secret 登陆
+# source ~/test_rc_aksk
 
 # 执行climc。例如，查看虚拟机列表
 $ climc server-list
