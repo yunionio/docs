@@ -5,15 +5,18 @@
 ## 安装 hugo
 
 文档使用 [hugo](https://github.com/gohugoio/hugo) 生成，安装 hugo 参考链接: https://gohugo.io/getting-started/installing/
-> hugo使用v0.55.5版，git使用最新版
+
+> hugo使用 v0.79.0/extended 版，git使用最新版
 
 ## 查看文档
 
 ```bash
 $ git clone https://github.com/yunionio/docs --recursive
 $ cd docs
+
 # 安装 npm 相关的包
 $ npm install
+
 # 使用 hugo 生成文档的 web 界面
 $ hugo serve -D
 # 访问 http://localhost:1313 查看文档
