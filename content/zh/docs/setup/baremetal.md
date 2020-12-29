@@ -5,15 +5,23 @@ description: >
   如果要使用 云联壹云 私有云物理机管理功能，需要启用物理机管理服务(baremetal-agent)，本节介绍如何部署相应组件
 ---
 
-启用 baremetal-agent 之前需要部署 云联壹云 集群，详见 ["安装部署/部署集群"](/docs/setup/controlplane)
+启用 baremetal-agent 之前需要部署 云联壹云 集群，详见 ["安装部署/部署集群"](/docs/setup/controlplane) 。
 
-待集群准备完毕后指定 node 来部署 baremetal-agent 服务
+待集群准备完毕后需要指定集群中的一个 node 来部署 baremetal-agent 服务。
+
+{{% alert title="注意" color="warning" %}}
+目前只能指定一个 node 来部署运行 baremetal-agent 服务，因为 baremetal-agent 服务是有状态的，不能多副本夸节点运行。
+{{% /alert %}}
 
 ## 启用 baremetal-agent
 
 在通过 pxe 引导流程中，baremetal-agent 只会处理来自 dhcp relay 服务器的请求, 所以你需要事先在交换机配置 dhcp relay 或者使用 云联壹云 host 服务的 dhcp relay 功能。
 
 ### 如何配置 host 服务 启用 dhcp relay
+
+{{% alert title="注意" color="warning" %}}
+如果在交换机上配置了 dhcp relay，则不需要在这里配置计算节点的 dhcp_relay 了，可以跳过这一步。
+{{% /alert %}}
 
 ```bash
 # 登录到已经部署好计算节点的服务器上修改 /etc/yunion/host.conf，添加 dhcp_relay 配置项：
@@ -46,7 +54,7 @@ $ climc agent-list
 +--------------------------------------+--------------------------+----------------+-----------------------------+---------+------------+------------------------------------------+--------------------------------------+
 ```
 
-部署完成后可以参考 ["操作管理/物理机"](/docs/howto/baremetal) 来进行对物理机的注册管理
+部署完成后可以参考 ["操作管理/物理机"](/docs/howto/baremetal) 来进行对物理机的注册管理。
 
 
 ## 禁用 baremetal-agent
