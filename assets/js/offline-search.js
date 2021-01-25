@@ -41,10 +41,11 @@
         const resultDetails = new Map(); // Will hold the data for the search results (titles and summaries)
         const options = {
             useExtendedSearch: true,
+            findAllMatches: true,
             keys: [
                 "title",
                 "body",
-                // "excerpt",
+                "excerpt",
             ]
         };
 
@@ -81,8 +82,37 @@
                 return;
             }
 
-            const results = idx.search(searchQuery);
-            debugger;
+            // hack: use extended include-match
+            // ref: https://fusejs.io/examples.html#extended-search
+            const includeSearch = `'${searchQuery}`;
+            const results = idx.search(includeSearch);
+
+            // filter results by language
+            let getLang = function(refPath) {
+                const langs = ['en', 'zh'];
+                const segs = refPath.split('/');
+                for (let i = 0; i < langs.length; i++) {
+                    const lang = langs[i];
+                    if (segs.includes(lang)) {
+                        return lang;
+                    }
+                }
+                return null;
+            };
+
+            const curLang = getLang(window.location.pathname);
+            let resultsByLang = [];
+            if (curLang) {
+                results.forEach((item) => {
+                    const ref = item.item.ref;
+                    const itemLang = getLang(ref);
+                    if (itemLang === curLang) {
+                        resultsByLang.push(item);
+                    }
+                });
+            } else {
+                resultsByLang = results;
+            }
 
             //
             // Make result html
@@ -120,12 +150,12 @@
             });
             $html.append($searchResultBody);
 
-            if (results.length === 0) {
+            if (resultsByLang.length === 0) {
                 $searchResultBody.append(
                     $('<p>').text(`No results found for query "${searchQuery}"`)
                 );
             } else {
-                results.forEach((or) => {
+                resultsByLang.forEach((or) => {
                     const r = or.item;
                     const doc = resultDetails.get(r.ref);
                     const href =
