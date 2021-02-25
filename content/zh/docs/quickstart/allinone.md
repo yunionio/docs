@@ -68,7 +68,7 @@ $ ssh root@10.168.26.216 "hostname"
 $ pip install ansible
 
 # 下载 ocboot 工具到本地
-$ git clone -b release/3.4 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
 ### 编写部署配置
@@ -100,6 +100,8 @@ primary_master_node:
   controlplane_host: 10.168.26.216
   # k8s 控制节点的端口
   controlplane_port: "6443"
+  # 云联壹云 版本
+  onecloud_version: 'v3.6.7'
   # 云联壹云 登录用户
   onecloud_user: admin
   # 云联壹云 登录用户密码
