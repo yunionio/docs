@@ -77,7 +77,7 @@ $ systemctl restart mariadb
 ```bash
 $ yum install -y yum-utils bash-completion
 # 添加 yunion 云联壹云 rpm 源
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.4/yunion.repo
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.6/yunion.repo
 $ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
 ```
 
@@ -210,7 +210,7 @@ $ yum install -y yunion-climc yunion-ocadm
 # climc 在 /opt/yunion/bin 目录下，根据自己的需要加到 bash 或者 zsh 配置文件里面
 $ echo 'export PATH=$PATH:/opt/yunion/bin' >> ~/.bashrc && source ~/.bashrc
 # 安装必要的服务，并启动和设置为开机自启
-$ yum install -y yunion-executor-server && systemctl enable --now yunion-executor
+$ yum install -y yunion-executor && systemctl enable --now yunion-executor
 ```
 
 ### 部署 kubernetes 集群
@@ -365,7 +365,7 @@ $ ocadm reset --force
 $ yum --disablerepo='*' --enablerepo='yunion*' install -y \
   epel-release libaio jq libusb lvm2 nc ntp yunion-fetcherfs fuse fuse-devel fuse-libs \
   oniguruma pciutils spice spice-protocol sysstat tcpdump usbredir \
-  yunion-qemu-2.12.1 yunion-executor-server \
+  yunion-qemu-2.12.1 yunion-executor \
   kmod-openvswitch \
   openvswitch net-tools
 
