@@ -46,6 +46,8 @@ $ pip install ansible
 
 # 下载 ocboot 工具到本地
 $ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
+# 安装相应 python 包依赖
+$ pip install -r ./requirements.txt
 ```
 
 ## 更新 ocboot 代码
