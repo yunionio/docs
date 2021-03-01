@@ -393,15 +393,6 @@ default-host-7b5cr  2/2     Running    218        18h     192.168.222.4 controll
 default-host-ctx5s  2/2     Running    218        18h     192.168.222.5 controller02
 ```
 
-### 升级/回滚组件版本
+### 升级组件版本
 
-`ocadm init` 的时候使用 `--onecloud-version` 选项设置了组件的版本，可以使用 `ocadm cluster update` 命令升级组件到指定的版本，保持更新。
-
-```bash
-# 查看现在 云联壹云 cluster 的版本
-$ kubectl get oc -n onecloud default  -o jsonpath='{.spec.version}'
-v3.0.0-20200112.0
-
-# 升级到 v3.0.0-20200113.0
-$ ocadm cluster update --version v3.0.0-20200113.0 --wait
-```
+请参考 [升级相关](../upgrade/) 进行升级。
