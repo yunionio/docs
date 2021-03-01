@@ -64,12 +64,21 @@ $ git pull
 
 如果没有设置免密码登录，请使用 *ssh-copy-id -i ~/.ssh/id_rsa.pub root@PRIMARY_MASTER_HOST* 命令把公钥下发到自己环境对应的节点。
 
+升级的版本号可以到 [CHANGELOG release/3.6 页面](../../changelog/release-3.6/) 查询。
+
 ```bash
 # 使用 ocboot 相关服务到 v3.6.9 版本
 # 该步骤会因为拉取 docker 镜像等待较长时间，请耐心等待
 # PRIMARY_MASTER_HOST 是指部署集群的第一个节点的 ip 地址
 # 需要本机能够使用 ssh 密钥登录上去
 $ ./ocboot.py upgrade <PRIMARY_MASTER_HOST> v3.6.9
+
+# 另外可以使用 `./ocboot.py upgrade --help` 查看其它可选参数
+# 比如:
+# --user 可以指定其它 ssh 用户
+# --port 指定 ssh 端口
+# --key-file 指定另外的 ssh private key
+# --as-bastion 可以让 PRIMARY_MASTER_HOST 作为堡垒机部署在内网的宿主机
 
 # 另外可以在升级的过程中可以登录到 PRIMARY_MASTER_HOST， 使用 kubectl 查看对应 pods 的升级情况
 $ kubectl get pods -n onecloud --watch
