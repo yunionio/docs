@@ -153,9 +153,9 @@ Password: admin@123
 
 #### 1. 导入镜像
 
-浏览位于 [CentOS云主机镜像](https://cloud.centos.org/centos/8/x86_64/images/) ，选择一个GenericCloud 镜像，拷贝镜像URL。
+浏览位于 [CentOS 7云主机镜像](https://cloud.centos.org/centos/7/images/) ，选择一个GenericCloud 镜像，拷贝镜像URL。
 
-在 `主机` 菜单，选择 `系统镜像`，选择 `上传`。输入镜像名称，选择 `输入镜像URL`。
+在 `主机` 菜单，选择 `系统镜像`，选择 `上传`。输入镜像名称，选择 `输入镜像URL`，选择 `确定`。
 
 可以访问 https://docs.openstack.org/image-guide/obtain-images.html 获得更多的虚拟机镜像。
 
