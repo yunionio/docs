@@ -18,7 +18,7 @@ description: >
 
 ## 环境
 
-- 操作系统: Centos 7.x
+- 操作系统: CentOS 7.x
 - 硬件要求:
 	- Virtualization: CPU 要支持虚拟化，用于虚拟机 KVM 加速
 	- 打开 iommu，VT-d: 用于 GPU 透传(不用GPU可以不开)
