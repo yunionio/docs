@@ -10,7 +10,7 @@ description: >
 
 云联壹云 相关的组件运行在 kubernetes 之上，环境以及相关的软件依赖如下:
 
-- 操作系统: Centos 7.6
+- 操作系统: CentOS 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 150G
 - 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
 - docker: ce-19.03.9
@@ -118,7 +118,7 @@ $ systemctl enable --now docker
 
 ### 安装 云联壹云 依赖内核
 
-这里需要安装我们编译的内核，这个内核是基于上游 Centos 3.10.0-1062 编译的，默认添加了 nbd 模块，nbd 模块用于镜像相关的操作。
+这里需要安装我们编译的内核，这个内核是基于上游 CentOS 3.10.0-1062 编译的，默认添加了 nbd 模块，nbd 模块用于镜像相关的操作。
 
 ```bash
 # 安装内核
