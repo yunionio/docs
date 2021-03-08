@@ -3,7 +3,7 @@ title: "All in One 安装"
 linkTitle: "All in One 安装"
 weight: 1
 description: >
-  使用 ansible 安装脚本快速在已有的 Centos 7 虚拟机上 All in One 部署 云联壹云 服务
+  使用 ansible 安装脚本快速在已有的 CentOS 7 虚拟机上 All in One 部署 云联壹云 服务
 ---
 
 ## 前提
@@ -18,14 +18,14 @@ description: >
 
 ### 服务器配置要求
 
-- 操作系统: Centos 7.6
+- 操作系统: CentOS 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 100G
 
 以下为待部署机器的环境:
 
 | IP   | 登录用户 | 操作系统 |
 |:----:|:--------:|:--------:|
-|10.168.26.216| root | Centos 7.6|
+|10.168.26.216| root | CentOS 7.6|
 
 {{% alert title="提示" %}}
 > 10.168.26.216 是本次测试环境 ip，请根据自己的环境做相应修改。
@@ -63,6 +63,18 @@ $ ssh root@10.168.26.216 "hostname"
 
 ### 下载 ocboot
 
+{{< tabs name="ocboot_install" >}}
+{{% tab name="CentOS 7" %}}
+```bash
+# 本地安装 ansible
+$ yum install -y epel-release ansible
+
+# 下载 ocboot 工具到本地
+$ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
+```
+{{% /tab %}}
+
+{{% tab name="其它操作系统" %}}
 ```bash
 # 本地安装 ansible
 $ pip install ansible
@@ -70,6 +82,9 @@ $ pip install ansible
 # 下载 ocboot 工具到本地
 $ git clone -b release/3.4 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
+{{% /tab %}}
+
+{{< /tabs >}}
 
 ### 编写部署配置
 
