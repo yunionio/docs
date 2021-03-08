@@ -85,7 +85,7 @@ climc 的本地配置参考 [非控制节点认证配置](../../howto/climc/#非
 ### 安装 telepresence
 
 确保有一个已部署的云联壹云 k8s集群，参考[安装部署](/docs/setup/)。
-这里介绍Centos7的本地环境安装，其他发行版可参考官方文档：[Installing Telepresence](https://www.telepresence.io/reference/install)。
+这里介绍 CentOS 7 的本地环境安装，其他发行版可参考官方文档：[Installing Telepresence](https://www.telepresence.io/reference/install)。
 
 > 不建议k8s集群的部署和开发在同一个环境，使用Telepresence会有端口冲突。
 
