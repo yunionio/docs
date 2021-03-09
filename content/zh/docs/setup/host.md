@@ -37,7 +37,7 @@ description: >
 $ cat <<EOF >/etc/yum.repos.d/yunion.repo
 [yunion]
 name=Packages for Yunion Multi-Cloud Platform
-baseurl=https://iso.yunion.cn/yumrepo-3.4
+baseurl=https://iso.yunion.cn/yumrepo-3.6
 sslverify=0
 failovermethod=priority
 enabled=1
@@ -55,7 +55,7 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 $ yum --disablerepo='*' --enablerepo='yunion*' install -y \
   epel-release libaio jq libusb lvm2 nc ntp yunion-fetcherfs fuse fuse-devel fuse-libs \
   oniguruma pciutils spice spice-protocol sysstat tcpdump usbredir \
-  yunion-qemu-2.12.1 yunion-executor-server \
+  yunion-qemu-2.12.1 yunion-executor \
   kernel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-devel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-headers-3.10.0-1062.4.3.el7.yn20191203 \
@@ -83,7 +83,7 @@ $ uname -r
 ```bash
 $ yum install -y yum-utils bash-completion
 # 添加 yunion 云联壹云 rpm 源
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.4/yunion.repo
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.6/yunion.repo
 $ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
 ```
 
