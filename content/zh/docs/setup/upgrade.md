@@ -3,6 +3,7 @@ title: "升级相关"
 linkTitle: "升级相关"
 weight: 100
 description: >
+  介绍如何升级服务版本
 ---
 
 本文介绍从 v3.4.x 升级到 v3.6.x 的步骤以及注意事项。
