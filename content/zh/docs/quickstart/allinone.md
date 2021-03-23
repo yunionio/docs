@@ -57,7 +57,7 @@ $ ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.168.26.216
 $ ssh root@10.168.26.216 "hostname"
 ```
 
-## 开始部署
+## 开始安装
 
 部署的工具是 https://github.com/yunionio/ocboot , 然后根据需要部署机器的配置， 利用 ansbile 远程登录到待部署的机器安装配置 云联壹云 服务，以下操作都在本地环境上进行操作。操作步骤如下:
 
