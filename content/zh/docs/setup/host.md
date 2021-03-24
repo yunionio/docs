@@ -74,7 +74,7 @@ $ uname -r
 
 ### 安装 docker 和 kubelet
 
-参考 ["部署集群/环境准备"](/docs/setup/controlplane/#安装配置-docker) 的流程，安装好 docker 和 kubelet。
+参考 ["部署集群/环境准备"](../../setup/controlplane/#安装配置-docker) 的流程，安装好 docker 和 kubelet。
 
 #### 安装配置 docker
 
@@ -215,7 +215,7 @@ $ climc network-create --gateway 10.168.222.1 --server-type baremetal bcast0 adm
 
 ### 配置 host 服务
 
-参考 ["添加节点/获取加入集群token"](/docs/setup/components/#获取加入集群-token) 的流程获取join所需的信息
+参考 ["添加节点/获取加入集群token"](../../setup/components/#获取加入集群-token) 的流程获取join所需的信息
 
 ```bash
 # 使用 ocadm join 来创建一台计算节点
