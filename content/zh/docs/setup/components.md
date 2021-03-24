@@ -9,7 +9,7 @@ description: >
 
 ### 环境准备
 
-参考 ["部署集群/环境准备"](/docs/setup/controlplane/#安装配置-docker) 的流程，安装好 docker 和 kubelet。
+参考 ["部署集群/环境准备"](../../setup/controlplane/#安装配置-docker) 的流程，安装好 docker 和 kubelet。
 
 ### 获取加入集群 token
 

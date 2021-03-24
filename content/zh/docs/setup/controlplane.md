@@ -197,7 +197,7 @@ $ chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/i
 ## 部署集群
 
 {{% alert title="提示" %}}
-> 如果要部署高可用集群，请先搭建负载均衡集群，参考 [部署 HA 环境](/docs/setup/controlplane-ha)。
+> 如果要部署高可用集群，请先搭建负载均衡集群，参考 [部署 HA 环境](../../setup/controlplane-ha)。
 {{% /alert %}}
 
 ### 安装部署工具
@@ -247,7 +247,7 @@ Your Kubernetes and control-plane has initialized successfully!
 ```
 
 {{% alert title="提示" %}}
-> kubernetes 高可用部署需要 3 个节点，主要是 etcd 需要至少 3 个节点组成高可用集群。如果是高可用部署，请在另外两个节点执行 `ocadm join --control-plane <vip>:6443` 部署控制服务，join 的另外两个节点会自动和当前的控制节点组成高可用集群。参考: [加入控制节点](/docs/setup/components/#%E5%8A%A0%E5%85%A5-controlplane)
+> kubernetes 高可用部署需要 3 个节点，主要是 etcd 需要至少 3 个节点组成高可用集群。如果是高可用部署，请在另外两个节点执行 `ocadm join --control-plane <vip>:6443` 部署控制服务，join 的另外两个节点会自动和当前的控制节点组成高可用集群。参考: [加入控制节点](../../setup/components/#%E5%8A%A0%E5%85%A5-controlplane)
 {{% /alert %}}
 
 kubernetes 集群部署完成后，通过以下命令来确保相关的 pod (容器) 都已经启动, 变成 running 的状态。
@@ -332,7 +332,7 @@ $ ip route get 1 | awk '{print $NF;exit}'
 $ curl -k https://10.168.222.218
 ```
 
-用浏览器访问 'https://本机IP' 会跳转到 web 界面，使用 [创建登录用户](/docs/setup/controlplane/#创建登录用户) 里面指定的用户名和密码登录后，界面如下:
+用浏览器访问 'https://本机IP' 会跳转到 web 界面，使用 [创建登录用户](../../setup/controlplane/#创建登录用户) 里面指定的用户名和密码登录后，界面如下:
 
 ![登录页](../images/web-login.png)
 
@@ -352,13 +352,13 @@ $ ocadm reset --force
 
 ### 添加计算节点
 
-当控制节点搭建完成后，可以参考 [计算节点](/docs/setup/host/) 一节的内容，添加计算节点，组建一套私有云集群。
+当控制节点搭建完成后，可以参考 [计算节点](../../setup/host/) 一节的内容，添加计算节点，组建一套私有云集群。
 
 ### 控制节点作为计算节点
 
 默认情况下 `ocadm init` 创建的节点是控制节点，不会运行 onecloud 计算节点的服务。如果需要把控制节点也作为计算节点，需要执行以下步骤:
 
-- 安装计算节点需要的依赖，参考 ["计算节点/安装依赖"](/docs/setup/host/#安装依赖)，这里主要是要安装我们的内核和运行虚拟机的 qemu 等软件。
+- 安装计算节点需要的依赖，参考 ["计算节点/安装依赖"](../../setup/host/#安装依赖)，这里主要是要安装我们的内核和运行虚拟机的 qemu 等软件。
 
 ```bash
 # 安装rpm包
