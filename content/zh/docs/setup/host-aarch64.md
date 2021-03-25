@@ -93,7 +93,7 @@ Password: admin@123
 
 ## 创建 ARM 虚拟机
 
-基于 ARM 的机器部署完服务后，请先阅读 [All in One/FAQ](../../quickstart/allinone/#FAQ) 和 [All in One/创建第一台虚拟机](../../quickstart/allinone/#创建第一台虚拟机) 了解创建虚拟机需要创建网络、启用宿主机和导入镜像等步骤。
+基于 ARM 的机器部署完服务后，请先阅读 [All in One/FAQ](../../quickstart/allinone/#faq) 和 [All in One/创建第一台虚拟机](../../quickstart/allinone/#创建第一台虚拟机) 了解创建虚拟机需要创建网络、启用宿主机和导入镜像等步骤。
 
 ### 导入镜像
 
