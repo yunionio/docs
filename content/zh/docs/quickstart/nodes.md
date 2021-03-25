@@ -6,11 +6,11 @@ description: >
   使用 ocboot 部署工具在多个节点部署”云联壹云“服务
 ---
 
-多节点安装和 [All in One 安装](./allinone) 一样，都使用 https://github.com/yunionio/ocboot 这个部署工具，根据配置执行 ansible playbook 部署节点。
+多节点安装和 [All in One 安装](../allinone) 一样，都使用 https://github.com/yunionio/ocboot 这个部署工具，根据配置执行 ansible playbook 部署节点。
 
 ## 环境准备
 
-关于环境的准备和不同架构 CPU 操作系统的要求，请参考 [All in One 安装/机器配置要求](./allinone#机器配置要求)。
+关于环境的准备和不同架构 CPU 操作系统的要求，请参考 [All in One 安装/机器配置要求](../allinone#机器配置要求)。
 
 以下为待部署机器的环境，假设已经准备好了 5 台机器，IP 分别是 10.127.10.156-160 ，各个节点做出以下角色规划：
 
