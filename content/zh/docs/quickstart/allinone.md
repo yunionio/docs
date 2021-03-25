@@ -3,7 +3,7 @@ title: "All in One 安装"
 linkTitle: "All in One 安装"
 weight: 1
 description: >
-  使用 ansible 安装脚本快速在已有的 CentOS 7 虚拟机上 All in One 部署 云联壹云 服务
+  使用 ocboot 部署工具快速在已有的节点上以 All in One 的方式部署”云联壹云“服务
 ---
 
 ## 前提
@@ -14,32 +14,26 @@ description: >
 
 ## 环境准备
 
-云联壹云 相关的组件运行在 kubernetes 之上。
+### 机器配置要求
 
-### 服务器配置要求
-
-- 操作系统: CentOS 7.6
+- 操作系统: 根据 CPU 架构不同，支持的发行版也不一样
+    - X86_64: [CentOS 7](http://isoredirect.centos.org/centos/7/isos/x86_64/)
+    - ARM64: [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 或者 [统信 UOS](https://www.chinauos.com/) 
 - 最低配置要求: CPU 4核, 内存 8G, 存储 100G
 
 以下为待部署机器的环境:
 
-| IP   | 登录用户 | 操作系统 |
-|:----:|:--------:|:--------:|
-|10.168.26.216| root | CentOS 7.6|
+| IP   | 登录用户 |
+|:----:|:--------:|
+|10.168.26.216| root |
 
 {{% alert title="提示" %}}
-> 10.168.26.216 是本次测试环境 ip，请根据自己的环境做相应修改。
+> 10.168.26.216 是本次测试环境的 IP，请根据自己的环境做相应修改。
 {{% /alert %}}
-
-### 云联壹云相关软件依赖
-
-- 数据库: mariadb Ver 15.1 Distrib 5.5.56-MariaDB
-- docker: ce-19.03.9
-- kubernetes: v1.15.8
 
 ### 本地环境配置要求
 
-本地环境即用户进行实际操作部署的环境。本次测试的本地环境为MAC操作系统的笔记本，也可在待部署机器上进行操作。
+本地环境即用户进行实际操作部署的环境。本次测试的本地环境为 MAC 操作系统的笔记本，也可在待部署机器上进行操作。
 
 - ssh: 开启 ssh 免密登录
 - 本地环境安装部署 ansbile，Windows操作系统不支持安装 ansible
@@ -68,6 +62,16 @@ $ ssh root@10.168.26.216 "hostname"
 ```bash
 # 本地安装 ansible
 $ yum install -y epel-release ansible
+
+# 下载 ocboot 工具到本地
+$ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
+```
+{{% /tab %}}
+
+{{% tab name="Debian 10" %}}
+```bash
+# 本地安装 ansible
+$ apt install -y ansible
 
 # 下载 ocboot 工具到本地
 $ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
