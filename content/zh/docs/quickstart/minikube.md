@@ -1,7 +1,7 @@
 ---
 title: "MiniKube 安装"
 linkTitle: "MiniKube 安装"
-weight: 1
+weight: 3
 description: >
   使用 MiniKube, 快速部署体验单机版本的云联壹云服务
 ---
