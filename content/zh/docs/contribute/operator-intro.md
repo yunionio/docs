@@ -37,9 +37,9 @@ OnecloudCluster 资源的镜像版本控制的关键属性简介如下：
 | .spec.$(组件名).tag        | 控制该组件镜像的 tag       | 默认没有设置，可以通过设置该值单独控制组件的 tag     |
 
 
-### 通一修改版本
+### 统一修改版本
 
-通过修改 default onecloudcluster `spec.imageRepository` 和 `spec.version` 属性，就会把所有服务的镜像通一更改，以下是使用场景举例:
+通过修改 default onecloudcluster `spec.imageRepository` 和 `spec.version` 属性，就会把所有服务的镜像统一更改，以下是使用场景举例:
 
 1. 把所有的服务镜像通一修改到 archdev-v36，修改 `spec.version`
 
