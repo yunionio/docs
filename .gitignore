@@ -18,3 +18,8 @@ package-lock.json
 
 # web storm
 .idea/
+
+*.o
+*.a
+*.so
+*.swp
