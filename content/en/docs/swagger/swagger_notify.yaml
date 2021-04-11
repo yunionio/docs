@@ -1,0 +1,3843 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  ConfigCreateInput:
+    properties:
+      __meta__:
+        additionalProperties:
+          type: string
+        description: 标签列表,最多支持20个
+        example:
+          user:rd: op
+        type: object
+        x-go-name: Metadata
+      content:
+        description: 'description: config content'
+        example:
+          app_id: "123456"
+          app_secret: feishu_nihao
+        type: object
+        x-go-name: Content
+      description:
+        description: 资源描述
+        example: test create network
+        type: string
+        x-go-name: Description
+      generate_name:
+        description: |-
+          生成资源名称的模板，如果name为空，则为必填项
+          description: generated resource name, given a pattern to generate name, required if name is not given
+        example: test###
+        type: string
+        x-go-name: GenerateName
+      is_emulated:
+        description: |-
+          资源是否为模拟资源
+          description: the resource is an emulated resource
+        type: boolean
+        x-go-name: IsEmulated
+      name:
+        description: |-
+          资源名称，如果generate_name为空，则为必填项
+          description: resource name, required if generated_name is not given
+        example: test-network
+        type: string
+        uniqueItems: true
+        x-go-name: Name
+      type:
+        description: 'description: config type'
+        example: feishu
+        type: string
+        x-go-name: Type
+    required:
+    - name
+    - type
+    - content
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ConfigManagerGetTypesInput:
+    properties:
+      robot:
+        description: 'description: Filter about robot'
+        enum:
+        - "no"
+        - "yes"
+        - only
+        example: "yes"
+        type: string
+        x-go-name: Robot
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ConfigManagerGetTypesOutput:
+    properties:
+      types:
+        items:
+          type: string
+        type: array
+        x-go-name: Types
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ConfigUpdateInput:
+    properties:
+      content:
+        description: 'description: config content'
+        example:
+          app_id: "123456"
+          app_secret: feishu_nihao
+        type: object
+        x-go-name: Content
+    required:
+    - content
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ConfigValidateInput:
+    properties:
+      content:
+        description: 'description: config content'
+        example:
+          app_id: "123456"
+          app_secret: feishu_nihao
+        type: object
+        x-go-name: Content
+      type:
+        description: 'description: config type'
+        example: feishu
+        type: string
+        x-go-name: Type
+    required:
+    - type
+    - content
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ConfigValidateOutput:
+    properties:
+      is_valid:
+        type: boolean
+        x-go-name: IsValid
+      message:
+        type: string
+        x-go-name: Message
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  Error:
+    properties:
+      class:
+        type: string
+        x-go-name: Class
+      code:
+        format: int64
+        type: integer
+        x-go-name: Code
+      details:
+        type: string
+        x-go-name: Details
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/httperrors
+  FailedElem:
+    properties:
+      ContactType:
+        type: string
+      Reason:
+        type: string
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  GetDetailsStatusOutput:
+    properties:
+      status:
+        description: 状态
+        type: string
+        x-go-name: Status
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  NotificationCreateInput:
+    properties:
+      __meta__:
+        additionalProperties:
+          type: string
+        description: 标签列表,最多支持20个
+        example:
+          user:rd: op
+        type: object
+        x-go-name: Metadata
+      contact_type:
+        description: |-
+          description: contact type
+          required: ture
+        example: email
+        type: string
+        x-go-name: ContactType
+      contacts:
+        description: 'description: direct contact, admin privileges required'
+        items:
+          type: string
+        type: array
+        x-go-name: Contacts
+      description:
+        description: 资源描述
+        example: test create network
+        type: string
+        x-go-name: Description
+      generate_name:
+        description: |-
+          生成资源名称的模板，如果name为空，则为必填项
+          description: generated resource name, given a pattern to generate name, required if name is not given
+        example: test###
+        type: string
+        x-go-name: GenerateName
+      ignore_nonexistent_receiver:
+        type: boolean
+        x-go-name: IgnoreNonexistentReceiver
+      is_emulated:
+        description: |-
+          资源是否为模拟资源
+          description: the resource is an emulated resource
+        type: boolean
+        x-go-name: IsEmulated
+      message:
+        description: |-
+          description: message content or jsonobject
+          required: ture
+        type: string
+        x-go-name: Message
+      metadata:
+        additionalProperties:
+          type: object
+        type: object
+        x-go-name: Metadata
+      name:
+        description: |-
+          资源名称，如果generate_name为空，则为必填项
+          description: resource name, required if generated_name is not given
+        example: test-network
+        type: string
+        uniqueItems: true
+        x-go-name: Name
+      priority:
+        description: 'description: notification priority'
+        enum:
+        - fatal
+        - important
+        - nomal
+        example: normal
+        type: string
+        x-go-name: Priority
+      receivers:
+        description: 'description: ids or names of receiver'
+        example: '{"adfb720ccdd34c638346ea4fa7a713a8", "zhangsan"}'
+        items:
+          type: string
+        type: array
+        x-go-name: Receivers
+      status:
+        description: 用来存储资源的状态
+        type: string
+        x-go-name: Status
+      tag:
+        description: 'description: notification tag'
+        example: alert
+        type: string
+        x-go-name: Tag
+      topic:
+        description: 'description: notification topic'
+        example: IMAGE_ACTIVE
+        type: string
+        x-go-name: Topic
+    required:
+    - name
+    - topic
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  NotificationDetails:
+    properties:
+      advance_days:
+        format: int64
+        type: integer
+        x-go-name: AdvanceDays
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      contact_type:
+        type: string
+        x-go-name: ContactType
+      content:
+        type: string
+        x-go-name: Content
+      created_at:
+        description: 资源创建时间
+        format: date-time
+        type: string
+        x-go-name: CreatedAt
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      deleted:
+        description: 资源是否被删除
+        type: boolean
+        x-go-name: Deleted
+      deleted_at:
+        description: 资源删除时间
+        format: date-time
+        type: string
+        x-go-name: DeletedAt
+      description:
+        description: 资源描述信息
+        type: string
+        x-go-name: Description
+      event:
+        type: string
+        x-go-name: Event
+      id:
+        description: 资源UUID
+        type: string
+        x-go-name: Id
+      is_emulated:
+        description: |-
+          是否是模拟资源, 部分从公有云上同步的资源并不真实存在, 例如宿主机
+          list 接口默认不会返回这类资源，除非显示指定 is_emulate=true 过滤参数
+        type: boolean
+        x-go-name: IsEmulated
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      name:
+        description: 资源名称
+        type: string
+        x-go-name: Name
+      priority:
+        type: string
+        x-go-name: Priority
+      receive_details:
+        items:
+          $ref: '#/definitions/ReceiveDetail'
+        type: array
+        x-go-name: ReceiveDetails
+      received_at:
+        format: date-time
+        type: string
+        x-go-name: ReceivedAt
+      send_times:
+        format: int64
+        type: integer
+        x-go-name: SendTimes
+      status:
+        description: 资源状态
+        type: string
+        x-go-name: Status
+      tag:
+        type: string
+        x-go-name: Tag
+      title:
+        type: string
+        x-go-name: Title
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+      update_version:
+        description: 资源被更新次数
+        format: int64
+        type: integer
+        x-go-name: UpdateVersion
+      updated_at:
+        description: 资源更新时间
+        format: date-time
+        type: string
+        x-go-name: UpdatedAt
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  NotificationManagerEventNotifyInput:
+    properties:
+      ProjectDomainId:
+        description: 'description: domainId of the resource that triggered the event
+          notification'
+        example: default
+        type: string
+      advance_days:
+        description: 'description: day left before the event'
+        example: 0
+        format: int64
+        type: integer
+        x-go-name: AdvanceDays
+      contact_type:
+        description: 'description: contact types'
+        example: email
+        items:
+          type: string
+        type: array
+        x-go-name: ContactTypes
+      contacts:
+        description: 'description: direct contact, admin privileges required'
+        items:
+          type: string
+        type: array
+        x-go-name: Contacts
+      event:
+        description: 'description: event trigger sending notification'
+        example: SERVER_DELETE
+        type: string
+        x-go-name: Event
+      priority:
+        description: 'description: notification priority'
+        enum:
+        - fatal
+        - important
+        - nomal
+        example: normal
+        type: string
+        x-go-name: Priority
+      project_id:
+        description: 'description: projectId of the resource that triggered the event
+          notification'
+        example: f627e09f038645f08ce6880c8d9cb8fd
+        type: string
+        x-go-name: ProjectId
+      receivers:
+        description: 'description: ids or names of receiver'
+        example: '{"adfb720ccdd34c638346ea4fa7a713a8", "zhangsan"}'
+        items:
+          type: string
+        type: array
+        x-go-name: Receivers
+      resource_details:
+        description: |-
+          description: resource details
+          required: ture
+        type: object
+        x-go-name: ResourceDetails
+    required:
+    - event
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  NotificationManagerEventNotifyOutput:
+    properties:
+      FailedList:
+        items:
+          $ref: '#/definitions/FailedElem'
+        type: array
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  PerformDisableInput:
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  PerformEnableInput:
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  PerformStatusInput:
+    properties:
+      reason:
+        description: 更改状态的原因描述
+        type: string
+        x-go-name: Reason
+      status:
+        description: 更改的目标状态值
+        type: string
+        x-go-name: Status
+    required:
+    - status
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  ReceiveDetail:
+    properties:
+      contact:
+        type: string
+        x-go-name: Contact
+      failed_reason:
+        type: string
+        x-go-name: FailedReason
+      receiver_id:
+        type: string
+        x-go-name: ReceiverId
+      receiver_name:
+        type: string
+        x-go-name: ReceiverName
+      send_by:
+        type: string
+        x-go-name: SendBy
+      sendAt:
+        format: date-time
+        type: string
+        x-go-name: SendAt
+      status:
+        type: string
+        x-go-name: Status
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ReceiverCreateInput:
+    properties:
+      __meta__:
+        additionalProperties:
+          type: string
+        description: 标签列表,最多支持20个
+        example:
+          user:rd: op
+        type: object
+        x-go-name: Metadata
+      description:
+        description: 资源描述
+        example: test create network
+        type: string
+        x-go-name: Description
+      disabled:
+        description: 该资源是否被管理员*人为*禁用, 和enabled互斥
+        type: boolean
+        x-go-name: Disabled
+      email:
+        description: 'description: user email'
+        example: example@gmail.com
+        type: string
+        x-go-name: Email
+      enabled:
+        description: 该资源是否被管理员*人为*启用或者禁用
+        type: boolean
+        x-go-name: Enabled
+      enabled_contact_types:
+        description: 'description: enabled contact types for user'
+        example: '{"email", "mobile", "feishu", "dingtalk", "workwx"}'
+        items:
+          type: string
+        type: array
+        x-go-name: EnabledContactTypes
+      generate_name:
+        description: |-
+          生成资源名称的模板，如果name为空，则为必填项
+          description: generated resource name, given a pattern to generate name, required if name is not given
+        example: test###
+        type: string
+        x-go-name: GenerateName
+      international_mobile:
+        $ref: '#/definitions/SInternationalMobile'
+      is_emulated:
+        description: |-
+          资源是否为模拟资源
+          description: the resource is an emulated resource
+        type: boolean
+        x-go-name: IsEmulated
+      name:
+        description: |-
+          资源名称，如果generate_name为空，则为必填项
+          description: resource name, required if generated_name is not given
+        example: test-network
+        type: string
+        uniqueItems: true
+        x-go-name: Name
+      project_domain_id:
+        description: 指定项目归属域名称或ID
+        type: string
+        x-go-name: ProjectDomainId
+      status:
+        description: 用来存储资源的状态
+        type: string
+        x-go-name: Status
+      uid:
+        description: 'description: user id in keystone'
+        example: adfb720ccdd34c638346ea4fa7a713a8
+        type: string
+        x-go-name: UID
+      uname:
+        description: 'description: user name in keystone'
+        example: hello
+        type: string
+        x-go-name: UName
+    required:
+    - name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ReceiverDetails:
+    properties:
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      created_at:
+        description: 资源创建时间
+        format: date-time
+        type: string
+        x-go-name: CreatedAt
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      deleted:
+        description: 资源是否被删除
+        type: boolean
+        x-go-name: Deleted
+      deleted_at:
+        description: 资源删除时间
+        format: date-time
+        type: string
+        x-go-name: DeletedAt
+      description:
+        description: 资源描述信息
+        type: string
+        x-go-name: Description
+      domain_id:
+        description: 域Id
+        type: string
+        x-go-name: DomainId
+      email:
+        type: string
+        x-go-name: Email
+      enabled:
+        description: 资源是否启用
+        type: boolean
+        x-go-name: Enabled
+      enabled_contact_types:
+        description: 'description: enabled contact types for user'
+        example: eamil, mobile, feishu, dingtalk, workwx
+        items:
+          type: string
+        type: array
+        x-go-name: EnabledContactTypes
+      id:
+        description: 资源UUID
+        type: string
+        x-go-name: Id
+      international_mobile:
+        $ref: '#/definitions/SInternationalMobile'
+      is_emulated:
+        description: |-
+          是否是模拟资源, 部分从公有云上同步的资源并不真实存在, 例如宿主机
+          list 接口默认不会返回这类资源，除非显示指定 is_emulate=true 过滤参数
+        type: boolean
+        x-go-name: IsEmulated
+      lang:
+        type: string
+        x-go-name: Lang
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      name:
+        description: 资源名称
+        type: string
+        x-go-name: Name
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      status:
+        description: 资源状态
+        type: string
+        x-go-name: Status
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+      update_version:
+        description: 资源被更新次数
+        format: int64
+        type: integer
+        x-go-name: UpdateVersion
+      updated_at:
+        description: 资源更新时间
+        format: date-time
+        type: string
+        x-go-name: UpdatedAt
+      verified_infos:
+        description: 'description: verified info'
+        items:
+          $ref: '#/definitions/VerifiedInfo'
+        type: array
+        x-go-name: VerifiedInfos
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ReceiverIntellijGetInput:
+    properties:
+      create_if_no:
+        description: 'description: create if receiver with UserId does not exist'
+        type: boolean
+        x-go-name: CreateIfNo
+      scope:
+        description: 'description: scope'
+        type: string
+        x-go-name: Scope
+      user_id:
+        description: 'description: user id in keystone'
+        type: string
+        x-go-name: UserId
+    required:
+    - user_id
+    - scope
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ReceiverTriggerVerifyInput:
+    properties:
+      contact_type:
+        description: 'description: contact type'
+        enum:
+        - email
+        - mobile
+        example: email
+        type: string
+        x-go-name: ContactType
+    required:
+    - contact_type
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ReceiverUpdateInput:
+    properties:
+      description:
+        description: 资源描述
+        type: string
+        x-go-name: Description
+      email:
+        description: 'description: user email'
+        example: example@gmail.com
+        type: string
+        x-go-name: Email
+      enabled_contact_types:
+        description: 'description: enabled contacts for user'
+        example: '{"email", "mobile", "feishu", "dingtalk", "workwx"}'
+        items:
+          type: string
+        type: array
+        x-go-name: EnabledContactTypes
+      international_mobile:
+        $ref: '#/definitions/SInternationalMobile'
+      name:
+        description: 资源名称
+        type: string
+        x-go-name: Name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ReceiverVerifyInput:
+    properties:
+      contact_type:
+        description: 'description: Contact type'
+        enum:
+        - email
+        - mobile
+        example: email
+        type: string
+        x-go-name: ContactType
+      token:
+        description: 'description: token user input'
+        example: "123456"
+        type: string
+        x-go-name: Token
+    required:
+    - contact_type
+    - token
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  ReceivingRole:
+    properties:
+      role:
+        description: 'description: id or name of role'
+        type: string
+        x-go-name: Role
+      scope:
+        description: 'description: scope of role'
+        enum:
+        - system
+        - domain
+        - project
+        type: string
+        x-go-name: Scope
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  SInternationalMobile:
+    properties:
+      area_code:
+        description: 'description: area code of mobile'
+        example: "86"
+        type: string
+        x-go-name: AreaCode
+      mobile:
+        description: 'description: user mobile'
+        example: "17812345678"
+        type: string
+        x-go-name: Mobile
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  STag:
+    properties:
+      Key:
+        description: 标签key
+        type: string
+      Value:
+        description: 标签Value
+        type: string
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  StandaloneResourceBaseUpdateInput:
+    properties:
+      description:
+        description: 资源描述
+        type: string
+        x-go-name: Description
+      name:
+        description: 资源名称
+        type: string
+        x-go-name: Name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  StandaloneResourceCreateInput:
+    properties:
+      __meta__:
+        additionalProperties:
+          type: string
+        description: 标签列表,最多支持20个
+        example:
+          user:rd: op
+        type: object
+        x-go-name: Metadata
+      description:
+        description: 资源描述
+        example: test create network
+        type: string
+        x-go-name: Description
+      generate_name:
+        description: |-
+          生成资源名称的模板，如果name为空，则为必填项
+          description: generated resource name, given a pattern to generate name, required if name is not given
+        example: test###
+        type: string
+        x-go-name: GenerateName
+      is_emulated:
+        description: |-
+          资源是否为模拟资源
+          description: the resource is an emulated resource
+        type: boolean
+        x-go-name: IsEmulated
+      name:
+        description: |-
+          资源名称，如果generate_name为空，则为必填项
+          description: resource name, required if generated_name is not given
+        example: test-network
+        type: string
+        uniqueItems: true
+        x-go-name: Name
+    required:
+    - name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  StandaloneResourceDetails:
+    properties:
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  StatusStandaloneResourceBaseUpdateInput:
+    properties:
+      description:
+        description: 资源描述
+        type: string
+        x-go-name: Description
+      name:
+        description: 资源名称
+        type: string
+        x-go-name: Name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  SubscriptionSetReceiverInput:
+    properties:
+      receivers:
+        items:
+          type: string
+        type: array
+        x-go-name: Receivers
+      roles:
+        items:
+          $ref: '#/definitions/ReceivingRole'
+        type: array
+        x-go-name: ReceivingRoles
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  SubscriptionSetRobotInput:
+    properties:
+      Robot:
+        description: 'description: robot'
+        enum:
+        - feishu-robot
+        - dingtalk-robot
+        - workwx-robot
+        type: string
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  SubscriptionSetWebhookInput:
+    properties:
+      Webhook:
+        type: string
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  TemplateCreateInput:
+    properties:
+      __meta__:
+        additionalProperties:
+          type: string
+        description: 标签列表,最多支持20个
+        example:
+          user:rd: op
+        type: object
+        x-go-name: Metadata
+      contact_type:
+        description: |-
+          description: Contact type, specifically, setting it to all means all contact type
+          require: true
+        example: email
+        type: string
+        x-go-name: ContactType
+      content:
+        description: 'description: Template content'
+        example: 镜像 {{.name}} 上传完成
+        type: string
+        x-go-name: Content
+      description:
+        description: 资源描述
+        example: test create network
+        type: string
+        x-go-name: Description
+      example:
+        description: 'description: Example for using this template'
+        example: '{"name": "centos7.6"}'
+        type: string
+        x-go-name: Example
+      generate_name:
+        description: |-
+          生成资源名称的模板，如果name为空，则为必填项
+          description: generated resource name, given a pattern to generate name, required if name is not given
+        example: test###
+        type: string
+        x-go-name: GenerateName
+      is_emulated:
+        description: |-
+          资源是否为模拟资源
+          description: the resource is an emulated resource
+        type: boolean
+        x-go-name: IsEmulated
+      name:
+        description: |-
+          资源名称，如果generate_name为空，则为必填项
+          description: resource name, required if generated_name is not given
+        example: test-network
+        type: string
+        uniqueItems: true
+        x-go-name: Name
+      template_type:
+        description: 'description: Template type'
+        enum:
+        - title
+        - content
+        - remote
+        example: title
+        type: string
+        x-go-name: TemplateType
+      topic:
+        description: 'description: Template topic'
+        example: IMAGE_ACTIVE
+        type: string
+        x-go-name: Topic
+    required:
+    - name
+    - topic
+    - content
+    - example
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  TemplateDetails:
+    properties:
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      contact_type:
+        type: string
+        x-go-name: ContactType
+      content:
+        type: string
+        x-go-name: Content
+      created_at:
+        description: 资源创建时间
+        format: date-time
+        type: string
+        x-go-name: CreatedAt
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      deleted:
+        description: 资源是否被删除
+        type: boolean
+        x-go-name: Deleted
+      deleted_at:
+        description: 资源删除时间
+        format: date-time
+        type: string
+        x-go-name: DeletedAt
+      description:
+        description: 资源描述信息
+        type: string
+        x-go-name: Description
+      example:
+        type: string
+        x-go-name: Example
+      id:
+        description: 资源UUID
+        type: string
+        x-go-name: Id
+      is_emulated:
+        description: |-
+          是否是模拟资源, 部分从公有云上同步的资源并不真实存在, 例如宿主机
+          list 接口默认不会返回这类资源，除非显示指定 is_emulate=true 过滤参数
+        type: boolean
+        x-go-name: IsEmulated
+      lang:
+        type: string
+        x-go-name: Lang
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      name:
+        description: 资源名称
+        type: string
+        x-go-name: Name
+      template_type:
+        description: title | content | remote
+        type: string
+        x-go-name: TemplateType
+      topic:
+        type: string
+        x-go-name: Topic
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+      update_version:
+        description: 资源被更新次数
+        format: int64
+        type: integer
+        x-go-name: UpdateVersion
+      updated_at:
+        description: 资源更新时间
+        format: date-time
+        type: string
+        x-go-name: UpdatedAt
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  TemplateUpdateInput:
+    properties:
+      __meta__:
+        additionalProperties:
+          type: string
+        description: 标签列表,最多支持20个
+        example:
+          user:rd: op
+        type: object
+        x-go-name: Metadata
+      content:
+        description: 'description: template content'
+        example: 镜像 {{.name}} 上传完成
+        type: string
+        x-go-name: Content
+      description:
+        description: 资源描述
+        example: test create network
+        type: string
+        x-go-name: Description
+      example:
+        description: 'description: all example for using this template'
+        example: '{"name": "centos7.6"}'
+        type: string
+        x-go-name: Example
+      generate_name:
+        description: |-
+          生成资源名称的模板，如果name为空，则为必填项
+          description: generated resource name, given a pattern to generate name, required if name is not given
+        example: test###
+        type: string
+        x-go-name: GenerateName
+      is_emulated:
+        description: |-
+          资源是否为模拟资源
+          description: the resource is an emulated resource
+        type: boolean
+        x-go-name: IsEmulated
+      name:
+        description: |-
+          资源名称，如果generate_name为空，则为必填项
+          description: resource name, required if generated_name is not given
+        example: test-network
+        type: string
+        uniqueItems: true
+        x-go-name: Name
+    required:
+    - name
+    - content
+    - example
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  VerifiedInfo:
+    properties:
+      ContactType:
+        type: string
+      Note:
+        type: string
+      Verified:
+        type: boolean
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+host: '"127.0.0.1:8889"'
+info:
+  contact:
+    email: lizexi@yunion.cn
+    name: Zexi Li
+  description: Notify API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0"
+paths:
+  /configs:
+    get:
+      description: 列表
+      operationId: config_ListItemFilter
+      parameters:
+      - default: 20
+        description: 查询限制量
+        format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
+      - default: 0
+        description: 查询偏移量
+        format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - description: 列表排序时，用于排序的字段的名称，该字段不提供时，则按默认字段排序。一般时按照资源的新建时间逆序排序。
+        in: query
+        items:
+          type: string
+        name: order_by
+        type: array
+        x-go-name: OrderBy
+      - description: 列表排序时的顺序，desc为从高到低，asc为从低到高。默认是按照资源的创建时间desc排序。
+        example: desc|asc
+        in: query
+        name: order
+        type: string
+        x-go-name: Order
+      - description: 列表返回资源的更多详细信息。默认只显示基本字段，该字段为true则返回扩展字段信息。
+        in: query
+        name: details
+        type: boolean
+        x-go-name: Details
+      - description: 模糊搜索所有字段
+        in: query
+        name: search
+        type: string
+        x-go-name: Search
+      - description: |-
+          指定过滤条件，允许指定多个，每个条件的格式为"字段名称.操作符(匹配信息)"，例如name字段等于test的过滤器为：name.equals('test')
+          支持的操作符如下：
+
+           操作符        | 参数个数 | 举例                                           | 说明                        |
+          ---------------|----------|------------------------------------------------|-----------------------------|
+           in            | > 0      | name.in("test", "good")                        | 在给定数组中                |
+           notin         | > 0      | name.notin('test')                             | 不在给定数组中              |
+           between       | 2        | created_at.between('2019-12-10', '2020-01-02') | 在两个值之间                |
+           ge            | 1        | created_at.ge('2020-01-01')                    | 大于或等于给定值            |
+           gt            | 1        | created_at.gt('2020-01-01')                    | 严格大于给定值              |
+           le            | 1        | created_at.le('2020-01-01')                    | 小于或等于给定值            |
+           lt            | 1        | sync_seconds.lt(900)                           | 严格大于给定值              |
+           like          | > 0      | name.like('%test%')                            | sql字符串匹配任意一个字符串 |
+           contains      | > 0      | name.contains('test')                          | 包含任意一个给定字符串      |
+           startswith    | > 0      | name.startswith('test')                        | 以任意一个给定字符串开头    |
+           endswith      | > 0      | name.endswith('test')                          | 以任意一个给定字符串结尾    |
+           equals        | > 0      | name.equals('test')                            | 等于任意一个给定值          |
+           notequals     | 1        | name.notequals('test')                         | 不等于给定值                |
+           isnull        | 0        | name.isnull()                                  | 值为SQL的NULL               |
+           isnotnull     | 0        | name.isnotnull()                               | 值不为SQL的NULL             |
+           isempty       | 0        | name.isempty('test')                           | 值为空字符串                |
+           isnotempty    | 0        | name.isnotempty('test')                        | 值不是空字符串              |
+           isnullorempty | 0        | name.isnullorempty('test')                     | 值为SQL的NULL或者空字符串   |
+        in: query
+        items:
+          type: string
+        name: filter
+        type: array
+        x-go-name: Filter
+      - description: |-
+          指定关联过滤条件，允许指定多个，后端将根据关联过滤条件和其他表关联查询，支持的查询语法和filter相同，
+          和其他表关联的语法如下：
+          joint_resources.related_key(origin_key).filter_col.filter_ops(values)
+          其中，joint_resources为要关联的资源名称，related_key为关联表column，origin_key为当前表column, filter_col为
+          关联表用于查询匹配的field名称，field_ops为filter支持的操作，values为匹配的值
+          举例：
+          guestnetworks.guest_id(id).ip_addr.equals('10.168.21.222')
+        in: query
+        items:
+          type: string
+        name: joint_filter
+        type: array
+        x-go-name: JointFilter
+      - description: 如果filter_any为true，则查询所有filter的并集，否则为交集
+        in: query
+        name: filter_any
+        type: boolean
+        x-go-name: FilterAny
+      - description: 返回结果只包含指定的字段
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 用于数据导出，指定导出的数据字段
+        in: query
+        name: export_keys
+        type: string
+        x-go-name: ExportKeys
+      - description: 返回结果携带delete_fail_reason和update_fail_reason字段
+        in: query
+        name: show_fail_reason
+        type: boolean
+        x-go-name: ShowFailReason
+      - description: 通过标签过滤
+        in: query
+        items:
+          $ref: '#/definitions/STag'
+        name: tags
+        type: array
+        x-go-name: Tags
+      - description: 通过标签过滤
+        in: query
+        name: order_by_tag
+        type: string
+        x-go-name: OrderByTag
+      - description: |-
+          deprecated
+          返回资源的标签不包含用户标签
+        in: query
+        name: without_user_meta
+        type: boolean
+        x-go-name: WithoutUserMeta
+      - description: 返回包含用户标签的资源
+        in: query
+        name: with_user_meta
+        type: boolean
+        x-go-name: WithUserMeta
+      - description: 返回包含外部标签的资源
+        in: query
+        name: with_cloud_meta
+        type: boolean
+        x-go-name: WithCloudMeta
+      - description: 返回包含任意标签的资源
+        in: query
+        name: with_any_meta
+        type: boolean
+        x-go-name: WithAnyMeta
+      - description: 返回列表数据中包含资源的标签数据（Metadata）
+        in: query
+        name: with_meta
+        type: boolean
+        x-go-name: WithMeta
+      - description: 显示所有的资源，包括模拟的资源
+        in: query
+        name: show_emulated
+        type: boolean
+        x-go-name: ShowEmulated
+      - description: 以资源ID过滤列表
+        in: query
+        items:
+          type: string
+        name: id
+        type: array
+        x-go-name: Ids
+      - description: 以资源名称过滤列表
+        in: query
+        items:
+          type: string
+        name: name
+        type: array
+        x-go-name: Names
+      - in: query
+        name: type
+        type: string
+        x-go-name: Type
+      responses:
+        "200":
+          $ref: '#/responses/config_ListItemFilterOutput'
+      summary: 列表
+      tags:
+      - config
+    post:
+      description: 新建
+      operationId: config_ValidateCreateData
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            config:
+              $ref: '#/definitions/ConfigCreateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/config_ValidateCreateDataOutput'
+      summary: 新建
+      tags:
+      - config
+  /configs/{id}:
+    delete:
+      description: 删除
+      operationId: config_CustomizeDelete
+      parameters:
+      - description: The Id or Name of config
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/config_CustomizeDeleteOutput'
+      summary: 删除
+      tags:
+      - config
+    get:
+      description: 获取详情
+      operationId: config_GetExtraDetails
+      parameters:
+      - description: The Id or Name of config
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/config_GetExtraDetailsOutput'
+      summary: 获取详情
+      tags:
+      - config
+    put:
+      description: 更新
+      operationId: config_ValidateUpdateData
+      parameters:
+      - description: The Id or Name of config
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            config:
+              $ref: '#/definitions/ConfigUpdateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/config_ValidateUpdateDataOutput'
+      summary: 更新
+      tags:
+      - config
+  /configs/{id}/metadata:
+    get:
+      description: 获取指定信息Metadata
+      operationId: config_GetDetailsMetadata
+      parameters:
+      - description: |-
+          指定需要获取的所有标签的KEY列表，如果列表为空，则获取全部标签
+          标签分为
+
+           类型     | 说明                                        |
+          ----------|---------------------------------------------|
+           系统标签 | 平台定义的标签                              |
+           用户标签 | key以user:为前缀，用户自定义标签            |
+           外部标签 | key以ext:为前缀，为从其他平台同步过来的标签 |
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 按标签前缀过滤
+        in: query
+        name: prefix
+        type: string
+        x-go-name: Prefix
+      - description: The Id or Name of config
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/config_GetDetailsMetadataOutput'
+      summary: 获取资源标签（元数据）
+      tags:
+      - config
+  /configs/{id}/set-user-metadata:
+    post:
+      description: 执行操作SetUserMetadata
+      operationId: config_PerformSetUserMetadata
+      parameters:
+      - description: The Id or Name of config
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            config:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/config_PerformSetUserMetadataOutput'
+      summary: 全量替换资源的所有用户标签
+      tags:
+      - config
+  /configs/distinct-field:
+    get:
+      description: 获取指定资源类的信息DistinctField
+      operationId: config_GetPropertyDistinctField
+      responses:
+        "200":
+          $ref: '#/responses/config_GetPropertyDistinctFieldOutput'
+      summary: 获取指定资源类的信息DistinctField
+      tags:
+      - config
+  /configs/purge-splitable:
+    post:
+      description: 执行操作PurgeSplitable
+      operationId: config_PerformPurgeSplitable
+      responses:
+        "200":
+          $ref: '#/responses/config_PerformPurgeSplitableOutput'
+      summary: 执行操作PurgeSplitable
+      tags:
+      - config
+  /configs/splitable:
+    get:
+      description: 获取指定资源类的信息Splitable
+      operationId: config_GetPropertySplitable
+      responses:
+        "200":
+          $ref: '#/responses/config_GetPropertySplitableOutput'
+      summary: 获取指定资源类的信息Splitable
+      tags:
+      - config
+  /configs/validate:
+    post:
+      description: 执行操作Validate
+      operationId: config_PerformValidate
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            config:
+              $ref: '#/definitions/ConfigValidateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/config_PerformValidateOutput'
+      summary: 执行操作Validate
+      tags:
+      - config
+  /notifications:
+    get:
+      description: 列表
+      operationId: notification_ListItemFilter
+      parameters:
+      - default: 20
+        description: 查询限制量
+        format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
+      - default: 0
+        description: 查询偏移量
+        format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - description: 列表排序时，用于排序的字段的名称，该字段不提供时，则按默认字段排序。一般时按照资源的新建时间逆序排序。
+        in: query
+        items:
+          type: string
+        name: order_by
+        type: array
+        x-go-name: OrderBy
+      - description: 列表排序时的顺序，desc为从高到低，asc为从低到高。默认是按照资源的创建时间desc排序。
+        example: desc|asc
+        in: query
+        name: order
+        type: string
+        x-go-name: Order
+      - description: 列表返回资源的更多详细信息。默认只显示基本字段，该字段为true则返回扩展字段信息。
+        in: query
+        name: details
+        type: boolean
+        x-go-name: Details
+      - description: 模糊搜索所有字段
+        in: query
+        name: search
+        type: string
+        x-go-name: Search
+      - description: |-
+          指定过滤条件，允许指定多个，每个条件的格式为"字段名称.操作符(匹配信息)"，例如name字段等于test的过滤器为：name.equals('test')
+          支持的操作符如下：
+
+           操作符        | 参数个数 | 举例                                           | 说明                        |
+          ---------------|----------|------------------------------------------------|-----------------------------|
+           in            | > 0      | name.in("test", "good")                        | 在给定数组中                |
+           notin         | > 0      | name.notin('test')                             | 不在给定数组中              |
+           between       | 2        | created_at.between('2019-12-10', '2020-01-02') | 在两个值之间                |
+           ge            | 1        | created_at.ge('2020-01-01')                    | 大于或等于给定值            |
+           gt            | 1        | created_at.gt('2020-01-01')                    | 严格大于给定值              |
+           le            | 1        | created_at.le('2020-01-01')                    | 小于或等于给定值            |
+           lt            | 1        | sync_seconds.lt(900)                           | 严格大于给定值              |
+           like          | > 0      | name.like('%test%')                            | sql字符串匹配任意一个字符串 |
+           contains      | > 0      | name.contains('test')                          | 包含任意一个给定字符串      |
+           startswith    | > 0      | name.startswith('test')                        | 以任意一个给定字符串开头    |
+           endswith      | > 0      | name.endswith('test')                          | 以任意一个给定字符串结尾    |
+           equals        | > 0      | name.equals('test')                            | 等于任意一个给定值          |
+           notequals     | 1        | name.notequals('test')                         | 不等于给定值                |
+           isnull        | 0        | name.isnull()                                  | 值为SQL的NULL               |
+           isnotnull     | 0        | name.isnotnull()                               | 值不为SQL的NULL             |
+           isempty       | 0        | name.isempty('test')                           | 值为空字符串                |
+           isnotempty    | 0        | name.isnotempty('test')                        | 值不是空字符串              |
+           isnullorempty | 0        | name.isnullorempty('test')                     | 值为SQL的NULL或者空字符串   |
+        in: query
+        items:
+          type: string
+        name: filter
+        type: array
+        x-go-name: Filter
+      - description: |-
+          指定关联过滤条件，允许指定多个，后端将根据关联过滤条件和其他表关联查询，支持的查询语法和filter相同，
+          和其他表关联的语法如下：
+          joint_resources.related_key(origin_key).filter_col.filter_ops(values)
+          其中，joint_resources为要关联的资源名称，related_key为关联表column，origin_key为当前表column, filter_col为
+          关联表用于查询匹配的field名称，field_ops为filter支持的操作，values为匹配的值
+          举例：
+          guestnetworks.guest_id(id).ip_addr.equals('10.168.21.222')
+        in: query
+        items:
+          type: string
+        name: joint_filter
+        type: array
+        x-go-name: JointFilter
+      - description: 如果filter_any为true，则查询所有filter的并集，否则为交集
+        in: query
+        name: filter_any
+        type: boolean
+        x-go-name: FilterAny
+      - description: 返回结果只包含指定的字段
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 用于数据导出，指定导出的数据字段
+        in: query
+        name: export_keys
+        type: string
+        x-go-name: ExportKeys
+      - description: 返回结果携带delete_fail_reason和update_fail_reason字段
+        in: query
+        name: show_fail_reason
+        type: boolean
+        x-go-name: ShowFailReason
+      - description: 通过标签过滤
+        in: query
+        items:
+          $ref: '#/definitions/STag'
+        name: tags
+        type: array
+        x-go-name: Tags
+      - description: 通过标签过滤
+        in: query
+        name: order_by_tag
+        type: string
+        x-go-name: OrderByTag
+      - description: |-
+          deprecated
+          返回资源的标签不包含用户标签
+        in: query
+        name: without_user_meta
+        type: boolean
+        x-go-name: WithoutUserMeta
+      - description: 返回包含用户标签的资源
+        in: query
+        name: with_user_meta
+        type: boolean
+        x-go-name: WithUserMeta
+      - description: 返回包含外部标签的资源
+        in: query
+        name: with_cloud_meta
+        type: boolean
+        x-go-name: WithCloudMeta
+      - description: 返回包含任意标签的资源
+        in: query
+        name: with_any_meta
+        type: boolean
+        x-go-name: WithAnyMeta
+      - description: 返回列表数据中包含资源的标签数据（Metadata）
+        in: query
+        name: with_meta
+        type: boolean
+        x-go-name: WithMeta
+      - description: 显示所有的资源，包括模拟的资源
+        in: query
+        name: show_emulated
+        type: boolean
+        x-go-name: ShowEmulated
+      - description: 以资源ID过滤列表
+        in: query
+        items:
+          type: string
+        name: id
+        type: array
+        x-go-name: Ids
+      - description: 以资源名称过滤列表
+        in: query
+        items:
+          type: string
+        name: name
+        type: array
+        x-go-name: Names
+      - description: 以资源的状态过滤列表
+        in: query
+        items:
+          type: string
+        name: status
+        type: array
+        x-go-name: Status
+      - in: query
+        name: ContactType
+        type: string
+      - in: query
+        name: ReceiverId
+        type: string
+      - in: query
+        name: Tag
+        type: string
+      responses:
+        "200":
+          $ref: '#/responses/notification_ListItemFilterOutput'
+      summary: 通知消息列表
+      tags:
+      - notification
+    post:
+      description: 新建
+      operationId: notification_ValidateCreateData
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            notification:
+              $ref: '#/definitions/NotificationCreateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/notification_ValidateCreateDataOutput'
+      summary: 新建
+      tags:
+      - notification
+  /notifications/{id}:
+    delete:
+      description: 删除
+      operationId: notification_CustomizeDelete
+      parameters:
+      - description: The Id or Name of notification
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/notification_CustomizeDeleteOutput'
+      summary: 删除
+      tags:
+      - notification
+    get:
+      description: 获取详情
+      operationId: notification_GetExtraDetails
+      parameters:
+      - description: The Id or Name of notification
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/notification_GetExtraDetailsOutput'
+      summary: 获取详情
+      tags:
+      - notification
+    put:
+      description: 更新
+      operationId: notification_ValidateUpdateData
+      parameters:
+      - description: The Id or Name of notification
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            notification:
+              $ref: '#/definitions/StatusStandaloneResourceBaseUpdateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/notification_ValidateUpdateDataOutput'
+      summary: 更新
+      tags:
+      - notification
+  /notifications/{id}/metadata:
+    get:
+      description: 获取指定信息Metadata
+      operationId: notification_GetDetailsMetadata
+      parameters:
+      - description: |-
+          指定需要获取的所有标签的KEY列表，如果列表为空，则获取全部标签
+          标签分为
+
+           类型     | 说明                                        |
+          ----------|---------------------------------------------|
+           系统标签 | 平台定义的标签                              |
+           用户标签 | key以user:为前缀，用户自定义标签            |
+           外部标签 | key以ext:为前缀，为从其他平台同步过来的标签 |
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 按标签前缀过滤
+        in: query
+        name: prefix
+        type: string
+        x-go-name: Prefix
+      - description: The Id or Name of notification
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/notification_GetDetailsMetadataOutput'
+      summary: 获取资源标签（元数据）
+      tags:
+      - notification
+  /notifications/{id}/set-user-metadata:
+    post:
+      description: 执行操作SetUserMetadata
+      operationId: notification_PerformSetUserMetadata
+      parameters:
+      - description: The Id or Name of notification
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            notification:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/notification_PerformSetUserMetadataOutput'
+      summary: 全量替换资源的所有用户标签
+      tags:
+      - notification
+  /notifications/{id}/status:
+    get:
+      description: 获取指定信息Status
+      operationId: notification_GetDetailsStatus
+      parameters:
+      - description: The Id or Name of notification
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/notification_GetDetailsStatusOutput'
+      summary: 获取资源状态
+      tags:
+      - notification
+    post:
+      description: 执行操作Status
+      operationId: notification_PerformStatus
+      parameters:
+      - description: The Id or Name of notification
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            notification:
+              $ref: '#/definitions/PerformStatusInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/notification_PerformStatusOutput'
+      summary: 更新资源状态
+      tags:
+      - notification
+  /notifications/distinct-field:
+    get:
+      description: 获取指定资源类的信息DistinctField
+      operationId: notification_GetPropertyDistinctField
+      responses:
+        "200":
+          $ref: '#/responses/notification_GetPropertyDistinctFieldOutput'
+      summary: 获取指定资源类的信息DistinctField
+      tags:
+      - notification
+  /notifications/event-notify:
+    post:
+      description: 执行操作EventNotify
+      operationId: notification_PerformEventNotify
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            notification:
+              $ref: '#/definitions/NotificationManagerEventNotifyInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/notification_PerformEventNotifyOutput'
+      summary: 'TODO: support project and domain'
+      tags:
+      - notification
+  /notifications/purge-splitable:
+    post:
+      description: 执行操作PurgeSplitable
+      operationId: notification_PerformPurgeSplitable
+      responses:
+        "200":
+          $ref: '#/responses/notification_PerformPurgeSplitableOutput'
+      summary: 执行操作PurgeSplitable
+      tags:
+      - notification
+  /notifications/splitable:
+    get:
+      description: 获取指定资源类的信息Splitable
+      operationId: notification_GetPropertySplitable
+      responses:
+        "200":
+          $ref: '#/responses/notification_GetPropertySplitableOutput'
+      summary: 获取指定资源类的信息Splitable
+      tags:
+      - notification
+  /receivers:
+    get:
+      description: 列表
+      operationId: receiver_ListItemFilter
+      parameters:
+      - default: 20
+        description: 查询限制量
+        format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
+      - default: 0
+        description: 查询偏移量
+        format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - description: 列表排序时，用于排序的字段的名称，该字段不提供时，则按默认字段排序。一般时按照资源的新建时间逆序排序。
+        in: query
+        items:
+          type: string
+        name: order_by
+        type: array
+        x-go-name: OrderBy
+      - description: 列表排序时的顺序，desc为从高到低，asc为从低到高。默认是按照资源的创建时间desc排序。
+        example: desc|asc
+        in: query
+        name: order
+        type: string
+        x-go-name: Order
+      - description: 列表返回资源的更多详细信息。默认只显示基本字段，该字段为true则返回扩展字段信息。
+        in: query
+        name: details
+        type: boolean
+        x-go-name: Details
+      - description: 模糊搜索所有字段
+        in: query
+        name: search
+        type: string
+        x-go-name: Search
+      - description: |-
+          指定过滤条件，允许指定多个，每个条件的格式为"字段名称.操作符(匹配信息)"，例如name字段等于test的过滤器为：name.equals('test')
+          支持的操作符如下：
+
+           操作符        | 参数个数 | 举例                                           | 说明                        |
+          ---------------|----------|------------------------------------------------|-----------------------------|
+           in            | > 0      | name.in("test", "good")                        | 在给定数组中                |
+           notin         | > 0      | name.notin('test')                             | 不在给定数组中              |
+           between       | 2        | created_at.between('2019-12-10', '2020-01-02') | 在两个值之间                |
+           ge            | 1        | created_at.ge('2020-01-01')                    | 大于或等于给定值            |
+           gt            | 1        | created_at.gt('2020-01-01')                    | 严格大于给定值              |
+           le            | 1        | created_at.le('2020-01-01')                    | 小于或等于给定值            |
+           lt            | 1        | sync_seconds.lt(900)                           | 严格大于给定值              |
+           like          | > 0      | name.like('%test%')                            | sql字符串匹配任意一个字符串 |
+           contains      | > 0      | name.contains('test')                          | 包含任意一个给定字符串      |
+           startswith    | > 0      | name.startswith('test')                        | 以任意一个给定字符串开头    |
+           endswith      | > 0      | name.endswith('test')                          | 以任意一个给定字符串结尾    |
+           equals        | > 0      | name.equals('test')                            | 等于任意一个给定值          |
+           notequals     | 1        | name.notequals('test')                         | 不等于给定值                |
+           isnull        | 0        | name.isnull()                                  | 值为SQL的NULL               |
+           isnotnull     | 0        | name.isnotnull()                               | 值不为SQL的NULL             |
+           isempty       | 0        | name.isempty('test')                           | 值为空字符串                |
+           isnotempty    | 0        | name.isnotempty('test')                        | 值不是空字符串              |
+           isnullorempty | 0        | name.isnullorempty('test')                     | 值为SQL的NULL或者空字符串   |
+        in: query
+        items:
+          type: string
+        name: filter
+        type: array
+        x-go-name: Filter
+      - description: |-
+          指定关联过滤条件，允许指定多个，后端将根据关联过滤条件和其他表关联查询，支持的查询语法和filter相同，
+          和其他表关联的语法如下：
+          joint_resources.related_key(origin_key).filter_col.filter_ops(values)
+          其中，joint_resources为要关联的资源名称，related_key为关联表column，origin_key为当前表column, filter_col为
+          关联表用于查询匹配的field名称，field_ops为filter支持的操作，values为匹配的值
+          举例：
+          guestnetworks.guest_id(id).ip_addr.equals('10.168.21.222')
+        in: query
+        items:
+          type: string
+        name: joint_filter
+        type: array
+        x-go-name: JointFilter
+      - description: 如果filter_any为true，则查询所有filter的并集，否则为交集
+        in: query
+        name: filter_any
+        type: boolean
+        x-go-name: FilterAny
+      - description: 返回结果只包含指定的字段
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 用于数据导出，指定导出的数据字段
+        in: query
+        name: export_keys
+        type: string
+        x-go-name: ExportKeys
+      - description: 返回结果携带delete_fail_reason和update_fail_reason字段
+        in: query
+        name: show_fail_reason
+        type: boolean
+        x-go-name: ShowFailReason
+      - description: 通过标签过滤
+        in: query
+        items:
+          $ref: '#/definitions/STag'
+        name: tags
+        type: array
+        x-go-name: Tags
+      - description: 通过标签过滤
+        in: query
+        name: order_by_tag
+        type: string
+        x-go-name: OrderByTag
+      - description: |-
+          deprecated
+          返回资源的标签不包含用户标签
+        in: query
+        name: without_user_meta
+        type: boolean
+        x-go-name: WithoutUserMeta
+      - description: 返回包含用户标签的资源
+        in: query
+        name: with_user_meta
+        type: boolean
+        x-go-name: WithUserMeta
+      - description: 返回包含外部标签的资源
+        in: query
+        name: with_cloud_meta
+        type: boolean
+        x-go-name: WithCloudMeta
+      - description: 返回包含任意标签的资源
+        in: query
+        name: with_any_meta
+        type: boolean
+        x-go-name: WithAnyMeta
+      - description: 返回列表数据中包含资源的标签数据（Metadata）
+        in: query
+        name: with_meta
+        type: boolean
+        x-go-name: WithMeta
+      - description: 显示所有的资源，包括模拟的资源
+        in: query
+        name: show_emulated
+        type: boolean
+        x-go-name: ShowEmulated
+      - description: 以资源ID过滤列表
+        in: query
+        items:
+          type: string
+        name: id
+        type: array
+        x-go-name: Ids
+      - description: 以资源名称过滤列表
+        in: query
+        items:
+          type: string
+        name: name
+        type: array
+        x-go-name: Names
+      - description: 以资源的状态过滤列表
+        in: query
+        items:
+          type: string
+        name: status
+        type: array
+        x-go-name: Status
+      - description: 指定查询的权限范围，可能值为project, domain or system
+        in: query
+        name: scope
+        type: string
+        x-go-name: Scope
+      - description: 指定项目归属域名称或ID
+        in: query
+        name: project_domain_id
+        type: string
+        x-go-name: ProjectDomainId
+      - description: 对具有域属性的资源，严格匹配域ID
+        in: query
+        items:
+          type: string
+        name: project_domain_ids
+        type: array
+        x-go-name: ProjectDomainIds
+      - description: 按domain名称排序，可能值为asc|desc
+        in: query
+        name: order_by_domain
+        pattern: asc|desc
+        type: string
+        x-go-name: OrderByDomain
+      - description: 以资源是否启用/禁用过滤列表
+        in: query
+        name: enabled
+        type: boolean
+        x-go-name: Enabled
+      - in: query
+        name: uid
+        type: string
+        x-go-name: UID
+      - in: query
+        name: uname
+        type: string
+        x-go-name: UName
+      - in: query
+        name: enabled_contact_type
+        type: string
+        x-go-name: EnabledContactType
+      - in: query
+        name: verified_contact_type
+        type: string
+        x-go-name: VerifiedContactType
+      - in: query
+        name: project_domain_filter
+        type: boolean
+        x-go-name: ProjectDomainFilter
+      responses:
+        "200":
+          $ref: '#/responses/receiver_ListItemFilterOutput'
+      summary: 列表
+      tags:
+      - receiver
+    post:
+      description: 新建
+      operationId: receiver_ValidateCreateData
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              $ref: '#/definitions/ReceiverCreateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_ValidateCreateDataOutput'
+      summary: 新建
+      tags:
+      - receiver
+  /receivers/{id}:
+    delete:
+      description: 删除
+      operationId: receiver_CustomizeDelete
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/receiver_CustomizeDeleteOutput'
+      summary: 删除
+      tags:
+      - receiver
+    get:
+      description: 获取详情
+      operationId: receiver_GetExtraDetails
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/receiver_GetExtraDetailsOutput'
+      summary: 获取详情
+      tags:
+      - receiver
+    put:
+      description: 更新
+      operationId: receiver_ValidateUpdateData
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              $ref: '#/definitions/ReceiverUpdateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_ValidateUpdateDataOutput'
+      summary: 更新
+      tags:
+      - receiver
+  /receivers/{id}/disable:
+    post:
+      description: 执行操作Disable
+      operationId: receiver_PerformDisable
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              $ref: '#/definitions/PerformDisableInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformDisableOutput'
+      summary: 执行操作Disable
+      tags:
+      - receiver
+  /receivers/{id}/enable:
+    post:
+      description: 执行操作Enable
+      operationId: receiver_PerformEnable
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              $ref: '#/definitions/PerformEnableInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformEnableOutput'
+      summary: 执行操作Enable
+      tags:
+      - receiver
+  /receivers/{id}/metadata:
+    get:
+      description: 获取指定信息Metadata
+      operationId: receiver_GetDetailsMetadata
+      parameters:
+      - description: |-
+          指定需要获取的所有标签的KEY列表，如果列表为空，则获取全部标签
+          标签分为
+
+           类型     | 说明                                        |
+          ----------|---------------------------------------------|
+           系统标签 | 平台定义的标签                              |
+           用户标签 | key以user:为前缀，用户自定义标签            |
+           外部标签 | key以ext:为前缀，为从其他平台同步过来的标签 |
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 按标签前缀过滤
+        in: query
+        name: prefix
+        type: string
+        x-go-name: Prefix
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/receiver_GetDetailsMetadataOutput'
+      summary: 获取资源标签（元数据）
+      tags:
+      - receiver
+  /receivers/{id}/set-user-metadata:
+    post:
+      description: 执行操作SetUserMetadata
+      operationId: receiver_PerformSetUserMetadata
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformSetUserMetadataOutput'
+      summary: 全量替换资源的所有用户标签
+      tags:
+      - receiver
+  /receivers/{id}/status:
+    get:
+      description: 获取指定信息Status
+      operationId: receiver_GetDetailsStatus
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/receiver_GetDetailsStatusOutput'
+      summary: 获取资源状态
+      tags:
+      - receiver
+    post:
+      description: 执行操作Status
+      operationId: receiver_PerformStatus
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              $ref: '#/definitions/PerformStatusInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformStatusOutput'
+      summary: 更新资源状态
+      tags:
+      - receiver
+  /receivers/{id}/trigger-verify:
+    post:
+      description: 执行操作TriggerVerify
+      operationId: receiver_PerformTriggerVerify
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              $ref: '#/definitions/ReceiverTriggerVerifyInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformTriggerVerifyOutput'
+      summary: 执行操作TriggerVerify
+      tags:
+      - receiver
+  /receivers/{id}/verify:
+    post:
+      description: 执行操作Verify
+      operationId: receiver_PerformVerify
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              $ref: '#/definitions/ReceiverVerifyInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformVerifyOutput'
+      summary: 执行操作Verify
+      tags:
+      - receiver
+  /receivers/distinct-field:
+    get:
+      description: 获取指定资源类的信息DistinctField
+      operationId: receiver_GetPropertyDistinctField
+      responses:
+        "200":
+          $ref: '#/responses/receiver_GetPropertyDistinctFieldOutput'
+      summary: 获取指定资源类的信息DistinctField
+      tags:
+      - receiver
+  /receivers/get-types:
+    post:
+      description: 执行操作GetTypes
+      operationId: receiver_PerformGetTypes
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              $ref: '#/definitions/ConfigManagerGetTypesInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformGetTypesOutput'
+      summary: 执行操作GetTypes
+      tags:
+      - receiver
+  /receivers/intellij-get:
+    post:
+      description: 执行操作IntellijGet
+      operationId: receiver_PerformIntellijGet
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              $ref: '#/definitions/ReceiverIntellijGetInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformIntellijGetOutput'
+      summary: 执行操作IntellijGet
+      tags:
+      - receiver
+  /receivers/purge-splitable:
+    post:
+      description: 执行操作PurgeSplitable
+      operationId: receiver_PerformPurgeSplitable
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformPurgeSplitableOutput'
+      summary: 执行操作PurgeSplitable
+      tags:
+      - receiver
+  /receivers/splitable:
+    get:
+      description: 获取指定资源类的信息Splitable
+      operationId: receiver_GetPropertySplitable
+      responses:
+        "200":
+          $ref: '#/responses/receiver_GetPropertySplitableOutput'
+      summary: 获取指定资源类的信息Splitable
+      tags:
+      - receiver
+  /subscription_receivers:
+    get:
+      description: 列表
+      operationId: subscription_receiver_ListItemFilter
+      parameters:
+      - default: 20
+        description: 查询限制量
+        format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
+      - default: 0
+        description: 查询偏移量
+        format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - description: 列表排序时，用于排序的字段的名称，该字段不提供时，则按默认字段排序。一般时按照资源的新建时间逆序排序。
+        in: query
+        items:
+          type: string
+        name: order_by
+        type: array
+        x-go-name: OrderBy
+      - description: 列表排序时的顺序，desc为从高到低，asc为从低到高。默认是按照资源的创建时间desc排序。
+        example: desc|asc
+        in: query
+        name: order
+        type: string
+        x-go-name: Order
+      - description: 列表返回资源的更多详细信息。默认只显示基本字段，该字段为true则返回扩展字段信息。
+        in: query
+        name: details
+        type: boolean
+        x-go-name: Details
+      - description: 模糊搜索所有字段
+        in: query
+        name: search
+        type: string
+        x-go-name: Search
+      - description: |-
+          指定过滤条件，允许指定多个，每个条件的格式为"字段名称.操作符(匹配信息)"，例如name字段等于test的过滤器为：name.equals('test')
+          支持的操作符如下：
+
+           操作符        | 参数个数 | 举例                                           | 说明                        |
+          ---------------|----------|------------------------------------------------|-----------------------------|
+           in            | > 0      | name.in("test", "good")                        | 在给定数组中                |
+           notin         | > 0      | name.notin('test')                             | 不在给定数组中              |
+           between       | 2        | created_at.between('2019-12-10', '2020-01-02') | 在两个值之间                |
+           ge            | 1        | created_at.ge('2020-01-01')                    | 大于或等于给定值            |
+           gt            | 1        | created_at.gt('2020-01-01')                    | 严格大于给定值              |
+           le            | 1        | created_at.le('2020-01-01')                    | 小于或等于给定值            |
+           lt            | 1        | sync_seconds.lt(900)                           | 严格大于给定值              |
+           like          | > 0      | name.like('%test%')                            | sql字符串匹配任意一个字符串 |
+           contains      | > 0      | name.contains('test')                          | 包含任意一个给定字符串      |
+           startswith    | > 0      | name.startswith('test')                        | 以任意一个给定字符串开头    |
+           endswith      | > 0      | name.endswith('test')                          | 以任意一个给定字符串结尾    |
+           equals        | > 0      | name.equals('test')                            | 等于任意一个给定值          |
+           notequals     | 1        | name.notequals('test')                         | 不等于给定值                |
+           isnull        | 0        | name.isnull()                                  | 值为SQL的NULL               |
+           isnotnull     | 0        | name.isnotnull()                               | 值不为SQL的NULL             |
+           isempty       | 0        | name.isempty('test')                           | 值为空字符串                |
+           isnotempty    | 0        | name.isnotempty('test')                        | 值不是空字符串              |
+           isnullorempty | 0        | name.isnullorempty('test')                     | 值为SQL的NULL或者空字符串   |
+        in: query
+        items:
+          type: string
+        name: filter
+        type: array
+        x-go-name: Filter
+      - description: |-
+          指定关联过滤条件，允许指定多个，后端将根据关联过滤条件和其他表关联查询，支持的查询语法和filter相同，
+          和其他表关联的语法如下：
+          joint_resources.related_key(origin_key).filter_col.filter_ops(values)
+          其中，joint_resources为要关联的资源名称，related_key为关联表column，origin_key为当前表column, filter_col为
+          关联表用于查询匹配的field名称，field_ops为filter支持的操作，values为匹配的值
+          举例：
+          guestnetworks.guest_id(id).ip_addr.equals('10.168.21.222')
+        in: query
+        items:
+          type: string
+        name: joint_filter
+        type: array
+        x-go-name: JointFilter
+      - description: 如果filter_any为true，则查询所有filter的并集，否则为交集
+        in: query
+        name: filter_any
+        type: boolean
+        x-go-name: FilterAny
+      - description: 返回结果只包含指定的字段
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 用于数据导出，指定导出的数据字段
+        in: query
+        name: export_keys
+        type: string
+        x-go-name: ExportKeys
+      - description: 返回结果携带delete_fail_reason和update_fail_reason字段
+        in: query
+        name: show_fail_reason
+        type: boolean
+        x-go-name: ShowFailReason
+      - description: 通过标签过滤
+        in: query
+        items:
+          $ref: '#/definitions/STag'
+        name: tags
+        type: array
+        x-go-name: Tags
+      - description: 通过标签过滤
+        in: query
+        name: order_by_tag
+        type: string
+        x-go-name: OrderByTag
+      - description: |-
+          deprecated
+          返回资源的标签不包含用户标签
+        in: query
+        name: without_user_meta
+        type: boolean
+        x-go-name: WithoutUserMeta
+      - description: 返回包含用户标签的资源
+        in: query
+        name: with_user_meta
+        type: boolean
+        x-go-name: WithUserMeta
+      - description: 返回包含外部标签的资源
+        in: query
+        name: with_cloud_meta
+        type: boolean
+        x-go-name: WithCloudMeta
+      - description: 返回包含任意标签的资源
+        in: query
+        name: with_any_meta
+        type: boolean
+        x-go-name: WithAnyMeta
+      - description: 返回列表数据中包含资源的标签数据（Metadata）
+        in: query
+        name: with_meta
+        type: boolean
+        x-go-name: WithMeta
+      - description: 显示所有的资源，包括模拟的资源
+        in: query
+        name: show_emulated
+        type: boolean
+        x-go-name: ShowEmulated
+      - description: 以资源ID过滤列表
+        in: query
+        items:
+          type: string
+        name: id
+        type: array
+        x-go-name: Ids
+      - description: 以资源名称过滤列表
+        in: query
+        items:
+          type: string
+        name: name
+        type: array
+        x-go-name: Names
+      responses:
+        "200":
+          $ref: '#/responses/subscription_receiver_ListItemFilterOutput'
+      summary: 列表
+      tags:
+      - subscription_receiver
+    post:
+      description: 新建
+      operationId: subscription_receiver_ValidateCreateData
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscription_receiver:
+              $ref: '#/definitions/StandaloneResourceCreateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/subscription_receiver_ValidateCreateDataOutput'
+      summary: 新建
+      tags:
+      - subscription_receiver
+  /subscription_receivers/{id}:
+    delete:
+      description: 删除
+      operationId: subscription_receiver_CustomizeDelete
+      parameters:
+      - description: The Id or Name of subscription_receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/subscription_receiver_CustomizeDeleteOutput'
+      summary: 删除
+      tags:
+      - subscription_receiver
+    get:
+      description: 获取详情
+      operationId: subscription_receiver_GetExtraDetails
+      parameters:
+      - description: The Id or Name of subscription_receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/subscription_receiver_GetExtraDetailsOutput'
+      summary: 获取详情
+      tags:
+      - subscription_receiver
+    put:
+      description: 更新
+      operationId: subscription_receiver_ValidateUpdateData
+      parameters:
+      - description: The Id or Name of subscription_receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscription_receiver:
+              $ref: '#/definitions/StandaloneResourceBaseUpdateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/subscription_receiver_ValidateUpdateDataOutput'
+      summary: 更新
+      tags:
+      - subscription_receiver
+  /subscription_receivers/{id}/metadata:
+    get:
+      description: 获取指定信息Metadata
+      operationId: subscription_receiver_GetDetailsMetadata
+      parameters:
+      - description: |-
+          指定需要获取的所有标签的KEY列表，如果列表为空，则获取全部标签
+          标签分为
+
+           类型     | 说明                                        |
+          ----------|---------------------------------------------|
+           系统标签 | 平台定义的标签                              |
+           用户标签 | key以user:为前缀，用户自定义标签            |
+           外部标签 | key以ext:为前缀，为从其他平台同步过来的标签 |
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 按标签前缀过滤
+        in: query
+        name: prefix
+        type: string
+        x-go-name: Prefix
+      - description: The Id or Name of subscription_receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/subscription_receiver_GetDetailsMetadataOutput'
+      summary: 获取资源标签（元数据）
+      tags:
+      - subscription_receiver
+  /subscription_receivers/{id}/set-user-metadata:
+    post:
+      description: 执行操作SetUserMetadata
+      operationId: subscription_receiver_PerformSetUserMetadata
+      parameters:
+      - description: The Id or Name of subscription_receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscription_receiver:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/subscription_receiver_PerformSetUserMetadataOutput'
+      summary: 全量替换资源的所有用户标签
+      tags:
+      - subscription_receiver
+  /subscription_receivers/distinct-field:
+    get:
+      description: 获取指定资源类的信息DistinctField
+      operationId: subscription_receiver_GetPropertyDistinctField
+      responses:
+        "200":
+          $ref: '#/responses/subscription_receiver_GetPropertyDistinctFieldOutput'
+      summary: 获取指定资源类的信息DistinctField
+      tags:
+      - subscription_receiver
+  /subscription_receivers/purge-splitable:
+    post:
+      description: 执行操作PurgeSplitable
+      operationId: subscription_receiver_PerformPurgeSplitable
+      responses:
+        "200":
+          $ref: '#/responses/subscription_receiver_PerformPurgeSplitableOutput'
+      summary: 执行操作PurgeSplitable
+      tags:
+      - subscription_receiver
+  /subscription_receivers/splitable:
+    get:
+      description: 获取指定资源类的信息Splitable
+      operationId: subscription_receiver_GetPropertySplitable
+      responses:
+        "200":
+          $ref: '#/responses/subscription_receiver_GetPropertySplitableOutput'
+      summary: 获取指定资源类的信息Splitable
+      tags:
+      - subscription_receiver
+  /subscriptions:
+    get:
+      description: 列表
+      operationId: subscription_ListItemFilter
+      responses:
+        "200":
+          $ref: '#/responses/subscription_ListItemFilterOutput'
+      summary: 列表
+      tags:
+      - subscription
+    post:
+      description: |-
+        input error: unsupport body type: invalid type yunion.io/x/jsonutils.JSONObject
+        新建
+      operationId: subscription_ValidateCreateData
+      responses:
+        "200":
+          $ref: '#/responses/subscription_ValidateCreateDataOutput'
+      summary: input or output error exists
+      tags:
+      - subscription
+  /subscriptions/{id}:
+    delete:
+      description: 删除
+      operationId: subscription_CustomizeDelete
+      parameters:
+      - description: The Id or Name of subscription
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/subscription_CustomizeDeleteOutput'
+      summary: 删除
+      tags:
+      - subscription
+    get:
+      description: 获取详情
+      operationId: subscription_GetExtraDetails
+      parameters:
+      - description: The Id or Name of subscription
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/subscription_GetExtraDetailsOutput'
+      summary: 获取详情
+      tags:
+      - subscription
+    put:
+      description: |-
+        input error: unsupport body type: invalid type yunion.io/x/jsonutils.JSONObject
+        更新
+      operationId: subscription_ValidateUpdateData
+      parameters:
+      - description: The Id or Name of subscription
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/subscription_ValidateUpdateDataOutput'
+      summary: input or output error exists
+      tags:
+      - subscription
+  /subscriptions/{id}/metadata:
+    get:
+      description: 获取指定信息Metadata
+      operationId: subscription_GetDetailsMetadata
+      parameters:
+      - description: |-
+          指定需要获取的所有标签的KEY列表，如果列表为空，则获取全部标签
+          标签分为
+
+           类型     | 说明                                        |
+          ----------|---------------------------------------------|
+           系统标签 | 平台定义的标签                              |
+           用户标签 | key以user:为前缀，用户自定义标签            |
+           外部标签 | key以ext:为前缀，为从其他平台同步过来的标签 |
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 按标签前缀过滤
+        in: query
+        name: prefix
+        type: string
+        x-go-name: Prefix
+      - description: The Id or Name of subscription
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/subscription_GetDetailsMetadataOutput'
+      summary: 获取资源标签（元数据）
+      tags:
+      - subscription
+  /subscriptions/{id}/set-receiver:
+    post:
+      description: 执行操作SetReceiver
+      operationId: subscription_PerformSetReceiver
+      parameters:
+      - description: The Id or Name of subscription
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscription:
+              $ref: '#/definitions/SubscriptionSetReceiverInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/subscription_PerformSetReceiverOutput'
+      summary: 执行操作SetReceiver
+      tags:
+      - subscription
+  /subscriptions/{id}/set-robot:
+    post:
+      description: 执行操作SetRobot
+      operationId: subscription_PerformSetRobot
+      parameters:
+      - description: The Id or Name of subscription
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscription:
+              $ref: '#/definitions/SubscriptionSetRobotInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/subscription_PerformSetRobotOutput'
+      summary: 执行操作SetRobot
+      tags:
+      - subscription
+  /subscriptions/{id}/set-user-metadata:
+    post:
+      description: 执行操作SetUserMetadata
+      operationId: subscription_PerformSetUserMetadata
+      parameters:
+      - description: The Id or Name of subscription
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscription:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/subscription_PerformSetUserMetadataOutput'
+      summary: 全量替换资源的所有用户标签
+      tags:
+      - subscription
+  /subscriptions/{id}/set-webhook:
+    post:
+      description: 执行操作SetWebhook
+      operationId: subscription_PerformSetWebhook
+      parameters:
+      - description: The Id or Name of subscription
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscription:
+              $ref: '#/definitions/SubscriptionSetWebhookInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/subscription_PerformSetWebhookOutput'
+      summary: 执行操作SetWebhook
+      tags:
+      - subscription
+  /subscriptions/distinct-field:
+    get:
+      description: 获取指定资源类的信息DistinctField
+      operationId: subscription_GetPropertyDistinctField
+      responses:
+        "200":
+          $ref: '#/responses/subscription_GetPropertyDistinctFieldOutput'
+      summary: 获取指定资源类的信息DistinctField
+      tags:
+      - subscription
+  /subscriptions/purge-splitable:
+    post:
+      description: 执行操作PurgeSplitable
+      operationId: subscription_PerformPurgeSplitable
+      responses:
+        "200":
+          $ref: '#/responses/subscription_PerformPurgeSplitableOutput'
+      summary: 执行操作PurgeSplitable
+      tags:
+      - subscription
+  /subscriptions/splitable:
+    get:
+      description: 获取指定资源类的信息Splitable
+      operationId: subscription_GetPropertySplitable
+      responses:
+        "200":
+          $ref: '#/responses/subscription_GetPropertySplitableOutput'
+      summary: 获取指定资源类的信息Splitable
+      tags:
+      - subscription
+  /templates:
+    get:
+      description: 列表
+      operationId: template_ListItemFilter
+      parameters:
+      - default: 20
+        description: 查询限制量
+        format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
+      - default: 0
+        description: 查询偏移量
+        format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - description: 列表排序时，用于排序的字段的名称，该字段不提供时，则按默认字段排序。一般时按照资源的新建时间逆序排序。
+        in: query
+        items:
+          type: string
+        name: order_by
+        type: array
+        x-go-name: OrderBy
+      - description: 列表排序时的顺序，desc为从高到低，asc为从低到高。默认是按照资源的创建时间desc排序。
+        example: desc|asc
+        in: query
+        name: order
+        type: string
+        x-go-name: Order
+      - description: 列表返回资源的更多详细信息。默认只显示基本字段，该字段为true则返回扩展字段信息。
+        in: query
+        name: details
+        type: boolean
+        x-go-name: Details
+      - description: 模糊搜索所有字段
+        in: query
+        name: search
+        type: string
+        x-go-name: Search
+      - description: |-
+          指定过滤条件，允许指定多个，每个条件的格式为"字段名称.操作符(匹配信息)"，例如name字段等于test的过滤器为：name.equals('test')
+          支持的操作符如下：
+
+           操作符        | 参数个数 | 举例                                           | 说明                        |
+          ---------------|----------|------------------------------------------------|-----------------------------|
+           in            | > 0      | name.in("test", "good")                        | 在给定数组中                |
+           notin         | > 0      | name.notin('test')                             | 不在给定数组中              |
+           between       | 2        | created_at.between('2019-12-10', '2020-01-02') | 在两个值之间                |
+           ge            | 1        | created_at.ge('2020-01-01')                    | 大于或等于给定值            |
+           gt            | 1        | created_at.gt('2020-01-01')                    | 严格大于给定值              |
+           le            | 1        | created_at.le('2020-01-01')                    | 小于或等于给定值            |
+           lt            | 1        | sync_seconds.lt(900)                           | 严格大于给定值              |
+           like          | > 0      | name.like('%test%')                            | sql字符串匹配任意一个字符串 |
+           contains      | > 0      | name.contains('test')                          | 包含任意一个给定字符串      |
+           startswith    | > 0      | name.startswith('test')                        | 以任意一个给定字符串开头    |
+           endswith      | > 0      | name.endswith('test')                          | 以任意一个给定字符串结尾    |
+           equals        | > 0      | name.equals('test')                            | 等于任意一个给定值          |
+           notequals     | 1        | name.notequals('test')                         | 不等于给定值                |
+           isnull        | 0        | name.isnull()                                  | 值为SQL的NULL               |
+           isnotnull     | 0        | name.isnotnull()                               | 值不为SQL的NULL             |
+           isempty       | 0        | name.isempty('test')                           | 值为空字符串                |
+           isnotempty    | 0        | name.isnotempty('test')                        | 值不是空字符串              |
+           isnullorempty | 0        | name.isnullorempty('test')                     | 值为SQL的NULL或者空字符串   |
+        in: query
+        items:
+          type: string
+        name: filter
+        type: array
+        x-go-name: Filter
+      - description: |-
+          指定关联过滤条件，允许指定多个，后端将根据关联过滤条件和其他表关联查询，支持的查询语法和filter相同，
+          和其他表关联的语法如下：
+          joint_resources.related_key(origin_key).filter_col.filter_ops(values)
+          其中，joint_resources为要关联的资源名称，related_key为关联表column，origin_key为当前表column, filter_col为
+          关联表用于查询匹配的field名称，field_ops为filter支持的操作，values为匹配的值
+          举例：
+          guestnetworks.guest_id(id).ip_addr.equals('10.168.21.222')
+        in: query
+        items:
+          type: string
+        name: joint_filter
+        type: array
+        x-go-name: JointFilter
+      - description: 如果filter_any为true，则查询所有filter的并集，否则为交集
+        in: query
+        name: filter_any
+        type: boolean
+        x-go-name: FilterAny
+      - description: 返回结果只包含指定的字段
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 用于数据导出，指定导出的数据字段
+        in: query
+        name: export_keys
+        type: string
+        x-go-name: ExportKeys
+      - description: 返回结果携带delete_fail_reason和update_fail_reason字段
+        in: query
+        name: show_fail_reason
+        type: boolean
+        x-go-name: ShowFailReason
+      - description: 通过标签过滤
+        in: query
+        items:
+          $ref: '#/definitions/STag'
+        name: tags
+        type: array
+        x-go-name: Tags
+      - description: 通过标签过滤
+        in: query
+        name: order_by_tag
+        type: string
+        x-go-name: OrderByTag
+      - description: |-
+          deprecated
+          返回资源的标签不包含用户标签
+        in: query
+        name: without_user_meta
+        type: boolean
+        x-go-name: WithoutUserMeta
+      - description: 返回包含用户标签的资源
+        in: query
+        name: with_user_meta
+        type: boolean
+        x-go-name: WithUserMeta
+      - description: 返回包含外部标签的资源
+        in: query
+        name: with_cloud_meta
+        type: boolean
+        x-go-name: WithCloudMeta
+      - description: 返回包含任意标签的资源
+        in: query
+        name: with_any_meta
+        type: boolean
+        x-go-name: WithAnyMeta
+      - description: 返回列表数据中包含资源的标签数据（Metadata）
+        in: query
+        name: with_meta
+        type: boolean
+        x-go-name: WithMeta
+      - description: 显示所有的资源，包括模拟的资源
+        in: query
+        name: show_emulated
+        type: boolean
+        x-go-name: ShowEmulated
+      - description: 以资源ID过滤列表
+        in: query
+        items:
+          type: string
+        name: id
+        type: array
+        x-go-name: Ids
+      - description: 以资源名称过滤列表
+        in: query
+        items:
+          type: string
+        name: name
+        type: array
+        x-go-name: Names
+      - description: |-
+          description: Contact type, specifically, setting it to all means all contact type
+          require: true
+        example: email
+        in: query
+        name: contact_type
+        type: string
+        x-go-name: ContactType
+      - description: 'description: Template type'
+        enum:
+        - title
+        - content
+        - remote
+        example: title
+        in: query
+        name: template_type
+        type: string
+        x-go-name: TemplateType
+      - description: 'description: template topic'
+        example: IMAGE_ACTIVE
+        in: query
+        name: topic
+        required: true
+        type: string
+        x-go-name: Topic
+      responses:
+        "200":
+          $ref: '#/responses/template_ListItemFilterOutput'
+      summary: 列表
+      tags:
+      - template
+    post:
+      description: 新建
+      operationId: template_ValidateCreateData
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            template:
+              $ref: '#/definitions/TemplateCreateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/template_ValidateCreateDataOutput'
+      summary: 新建
+      tags:
+      - template
+  /templates/{id}:
+    delete:
+      description: 删除
+      operationId: template_CustomizeDelete
+      parameters:
+      - description: The Id or Name of template
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/template_CustomizeDeleteOutput'
+      summary: 删除
+      tags:
+      - template
+    get:
+      description: 获取详情
+      operationId: template_GetExtraDetails
+      parameters:
+      - description: The Id or Name of template
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/template_GetExtraDetailsOutput'
+      summary: 获取详情
+      tags:
+      - template
+    put:
+      description: 更新
+      operationId: template_ValidateUpdateData
+      parameters:
+      - description: The Id or Name of template
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            template:
+              $ref: '#/definitions/TemplateUpdateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/template_ValidateUpdateDataOutput'
+      summary: 更新
+      tags:
+      - template
+  /templates/{id}/metadata:
+    get:
+      description: 获取指定信息Metadata
+      operationId: template_GetDetailsMetadata
+      parameters:
+      - description: |-
+          指定需要获取的所有标签的KEY列表，如果列表为空，则获取全部标签
+          标签分为
+
+           类型     | 说明                                        |
+          ----------|---------------------------------------------|
+           系统标签 | 平台定义的标签                              |
+           用户标签 | key以user:为前缀，用户自定义标签            |
+           外部标签 | key以ext:为前缀，为从其他平台同步过来的标签 |
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 按标签前缀过滤
+        in: query
+        name: prefix
+        type: string
+        x-go-name: Prefix
+      - description: The Id or Name of template
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/template_GetDetailsMetadataOutput'
+      summary: 获取资源标签（元数据）
+      tags:
+      - template
+  /templates/{id}/set-user-metadata:
+    post:
+      description: 执行操作SetUserMetadata
+      operationId: template_PerformSetUserMetadata
+      parameters:
+      - description: The Id or Name of template
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            template:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/template_PerformSetUserMetadataOutput'
+      summary: 全量替换资源的所有用户标签
+      tags:
+      - template
+  /templates/distinct-field:
+    get:
+      description: 获取指定资源类的信息DistinctField
+      operationId: template_GetPropertyDistinctField
+      responses:
+        "200":
+          $ref: '#/responses/template_GetPropertyDistinctFieldOutput'
+      summary: 获取指定资源类的信息DistinctField
+      tags:
+      - template
+  /templates/purge-splitable:
+    post:
+      description: 执行操作PurgeSplitable
+      operationId: template_PerformPurgeSplitable
+      responses:
+        "200":
+          $ref: '#/responses/template_PerformPurgeSplitableOutput'
+      summary: 执行操作PurgeSplitable
+      tags:
+      - template
+  /templates/splitable:
+    get:
+      description: 获取指定资源类的信息Splitable
+      operationId: template_GetPropertySplitable
+      responses:
+        "200":
+          $ref: '#/responses/template_GetPropertySplitableOutput'
+      summary: 获取指定资源类的信息Splitable
+      tags:
+      - template
+produces:
+- application/json
+responses:
+  config_CustomizeDeleteOutput:
+    schema:
+      properties:
+        config:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  config_GetDetailsMetadataOutput:
+    schema:
+      properties:
+        config:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
+  config_GetExtraDetailsOutput:
+    schema:
+      properties:
+        config:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  config_GetPropertyDistinctFieldOutput: {}
+  config_GetPropertySplitableOutput: {}
+  config_ListItemFilterOutput:
+    schema:
+      properties:
+        configs:
+          items:
+            $ref: '#/definitions/StandaloneResourceDetails'
+          type: array
+          x-go-name: Output
+        limit:
+          format: int64
+          type: integer
+          x-go-name: Limit
+        offset:
+          format: int64
+          type: integer
+          x-go-name: Offset
+        total:
+          format: int64
+          type: integer
+          x-go-name: Total
+      type: object
+  config_PerformPurgeSplitableOutput: {}
+  config_PerformSetUserMetadataOutput: {}
+  config_PerformValidateOutput:
+    schema:
+      properties:
+        config:
+          $ref: '#/definitions/ConfigValidateOutput'
+      type: object
+  config_ValidateCreateDataOutput:
+    schema:
+      properties:
+        config:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  config_ValidateUpdateDataOutput:
+    schema:
+      properties:
+        config:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  notification_CustomizeDeleteOutput:
+    schema:
+      properties:
+        notification:
+          $ref: '#/definitions/NotificationDetails'
+      type: object
+  notification_GetDetailsMetadataOutput:
+    schema:
+      properties:
+        notification:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
+  notification_GetDetailsStatusOutput:
+    schema:
+      properties:
+        notification:
+          $ref: '#/definitions/GetDetailsStatusOutput'
+      type: object
+  notification_GetExtraDetailsOutput:
+    schema:
+      properties:
+        notification:
+          $ref: '#/definitions/NotificationDetails'
+      type: object
+  notification_GetPropertyDistinctFieldOutput: {}
+  notification_GetPropertySplitableOutput: {}
+  notification_ListItemFilterOutput:
+    schema:
+      properties:
+        limit:
+          format: int64
+          type: integer
+          x-go-name: Limit
+        notifications:
+          items:
+            $ref: '#/definitions/NotificationDetails'
+          type: array
+          x-go-name: Output
+        offset:
+          format: int64
+          type: integer
+          x-go-name: Offset
+        total:
+          format: int64
+          type: integer
+          x-go-name: Total
+      type: object
+  notification_PerformEventNotifyOutput:
+    schema:
+      properties:
+        notification:
+          $ref: '#/definitions/NotificationManagerEventNotifyOutput'
+      type: object
+  notification_PerformPurgeSplitableOutput: {}
+  notification_PerformSetUserMetadataOutput: {}
+  notification_PerformStatusOutput: {}
+  notification_ValidateCreateDataOutput:
+    schema:
+      properties:
+        notification:
+          $ref: '#/definitions/NotificationDetails'
+      type: object
+  notification_ValidateUpdateDataOutput:
+    schema:
+      properties:
+        notification:
+          $ref: '#/definitions/NotificationDetails'
+      type: object
+  receiver_CustomizeDeleteOutput:
+    schema:
+      properties:
+        receiver:
+          $ref: '#/definitions/ReceiverDetails'
+      type: object
+  receiver_GetDetailsMetadataOutput:
+    schema:
+      properties:
+        receiver:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
+  receiver_GetDetailsStatusOutput:
+    schema:
+      properties:
+        receiver:
+          $ref: '#/definitions/GetDetailsStatusOutput'
+      type: object
+  receiver_GetExtraDetailsOutput:
+    schema:
+      properties:
+        receiver:
+          $ref: '#/definitions/ReceiverDetails'
+      type: object
+  receiver_GetPropertyDistinctFieldOutput: {}
+  receiver_GetPropertySplitableOutput: {}
+  receiver_ListItemFilterOutput:
+    schema:
+      properties:
+        limit:
+          format: int64
+          type: integer
+          x-go-name: Limit
+        offset:
+          format: int64
+          type: integer
+          x-go-name: Offset
+        receivers:
+          items:
+            $ref: '#/definitions/ReceiverDetails'
+          type: array
+          x-go-name: Output
+        total:
+          format: int64
+          type: integer
+          x-go-name: Total
+      type: object
+  receiver_PerformDisableOutput: {}
+  receiver_PerformEnableOutput: {}
+  receiver_PerformGetTypesOutput:
+    schema:
+      properties:
+        receiver:
+          $ref: '#/definitions/ConfigManagerGetTypesOutput'
+      type: object
+  receiver_PerformIntellijGetOutput: {}
+  receiver_PerformPurgeSplitableOutput: {}
+  receiver_PerformSetUserMetadataOutput: {}
+  receiver_PerformStatusOutput: {}
+  receiver_PerformTriggerVerifyOutput: {}
+  receiver_PerformVerifyOutput: {}
+  receiver_ValidateCreateDataOutput:
+    schema:
+      properties:
+        receiver:
+          $ref: '#/definitions/ReceiverDetails'
+      type: object
+  receiver_ValidateUpdateDataOutput:
+    schema:
+      properties:
+        receiver:
+          $ref: '#/definitions/ReceiverDetails'
+      type: object
+  subscription_CustomizeDeleteOutput:
+    schema:
+      properties:
+        subscription:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  subscription_GetDetailsMetadataOutput:
+    schema:
+      properties:
+        subscription:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
+  subscription_GetExtraDetailsOutput:
+    schema:
+      properties:
+        subscription:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  subscription_GetPropertyDistinctFieldOutput: {}
+  subscription_GetPropertySplitableOutput: {}
+  subscription_ListItemFilterOutput:
+    schema:
+      properties:
+        limit:
+          format: int64
+          type: integer
+          x-go-name: Limit
+        offset:
+          format: int64
+          type: integer
+          x-go-name: Offset
+        subscriptions:
+          items:
+            $ref: '#/definitions/StandaloneResourceDetails'
+          type: array
+          x-go-name: Output
+        total:
+          format: int64
+          type: integer
+          x-go-name: Total
+      type: object
+  subscription_PerformPurgeSplitableOutput: {}
+  subscription_PerformSetReceiverOutput: {}
+  subscription_PerformSetRobotOutput: {}
+  subscription_PerformSetUserMetadataOutput: {}
+  subscription_PerformSetWebhookOutput: {}
+  subscription_ValidateCreateDataOutput:
+    schema:
+      properties:
+        subscription:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  subscription_ValidateUpdateDataOutput:
+    schema:
+      properties:
+        subscription:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  subscription_receiver_CustomizeDeleteOutput:
+    schema:
+      properties:
+        subscription_receiver:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  subscription_receiver_GetDetailsMetadataOutput:
+    schema:
+      properties:
+        subscription_receiver:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
+  subscription_receiver_GetExtraDetailsOutput:
+    schema:
+      properties:
+        subscription_receiver:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  subscription_receiver_GetPropertyDistinctFieldOutput: {}
+  subscription_receiver_GetPropertySplitableOutput: {}
+  subscription_receiver_ListItemFilterOutput:
+    schema:
+      properties:
+        limit:
+          format: int64
+          type: integer
+          x-go-name: Limit
+        offset:
+          format: int64
+          type: integer
+          x-go-name: Offset
+        subscription_receivers:
+          items:
+            $ref: '#/definitions/StandaloneResourceDetails'
+          type: array
+          x-go-name: Output
+        total:
+          format: int64
+          type: integer
+          x-go-name: Total
+      type: object
+  subscription_receiver_PerformPurgeSplitableOutput: {}
+  subscription_receiver_PerformSetUserMetadataOutput: {}
+  subscription_receiver_ValidateCreateDataOutput:
+    schema:
+      properties:
+        subscription_receiver:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  subscription_receiver_ValidateUpdateDataOutput:
+    schema:
+      properties:
+        subscription_receiver:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  template_CustomizeDeleteOutput:
+    schema:
+      properties:
+        template:
+          $ref: '#/definitions/TemplateDetails'
+      type: object
+  template_GetDetailsMetadataOutput:
+    schema:
+      properties:
+        template:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
+  template_GetExtraDetailsOutput:
+    schema:
+      properties:
+        template:
+          $ref: '#/definitions/TemplateDetails'
+      type: object
+  template_GetPropertyDistinctFieldOutput: {}
+  template_GetPropertySplitableOutput: {}
+  template_ListItemFilterOutput:
+    schema:
+      properties:
+        limit:
+          format: int64
+          type: integer
+          x-go-name: Limit
+        offset:
+          format: int64
+          type: integer
+          x-go-name: Offset
+        templates:
+          items:
+            $ref: '#/definitions/TemplateDetails'
+          type: array
+          x-go-name: Output
+        total:
+          format: int64
+          type: integer
+          x-go-name: Total
+      type: object
+  template_PerformPurgeSplitableOutput: {}
+  template_PerformSetUserMetadataOutput: {}
+  template_ValidateCreateDataOutput:
+    schema:
+      properties:
+        template:
+          $ref: '#/definitions/TemplateDetails'
+      type: object
+  template_ValidateUpdateDataOutput:
+    schema:
+      properties:
+        template:
+          $ref: '#/definitions/TemplateDetails'
+      type: object
+schemes:
+- https
+- http
+securityDefinitions:
+  keystone:
+    in: header
+    name: X-Auth-Token
+    type: apiKey
+swagger: "2.0"
