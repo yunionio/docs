@@ -64,7 +64,7 @@ $ ssh root@10.168.26.216 "hostname"
 $ yum install -y epel-release ansible
 
 # 下载 ocboot 工具到本地
-$ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 {{% /tab %}}
 
@@ -74,7 +74,7 @@ $ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
 $ apt install -y ansible
 
 # 下载 ocboot 工具到本地
-$ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 {{% /tab %}}
 
@@ -84,7 +84,7 @@ $ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
 $ pip install ansible
 
 # 下载 ocboot 工具到本地
-$ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 {{% /tab %}}
 
@@ -120,13 +120,15 @@ primary_master_node:
   # k8s 控制节点的端口
   controlplane_port: "6443"
   # 云联壹云 版本
-  onecloud_version: 'v3.6.9'
+  onecloud_version: 'v3.7.0-20210414.0'
   # 云联壹云 登录用户
   onecloud_user: admin
   # 云联壹云 登录用户密码
   onecloud_user_password: admin@123
   # 该节点作为 云联壹云 私有云计算节点
   as_host: true
+  # 启用 minio 作为后端对象存储
+  enable_minio: true
 EOF
 ```
 
@@ -195,7 +197,7 @@ All in One 部署的节点会部署 云联壹云 host 计算服务，作为宿�
 ```bash
 # 查看是否使用 yn 内核
 $ uname -a | grep yn
-Linux office-controller 3.10.0-1062.4.3.el7.yn20191203.x86_64
+Linux office-controller 3.10.0-1160.6.1.el7.yn20201125.x86_64
 # 如果内核不是带有 yn 关键字的版本，可能是第一次使用 ocboot 安装，重启即可进入 yn 内核
 $ reboot
 ```
