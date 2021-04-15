@@ -5,6 +5,20 @@ description: >
   介绍 github 发起 pull requests 和提交代码的流程
 ---
 
+## Fork 仓库
+
+访问 https://github.com/yunionio/onecloud ，将仓库 fork 到自己的 github 用户下。
+
+## Clone 源码
+
+clone 自己 fork 的仓库，并设置 upstream 为源仓库。
+
+```bash
+$ git clone https://github.com/<your_name>/onecloud
+$ cd onecloud
+$ git remote add upstream https://github.com/yunionio/onecloud
+```
+
 ## 提交代码流程
 
 - 从 master checkout 出 feature 或者 bugfix 分支
@@ -50,8 +64,8 @@ $ git push origin feature/implement-x # push 分支到自己的 repo
 $ export GITHUB_USER=<your_username>
 
 # 使用脚本自动 cherry-pick PR 到 release 分支
-# 比如现在有一个提交的PR的编号为8，要把它合并到 release/2.8.0
-$ ./scripts/cherry_pick_pull.sh upstream/release/2.8.0 8
+# 比如现在有一个提交的PR的编号为18，要把它合并到 release/3.4
+$ ./scripts/cherry_pick_pull.sh upstream/release/3.4 18
  
 # cherry pick 可能会出现冲突，冲突时开另外一个 terminal，解决好冲突，再输入 'y' 进行提交
 $ git add xxx # 解决完冲突后
@@ -59,7 +73,7 @@ $ git am --continue
 # 回到执行 cherry-pick 脚本的 terminal 输入 'y' 即可
 ```
 
-去 upstream 的 [PR 页面](https://github.com/yunionio/onecloud/pulls), 就能看到自动生成的 cherry-pick PR，上面操作的PR的标题前缀就应该为：`Automated cherry pick of #8`，然后重复 PR review 流程合并到 release
+去 upstream 的 [PR 页面](https://github.com/yunionio/onecloud/pulls), 就能看到自动生成的 cherry-pick PR，上面操作的PR的标题前缀就应该为：`Automated cherry pick of #18`，然后重复 PR review 流程合并到 release
 
 
 {{% alert title="注意" %}}
