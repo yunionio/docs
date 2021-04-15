@@ -82,7 +82,7 @@ $ docker buildx create --use --name build --node build --driver-opt network=host
 git clone 前确保 GOPATH 等环境变量已经设置好，clone 你自己 fork 的仓库
 
 ```sh
-$ git clone  https://github.com/<your_name>/onecloud $GOPATH/src/yunion.io/x/onecloud
+$ git clone https://github.com/<your_name>/onecloud $GOPATH/src/yunion.io/x/onecloud
 $ cd $GOPATH/src/yunion.io/x/onecloud
 $ git remote add upstream https://github.com/yunionio/onecloud
 ```
