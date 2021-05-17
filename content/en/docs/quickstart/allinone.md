@@ -10,7 +10,9 @@ description: >
 
 ### Configuration Requirements
 
-- OS: CentOS 7.6
+- OS: Depending on the CPU architecture, the supported distributions are different
+    - X86_64: [CentOS 7](http://isoredirect.centos.org/centos/7/isos/x86_64/)
+    - ARM64: [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) or [China UOS](https://www.chinauos.com/) 
 - Minimum Configuration Requirements: CPU 4 cores, Memory 8G, Storage 100G
 
 The following is the environment of the machine to be deployed:
@@ -22,12 +24,6 @@ The following is the environment of the machine to be deployed:
 {{% alert title="Tips" %}}
 > 10.168.26.216 is the IP of this test environment, please modify accordingly according to your own environment.
 {{% /alert %}}
-
-### Related Software Dependencies
-
-- database: mariadb Ver 15.1 Distrib 5.5.56-MariaDB
-- docker: ce-19.03.9
-- kubernetes: v1.15.8
 
 ### Local environment requirements
 
@@ -62,7 +58,17 @@ The installation tool is https://github.com/yunionio/ocboot , then according to 
 $ yum install -y epel-release ansible
 
 # Git clone the ocboot installation tool locally
-$ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
+```
+{{% /tab %}}
+
+{{% tab name="Debian 10" %}}
+```bash
+# Install ansible locally
+$ apt install -y ansible
+
+# Git clone the ocboot installation tool locally
+$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 {{% /tab %}}
 
@@ -72,7 +78,7 @@ $ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
 $ pip install ansible
 
 # Git clone the ocboot installation tool locally
-$ git clone -b release/3.6 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 {{% /tab %}}
 
@@ -108,7 +114,7 @@ primary_master_node:
   # Port of Kubernetes controlplane
   controlplane_port: "6443"
   # Yunion OneCloud version
-  onecloud_version: 'v3.6.9'
+  onecloud_version: 'v3.7.0'
   # Yunion OneCloud login username
   onecloud_user: admin
   # Yunion OneCloud login user's password
@@ -190,7 +196,7 @@ If you want to use Yunion OneCloud private cloud, you need ensure the computing 
 ```bash
 # Check if yn keyword kernel is used
 $ uname -a | grep yn
-Linux office-controller 3.10.0-1062.4.3.el7.yn20191203.x86_64
+Linux office-controller 3.10.0-1160.6.1.el7.yn20201125.x86_64
 # If the kernel is not the version with the yn keyword,
 # it may be the first time you install it using ocboot,
 # and you can reboot into the yn kernel
