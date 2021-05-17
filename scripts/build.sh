@@ -14,6 +14,7 @@ HOST=https://opensource.yunion.cn
 # append '(latest)' to the version string, and build script can place the
 # artifact in an appropriate location
 VERSION_ARRAY=(
+'v3.7'
 'v3.6'
 'v3.4'
 'v3.3'
