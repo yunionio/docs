@@ -100,10 +100,10 @@ time_format_blog = "02.01.2006"
     weight = 50
     url = "https://github.com/yunionio/onecloud"
 
-#[[languages.en.menu.main]]
-#    name = "CHANGELOG"
-#    weight = 59
-#    url = "docs/changelog"
+[[languages.en.menu.main]]
+    name = "CHANGELOG"
+    weight = 59
+    url = "docs/changelog"
 
 #[[languages.en.menu.main]]
 #    name = "Contact us"
