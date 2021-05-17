@@ -120,7 +120,7 @@ primary_master_node:
   # k8s 控制节点的端口
   controlplane_port: "6443"
   # 云联壹云 版本
-  onecloud_version: 'v3.7.0-20210414.0'
+  onecloud_version: 'v3.7.0'
   # 云联壹云 登录用户
   onecloud_user: admin
   # 云联壹云 登录用户密码
@@ -221,4 +221,4 @@ k8s 管理节点，依赖于 hostname，请改回去。
 
 ### 4. 其它问题？
 
-其它问题欢迎在 云联壹云 github issues 界面提交: https://github.com/yunionio/onecloud/issues , 我们会尽快回复。
+其它问题欢迎在 云联壹云 github issues 界面提交: https://github.com/yunionio/yunioncloud/issues , 我们会尽快回复。
