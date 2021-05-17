@@ -20,7 +20,7 @@ description: >
     - 节点: 10.127.10.156
 - master_nodes: 这个角色表示这些节点运行控制服务，该角色可选，主要作用是和 primary_master_node 一起组成 Kubernetes 的 etcd 3 节点高可用
     - 节点: 10.127.10.157-158
-- worker_nodes: 这个角色表示这些节点运行私有云计算服务，该角色可选，如果需要内置的私有云功能，可以不配置
+- worker_nodes: 这个角色表示这些节点运行私有云计算服务，该角色可选，如果不需要内置的私有云功能，可以不配置
     - 节点: 10.127.10.159-160
 
 |         IP        | 登录用户 | 角色                               |
@@ -29,7 +29,7 @@ description: >
 | 10.127.10.157-158 |   root   | master_nodes                       |
 | 10.127.10.159-160 |   root   | worker_nodes                       |
 
-## 开始部署
+## 开始安装
 
 ### 下载 ocboot
 
@@ -38,7 +38,7 @@ description: >
 ### 编写部署配置
 
 ```bash
-# 编写 config-allinone.yml 文件
+# 编写 config-nodes.yml 文件
 $ cat <<EOF >./config-nodes.yml
 mariadb_node:
   hostname: 10.127.10.156
@@ -75,9 +75,13 @@ EOF
 
 ### 开始部署
 
-当填写完 config-allinone.yml 部署配置文件后，便可以执行 ocboot 里面的 `./run.py ./config-allinone.yml` 部署集群了。
+当填写完 config-nodes.yml 部署配置文件后，便可以执行 ocboot 里面的 `./run.py ./config-nodes.yml` 部署集群了。
 
 ```bash
 # 开始部署
 $ ./run.py ./config-nodes.yml
 ```
+
+等待部署完成后，就可以使用浏览器访问 https://10.168.26.216 (primary_master_node 的 IP), 输入用户名 `admin` 和密码 `admin@123`，进入前端。
+
+然后就可以[创建私有云虚拟机](../allinone/#创建第一台虚拟机)或者[纳管公有云资源](../allinone/#导入公有云或者其它私有云平台资源)。
