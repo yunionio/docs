@@ -48,7 +48,7 @@ mariadb_node:
 # primary_master_node 表示将 10.127.40.252 作为第一个部署的 master 节点
 # 上面会运行云联壹云必要的控制服务
 primary_master_node:
-  onecloud_version: v3.6.15
+  onecloud_version: v3.7.0
   hostname: 10.127.40.252
   user: root
   db_host: 10.127.40.252
