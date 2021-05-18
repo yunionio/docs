@@ -73,6 +73,11 @@ time_format_blog = "02.01.2006"
     url = "https://github.com/yunionio/onecloud"
 
 [[languages.zh.menu.main]]
+    name = "API"
+    weight = 50
+    url = "https://docs.yunion.io/zh/docs/swagger/"
+
+[[languages.zh.menu.main]]
     name = "CHANGELOG"
     weight = 59
     url = "docs/changelog"
@@ -94,6 +99,11 @@ time_format_blog = "02.01.2006"
     name = "Quick Start"
     weight = -100
     url = "docs/quickstart/"
+
+[[languages.en.menu.main]]
+    name = "API"
+    weight = 50
+    url = "https://docs.yunion.io/en/docs/swagger/"
 
 [[languages.en.menu.main]]
     name = "Github"
