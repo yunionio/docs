@@ -29,7 +29,7 @@ The documents are in the content/{en,zh} directory, select the desired section t
 
 There are no multiple versions of the documentation in the development phase. To see the effect of multiple versions of the documentation, you can run the following command.
 
-```
+```bash
 # Compiling multiple versions of documentation using docker.
 # Then the documentation site will be in the . /public directory.
 $ make container-build
