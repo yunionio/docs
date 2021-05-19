@@ -114,7 +114,7 @@ primary_master_node:
   # Port of Kubernetes controlplane
   controlplane_port: "6443"
   # Yunion OneCloud version
-  onecloud_version: 'v3.7.0'
+  onecloud_version: 'v3.7.1'
   # Yunion OneCloud login username
   onecloud_user: admin
   # Yunion OneCloud login user's password
