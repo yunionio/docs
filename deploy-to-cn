@@ -1,0 +1,9 @@
+#!/bin/sh
+
+USER=${USER:-yunion}
+HOST=${HOST:-yunion-doc}
+DIR=/var/www/doc-os/
+
+rm -rf ./public
+
+HOST=https://opensource.yunion.cn EXIT_AFTER_BUILD=1 ./scripts/build.sh && rsync -avz --delete public/ $USER@$HOST:$DIR

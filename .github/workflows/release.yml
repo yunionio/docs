@@ -1,0 +1,53 @@
+name: Release github pages
+
+on:
+  push:
+    branches:
+      - release/*  # Set a branch to deploy
+      #- master  # Set a branch to deploy
+      #- feature/*  # Set a branch to deploy
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive  # Fetch the Docsy theme
+        fetch-depth: 0         # Fetch all history for .GitInfo and .Lastmod
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: '0.83.1'
+        extended: true
+
+    - name: Setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Cache dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - run: npm install
+
+    - name: Build public site
+      run: |
+        EXIT_AFTER_BUILD=1 ./scripts/build.sh
+        ls -alh ./public
+
+    - name: Publish site
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.PERSONAL_TOKEN }}
+        publish_dir: ./public
+        external_repository: yunionio/yunionio.github.io
+        allow_empty_commit: true
+        cname: docs.yunion.io
+        publish_branch: master
