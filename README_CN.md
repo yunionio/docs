@@ -29,7 +29,7 @@ $ make container-serve
 
 开发阶段的文档是没有多版本的，如果要查看多版本文档的效果，可以运行以下命令。
 
-```
+```bash
 # 使用 docker 编译多版本的文档
 # 生成的文档网站会在 ./public 目录下
 $ make container-build
