@@ -8,6 +8,9 @@ fi
 CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 pushd $(dirname "$0")/.. > /dev/null
+
+git submodule update --init --recursive
+
 pushd themes > /dev/null
 if [ ! -d "docsy" ]; then
     git clone --recurse-submodules --depth 1 https://github.com/google/docsy.git
@@ -19,5 +22,3 @@ else
     popd > /dev/null
 fi
 popd > /dev/null
-
-npm install
