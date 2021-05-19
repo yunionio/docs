@@ -1,42 +1,42 @@
-# 云联壹云 文档
+# YunionCloud Documentation
 
-本仓库包含 云联壹云 相关的文档
+This repository contains YunionCloud related documentation.
 
-## 安装 hugo
+[English](./README.md) | [简体中文](./README_CN.md)
 
-文档使用 [hugo](https://github.com/gohugoio/hugo) 生成，安装 hugo 参考链接: https://gohugo.io/getting-started/installing/
+## Installing Dependencies
 
-> hugo使用 v0.79.0/extended 版，git使用最新版
+The documentation is compiled and developed using [docker](https://docs.docker.com/get-started/overview/) running [hugo](https://gohugo.io/) container, which has the advantage of not requiring local installation and configuration of hugo to ensure a uniform development environment.
 
-## 查看文档
+- docker: To install docker, please refer to the documentation at [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/).
+
+## View Document Website
 
 ```bash
 $ git clone https://github.com/yunionio/docs --recursive
 $ cd docs
 
-# 安装 npm 相关的包
-$ npm install
-
-# 使用 hugo 生成文档的 web 界面
-$ hugo serve -D
-# 访问 http://localhost:1313 查看文档
+# Running the hugo serve container with docker
+$ make container-serve
+# Then visit http://localhost:1313 to view the documentation site
 ```
 
-## 编辑文档
+## Edit Document
 
-文档都在 content 目录下，选择需要的部分进行编辑，内容组织参考：https://gohugo.io/content-management/organization/
+The documents are in the content/{en,zh} directory, select the desired section to edit or add, for content organization please refer to: https://gohugo.io/content-management/organization/.
 
-```bash
-# 添加新文档
-$ hugo new chapter0/section0.md
+## Compile Documentation
 
-# 生成的文档会在 content/chapter0/section0.md
-$ ls content/chapter0/section0.md
+There are no multiple versions of the documentation in the development phase. To see the effect of multiple versions of the documentation, you can run the following command.
 
-# 用编辑器编辑 content/chapter0/section0.md 文档即可
+```
+# Compiling multiple versions of documentation using docker.
+# Then the documentation site will be in the . /public directory.
+$ make container-build
+$ cd public && python3 -m http.server 1313
 ```
 
-## 更新 submodule
+## Update Submodule
 
 ```bash
 $ git submodule update --recursive

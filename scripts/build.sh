@@ -5,7 +5,7 @@
 GREEN='\033[32;1m'
 RESET='\033[0m'
 
-HOST=https://opensource.yunion.cn
+HOST=${HOST:-https://docs.yunion.io}
 
 # TODO - Maybe get list of released versions from Github API and filter
 # those which have docs.
@@ -51,7 +51,7 @@ rebuild() {
     HUGO_TITLE="$title" \
     VERSIONS=${VERSION_STRING} \
         CURRENT_BRANCH=${1} \
-        CURRENT_VERSION=${2} $cmd \
+        CURRENT_VERSION=${2} $cmd --minify \
         --destination=public/"$dir" \
         --baseURL="$HOST"/"$dir" 1> /dev/null
 }
