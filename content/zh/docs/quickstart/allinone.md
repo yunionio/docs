@@ -120,7 +120,7 @@ primary_master_node:
   # k8s 控制节点的端口
   controlplane_port: "6443"
   # 云联壹云 版本
-  onecloud_version: 'v3.7.0'
+  onecloud_version: 'v3.7.1'
   # 云联壹云 登录用户
   onecloud_user: admin
   # 云联壹云 登录用户密码
