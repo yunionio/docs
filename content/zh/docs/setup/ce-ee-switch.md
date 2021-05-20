@@ -18,15 +18,9 @@ $ ocadm cluster update --use-ee --wait
 $ ocadm cluster update --use-ce --wait
 ```
 
-`ocadm cluster update --use-ee/--use-ce` 命令会更新替换当前的 default-web deployment，执行该命令后等到新的 pod 启动后，重新刷新前端页面，即可进入(开源版/企业版)前端。
+`ocadm cluster update --use-ee/--use-ce` 命令会更新替换当前的 default-web deployment
 
-## 常见问题
-
-### 访问前端出现错误
-
-**问题原因**: 开源与企业版本的前端分别依赖不同的 default-web configmap，直接切换过去会导致 default-web configmap 没有更新，会造成企业版本使用开源版本 configmap 的问题。
-
-**解决办法**: 在控制节点上删除 web 服务的 nginx configmap 配置文件，并重启 web 服务即可。
+待所有pod启动后，由于开源版和企业版的前端分别依赖不同的 default-web configmap，直接切换过去会导致 default-web configmap 没有更新，web前端无法访问，因为需要删除web服务的nginx configmap，并重启 web 服务。
 
 ```bash
 # 删除 default-web 的 configmap 文件
