@@ -350,6 +350,10 @@ description: >
 
     ![](../../image/ucloudapikeypair.png)
 
+4. 若使用子账号，除获取公钥或私钥外，还需要获取project_id，在“访问控制-用户管理-子账户详情”中获取project_id为个人权限中的应用项目的项目ID。
+
+    ![](../../image/ucloudprojectid.png)
+
 ##### 使用平台管理UCloud资源，需要云账号具备哪些权限
 
 | 权限策略            | 策略说明                        |
