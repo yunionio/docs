@@ -338,20 +338,23 @@ description: >
 
 ##### 如何获取 UCloud API 密钥
 
-1. 登录 UCloud 控制台，单击右上角**个人中心** 图标，选择 **_" **API 密钥"_** 菜单项 ，进入 API 密钥管理页面；
-   ![](../../images/ucloud_access_api_key_1.png)
+1. 登录 UCloud 控制台，单击顶部 **_"全部产品"_** ，搜索或选择 **_"开放API UAPI"_** 菜单项 ，进入 API 产品页面；
+    
+    ![](../../image/ucloudapi.png)
 
-2. 在API密钥管理页面，单击 **_"显示"_** 按钮，进行手机短信二次验证；
-   ![](../../images/ucloud_api_key.png)
+2. 单击“API密钥”页签，进入API 密钥页面。单击 **_"显示"_** 按钮，进行手机短信二次验证；
+
+    ![](../../image/ucloudapikeyshow.png)
 
 3. 通过手机验证后获取公钥和私钥值。
-   ![](../../images/ucloud_api_public_private_key.png)
+
+    ![](../../image/ucloudapikeypair.png)
 
 ##### 使用平台管理UCloud资源，需要云账号具备哪些权限
 
 | 权限策略            | 策略说明                        |
 | :------------------ | :---------------------- |
-| Admin| 管理员角色 |
+| AdministratorAccess | 超级管理员权限 |
 
 ### 新建Google账号
 
