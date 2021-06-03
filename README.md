@@ -1,8 +1,8 @@
-# YunionCloud Documentation
+# Cloudpods Documentation
 
 [English](./README.md) | [简体中文](./README_CN.md)
 
-This repository contains [YunionCloud](https://github.com/yunionio/yunioncloud) related documentation.
+This repository contains [Cloudpods](https://github.com/yunionio/cloudpods) related documentation.
 
 ## Installing Dependencies
 

@@ -1,18 +1,20 @@
 ---
-title: Welcome to YunionCloud documentation
+title: Welcome to Cloudpods documentation
 linktitle: "Documentation"
 menu:
   main:
     weight: 20
 ---
 
-Welcome the documentation of YunionCloud.
+Welcome the documentation of Cloudpods.
 
-## What is YunionCloud?
+## What is Cloudpods?
 
-YunionCloud is an open-source unified multi-cloud/hybrid-cloud IaaS platform that provides unified APIs to access heterogenous IaaS resources across a broad range of cloud providers, including on-premise KVM/BareMetal/VMware, private clouds such as OpenStack, and public clouds such as AWS, Azure, Alibaba Cloud, etc. YunionCloud provides a set of APIs and a web UI dashboard. YunionCloud hides the differences of underlying IaaS resources, and makes it easy to build PaaS services and applications across multi-cloud/hybrid-cloud IaaS platforms.
+Cloudpods is an open-source unified multi-cloud/hybrid-cloud Cloud platform that provides unified APIs to access heterogenous IaaS resources across a broad range of cloud providers, including on-premise KVM/BareMetal/VMware, private clouds such as OpenStack, and public clouds such as AWS, Azure, Alibaba Cloud, etc. Cloudpods provides a set of APIs and a web UI dashboard. Cloudpods hides the differences of underlying resources, and makes it easy to build PaaS services and applications across multi-cloud/hybrid-cloud platforms.
 
-Here are some highlights of YunionCloud:
+## Features
+
+Here are some highlight features of Cloudpods:
 
 - A self-contained light-weight private cloud that manages KVM hypervisor in scale
 - A self-contained BareMetal cloud that automates the full life-cycle management of baremetal physical machines
