@@ -1,8 +1,8 @@
-# YunionCloud 文档
-
-本仓库包含 YunionCloud 相关的文档
+# Cloudpods文档
 
 [English](./README.md) | [简体中文](./README_CN.md)
+
+本仓库包含 [Cloudpods](https://github.com/yunionio/cloudpods) 相关的文档。
 
 ## 安装依赖
 
