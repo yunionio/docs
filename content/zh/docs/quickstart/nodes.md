@@ -3,7 +3,7 @@ title: "多节点安装"
 linkTitle: "多节点安装"
 weight: 1
 description: >
-  使用 ocboot 部署工具在多个节点部署”云联壹云“服务
+  使用 ocboot 部署工具在多个节点部署”Cloudpods“服务
 ---
 
 多节点安装和 [All in One 安装](../allinone) 一样，都使用 https://github.com/yunionio/ocboot 这个部署工具，根据配置执行 ansible playbook 部署节点。

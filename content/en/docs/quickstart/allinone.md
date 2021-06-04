@@ -3,19 +3,19 @@ title: "All in One Installation"
 linkTitle: "All in One Installation"
 weight: 1
 description: >
-  Quickly deploy Yunion OneCloud Platform on an existing CentOS 7 machine using the ansible playbook
+  Quickly deploy Cloudpods on an existing Linux box using the ansible playbook
 ---
 
-## Environmental Preparation
+## Preparation
 
-### Configuration Requirements
+### Requirements
 
 - OS: Depending on the CPU architecture, the supported distributions are different
     - X86_64: [CentOS 7](http://isoredirect.centos.org/centos/7/isos/x86_64/)
     - ARM64: [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) or [China UOS](https://www.chinauos.com/) 
-- Minimum Configuration Requirements: CPU 4 cores, Memory 8G, Storage 100G
+- Minimum Configuration Requirements: CPU 4 cores, Memory 8GiB, Storage 100GiB
 
-The following is the environment of the machine to be deployed:
+As an example, the following is the environment of the Linux box to be deployed:
 
 | IP   | Login User | OS |
 |:----:|:--------:|:--------:|
@@ -25,11 +25,11 @@ The following is the environment of the machine to be deployed:
 > 10.168.26.216 is the IP of this test environment, please modify accordingly according to your own environment.
 {{% /alert %}}
 
-### Local environment requirements
+### Local environment
 
-The local environment is the environment where the user performs the actual operation and deployment. The local environment for this installation is executing on a MAC OS laptop, which can also be operated on the machine to be deployed.
+The local environment is the environment where the user performs the actual operation. The local environment for this installation is executing on a MAC OS laptop. The installation can also be executed on the Linux box to be deployed.
 
-#### Configure SSH unencrypted login
+#### Prepare passwordless SSH login
 
 ```bash
 # Generate the local ssh keypair
@@ -45,20 +45,15 @@ $ ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.168.26.216
 $ ssh root@10.168.26.216 "hostname"
 ```
 
-## Start Installation
+### Install ansible and git
 
-The installation tool is https://github.com/yunionio/ocboot , then according to the configuration of the machine to be deployed, use ansbile playbook to install and configure the Yunion OneCloud platform. The following operations are performed on the local environment and steps are as follows:
-
-### Download ocboot
+We first install ansible and git. The commends depends on the OS of the box.
 
 {{< tabs name="ocboot_install" >}}
 {{% tab name="CentOS 7" %}}
 ```bash
 # Install ansible locally
 $ yum install -y epel-release ansible
-
-# Git clone the ocboot installation tool locally
-$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 {{% /tab %}}
 
@@ -66,9 +61,6 @@ $ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```bash
 # Install ansible locally
 $ apt install -y ansible
-
-# Git clone the ocboot installation tool locally
-$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 {{% /tab %}}
 
@@ -76,15 +68,33 @@ $ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```bash
 # Install ansible locally
 $ pip install ansible
-
-# Git clone the ocboot installation tool locally
-$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 {{% /tab %}}
 
 {{< /tabs >}}
 
-### Write deployment configuration
+### Install cloudpods
+
+The installation tool is https://github.com/yunionio/ocboot, then according to the configuration of the machine to be deployed, use ansbile playbook to install and configure the Cloudpods. The following commands are performed on the local environment and steps are as follows:
+
+```bash
+# Git clone the ocboot installation tool locally
+$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
+```
+
+#### Quick installation
+
+Simplely execute run.py with the IP address of the Linux box to start the AllInOne installation.
+
+```bash
+./run.py 10.168.26.216
+```
+
+This command will automatically generate a configuration yaml config-allinone-current.yaml in the working directory. You may check the default values of the installation parameters in this YAML.
+
+#### Customized installation
+
+You may also use a customized installation YAML to start the installation. An example configuration file is shown as following.
 
 ```bash
 # Write config-allinone.yml configuration file
@@ -113,18 +123,16 @@ primary_master_node:
   controlplane_host: 10.168.26.216
   # Port of Kubernetes controlplane
   controlplane_port: "6443"
-  # Yunion OneCloud version
-  onecloud_version: 'v3.7.1'
-  # Yunion OneCloud login username
+  # Cloudpods version
+  onecloud_version: 'v3.7.2'
+  # Cloudpods login username
   onecloud_user: admin
-  # Yunion OneCloud login user's password
+  # Cloudpods login user's password
   onecloud_user_password: admin@123
-  # This machine serves as a Yunion OneCloud private cloud computing node
+  # This machine serves as a Cloudpods private cloud computing node
   as_host: true
 EOF
 ```
-
-### Start Deployment
 
 Once the config-allinone.yml deployment configuration file is filled in, you can execute the ocboot file `. /run.py . /config-allinone.yml` to deploy the cluster.
 
@@ -141,6 +149,8 @@ Web page: https://10.168.26.216
 User: admin
 Password: admin@123
 ```
+
+### Done
 
 Then use your browser to visit https://10.168.26.216, enter `admin` for username and `admin@123` for password and you will see the Web UI.
 
@@ -174,9 +184,9 @@ In the `Compute` menu, select `Servers` and choose `Create`. In this UI, enter t
 
 ### Import public cloud or other private cloud platform resources
 
-Yunion OneCloud itself is a complete private cloud, and can also unify and manage resources from other cloud platforms.
+Cloudpods itself is a complete suite of private cloud, and can also unify and manage resources from other cloud platforms.
 
-In the `Multicloud` menu, select `Accounts` and create a new one, fill in the authentication information of the corresponding cloud platform according to your needs, and after configuring the cloud account, the Yunion OneCloud service will synchronize the resources of the corresponding cloud platform, and you can view them in the Web UI after the synchronization is completed.
+In the `Multicloud` menu, select `Accounts` and create a new one, fill in the authentication information of the corresponding cloud platform according to your needs, and after configuring the cloud account, the Cloudpods service will synchronize the resources of the corresponding cloud platform, and you can view them in the Web UI after the synchronization is completed.
 
 ![Multicloud Management](../images/cloudaccount.png)
 
@@ -184,14 +194,14 @@ In the `Multicloud` menu, select `Accounts` and create a new one, fill in the au
 
 ### 1. Can't find the virtual machine menu in Web UI?
 
-Machine deployed using the All in One way is treated as Yunion OneCloud private cloud computing node by default, which has the ability to create and manage virtual machines.
+Machine deployed using the All in One way is treated as Cloudpods private cloud computing node by default, which has the ability to create and manage virtual machines.
 
 If there is no virtual machine creation button it should be that the private cloud computing node is not enabled.
 
 Please go to the Web UI, click `Compute/Physical Resources/Hosts` to view the list of hosts, enable the corresponding hosts, refresh the interface and the virtual machine creation button will appear.
 
 {{% alert title="Attention" color="warning" %}}
-If you want to use Yunion OneCloud private cloud, you need ensure the computing machine use the kernel compiled by us. You can use the following command to check whether the host uses the kernel including the `yn` keyword.
+If you want to use Cloudpods private cloud, you need ensure the computing machine use the kernel compiled by us. You can use the following command to check whether the host uses the kernel including the `yn` keyword.
 
 ```bash
 # Check if yn keyword kernel is used
@@ -208,7 +218,7 @@ $ reboot
 
 ### 2. Change the hostname of the node, some services fail to start
 
-Yunion OneCloud uses Kubernetes management node, depends on hostname, please change it back.
+CLoudpods uses Kubernetes management node, depends on hostname, please change it back.
 
 ### 3. How to reinstall
 
@@ -224,4 +234,4 @@ Yunion OneCloud uses Kubernetes management node, depends on hostname, please cha
 
 ### 4. Other questions？
 
-Other questions are welcome to submit Yunion OneCloud github issues: https://github.com/yunionio/onecloud/issues , we will reply as soon as possible.
+Other questions are welcome to submit Cloudpods github issues: https://github.com/yunionio/onecloud/issues , we will reply as soon as possible.

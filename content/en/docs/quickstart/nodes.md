@@ -3,7 +3,7 @@ title: "Multi-node Installation"
 linkTitle: "Multi-node Installation"
 weight: 1
 description: >
-  Use ocboot installation tool to deploy Yunion OneCloud Platform in multiple nodes
+  Use ocboot installation tool to deploy Cloupods in multiple nodes
 ---
 
 Like the [All in One Installation](../allinone), the multi-node installation uses installation tool https://github.com/yunionio/ocboot to deploy the nodes according to the configuration by executing the ansible playbook.
