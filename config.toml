@@ -70,7 +70,7 @@ time_format_blog = "02.01.2006"
 [[languages.zh.menu.main]]
     name = "Github"
     weight = 50
-    url = "https://github.com/yunionio/onecloud"
+    url = "https://github.com/yunionio/cloudpods"
 
 [[languages.zh.menu.main]]
     name = "CHANGELOG"
@@ -84,7 +84,7 @@ time_format_blog = "02.01.2006"
 
 [languages.en]
 version_menu = "Version"
-description = "Documentation for OneCloud"
+description = "Documentation for Cloudpods"
 languageName = "English"
 contentDir = "content/en"
 time_format_default = "02.01.2006"
@@ -98,7 +98,7 @@ time_format_blog = "02.01.2006"
 [[languages.en.menu.main]]
     name = "Github"
     weight = 50
-    url = "https://github.com/yunionio/onecloud"
+    url = "https://github.com/yunionio/cloudpods"
 
 [[languages.en.menu.main]]
     name = "CHANGELOG"
@@ -138,7 +138,7 @@ author = "yunionio.org" # add your company name
 github = "yunionio" # add your github profile name
 twitter = "yunionio" # add your twitter profile
 github_repo = "https://github.com/yunionio/docs"
-github_project_repo = "https://github.com/yunionio/onecloud"
+github_project_repo = "https://github.com/yunionio/cloudpods"
 #email = "myemail@myaddress.xxx"
 
 # Google Custom Search Engine ID. Remove or comment out to disable search.
