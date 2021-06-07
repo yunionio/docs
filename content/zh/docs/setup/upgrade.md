@@ -12,13 +12,13 @@ description: >
 
 1. v3.2.x => v3.3.x
 2. v3.3.x => v3.4.x
-4. v3.4.x => v3.6.x
+3. v3.4.x => v3.6.x
 
 直接跨多个版本升级可能会出现问题，建议参考以下的内容选择升级步骤:
 
-- [v3.1.x 升级到 v3.2.x](https://opensource.yunion.cn/v3.2/docs/setup/upgrade)
-- [v3.2.x 升级到 v3.3.x](https://opensource.yunion.cn/v3.3/docs/setup/upgrade)
-- [v3.3.x 升级到 v3.4.x](https://opensource.yunion.cn/v3.4/docs/setup/upgrade)
+- [v3.1.x 升级到 v3.2.x](https://docs.yunion.io/v3.2/docs/setup/upgrade)
+- [v3.2.x 升级到 v3.3.x](https://docs.yunion.io/v3.3/docs/setup/upgrade)
+- [v3.3.x 升级到 v3.4.x](https://docs.yunion.io/v3.4/docs/setup/upgrade)
 
 总体来说，升级的步骤如下:
 
