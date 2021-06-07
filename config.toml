@@ -68,7 +68,7 @@ time_format_blog = "02.01.2006"
     url = "docs/quickstart/"
 
 [[languages.zh.menu.main]]
-    name = "Github"
+    name = "GitHub"
     weight = 50
     url = "https://github.com/yunionio/onecloud"
 
@@ -96,7 +96,7 @@ time_format_blog = "02.01.2006"
     url = "docs/quickstart/"
 
 [[languages.en.menu.main]]
-    name = "Github"
+    name = "GitHub"
     weight = 50
     url = "https://github.com/yunionio/onecloud"
 
