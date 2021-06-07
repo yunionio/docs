@@ -77,10 +77,10 @@ time_format_blog = "02.01.2006"
     weight = 59
     url = "docs/changelog"
 
-[[languages.zh.menu.main]]
-    name = "联系我们"
-    weight = 60
-    url = "docs/contact"
+#[[languages.zh.menu.main]]
+#    name = "联系我们"
+#    weight = 60
+#    url = "docs/contact"
 
 [languages.en]
 version_menu = "Version"
