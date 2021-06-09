@@ -1,5 +1,5 @@
 ---
-title: " Nvidia GPU 虚拟化透传记录 "
+title: "使用Linux vfio将Nvidia GPU透传给QEMU虚拟机"
 date: 2021-06-07
 slug: nvidia-gpu-passthrough-record
 ---
