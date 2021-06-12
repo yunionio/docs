@@ -7,16 +7,16 @@ description: >
 
 ## Fork 仓库
 
-访问 https://github.com/yunionio/onecloud ，将仓库 fork 到自己的 github 用户下。
+访问 https://github.com/yunionio/cloudpods ，将仓库 fork 到自己的 github 用户下。
 
 ## Clone 源码
 
 clone 自己 fork 的仓库，并设置 upstream 为源仓库。
 
 ```bash
-$ git clone https://github.com/<your_name>/onecloud
-$ cd onecloud
-$ git remote add upstream https://github.com/yunionio/onecloud
+$ git clone https://github.com/<your_name>/cloudpods
+$ cd cloudpods
+$ git remote add upstream https://github.com/yunionio/cloudpods
 ```
 
 ## 提交代码流程
@@ -73,7 +73,7 @@ $ git am --continue
 # 回到执行 cherry-pick 脚本的 terminal 输入 'y' 即可
 ```
 
-去 upstream 的 [PR 页面](https://github.com/yunionio/onecloud/pulls), 就能看到自动生成的 cherry-pick PR，上面操作的PR的标题前缀就应该为：`Automated cherry pick of #18`，然后重复 PR review 流程合并到 release
+去 upstream 的 [PR 页面](https://github.com/yunionio/cloudpods/pulls), 就能看到自动生成的 cherry-pick PR，上面操作的PR的标题前缀就应该为：`Automated cherry pick of #18`，然后重复 PR review 流程合并到 release
 
 
 {{% alert title="注意" %}}
