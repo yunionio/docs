@@ -5,7 +5,7 @@
 GREEN='\033[32;1m'
 RESET='\033[0m'
 
-HOST=${HOST:-https://docs.yunion.io}
+HOST=${HOST:-https://www.cloudpods.org}
 
 # TODO - Maybe get list of released versions from Github API and filter
 # those which have docs.
