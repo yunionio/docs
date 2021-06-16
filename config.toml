@@ -53,9 +53,9 @@ id = "UA-00000000-0"
 
 [languages]
 [languages.zh]
-title = "云联壹云"
+title = "Cloudpods"
 version_menu = "版本"
-description = "云联壹云文档"
+description = "Cloudpods文档"
 languageName ="中文"
 contentDir = "content/zh"
 time_format_default = "02.01.2006"
@@ -123,7 +123,7 @@ time_format_blog = "02.01.2006"
 ### Everything below this are Site Params ###
 
 [params]
-copyright = "Copyright 2017 - 2020 | 北京云联万维技术有限公司 京ICP备17065753号"
+copyright = "Copyright 2017 - 2021 | www.cloudpods.org"
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
@@ -134,7 +134,7 @@ version_menu = "Releases"
 multi_versions = true
 
 RSSLink = "/index.xml"
-author = "yunionio.org" # add your company name
+author = "cloudpods.org" # add your company name
 github = "yunionio" # add your github profile name
 twitter = "yunionio" # add your twitter profile
 github_repo = "https://github.com/yunionio/docs"
