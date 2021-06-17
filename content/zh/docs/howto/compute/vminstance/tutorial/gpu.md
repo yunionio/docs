@@ -4,7 +4,7 @@ date: 2019-07-19T18:32:40+08:00
 weight: 40
 ---
 
-目前仅支持 云联壹云 kvm 虚拟机使用 GPU，使用的 PCI Passthrough 的方式将宿主机上的 Nvidia/AMD GPU 透传给虚拟机使用。
+目前仅支持 Cloudpods kvm 虚拟机使用 GPU，使用的 PCI Passthrough 的方式将宿主机上的 Nvidia/AMD GPU 透传给虚拟机使用。
 
 ## 相关操作
 
