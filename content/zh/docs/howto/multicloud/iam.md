@@ -1,6 +1,6 @@
 ---
-title: "多云纳管权限要求"
-weight: 1
+title: "多云纳管权限表"
+weight: 30
 description: >
     云平台各功能需要权限情况
 ---
@@ -10,7 +10,8 @@ description: >
 此表会根据云平台纳管功能不断更新。
 {{% /alert %}}
 
-## 阿里云
+{{< tabs >}}
+{{% tab name="阿里云" %}}
 
 | 功能                               | 只读权限                                          | 可读可写权限                                 |
 | :----------                        | :--------                                         | :----------                                  |
@@ -32,8 +33,9 @@ description: >
 | 账单,余额,费用                     | AliyunFinanceConsoleReadOnlyAccess                | AliyunFinanceConsoleFullAccess               |
 | 监控                               | AliyunCloudMonitorReadOnlyAccess                  | AliyunCloudMonitorFullAccess                 |
 
+{{% /tab %}}
 
-## 腾讯云
+{{% tab name="腾讯云" %}}
 
 | 功能                                          | 只读权限                                                                                                          | 可读可写权限                                                                                      |
 | :----------                                   | :--------                                                                                                         | :----------                                                                                       |
@@ -52,8 +54,9 @@ description: >
 | DNS                                           | QcloudDNSPodReadOnlyAccess<br>QcloudPrivateDNSReadOnlyAccess                                                         | QcloudPrivateDNSFullAccess<br>QcloudDNSPodFullAccess                                                 |
 | 账单,余额,费用                                | -                                                                                                                 | QCloudFinanceFullAccess                                                                           |
 | 监控                                          | QcloudMonitorReadOnlyAccess                                                                                       | QcloudMonitorFullAccess                                                                           |
+{{% /tab %}}
 
-## 华为云
+{{% tab name="华为云" %}}
 
 | 功能                                          | 只读权限                                          | 可读可写权限                                     |
 | :----------                                   | :--------                                         | :----------                                      |
@@ -76,8 +79,9 @@ description: >
 | 账单,余额,费用                                | BSS Operator                                      | BSS Administrator                                |
 | 监控                                          | CES ReadOnlyAccess                                | CES FullAccess                                   |
 
-## Aws
+{{% /tab %}}
 
+{{% tab name="Aws" %}}
 | 功能                                              | 只读权限                                          | 可读可写权限                                 |
 | :----------                                       | :--------                                         | :----------                                  |
 | 所有功能总和                                      | ReadOnlyAccess                                    | AdministratorAccess                          |
@@ -95,8 +99,9 @@ description: >
 | DNS                                               | AmazonRoute53DomainsReadOnlyAccess                | AmazonRoute53DomainsFullAccess               |
 | 账单,费用                                         | AWSBillingReadOnlyAccess                          | Billing                                      |
 | 监控                                              | CloudWatchReadOnlyAccess                          | CloudWatchFullAccess                         |
+{{% /tab %}}
 
-## Google
+{{% tab name="Google云" %}}
 
 | 功能                                                      | 只读权限                                              | 可读可写权限                     |
 | :----------                                               | :--------                                             | :----------                      |
@@ -115,7 +120,9 @@ description: >
 | 账单,费用                                                 | Billing Account Viewer                                | Billing Account Administrator    |
 | 监控                                                      | Monitoring Viewer                                     | Monitoring Admin                 |
 
-## Azure
+{{% /tab %}}
+
+{{% tab name="Azure" %}}
 
 | 功能                                                      | 只读权限                                              | 可读可写权限                                                      |
 | :----------                                               | :--------                                             | :----------                                                       |
@@ -133,3 +140,6 @@ description: >
 | 账单,费用                                                 | Billing Reader<br>Cost Management Reader              | Cost Management Contributor                                       |
 | 监控,操作日志                                             | Monitoring Reader                                     | Monitoring Contributor                                            |
 
+
+{{% /tab %}}
+{{< /tabs >}}
