@@ -1,6 +1,6 @@
 ---
 title: "多云功能"
-weight: 1
+weight: 40
 description: >
     云平台各功能支持情况。
 ---
