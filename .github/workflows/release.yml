@@ -49,5 +49,5 @@ jobs:
         publish_dir: ./public
         external_repository: yunionio/yunionio.github.io
         allow_empty_commit: true
-        cname: docs.yunion.io
+        cname: www.cloudpods.org
         publish_branch: master

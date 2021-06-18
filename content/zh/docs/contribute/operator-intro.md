@@ -2,10 +2,10 @@
 title: "Operator 相关"
 weight: 6
 description: >
-  服务都运行在 K8S 集群中，其中有一个叫做 onecloud-operator 的 deployment，用于部署和控制其它服务的所需要的 K8S 资源，这里介绍下这个叫做 operator 组件的操作
+  服务都运行在 K8S 集群中，其中有一个叫做 cloudpods-operator 的 deployment，用于部署和控制其它服务的所需要的 K8S 资源，这里介绍下这个叫做 operator 组件的操作
 ---
 
-[onecloud-operator](https://github.com/yunionio/onecloud-operator) 是单独编写的一个组件，作为一个长期运行的服务运行在 Kubernetes 集群内部，作用是自动搭建和维护 云联壹云 所有服务。详细的介绍可以参考 [onecloud-operator 工作原理](https://github.com/yunionio/onecloud-operator/blob/master/docs/intro.md)。
+[cloudpods-operator](https://github.com/yunionio/cloudpods-operator) 是单独编写的一个组件，作为一个长期运行的服务运行在 Kubernetes 集群内部，作用是自动搭建和维护 云联壹云 所有服务。详细的介绍可以参考 [cloudpods-operator 工作原理](https://github.com/yunionio/cloudpods-operator/blob/master/docs/intro.md)。
 
 ## 简介
 
