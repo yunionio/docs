@@ -2,6 +2,8 @@
 title: "同步状态"
 date: 2021-06-23T08:22:33+08:00
 weight: 30
+description: >
+   同步RDS实例及相关资源
 ---
 
 {{< tabs >}}
