@@ -28,13 +28,13 @@ slug: cloudpods-3.7-new-feature-introduction
 
 我们早在2017年就关注到多云带来客户的问题，开始做云联壹云这款产品，希望能够帮助企业很好的解决这些问题。
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/01.png)
+![](./01.png)
 
 云联壹云是一站式管理云计算资源的解决方案，希望帮助客户在一个地方管理本地IDC、私有云、公有云等IT资源，整体提高企业IT基础设施的管理效率。
 
 从产品架构图上，我们可以看出，底层是一些异构资源，上层是一些应用或服务，云联壹云处于承上启下的作用，向下屏蔽异构的差异，向上提供一致的资源管理能力。
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/02.png)
+![](./02.png)
 
 以上是我们最新版本也就是3.7版本的功能概览。
 
@@ -72,47 +72,47 @@ slug: cloudpods-3.7-new-feature-introduction
 
 2.1 支持AWS的预留实例分析，包括RI推荐及RI覆盖率，帮助客户用好RI，节约成本
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/03.png)
+![](./03.png)
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/04.png)
+![](./04.png)
 
 2.2 支持价格对比功能，同配置全网比价，帮助客户发现便宜资源
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/05.png)
+![](./05.png)
 
 2.3 支持所有平台费用报告及定期发送
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/06.png)
+![](./06.png)
 
 2.4 支持预算管理功能，并且可以配置预算告警，防止费用超支
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/07.png)
+![](./07.png)
 
 2.5 费用优化迭代，更多纬度节省费用，帮助用户发现更多可以优化成本的途径
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/08.png)
+![](./08.png)
 
 ### 3. 多云监控告警
 
 3.1 支持自定义监控面板，一次定义，随时查看
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/09.png)
+![](./09.png)
 
 3.2 报警策略支持函数及静默期设置，有效避免毛刺、报警泛滥等问题
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/10.png)
+![](./10.png)
 
 3.3 支持自动化安装监控插件，可显示内存使用率等更多监控指标
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/11.png)
+![](./11.png)
 
 3.4 大屏增加地图，可根据资源城市进行分布
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/12.png)
+![](./12.png)
 
 3.5 增加监控总览，可以查看告警情况及平台各纬度使用情况
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/13.png)
+![](./13.png)
 
 ### 4. 多云权限管理
 
@@ -120,18 +120,18 @@ slug: cloudpods-3.7-new-feature-introduction
 * 通过云管壹云控制台可一键跳转免密登录公有云控制台
 * 员工离职，自动注销对应的公有云账号
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/14.png)
+![](./14.png)
 
 ### 5. 标签管理
 
 * 标签支持CMP与公有云平台双向同步
 * 标签搜索增强，支持特殊符号复杂搜索
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/15.png)
+![](./15.png)
 
 除以上5大功能的更新外，我们其实还有很多细节更新，在这里就不在展开给大家介绍，感兴趣的同学可以看一下以下总结
 
-![](./2021-05-31-cloudpods-3.7-new-feature-introduction/16.png)
+![](./16.png)
 
 ## 三、功能规划
 
