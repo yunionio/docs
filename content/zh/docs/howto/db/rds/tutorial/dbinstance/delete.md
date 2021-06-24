@@ -1,23 +1,20 @@
 ---
-title: "关联安全组"
+title: "删除"
 date: 2021-06-23T08:22:33+08:00
-weight: 50
+weight: 10
 description: >
-   设置RDS实例安全组
+   删除RDS实例
 ---
 
-## 限制
-- 仅RDS实例状态为 运行中(running) 时才可进行此操作
-- 阿里云最多关联三个安全组
-- 腾讯云最多关联5个安全组
-- 华为云最多关联1个安全组
+## 前提条件
+- [关闭RDS实例删除保护]({{< relref "protect" >}})
 
 
 {{< tabs >}}
 {{% tab name="控制台" %}}
 
- ![RDS实例关联安全组](../../../images/rds_secgroup.png)
- ![RDS实例关联安全组](../../../images/rds_secgroup2.png)
+ ![删除RDS实例](../../../images/rds_delete.png)
+ ![删除RDS实例](../../../images/rds_delete2.png)
 
 
 {{% /tab %}}
@@ -25,7 +22,8 @@ description: >
 
 {{% tab name="命令行" %}}
 ```bash
-$ climc dbinstance-set-secgroup 6df152bc-0802-4fcc-8e72-22415ddf43a9 secgroup1 secgroup2
+# 删除RDS实例
+$ climc dbinstance-delete 6df152bc-0802-4fcc-8e72-22415ddf43a9
 +--------------------+----------------------------------------------------------------------------------------------------------------------------+
 |       Field        |                                                           Value                                                            |
 +--------------------+----------------------------------------------------------------------------------------------------------------------------+
@@ -74,7 +72,7 @@ $ climc dbinstance-set-secgroup 6df152bc-0802-4fcc-8e72-22415ddf43a9 secgroup1 s
 | region_external_id | Azure-int/eastus                                                                                                           |
 | region_id          | 59260e38-17f1-4b57-8df4-6177e6105067                                                                                       |
 | source             | cloud                                                                                                                      |
-| status             | deploying                                                                                                                  |
+| status             | deleting                                                                                                                   |
 | tenant             | system                                                                                                                     |
 | tenant_id          | a9a365125abf43c580ba98e5640b5c51                                                                                           |
 | update_version     | 18                                                                                                                         |
@@ -85,5 +83,6 @@ $ climc dbinstance-set-secgroup 6df152bc-0802-4fcc-8e72-22415ddf43a9 secgroup1 s
 | vpc_ext_id         | 59260e38-17f1-4b57-8df4-6177e6105067-7ffddf3c-65ad-467c-870b-a99f2044039d                                                  |
 | vpc_id             | c327f83f-f4c0-4d06-8269-0e56c681dd07                                                                                       |
 +--------------------+----------------------------------------------------------------------------------------------------------------------------+```
+```
 {{% /tab %}}
 {{< /tabs >}}
