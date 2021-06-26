@@ -10,7 +10,7 @@ description: >
 Optimize the general architecture of cloudpods
 
 - [ ] Seperate on-premise cloud (Cloudpods native cloud, i.e. KVM, Baremetal, VMware) and Cloud Management (Management of other clouds) into different service components
-- [ ] On-premise cloud: seperate storage agent to do storage management tasks
+- [ ] On-premise cloud: seperate a storage agent to do storage management tasks
 - [ ] On-premise cloud: integrate Rook for shared storage
 - [ ] On-premise cloud: store state of baremetal agent in DB
 - [ ] Cloud management: allow managing multiple instance of cloudpods native cloud
