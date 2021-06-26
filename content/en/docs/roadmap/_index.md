@@ -13,7 +13,7 @@ Optimize the general architecture of cloudpods
 - [ ] On-premise cloud: Seperate storage management component
 - [ ] On-premise cloud: integrate Rook
 - [ ] Cloud management: Allow managing multiple instance of cloudpods native cloud
-- [ ] Cloud management: recode resource synchronization, better structure and finer grain
+- [ ] Cloud management: recode resource synchronization, better code structure and finer grain synchronization resource
 
 ## Mutli-cloud Resource Management
 
