@@ -5,6 +5,16 @@ description: >
   Roadmap
 ---
 
+## Architecture
+
+Optimize the general architecture of cloudpods
+
+- [ ] Seperate on-premise cloud (Cloudpods native cloud, i.e. KVM, Baremetal, VMware) and Cloud Management (Management of other clouds) into different service components
+- [ ] On-premise cloud: Seperate storage management component
+- [ ] On-premise cloud: integrate Rook
+- [ ] Cloud management: Allow managing multiple instance of cloudpods native cloud
+- [ ] Cloud management: recode resource synchronization, better structure and finer grain
+
 ## Mutli-cloud Resource Management
 
 Further broaden the coverage of cloud products and providers.
