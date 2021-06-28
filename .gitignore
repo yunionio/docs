@@ -26,3 +26,7 @@ package-lock.json
 *.a
 *.so
 *.swp
+
+.content
+.assets
+.static
