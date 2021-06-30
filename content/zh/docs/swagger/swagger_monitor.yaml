@@ -115,6 +115,62 @@ definitions:
     - name
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  AlertDashBoardDetails:
+    properties:
+      alert_panel_details:
+        items:
+          $ref: '#/definitions/AlertPanelDetail'
+        type: array
+        x-go-name: AlertPanelDetails
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      project:
+        description: |-
+          资源归属项目的名称（向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: Tenant
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      project_id:
+        description: |-
+          资源归属项目的ID(向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: TenantId
+      scope:
+        type: string
+        x-go-name: Scope
+      tenant:
+        description: |-
+          资源归属项目的名称
+          alias:project
+        type: string
+        x-go-name: Project
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
   AlertDetails:
     properties:
       can_delete:
@@ -233,6 +289,73 @@ definitions:
         x-go-name: UsedBy
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  AlertPanelDetail:
+    properties:
+      Setting:
+        type: object
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      common_alert_metric_details:
+        items:
+          $ref: '#/definitions/CommonAlertMetricDetails'
+        type: array
+        x-go-name: CommonAlertMetricDetails
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      panel_id:
+        type: string
+        x-go-name: PanelId
+      panel_name:
+        type: string
+        x-go-name: PanelName
+      project:
+        description: |-
+          资源归属项目的名称（向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: Tenant
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      project_id:
+        description: |-
+          资源归属项目的ID(向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: TenantId
+      refresh:
+        type: string
+        x-go-name: Refresh
+      scope:
+        type: string
+        x-go-name: Scope
+      tenant:
+        description: |-
+          资源归属项目的名称
+          alias:project
+        type: string
+        x-go-name: Project
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
   AlertPauseInput:
     properties:
       paused:
@@ -318,6 +441,64 @@ definitions:
     - name
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  AlertRecordDetails:
+    properties:
+      alert_name:
+        type: string
+        x-go-name: AlertName
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      project:
+        description: |-
+          资源归属项目的名称（向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: Tenant
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      project_id:
+        description: |-
+          资源归属项目的ID(向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: TenantId
+      res_num:
+        format: int64
+        type: integer
+        x-go-name: ResNum
+      scope:
+        type: string
+        x-go-name: Scope
+      tenant:
+        description: |-
+          资源归属项目的名称
+          alias:project
+        type: string
+        x-go-name: Project
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
   AlertRecordRule:
     properties:
       alert_duration:
@@ -363,6 +544,41 @@ definitions:
         description: 报警阀值
         type: string
         x-go-name: Threshold
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  AlertResourceDetails:
+    properties:
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      count:
+        format: int64
+        type: integer
+        x-go-name: Count
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      tags:
+        additionalProperties:
+          type: string
+        type: object
+        x-go-name: Tags
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
   AlertSetting:
@@ -661,6 +877,155 @@ definitions:
         x-go-name: UsedBy
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  CommonAlertDetails:
+    properties:
+      alert_duration:
+        description: 报警连续持续周期数
+        format: int64
+        type: integer
+        x-go-name: AlertDuration
+      alert_type:
+        description: 报警类型
+        type: string
+        x-go-name: AlertType
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      channel:
+        items:
+          type: string
+        type: array
+        x-go-name: Channel
+      common_alert_metric_details:
+        items:
+          $ref: '#/definitions/CommonAlertMetricDetails'
+        type: array
+        x-go-name: CommonAlertMetricDetails
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      level:
+        type: string
+        x-go-name: Level
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      notifier_id:
+        type: string
+        x-go-name: NotifierId
+      period:
+        type: string
+        x-go-name: Period
+      project:
+        description: |-
+          资源归属项目的名称（向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: Tenant
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      project_id:
+        description: |-
+          资源归属项目的ID(向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: TenantId
+      recipients:
+        items:
+          type: string
+        type: array
+        x-go-name: Recipients
+      scope:
+        type: string
+        x-go-name: Scope
+      silent_period:
+        description: 静默期
+        type: string
+        x-go-name: SilentPeriod
+      status:
+        type: string
+        x-go-name: Status
+      tenant:
+        description: |-
+          资源归属项目的名称
+          alias:project
+        type: string
+        x-go-name: Project
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  CommonAlertMetricDetails:
+    properties:
+      FieldDescription:
+        $ref: '#/definitions/MetricFieldDetail'
+      comparator:
+        type: string
+        x-go-name: Comparator
+      condition_type:
+        type: string
+        x-go-name: ConditionType
+      db:
+        type: string
+        x-go-name: DB
+      field:
+        type: string
+        x-go-name: Field
+      field_opt:
+        type: string
+        x-go-name: FieldOpt
+      filters:
+        items:
+          $ref: '#/definitions/MetricQueryTag'
+        type: array
+        x-go-name: Filters
+      get_point_str:
+        type: boolean
+        x-go-name: GetPointStr
+      groupby:
+        type: string
+        x-go-name: Groupby
+      measurement:
+        type: string
+        x-go-name: Measurement
+      measurement_display_name:
+        type: string
+        x-go-name: MeasurementDisplayName
+      reduce:
+        description: metric points'value的运算方式
+        type: string
+        x-go-name: Reduce
+      res_type:
+        type: string
+        x-go-name: ResType
+      threshold:
+        format: double
+        type: number
+        x-go-name: Threshold
+      threshold_str:
+        type: string
+        x-go-name: ThresholdStr
+      within_range:
+        items:
+          format: double
+          type: number
+        type: array
+        x-go-name: WithinRange
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
   CommonAlertQuery:
     properties:
       comparator:
@@ -880,6 +1245,106 @@ definitions:
         x-go-name: Window
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  MeterAlertDetails:
+    properties:
+      account_id:
+        type: string
+        x-go-name: AccountId
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      channel:
+        type: string
+        x-go-name: Channel
+      comparator:
+        type: string
+        x-go-name: Comparator
+      db:
+        type: string
+        x-go-name: DB
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      field:
+        type: string
+        x-go-name: Field
+      level:
+        type: string
+        x-go-name: Level
+      measurement:
+        type: string
+        x-go-name: Measurement
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      name:
+        type: string
+        x-go-name: Name
+      notifier_id:
+        type: string
+        x-go-name: NotifierId
+      period:
+        type: string
+        x-go-name: Period
+      project:
+        description: |-
+          资源归属项目的名称（向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: Tenant
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      project_id:
+        description: |-
+          资源归属项目的ID(向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: ProjectId
+      provider:
+        type: string
+        x-go-name: Provider
+      recipients:
+        type: string
+        x-go-name: Recipients
+      scope:
+        type: string
+        x-go-name: Scope
+      status:
+        type: string
+        x-go-name: Status
+      tenant:
+        description: |-
+          资源归属项目的名称
+          alias:project
+        type: string
+        x-go-name: Project
+      threshold:
+        format: double
+        type: number
+        x-go-name: Threshold
+      type:
+        type: string
+        x-go-name: Type
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+      window:
+        type: string
+        x-go-name: Window
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
   MeterAlertUpdateInput:
     properties:
       channel:
@@ -961,6 +1426,62 @@ definitions:
         x-go-name: Scope
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  MetricDetails:
+    properties:
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      metric_fields:
+        items:
+          $ref: '#/definitions/MetricFieldDetail'
+        type: array
+        x-go-name: MetricFields
+      project:
+        description: |-
+          资源归属项目的名称（向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: Tenant
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      project_id:
+        description: |-
+          资源归属项目的ID(向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: TenantId
+      scope:
+        type: string
+        x-go-name: Scope
+      tenant:
+        description: |-
+          资源归属项目的名称
+          alias:project
+        type: string
+        x-go-name: Project
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
   MetricFieldCreateInput:
     properties:
       __meta__:
@@ -1012,6 +1533,22 @@ definitions:
         x-go-name: ValueType
     required:
     - name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  MetricFieldDetail:
+    properties:
+      display_name:
+        type: string
+        x-go-name: DisplayName
+      id:
+        type: string
+        x-go-name: Id
+      name:
+        type: string
+        x-go-name: Name
+      unit:
+        type: string
+        x-go-name: Unit
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
   MetricFieldListInput:
@@ -1601,6 +2138,156 @@ definitions:
         x-go-name: Scope
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  MonitorResourceCreateInput:
+    properties:
+      __meta__:
+        additionalProperties:
+          type: string
+        description: 标签列表,最多支持20个
+        example:
+          user:rd: op
+        type: object
+        x-go-name: Metadata
+      alert_status:
+        type: string
+        x-go-name: AlertStatus
+      description:
+        description: 资源描述
+        example: test create network
+        type: string
+        x-go-name: Description
+      disabled:
+        description: 该资源是否被管理员*人为*禁用, 和enabled互斥
+        type: boolean
+        x-go-name: Disabled
+      enabled:
+        description: 该资源是否被管理员*人为*启用或者禁用
+        type: boolean
+        x-go-name: Enabled
+      generate_name:
+        description: |-
+          生成资源名称的模板，如果name为空，则为必填项
+          description: generated resource name, given a pattern to generate name, required if name is not given
+        example: test###
+        type: string
+        x-go-name: GenerateName
+      is_emulated:
+        description: |-
+          资源是否为模拟资源
+          description: the resource is an emulated resource
+        type: boolean
+        x-go-name: IsEmulated
+      is_system:
+        description: 'description: indicate the resource is a system resource, which
+          is not visible to user'
+        type: boolean
+        x-go-name: IsSystem
+      name:
+        description: |-
+          资源名称，如果generate_name为空，则为必填项
+          description: resource name, required if generated_name is not given
+        example: test-network
+        type: string
+        uniqueItems: true
+        x-go-name: Name
+      project_domain_id:
+        description: 指定项目归属域名称或ID
+        type: string
+        x-go-name: ProjectDomainId
+      project_id:
+        description: 指定项目的名称或ID
+        type: string
+        x-go-name: ProjectId
+      res_id:
+        type: string
+        x-go-name: ResId
+      res_type:
+        type: string
+        x-go-name: ResType
+      status:
+        description: 用来存储资源的状态
+        type: string
+        x-go-name: Status
+    required:
+    - name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  MonitorResourceDetails:
+    properties:
+      attach_alert_count:
+        format: int64
+        type: integer
+        x-go-name: AttachAlertCount
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      cloudregion:
+        description: 区域的名称
+        type: string
+        x-go-name: Cloudregion
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      project:
+        description: |-
+          资源归属项目的名称（向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: Tenant
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      project_id:
+        description: |-
+          资源归属项目的ID(向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: TenantId
+      region:
+        description: 区域的名称
+        example: Default
+        type: string
+        x-go-name: Region
+      region_ext_id:
+        description: 纳管云区域的Id
+        example: 59e7bc87-a6b3-4c39-8f02-c68e8243d4e4
+        type: string
+        x-go-name: RegionExtId
+      region_external_id:
+        description: 纳管云区域的组合Id(平台+Id)
+        example: ZStack/59e7bc87-a6b3-4c39-8f02-c68e8243d4e4
+        type: string
+        x-go-name: RegionExternalId
+      region_id:
+        description: 区域的Id
+        example: default
+        type: string
+        x-go-name: RegionId
+      tenant:
+        description: |-
+          资源归属项目的名称
+          alias:project
+        type: string
+        x-go-name: Project
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
   NodeAlertCreateInput:
     properties:
       channel:
@@ -1902,6 +2589,62 @@ definitions:
         x-go-name: Type
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
+  PanelDetails:
+    properties:
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      common_alert_metric_details:
+        items:
+          $ref: '#/definitions/CommonAlertMetricDetails'
+        type: array
+        x-go-name: CommonAlertMetricDetails
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      project:
+        description: |-
+          资源归属项目的名称（向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: Tenant
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      project_id:
+        description: |-
+          资源归属项目的ID(向后兼容别名）
+          Deprecated
+        type: string
+        x-go-name: TenantId
+      scope:
+        type: string
+        x-go-name: Scope
+      tenant:
+        description: |-
+          资源归属项目的名称
+          alias:project
+        type: string
+        x-go-name: Project
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
   PerformChangeProjectOwnerInput:
     properties:
       project_id:
@@ -2057,30 +2800,20 @@ definitions:
         x-go-name: Name
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
-  StatusStandaloneResourceDetails:
+  StatusStatistic:
     properties:
-      can_delete:
-        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
-        example: true
-        type: boolean
-        x-go-name: CanDelete
-      can_update:
-        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
-        example: true
-        type: boolean
-        x-go-name: CanUpdate
-      delete_fail_reason:
-        $ref: '#/definitions/Error'
-      metadata:
-        additionalProperties:
-          type: string
-        description: 标签
-        type: object
-        x-go-name: Metadata
-      update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+      pending_deleted_count:
+        description: |-
+          回收站数量
+          需要指定pending_delete=all
+        format: int64
+        type: integer
+        x-go-name: PendingDeletedCount
+      total_count:
+        description: 资源总数
+        format: int64
+        type: integer
+        x-go-name: TotalCount
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   V1AlertUpdateInput:
@@ -2126,26 +2859,6 @@ definitions:
         $ref: '#/definitions/AlertSetting'
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/monitor
-  VirtualJointResourceBaseDetails:
-    properties:
-      can_delete:
-        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
-        example: true
-        type: boolean
-        x-go-name: CanDelete
-      can_update:
-        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
-        example: true
-        type: boolean
-        x-go-name: CanUpdate
-      delete_fail_reason:
-        $ref: '#/definitions/Error'
-      update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
-    type: object
-    x-go-package: yunion.io/x/onecloud/pkg/apis
   VirtualJointResourceBaseUpdateInput:
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
@@ -2487,7 +3200,7 @@ paths:
       - alert_dash_board
     get:
       description: 获取详情
-      operationId: alert_dash_board_GetExtraDetails
+      operationId: alert_dash_board_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of alert_dash_board
         in: path
@@ -2497,7 +3210,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/alert_dash_board_GetExtraDetailsOutput'
+          $ref: '#/responses/alert_dash_board_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - alert_dash_board
@@ -2554,6 +3267,23 @@ paths:
         "200":
           $ref: '#/responses/alert_dash_board_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - alert_dash_board
+  /alert_dash_boards/{id}/set-scope:
+    post:
+      description: 执行操作SetScope
+      operationId: alert_dash_board_PerformSetScope
+      parameters:
+      - description: The Id or Name of alert_dash_board
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/alert_dash_board_PerformSetScopeOutput'
+      summary: 执行操作SetScope
       tags:
       - alert_dash_board
   /alert_dash_boards/{id}/set-user-metadata:
@@ -2653,6 +3383,16 @@ paths:
         "200":
           $ref: '#/responses/alert_dash_board_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - alert_dash_board
+  /alert_dash_boards/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: alert_dash_board_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/alert_dash_board_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
       tags:
       - alert_dash_board
   /alert_dashboard_panels:
@@ -2806,7 +3546,7 @@ paths:
       - alert_dashboard_panel
     get:
       description: 获取详情
-      operationId: alert_dashboard_panel_GetExtraDetails
+      operationId: alert_dashboard_panel_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of alert_dashboard_panel
         in: path
@@ -2816,7 +3556,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/alert_dashboard_panel_GetExtraDetailsOutput'
+          $ref: '#/responses/alert_dashboard_panel_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - alert_dashboard_panel
@@ -3146,7 +3886,7 @@ paths:
       - alert_notification
     get:
       description: 获取详情
-      operationId: alert_notification_GetExtraDetails
+      operationId: alert_notification_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of alert_notification
         in: path
@@ -3156,7 +3896,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/alert_notification_GetExtraDetailsOutput'
+          $ref: '#/responses/alert_notification_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - alert_notification
@@ -3427,6 +4167,16 @@ paths:
         "200":
           $ref: '#/responses/alert_notification_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - alert_notification
+  /alert_notifications/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: alert_notification_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/alert_notification_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
       tags:
       - alert_notification
   /alert_panels:
@@ -3700,7 +4450,7 @@ paths:
       - alert_panel
     get:
       description: 获取详情
-      operationId: alert_panel_GetExtraDetails
+      operationId: alert_panel_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of alert_panel
         in: path
@@ -3710,7 +4460,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/alert_panel_GetExtraDetailsOutput'
+          $ref: '#/responses/alert_panel_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - alert_panel
@@ -3866,6 +4616,16 @@ paths:
         "200":
           $ref: '#/responses/alert_panel_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - alert_panel
+  /alert_panels/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: alert_panel_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/alert_panel_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
       tags:
       - alert_panel
   /alert_records:
@@ -4155,7 +4915,7 @@ paths:
       - alert_record
     get:
       description: 获取详情
-      operationId: alert_record_GetExtraDetails
+      operationId: alert_record_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of alert_record
         in: path
@@ -4165,7 +4925,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/alert_record_GetExtraDetailsOutput'
+          $ref: '#/responses/alert_record_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - alert_record
@@ -4327,6 +5087,16 @@ paths:
         "200":
           $ref: '#/responses/alert_record_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - alert_record
+  /alert_records/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: alert_record_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/alert_record_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
       tags:
       - alert_record
   /alert_records/total-alert:
@@ -4498,7 +5268,7 @@ paths:
       - alert_resource_alert
     get:
       description: 获取详情
-      operationId: alert_resource_alert_GetExtraDetails
+      operationId: alert_resource_alert_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of alert_resource_alert
         in: path
@@ -4508,7 +5278,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/alert_resource_alert_GetExtraDetailsOutput'
+          $ref: '#/responses/alert_resource_alert_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - alert_resource_alert
@@ -4779,7 +5549,7 @@ paths:
       - alert_resource
     get:
       description: 获取详情
-      operationId: alert_resource_GetExtraDetails
+      operationId: alert_resource_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of alert_resource
         in: path
@@ -4789,7 +5559,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/alert_resource_GetExtraDetailsOutput'
+          $ref: '#/responses/alert_resource_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - alert_resource
@@ -5179,7 +5949,7 @@ paths:
       - alert
     get:
       description: 获取详情
-      operationId: alert_GetExtraDetails
+      operationId: alert_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of alert
         in: path
@@ -5189,7 +5959,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/alert_GetExtraDetailsOutput'
+          $ref: '#/responses/alert_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - alert
@@ -5451,6 +6221,16 @@ paths:
         "200":
           $ref: '#/responses/alert_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - alert
+  /alerts/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: alert_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/alert_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
       tags:
       - alert
   /common_alerts:
@@ -5742,7 +6522,7 @@ paths:
       - common_alert
     get:
       description: 获取详情
-      operationId: common_alert_GetExtraDetails
+      operationId: common_alert_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of common_alert
         in: path
@@ -5752,7 +6532,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/common_alert_GetExtraDetailsOutput'
+          $ref: '#/responses/common_alert_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - common_alert
@@ -6044,6 +6824,16 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - common_alert
+  /common_alerts/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: common_alert_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/common_alert_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - common_alert
   /data_sources:
     get:
       description: 列表
@@ -6253,7 +7043,7 @@ paths:
       - data_source
     get:
       description: 获取详情
-      operationId: data_source_GetExtraDetails
+      operationId: data_source_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of data_source
         in: path
@@ -6263,7 +7053,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/data_source_GetExtraDetailsOutput'
+          $ref: '#/responses/data_source_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - data_source
@@ -6668,7 +7458,7 @@ paths:
       - meter_alert
     get:
       description: 获取详情
-      operationId: meter_alert_GetExtraDetails
+      operationId: meter_alert_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of meter_alert
         in: path
@@ -6678,7 +7468,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/meter_alert_GetExtraDetailsOutput'
+          $ref: '#/responses/meter_alert_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - meter_alert
@@ -6940,6 +7730,16 @@ paths:
         "200":
           $ref: '#/responses/meter_alert_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - meter_alert
+  /meter_alerts/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: meter_alert_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/meter_alert_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
       tags:
       - meter_alert
   /metric_fields:
@@ -7217,7 +8017,7 @@ paths:
       - metric_field
     get:
       description: 获取详情
-      operationId: metric_field_GetExtraDetails
+      operationId: metric_field_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of metric_field
         in: path
@@ -7227,7 +8027,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/metric_field_GetExtraDetailsOutput'
+          $ref: '#/responses/metric_field_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - metric_field
@@ -7391,6 +8191,16 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - metric_field
+  /metric_fields/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: metric_field_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/metric_field_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - metric_field
   /metric_measurements:
     get:
       description: 列表
@@ -7451,7 +8261,7 @@ paths:
       - metric_measurement
     get:
       description: 获取详情
-      operationId: metric_measurement_GetExtraDetails
+      operationId: metric_measurement_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of metric_measurement
         in: path
@@ -7461,7 +8271,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/metric_measurement_GetExtraDetailsOutput'
+          $ref: '#/responses/metric_measurement_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - metric_measurement
@@ -7625,6 +8435,16 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - metric_measurement
+  /metric_measurements/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: metric_measurement_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/metric_measurement_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - metric_measurement
   /metrics:
     get:
       description: 列表
@@ -7776,7 +8596,7 @@ paths:
       - metric
     get:
       description: 获取详情
-      operationId: metric_GetExtraDetails
+      operationId: metric_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of metric
         in: path
@@ -7786,7 +8606,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/metric_GetExtraDetailsOutput'
+          $ref: '#/responses/metric_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - metric
@@ -7844,6 +8664,926 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - metric
+  /monitor_resource_alerts:
+    get:
+      description: 列表
+      operationId: monitor_resource_alert_ListItemFilter
+      parameters:
+      - default: 20
+        description: 查询限制量
+        format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
+      - default: 0
+        description: 查询偏移量
+        format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - description: 列表排序时，用于排序的字段的名称，该字段不提供时，则按默认字段排序。一般时按照资源的新建时间逆序排序。
+        in: query
+        items:
+          type: string
+        name: order_by
+        type: array
+        x-go-name: OrderBy
+      - description: 列表排序时的顺序，desc为从高到低，asc为从低到高。默认是按照资源的创建时间desc排序。
+        example: desc|asc
+        in: query
+        name: order
+        type: string
+        x-go-name: Order
+      - description: 列表返回资源的更多详细信息。默认只显示基本字段，该字段为true则返回扩展字段信息。
+        in: query
+        name: details
+        type: boolean
+        x-go-name: Details
+      - description: 模糊搜索所有字段
+        in: query
+        name: search
+        type: string
+        x-go-name: Search
+      - description: |-
+          指定过滤条件，允许指定多个，每个条件的格式为"字段名称.操作符(匹配信息)"，例如name字段等于test的过滤器为：name.equals('test')
+          支持的操作符如下：
+
+           操作符        | 参数个数 | 举例                                           | 说明                        |
+          ---------------|----------|------------------------------------------------|-----------------------------|
+           in            | > 0      | name.in("test", "good")                        | 在给定数组中                |
+           notin         | > 0      | name.notin('test')                             | 不在给定数组中              |
+           between       | 2        | created_at.between('2019-12-10', '2020-01-02') | 在两个值之间                |
+           ge            | 1        | created_at.ge('2020-01-01')                    | 大于或等于给定值            |
+           gt            | 1        | created_at.gt('2020-01-01')                    | 严格大于给定值              |
+           le            | 1        | created_at.le('2020-01-01')                    | 小于或等于给定值            |
+           lt            | 1        | sync_seconds.lt(900)                           | 严格大于给定值              |
+           like          | > 0      | name.like('%test%')                            | sql字符串匹配任意一个字符串 |
+           contains      | > 0      | name.contains('test')                          | 包含任意一个给定字符串      |
+           startswith    | > 0      | name.startswith('test')                        | 以任意一个给定字符串开头    |
+           endswith      | > 0      | name.endswith('test')                          | 以任意一个给定字符串结尾    |
+           equals        | > 0      | name.equals('test')                            | 等于任意一个给定值          |
+           notequals     | 1        | name.notequals('test')                         | 不等于给定值                |
+           isnull        | 0        | name.isnull()                                  | 值为SQL的NULL               |
+           isnotnull     | 0        | name.isnotnull()                               | 值不为SQL的NULL             |
+           isempty       | 0        | name.isempty('test')                           | 值为空字符串                |
+           isnotempty    | 0        | name.isnotempty('test')                        | 值不是空字符串              |
+           isnullorempty | 0        | name.isnullorempty('test')                     | 值为SQL的NULL或者空字符串   |
+        in: query
+        items:
+          type: string
+        name: filter
+        type: array
+        x-go-name: Filter
+      - description: |-
+          指定关联过滤条件，允许指定多个，后端将根据关联过滤条件和其他表关联查询，支持的查询语法和filter相同，
+          和其他表关联的语法如下：
+          joint_resources.related_key(origin_key).filter_col.filter_ops(values)
+          其中，joint_resources为要关联的资源名称，related_key为关联表column，origin_key为当前表column, filter_col为
+          关联表用于查询匹配的field名称，field_ops为filter支持的操作，values为匹配的值
+          举例：
+          guestnetworks.guest_id(id).ip_addr.equals('10.168.21.222')
+        in: query
+        items:
+          type: string
+        name: joint_filter
+        type: array
+        x-go-name: JointFilter
+      - description: 如果filter_any为true，则查询所有filter的并集，否则为交集
+        in: query
+        name: filter_any
+        type: boolean
+        x-go-name: FilterAny
+      - description: 返回结果只包含指定的字段
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 用于数据导出，指定导出的数据字段
+        in: query
+        name: export_keys
+        type: string
+        x-go-name: ExportKeys
+      - description: 返回结果携带delete_fail_reason和update_fail_reason字段
+        in: query
+        name: show_fail_reason
+        type: boolean
+        x-go-name: ShowFailReason
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_alert_ListItemFilterOutput'
+      summary: 列表
+      tags:
+      - monitor_resource_alert
+    post:
+      description: 新建
+      operationId: monitor_resource_alert_ValidateCreateData
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            monitor_resource_alert:
+              $ref: '#/definitions/JoinResourceBaseCreateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_alert_ValidateCreateDataOutput'
+      summary: 新建
+      tags:
+      - monitor_resource_alert
+  /monitor_resource_alerts/{id}:
+    delete:
+      description: 删除
+      operationId: monitor_resource_alert_CustomizeDelete
+      parameters:
+      - description: The Id or Name of monitor_resource_alert
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_alert_CustomizeDeleteOutput'
+      summary: 删除
+      tags:
+      - monitor_resource_alert
+    get:
+      description: 获取详情
+      operationId: monitor_resource_alert_FetchCustomizeColumns
+      parameters:
+      - description: The Id or Name of monitor_resource_alert
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_alert_FetchCustomizeColumnsOutput'
+      summary: 获取详情
+      tags:
+      - monitor_resource_alert
+    put:
+      description: 更新
+      operationId: monitor_resource_alert_ValidateUpdateData
+      parameters:
+      - description: The Id or Name of monitor_resource_alert
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            monitor_resource_alert:
+              $ref: '#/definitions/JointResourceBaseUpdateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_alert_ValidateUpdateDataOutput'
+      summary: 更新
+      tags:
+      - monitor_resource_alert
+  /monitor_resource_alerts/distinct-field:
+    get:
+      description: 获取指定资源类的信息DistinctField
+      operationId: monitor_resource_alert_GetPropertyDistinctField
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_alert_GetPropertyDistinctFieldOutput'
+      summary: 获取指定资源类的信息DistinctField
+      tags:
+      - monitor_resource_alert
+  /monitor_resource_alerts/purge-splitable:
+    post:
+      description: 执行操作PurgeSplitable
+      operationId: monitor_resource_alert_PerformPurgeSplitable
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_alert_PerformPurgeSplitableOutput'
+      summary: 执行操作PurgeSplitable
+      tags:
+      - monitor_resource_alert
+  /monitor_resource_alerts/splitable:
+    get:
+      description: 获取指定资源类的信息Splitable
+      operationId: monitor_resource_alert_GetPropertySplitable
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_alert_GetPropertySplitableOutput'
+      summary: 获取指定资源类的信息Splitable
+      tags:
+      - monitor_resource_alert
+  /monitor_resources:
+    get:
+      description: 列表
+      operationId: monitor_resource_ListItemFilter
+      parameters:
+      - default: 20
+        description: 查询限制量
+        format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
+      - default: 0
+        description: 查询偏移量
+        format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - description: 列表排序时，用于排序的字段的名称，该字段不提供时，则按默认字段排序。一般时按照资源的新建时间逆序排序。
+        in: query
+        items:
+          type: string
+        name: order_by
+        type: array
+        x-go-name: OrderBy
+      - description: 列表排序时的顺序，desc为从高到低，asc为从低到高。默认是按照资源的创建时间desc排序。
+        example: desc|asc
+        in: query
+        name: order
+        type: string
+        x-go-name: Order
+      - description: 列表返回资源的更多详细信息。默认只显示基本字段，该字段为true则返回扩展字段信息。
+        in: query
+        name: details
+        type: boolean
+        x-go-name: Details
+      - description: 模糊搜索所有字段
+        in: query
+        name: search
+        type: string
+        x-go-name: Search
+      - description: |-
+          指定过滤条件，允许指定多个，每个条件的格式为"字段名称.操作符(匹配信息)"，例如name字段等于test的过滤器为：name.equals('test')
+          支持的操作符如下：
+
+           操作符        | 参数个数 | 举例                                           | 说明                        |
+          ---------------|----------|------------------------------------------------|-----------------------------|
+           in            | > 0      | name.in("test", "good")                        | 在给定数组中                |
+           notin         | > 0      | name.notin('test')                             | 不在给定数组中              |
+           between       | 2        | created_at.between('2019-12-10', '2020-01-02') | 在两个值之间                |
+           ge            | 1        | created_at.ge('2020-01-01')                    | 大于或等于给定值            |
+           gt            | 1        | created_at.gt('2020-01-01')                    | 严格大于给定值              |
+           le            | 1        | created_at.le('2020-01-01')                    | 小于或等于给定值            |
+           lt            | 1        | sync_seconds.lt(900)                           | 严格大于给定值              |
+           like          | > 0      | name.like('%test%')                            | sql字符串匹配任意一个字符串 |
+           contains      | > 0      | name.contains('test')                          | 包含任意一个给定字符串      |
+           startswith    | > 0      | name.startswith('test')                        | 以任意一个给定字符串开头    |
+           endswith      | > 0      | name.endswith('test')                          | 以任意一个给定字符串结尾    |
+           equals        | > 0      | name.equals('test')                            | 等于任意一个给定值          |
+           notequals     | 1        | name.notequals('test')                         | 不等于给定值                |
+           isnull        | 0        | name.isnull()                                  | 值为SQL的NULL               |
+           isnotnull     | 0        | name.isnotnull()                               | 值不为SQL的NULL             |
+           isempty       | 0        | name.isempty('test')                           | 值为空字符串                |
+           isnotempty    | 0        | name.isnotempty('test')                        | 值不是空字符串              |
+           isnullorempty | 0        | name.isnullorempty('test')                     | 值为SQL的NULL或者空字符串   |
+        in: query
+        items:
+          type: string
+        name: filter
+        type: array
+        x-go-name: Filter
+      - description: |-
+          指定关联过滤条件，允许指定多个，后端将根据关联过滤条件和其他表关联查询，支持的查询语法和filter相同，
+          和其他表关联的语法如下：
+          joint_resources.related_key(origin_key).filter_col.filter_ops(values)
+          其中，joint_resources为要关联的资源名称，related_key为关联表column，origin_key为当前表column, filter_col为
+          关联表用于查询匹配的field名称，field_ops为filter支持的操作，values为匹配的值
+          举例：
+          guestnetworks.guest_id(id).ip_addr.equals('10.168.21.222')
+        in: query
+        items:
+          type: string
+        name: joint_filter
+        type: array
+        x-go-name: JointFilter
+      - description: 如果filter_any为true，则查询所有filter的并集，否则为交集
+        in: query
+        name: filter_any
+        type: boolean
+        x-go-name: FilterAny
+      - description: 返回结果只包含指定的字段
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 用于数据导出，指定导出的数据字段
+        in: query
+        name: export_keys
+        type: string
+        x-go-name: ExportKeys
+      - description: 返回结果携带delete_fail_reason和update_fail_reason字段
+        in: query
+        name: show_fail_reason
+        type: boolean
+        x-go-name: ShowFailReason
+      - description: 通过标签过滤
+        in: query
+        items:
+          $ref: '#/definitions/STag'
+        name: tags
+        type: array
+        x-go-name: Tags
+      - description: 通过标签过滤
+        in: query
+        name: order_by_tag
+        type: string
+        x-go-name: OrderByTag
+      - description: |-
+          deprecated
+          返回资源的标签不包含用户标签
+        in: query
+        name: without_user_meta
+        type: boolean
+        x-go-name: WithoutUserMeta
+      - description: 返回包含用户标签的资源
+        in: query
+        name: with_user_meta
+        type: boolean
+        x-go-name: WithUserMeta
+      - description: 返回包含外部标签的资源
+        in: query
+        name: with_cloud_meta
+        type: boolean
+        x-go-name: WithCloudMeta
+      - description: 返回包含任意标签的资源
+        in: query
+        name: with_any_meta
+        type: boolean
+        x-go-name: WithAnyMeta
+      - description: 返回列表数据中包含资源的标签数据（Metadata）
+        in: query
+        name: with_meta
+        type: boolean
+        x-go-name: WithMeta
+      - description: 显示所有的资源，包括模拟的资源
+        in: query
+        name: show_emulated
+        type: boolean
+        x-go-name: ShowEmulated
+      - description: 以资源ID过滤列表
+        in: query
+        items:
+          type: string
+        name: id
+        type: array
+        x-go-name: Ids
+      - description: 以资源名称过滤列表
+        in: query
+        items:
+          type: string
+        name: name
+        type: array
+        x-go-name: Names
+      - description: 以资源的状态过滤列表
+        in: query
+        items:
+          type: string
+        name: status
+        type: array
+        x-go-name: Status
+      - description: 指定项目的名称或ID
+        in: query
+        name: project_id
+        type: string
+        x-go-name: ProjectId
+      - description: 对具有项目属性的资源，严格匹配项目ID
+        in: query
+        items:
+          type: string
+        name: project_ids
+        type: array
+        x-go-name: ProjectIds
+      - description: 按project名称排序，可能值为asc|desc
+        in: query
+        name: order_by_project
+        pattern: asc|desc
+        type: string
+        x-go-name: OrderByProject
+      - description: 列表中包含标记为"系统资源"的资源
+        in: query
+        name: system
+        type: boolean
+        x-go-name: System
+      - description: 是否显示回收站内的资源，默认不显示（对实现了回收站的资源有效，例如主机，磁盘，镜像）
+        in: query
+        name: pending_delete
+        type: boolean
+        x-go-name: PendingDelete
+      - description: 以资源是否启用/禁用过滤列表
+        in: query
+        name: enabled
+        type: boolean
+        x-go-name: Enabled
+      - description: 指定查询的权限范围，可能值为project, domain or system
+        in: query
+        name: scope
+        type: string
+        x-go-name: Scope
+      - description: 指定项目归属域名称或ID
+        in: query
+        name: project_domain_id
+        type: string
+        x-go-name: ProjectDomainId
+      - description: 对具有域属性的资源，严格匹配域ID
+        in: query
+        items:
+          type: string
+        name: project_domain_ids
+        type: array
+        x-go-name: ProjectDomainIds
+      - description: 按domain名称排序，可能值为asc|desc
+        in: query
+        name: order_by_domain
+        pattern: asc|desc
+        type: string
+        x-go-name: OrderByDomain
+      - description: |-
+          列出指定云平台的资源，支持的云平台如下
+
+           Provider  | 开始支持版本 | 平台                                |
+          -----------|------------|-------------------------------------|
+           OneCloud  | 0.0        | OneCloud内置私有云，包括KVM和裸金属管理 |
+           VMware    | 1.2        | VMware vCenter                      |
+           OpenStack | 2.6        | OpenStack M版本以上私有云             |
+           ZStack    | 2.10       | ZStack私有云                         |
+           Aliyun    | 2.0        | 阿里云                               |
+           Aws       | 2.3        | Amazon AWS                          |
+           Azure     | 2.2        | Microsoft Azure                     |
+           Google    | 2.13       | Google Cloud Platform               |
+           Qcloud    | 2.3        | 腾讯云                               |
+           Huawei    | 2.5        | 华为公有云                           |
+           Ucloud    | 2.7        | UCLOUD                               |
+           Ctyun     | 2.13       | 天翼云                               |
+           S3        | 2.11       | 通用s3对象存储                        |
+           Ceph      | 2.11       | Ceph对象存储                         |
+           Xsky      | 2.11       | XSKY启明星辰Ceph对象存储              |
+        enum:
+        - OneCloud
+        - VMware
+        - Aliyun
+        - Qcloud
+        - Azure
+        - Aws
+        - Huawei
+        - OpenStack
+        - Ucloud
+        - ZStack
+        - Google
+        - Ctyun
+        - S3
+        - Ceph
+        - Xsky"
+        in: query
+        items:
+          type: string
+        name: providers
+        type: array
+        x-go-name: Providers
+      - description: |-
+          列出指定云平台品牌的资源，一般来说brand和provider相同，除了以上支持的provider之外，还支持以下band
+
+             Brand  | Provider | 说明        |
+          ----------|----------|------------|
+           DStack   | ZStack   | 滴滴云私有云 |
+        in: query
+        items:
+          type: string
+        name: brands
+        type: array
+        x-go-name: Brands
+      - description: |-
+          列出指定云环境的资源，支持云环境如下：
+
+           CloudEnv  | 说明   |
+          -----------|--------|
+           public    | 公有云  |
+           private   | 私有云  |
+           onpremise | 本地IDC |
+        enum:
+        - public
+        - private
+        - onpremise
+        in: query
+        name: cloud_env
+        type: string
+        x-go-name: CloudEnv
+      - description: 以平台名称排序
+        in: query
+        name: order_by_provider
+        pattern: asc|desc
+        type: string
+        x-go-name: OrderByProvider
+      - description: 以平台品牌排序
+        in: query
+        name: order_by_brand
+        pattern: asc|desc
+        type: string
+        x-go-name: OrderByBrand
+      - description: 列出关联指定云订阅(ID或Name)的资源
+        in: query
+        name: cloudprovider_id
+        type: string
+        x-go-name: CloudproviderId
+      - description: 列出关联指定云账号(ID或Name)的资源
+        in: query
+        items:
+          type: string
+        name: cloudaccount_id
+        type: array
+        x-go-name: CloudaccountId
+      - default: false
+        description: 过滤资源，是否为非OneCloud内置私有云管理的资源
+        in: query
+        name: is_managed
+        type: boolean
+        x-go-name: IsManaged
+      - description: 以云账号名称排序
+        in: query
+        name: order_by_account
+        pattern: asc|desc
+        type: string
+        x-go-name: OrderByAccount
+      - description: 以云订阅名称排序
+        in: query
+        name: order_by_manager
+        pattern: asc|desc
+        type: string
+        x-go-name: OrderByManager
+      - in: query
+        items:
+          type: string
+        name: res_id
+        type: array
+        x-go-name: ResId
+      - in: query
+        name: res_type
+        type: string
+        x-go-name: ResType
+      - in: query
+        name: only_res_id
+        type: boolean
+        x-go-name: OnlyResId
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_ListItemFilterOutput'
+      summary: 列表
+      tags:
+      - monitor_resource
+    post:
+      description: 新建
+      operationId: monitor_resource_ValidateCreateData
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            monitor_resource:
+              $ref: '#/definitions/MonitorResourceCreateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_ValidateCreateDataOutput'
+      summary: 新建
+      tags:
+      - monitor_resource
+  /monitor_resources/{id}:
+    delete:
+      description: 删除
+      operationId: monitor_resource_CustomizeDelete
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_CustomizeDeleteOutput'
+      summary: 删除
+      tags:
+      - monitor_resource
+    get:
+      description: 获取详情
+      operationId: monitor_resource_FetchCustomizeColumns
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_FetchCustomizeColumnsOutput'
+      summary: 获取详情
+      tags:
+      - monitor_resource
+    put:
+      description: 更新
+      operationId: monitor_resource_ValidateUpdateData
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            monitor_resource:
+              $ref: '#/definitions/VirtualResourceBaseUpdateInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_ValidateUpdateDataOutput'
+      summary: 更新
+      tags:
+      - monitor_resource
+  /monitor_resources/{id}/cancel-delete:
+    post:
+      description: 执行操作CancelDelete
+      operationId: monitor_resource_PerformCancelDelete
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_PerformCancelDeleteOutput'
+      summary: 执行操作CancelDelete
+      tags:
+      - monitor_resource
+  /monitor_resources/{id}/change-owner:
+    post:
+      description: 执行操作ChangeOwner
+      operationId: monitor_resource_PerformChangeOwner
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            monitor_resource:
+              $ref: '#/definitions/PerformChangeProjectOwnerInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_PerformChangeOwnerOutput'
+      summary: 执行操作ChangeOwner
+      tags:
+      - monitor_resource
+  /monitor_resources/{id}/change-owner-candidate-domains:
+    get:
+      description: 获取指定信息ChangeOwnerCandidateDomains
+      operationId: monitor_resource_GetDetailsChangeOwnerCandidateDomains
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_GetDetailsChangeOwnerCandidateDomainsOutput'
+      summary: 获取指定信息ChangeOwnerCandidateDomains
+      tags:
+      - monitor_resource
+  /monitor_resources/{id}/freeze:
+    post:
+      description: 执行操作Freeze
+      operationId: monitor_resource_PerformFreeze
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            monitor_resource:
+              $ref: '#/definitions/PerformFreezeInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_PerformFreezeOutput'
+      summary: freezed update and perform action operation except for unfreeze
+      tags:
+      - monitor_resource
+  /monitor_resources/{id}/metadata:
+    get:
+      description: 获取指定信息Metadata
+      operationId: monitor_resource_GetDetailsMetadata
+      parameters:
+      - description: |-
+          指定需要获取的所有标签的KEY列表，如果列表为空，则获取全部标签
+          标签分为
+
+           类型     | 说明                                        |
+          ----------|---------------------------------------------|
+           系统标签 | 平台定义的标签                              |
+           用户标签 | key以user:为前缀，用户自定义标签            |
+           外部标签 | key以ext:为前缀，为从其他平台同步过来的标签 |
+        in: query
+        items:
+          type: string
+        name: field
+        type: array
+        x-go-name: Field
+      - description: 按标签前缀过滤
+        in: query
+        name: prefix
+        type: string
+        x-go-name: Prefix
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_GetDetailsMetadataOutput'
+      summary: 获取资源标签（元数据）
+      tags:
+      - monitor_resource
+  /monitor_resources/{id}/set-user-metadata:
+    post:
+      description: 执行操作SetUserMetadata
+      operationId: monitor_resource_PerformSetUserMetadata
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            monitor_resource:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_PerformSetUserMetadataOutput'
+      summary: 全量替换资源的所有用户标签
+      tags:
+      - monitor_resource
+  /monitor_resources/{id}/status:
+    get:
+      description: 获取指定信息Status
+      operationId: monitor_resource_GetDetailsStatus
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_GetDetailsStatusOutput'
+      summary: 获取资源状态
+      tags:
+      - monitor_resource
+    post:
+      description: 执行操作Status
+      operationId: monitor_resource_PerformStatus
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            monitor_resource:
+              $ref: '#/definitions/PerformStatusInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_PerformStatusOutput'
+      summary: 更新资源状态
+      tags:
+      - monitor_resource
+  /monitor_resources/{id}/unfreeze:
+    post:
+      description: 执行操作Unfreeze
+      operationId: monitor_resource_PerformUnfreeze
+      parameters:
+      - description: The Id or Name of monitor_resource
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            monitor_resource:
+              $ref: '#/definitions/PerformUnfreezeInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_PerformUnfreezeOutput'
+      summary: 执行操作Unfreeze
+      tags:
+      - monitor_resource
+  /monitor_resources/alert:
+    get:
+      description: 获取指定资源类的信息Alert
+      operationId: monitor_resource_GetPropertyAlert
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_GetPropertyAlertOutput'
+      summary: 获取指定资源类的信息Alert
+      tags:
+      - monitor_resource
+  /monitor_resources/distinct-field:
+    get:
+      description: 获取指定资源类的信息DistinctField
+      operationId: monitor_resource_GetPropertyDistinctField
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_GetPropertyDistinctFieldOutput'
+      summary: 获取指定资源类的信息DistinctField
+      tags:
+      - monitor_resource
+  /monitor_resources/purge-splitable:
+    post:
+      description: 执行操作PurgeSplitable
+      operationId: monitor_resource_PerformPurgeSplitable
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_PerformPurgeSplitableOutput'
+      summary: 执行操作PurgeSplitable
+      tags:
+      - monitor_resource
+  /monitor_resources/splitable:
+    get:
+      description: 获取指定资源类的信息Splitable
+      operationId: monitor_resource_GetPropertySplitable
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_GetPropertySplitableOutput'
+      summary: 获取指定资源类的信息Splitable
+      tags:
+      - monitor_resource
+  /monitor_resources/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: monitor_resource_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/monitor_resource_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - monitor_resource
   /node_alerts:
     get:
       description: 列表
@@ -8131,7 +9871,7 @@ paths:
       - node_alert
     get:
       description: 获取详情
-      operationId: node_alert_GetExtraDetails
+      operationId: node_alert_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of node_alert
         in: path
@@ -8141,7 +9881,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/node_alert_GetExtraDetailsOutput'
+          $ref: '#/responses/node_alert_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - node_alert
@@ -8403,6 +10143,16 @@ paths:
         "200":
           $ref: '#/responses/node_alert_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - node_alert
+  /node_alerts/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: node_alert_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/node_alert_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
       tags:
       - node_alert
   /v1_alerts:
@@ -8672,7 +10422,7 @@ paths:
       - v1_alert
     get:
       description: 获取详情
-      operationId: v1_alert_GetExtraDetails
+      operationId: v1_alert_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of v1_alert
         in: path
@@ -8682,7 +10432,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/v1_alert_GetExtraDetailsOutput'
+          $ref: '#/responses/v1_alert_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - v1_alert
@@ -8946,10 +10696,26 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - v1_alert
+  /v1_alerts/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: v1_alert_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/v1_alert_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - v1_alert
 produces:
 - application/json
 responses:
   alert_CustomizeDeleteOutput:
+    schema:
+      properties:
+        alert:
+          $ref: '#/definitions/AlertDetails'
+      type: object
+  alert_FetchCustomizeColumnsOutput:
     schema:
       properties:
         alert:
@@ -8970,14 +10736,17 @@ responses:
         alert:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  alert_GetExtraDetailsOutput:
+  alert_GetPropertyDistinctFieldOutput: {}
+  alert_GetPropertySplitableOutput: {}
+  alert_GetPropertyStatisticsOutput:
     schema:
       properties:
         alert:
-          $ref: '#/definitions/AlertDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  alert_GetPropertyDistinctFieldOutput: {}
-  alert_GetPropertySplitableOutput: {}
   alert_ListItemFilterOutput:
     schema:
       properties:
@@ -9027,7 +10796,13 @@ responses:
     schema:
       properties:
         alert_dash_board:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/AlertDashBoardDetails'
+      type: object
+  alert_dash_board_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        alert_dash_board:
+          $ref: '#/definitions/AlertDashBoardDetails'
       type: object
   alert_dash_board_GetDetailsMetadataOutput:
     schema:
@@ -9044,20 +10819,23 @@ responses:
         alert_dash_board:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  alert_dash_board_GetExtraDetailsOutput:
+  alert_dash_board_GetPropertyDistinctFieldOutput: {}
+  alert_dash_board_GetPropertySplitableOutput: {}
+  alert_dash_board_GetPropertyStatisticsOutput:
     schema:
       properties:
         alert_dash_board:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  alert_dash_board_GetPropertyDistinctFieldOutput: {}
-  alert_dash_board_GetPropertySplitableOutput: {}
   alert_dash_board_ListItemFilterOutput:
     schema:
       properties:
         alert_dash_boards:
           items:
-            $ref: '#/definitions/StatusStandaloneResourceDetails'
+            $ref: '#/definitions/AlertDashBoardDetails'
           type: array
           x-go-name: Output
         limit:
@@ -9074,31 +10852,32 @@ responses:
           x-go-name: Total
       type: object
   alert_dash_board_PerformPurgeSplitableOutput: {}
+  alert_dash_board_PerformSetScopeOutput: {}
   alert_dash_board_PerformSetUserMetadataOutput: {}
   alert_dash_board_PerformStatusOutput: {}
   alert_dash_board_ValidateCreateDataOutput:
     schema:
       properties:
         alert_dash_board:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/AlertDashBoardDetails'
       type: object
   alert_dash_board_ValidateUpdateDataOutput:
     schema:
       properties:
         alert_dash_board:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/AlertDashBoardDetails'
       type: object
   alert_dashboard_panel_CustomizeDeleteOutput:
     schema:
       properties:
         alert_dashboard_panel:
-          $ref: '#/definitions/VirtualJointResourceBaseDetails'
+          $ref: '#/definitions/JointResourceBaseDetails'
       type: object
-  alert_dashboard_panel_GetExtraDetailsOutput:
+  alert_dashboard_panel_FetchCustomizeColumnsOutput:
     schema:
       properties:
         alert_dashboard_panel:
-          $ref: '#/definitions/VirtualJointResourceBaseDetails'
+          $ref: '#/definitions/JointResourceBaseDetails'
       type: object
   alert_dashboard_panel_GetPropertyDistinctFieldOutput: {}
   alert_dashboard_panel_GetPropertySplitableOutput: {}
@@ -9107,7 +10886,7 @@ responses:
       properties:
         alert_dashboard_panels:
           items:
-            $ref: '#/definitions/VirtualJointResourceBaseDetails'
+            $ref: '#/definitions/JointResourceBaseDetails'
           type: array
           x-go-name: Output
         limit:
@@ -9128,15 +10907,21 @@ responses:
     schema:
       properties:
         alert_dashboard_panel:
-          $ref: '#/definitions/VirtualJointResourceBaseDetails'
+          $ref: '#/definitions/JointResourceBaseDetails'
       type: object
   alert_dashboard_panel_ValidateUpdateDataOutput:
     schema:
       properties:
         alert_dashboard_panel:
-          $ref: '#/definitions/VirtualJointResourceBaseDetails'
+          $ref: '#/definitions/JointResourceBaseDetails'
       type: object
   alert_notification_CustomizeDeleteOutput:
+    schema:
+      properties:
+        alert_notification:
+          $ref: '#/definitions/VirtualResourceDetails'
+      type: object
+  alert_notification_FetchCustomizeColumnsOutput:
     schema:
       properties:
         alert_notification:
@@ -9163,14 +10948,17 @@ responses:
         alert_notification:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  alert_notification_GetExtraDetailsOutput:
+  alert_notification_GetPropertyDistinctFieldOutput: {}
+  alert_notification_GetPropertySplitableOutput: {}
+  alert_notification_GetPropertyStatisticsOutput:
     schema:
       properties:
         alert_notification:
-          $ref: '#/definitions/VirtualResourceDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  alert_notification_GetPropertyDistinctFieldOutput: {}
-  alert_notification_GetPropertySplitableOutput: {}
   alert_notification_ListItemFilterOutput:
     schema:
       properties:
@@ -9215,7 +11003,13 @@ responses:
     schema:
       properties:
         alert_panel:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/PanelDetails'
+      type: object
+  alert_panel_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        alert_panel:
+          $ref: '#/definitions/PanelDetails'
       type: object
   alert_panel_GetDetailsMetadataOutput:
     schema:
@@ -9232,20 +11026,23 @@ responses:
         alert_panel:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  alert_panel_GetExtraDetailsOutput:
+  alert_panel_GetPropertyDistinctFieldOutput: {}
+  alert_panel_GetPropertySplitableOutput: {}
+  alert_panel_GetPropertyStatisticsOutput:
     schema:
       properties:
         alert_panel:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  alert_panel_GetPropertyDistinctFieldOutput: {}
-  alert_panel_GetPropertySplitableOutput: {}
   alert_panel_ListItemFilterOutput:
     schema:
       properties:
         alert_panels:
           items:
-            $ref: '#/definitions/StatusStandaloneResourceDetails'
+            $ref: '#/definitions/PanelDetails'
           type: array
           x-go-name: Output
         limit:
@@ -9268,19 +11065,25 @@ responses:
     schema:
       properties:
         alert_panel:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/PanelDetails'
       type: object
   alert_panel_ValidateUpdateDataOutput:
     schema:
       properties:
         alert_panel:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/PanelDetails'
       type: object
   alert_record_CustomizeDeleteOutput:
     schema:
       properties:
         alert_record:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/AlertRecordDetails'
+      type: object
+  alert_record_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        alert_record:
+          $ref: '#/definitions/AlertRecordDetails'
       type: object
   alert_record_GetDetailsMetadataOutput:
     schema:
@@ -9297,21 +11100,24 @@ responses:
         alert_record:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  alert_record_GetExtraDetailsOutput:
+  alert_record_GetPropertyDistinctFieldOutput: {}
+  alert_record_GetPropertySplitableOutput: {}
+  alert_record_GetPropertyStatisticsOutput:
     schema:
       properties:
         alert_record:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  alert_record_GetPropertyDistinctFieldOutput: {}
-  alert_record_GetPropertySplitableOutput: {}
   alert_record_GetPropertyTotalAlertOutput: {}
   alert_record_ListItemFilterOutput:
     schema:
       properties:
         alert_records:
           items:
-            $ref: '#/definitions/StatusStandaloneResourceDetails'
+            $ref: '#/definitions/AlertRecordDetails'
           type: array
           x-go-name: Output
         limit:
@@ -9334,19 +11140,25 @@ responses:
     schema:
       properties:
         alert_record:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/AlertRecordDetails'
       type: object
   alert_record_ValidateUpdateDataOutput:
     schema:
       properties:
         alert_record:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/AlertRecordDetails'
       type: object
   alert_resource_CustomizeDeleteOutput:
     schema:
       properties:
         alert_resource:
-          $ref: '#/definitions/StandaloneResourceDetails'
+          $ref: '#/definitions/AlertResourceDetails'
+      type: object
+  alert_resource_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        alert_resource:
+          $ref: '#/definitions/AlertResourceDetails'
       type: object
   alert_resource_GetDetailsMetadataOutput:
     schema:
@@ -9357,12 +11169,6 @@ responses:
           type: object
           x-go-name: Output
       type: object
-  alert_resource_GetExtraDetailsOutput:
-    schema:
-      properties:
-        alert_resource:
-          $ref: '#/definitions/StandaloneResourceDetails'
-      type: object
   alert_resource_GetPropertyDistinctFieldOutput: {}
   alert_resource_GetPropertySplitableOutput: {}
   alert_resource_ListItemFilterOutput:
@@ -9370,7 +11176,7 @@ responses:
       properties:
         alert_resources:
           items:
-            $ref: '#/definitions/StandaloneResourceDetails'
+            $ref: '#/definitions/AlertResourceDetails'
           type: array
           x-go-name: Output
         limit:
@@ -9392,25 +11198,27 @@ responses:
     schema:
       properties:
         alert_resource:
-          $ref: '#/definitions/StandaloneResourceDetails'
+          $ref: '#/definitions/AlertResourceDetails'
       type: object
   alert_resource_ValidateUpdateDataOutput:
     schema:
       properties:
         alert_resource:
-          $ref: '#/definitions/StandaloneResourceDetails'
+          $ref: '#/definitions/AlertResourceDetails'
       type: object
   alert_resource_alert_CustomizeDeleteOutput:
     schema:
       properties:
         alert_resource_alert:
-          $ref: '#/definitions/JointResourceBaseDetails'
+          type: object
+          x-go-name: Output
       type: object
-  alert_resource_alert_GetExtraDetailsOutput:
+  alert_resource_alert_FetchCustomizeColumnsOutput:
     schema:
       properties:
         alert_resource_alert:
-          $ref: '#/definitions/JointResourceBaseDetails'
+          type: object
+          x-go-name: Output
       type: object
   alert_resource_alert_GetPropertyDistinctFieldOutput: {}
   alert_resource_alert_GetPropertySplitableOutput: {}
@@ -9419,7 +11227,7 @@ responses:
       properties:
         alert_resource_alerts:
           items:
-            $ref: '#/definitions/JointResourceBaseDetails'
+            type: object
           type: array
           x-go-name: Output
         limit:
@@ -9440,19 +11248,27 @@ responses:
     schema:
       properties:
         alert_resource_alert:
-          $ref: '#/definitions/JointResourceBaseDetails'
+          type: object
+          x-go-name: Output
       type: object
   alert_resource_alert_ValidateUpdateDataOutput:
     schema:
       properties:
         alert_resource_alert:
-          $ref: '#/definitions/JointResourceBaseDetails'
+          type: object
+          x-go-name: Output
       type: object
   common_alert_CustomizeDeleteOutput:
     schema:
       properties:
         common_alert:
-          $ref: '#/definitions/AlertDetails'
+          $ref: '#/definitions/CommonAlertDetails'
+      type: object
+  common_alert_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        common_alert:
+          $ref: '#/definitions/CommonAlertDetails'
       type: object
   common_alert_GetDetailsMetadataOutput:
     schema:
@@ -9469,20 +11285,23 @@ responses:
         common_alert:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  common_alert_GetExtraDetailsOutput:
+  common_alert_GetPropertyDistinctFieldOutput: {}
+  common_alert_GetPropertySplitableOutput: {}
+  common_alert_GetPropertyStatisticsOutput:
     schema:
       properties:
         common_alert:
-          $ref: '#/definitions/AlertDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  common_alert_GetPropertyDistinctFieldOutput: {}
-  common_alert_GetPropertySplitableOutput: {}
   common_alert_ListItemFilterOutput:
     schema:
       properties:
         common_alerts:
           items:
-            $ref: '#/definitions/AlertDetails'
+            $ref: '#/definitions/CommonAlertDetails'
           type: array
           x-go-name: Output
         limit:
@@ -9516,15 +11335,21 @@ responses:
     schema:
       properties:
         common_alert:
-          $ref: '#/definitions/AlertDetails'
+          $ref: '#/definitions/CommonAlertDetails'
       type: object
   common_alert_ValidateUpdateDataOutput:
     schema:
       properties:
         common_alert:
-          $ref: '#/definitions/AlertDetails'
+          $ref: '#/definitions/CommonAlertDetails'
       type: object
   data_source_CustomizeDeleteOutput:
+    schema:
+      properties:
+        data_source:
+          $ref: '#/definitions/StandaloneResourceDetails'
+      type: object
+  data_source_FetchCustomizeColumnsOutput:
     schema:
       properties:
         data_source:
@@ -9538,12 +11363,6 @@ responses:
             type: string
           type: object
           x-go-name: Output
-      type: object
-  data_source_GetExtraDetailsOutput:
-    schema:
-      properties:
-        data_source:
-          $ref: '#/definitions/StandaloneResourceDetails'
       type: object
   data_source_GetPropertyDistinctFieldOutput: {}
   data_source_GetPropertySplitableOutput: {}
@@ -9586,7 +11405,13 @@ responses:
     schema:
       properties:
         meter_alert:
-          $ref: '#/definitions/AlertV1Details'
+          $ref: '#/definitions/MeterAlertDetails'
+      type: object
+  meter_alert_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        meter_alert:
+          $ref: '#/definitions/MeterAlertDetails'
       type: object
   meter_alert_GetDetailsMetadataOutput:
     schema:
@@ -9603,14 +11428,17 @@ responses:
         meter_alert:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  meter_alert_GetExtraDetailsOutput:
+  meter_alert_GetPropertyDistinctFieldOutput: {}
+  meter_alert_GetPropertySplitableOutput: {}
+  meter_alert_GetPropertyStatisticsOutput:
     schema:
       properties:
         meter_alert:
-          $ref: '#/definitions/AlertV1Details'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  meter_alert_GetPropertyDistinctFieldOutput: {}
-  meter_alert_GetPropertySplitableOutput: {}
   meter_alert_ListItemFilterOutput:
     schema:
       properties:
@@ -9620,7 +11448,7 @@ responses:
           x-go-name: Limit
         meter_alerts:
           items:
-            $ref: '#/definitions/AlertV1Details'
+            $ref: '#/definitions/MeterAlertDetails'
           type: array
           x-go-name: Output
         offset:
@@ -9648,25 +11476,25 @@ responses:
     schema:
       properties:
         meter_alert:
-          $ref: '#/definitions/AlertV1Details'
+          $ref: '#/definitions/MeterAlertDetails'
       type: object
   meter_alert_ValidateUpdateDataOutput:
     schema:
       properties:
         meter_alert:
-          $ref: '#/definitions/AlertV1Details'
+          $ref: '#/definitions/MeterAlertDetails'
       type: object
   metric_CustomizeDeleteOutput:
     schema:
       properties:
         metric:
-          $ref: '#/definitions/VirtualJointResourceBaseDetails'
+          $ref: '#/definitions/JointResourceBaseDetails'
       type: object
-  metric_GetExtraDetailsOutput:
+  metric_FetchCustomizeColumnsOutput:
     schema:
       properties:
         metric:
-          $ref: '#/definitions/VirtualJointResourceBaseDetails'
+          $ref: '#/definitions/JointResourceBaseDetails'
       type: object
   metric_GetPropertyDistinctFieldOutput: {}
   metric_GetPropertySplitableOutput: {}
@@ -9679,7 +11507,7 @@ responses:
           x-go-name: Limit
         metrics:
           items:
-            $ref: '#/definitions/VirtualJointResourceBaseDetails'
+            $ref: '#/definitions/JointResourceBaseDetails'
           type: array
           x-go-name: Output
         offset:
@@ -9696,19 +11524,25 @@ responses:
     schema:
       properties:
         metric:
-          $ref: '#/definitions/VirtualJointResourceBaseDetails'
+          $ref: '#/definitions/JointResourceBaseDetails'
       type: object
   metric_ValidateUpdateDataOutput:
     schema:
       properties:
         metric:
-          $ref: '#/definitions/VirtualJointResourceBaseDetails'
+          $ref: '#/definitions/JointResourceBaseDetails'
       type: object
   metric_field_CustomizeDeleteOutput:
     schema:
       properties:
         metric_field:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/MetricFieldDetail'
+      type: object
+  metric_field_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        metric_field:
+          $ref: '#/definitions/MetricFieldDetail'
       type: object
   metric_field_GetDetailsMetadataOutput:
     schema:
@@ -9725,14 +11559,17 @@ responses:
         metric_field:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  metric_field_GetExtraDetailsOutput:
+  metric_field_GetPropertyDistinctFieldOutput: {}
+  metric_field_GetPropertySplitableOutput: {}
+  metric_field_GetPropertyStatisticsOutput:
     schema:
       properties:
         metric_field:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  metric_field_GetPropertyDistinctFieldOutput: {}
-  metric_field_GetPropertySplitableOutput: {}
   metric_field_ListItemFilterOutput:
     schema:
       properties:
@@ -9742,7 +11579,7 @@ responses:
           x-go-name: Limit
         metric_fields:
           items:
-            $ref: '#/definitions/StatusStandaloneResourceDetails'
+            $ref: '#/definitions/MetricFieldDetail'
           type: array
           x-go-name: Output
         offset:
@@ -9761,19 +11598,25 @@ responses:
     schema:
       properties:
         metric_field:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/MetricFieldDetail'
       type: object
   metric_field_ValidateUpdateDataOutput:
     schema:
       properties:
         metric_field:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/MetricFieldDetail'
       type: object
   metric_measurement_CustomizeDeleteOutput:
     schema:
       properties:
         metric_measurement:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/MetricDetails'
+      type: object
+  metric_measurement_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        metric_measurement:
+          $ref: '#/definitions/MetricDetails'
       type: object
   metric_measurement_GetDetailsMetadataOutput:
     schema:
@@ -9790,14 +11633,17 @@ responses:
         metric_measurement:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  metric_measurement_GetExtraDetailsOutput:
+  metric_measurement_GetPropertyDistinctFieldOutput: {}
+  metric_measurement_GetPropertySplitableOutput: {}
+  metric_measurement_GetPropertyStatisticsOutput:
     schema:
       properties:
         metric_measurement:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  metric_measurement_GetPropertyDistinctFieldOutput: {}
-  metric_measurement_GetPropertySplitableOutput: {}
   metric_measurement_ListItemFilterOutput:
     schema:
       properties:
@@ -9807,7 +11653,7 @@ responses:
           x-go-name: Limit
         metric_measurements:
           items:
-            $ref: '#/definitions/StatusStandaloneResourceDetails'
+            $ref: '#/definitions/MetricDetails'
           type: array
           x-go-name: Output
         offset:
@@ -9826,15 +11672,154 @@ responses:
     schema:
       properties:
         metric_measurement:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/MetricDetails'
       type: object
   metric_measurement_ValidateUpdateDataOutput:
     schema:
       properties:
         metric_measurement:
-          $ref: '#/definitions/StatusStandaloneResourceDetails'
+          $ref: '#/definitions/MetricDetails'
+      type: object
+  monitor_resource_CustomizeDeleteOutput:
+    schema:
+      properties:
+        monitor_resource:
+          $ref: '#/definitions/MonitorResourceDetails'
+      type: object
+  monitor_resource_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        monitor_resource:
+          $ref: '#/definitions/MonitorResourceDetails'
+      type: object
+  monitor_resource_GetDetailsChangeOwnerCandidateDomainsOutput:
+    schema:
+      properties:
+        monitor_resource:
+          $ref: '#/definitions/ChangeOwnerCandidateDomainsOutput'
+      type: object
+  monitor_resource_GetDetailsMetadataOutput:
+    schema:
+      properties:
+        monitor_resource:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
+  monitor_resource_GetDetailsStatusOutput:
+    schema:
+      properties:
+        monitor_resource:
+          $ref: '#/definitions/GetDetailsStatusOutput'
+      type: object
+  monitor_resource_GetPropertyAlertOutput: {}
+  monitor_resource_GetPropertyDistinctFieldOutput: {}
+  monitor_resource_GetPropertySplitableOutput: {}
+  monitor_resource_GetPropertyStatisticsOutput:
+    schema:
+      properties:
+        monitor_resource:
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
+      type: object
+  monitor_resource_ListItemFilterOutput:
+    schema:
+      properties:
+        limit:
+          format: int64
+          type: integer
+          x-go-name: Limit
+        monitor_resources:
+          items:
+            $ref: '#/definitions/MonitorResourceDetails'
+          type: array
+          x-go-name: Output
+        offset:
+          format: int64
+          type: integer
+          x-go-name: Offset
+        total:
+          format: int64
+          type: integer
+          x-go-name: Total
+      type: object
+  monitor_resource_PerformCancelDeleteOutput: {}
+  monitor_resource_PerformChangeOwnerOutput: {}
+  monitor_resource_PerformFreezeOutput: {}
+  monitor_resource_PerformPurgeSplitableOutput: {}
+  monitor_resource_PerformSetUserMetadataOutput: {}
+  monitor_resource_PerformStatusOutput: {}
+  monitor_resource_PerformUnfreezeOutput: {}
+  monitor_resource_ValidateCreateDataOutput:
+    schema:
+      properties:
+        monitor_resource:
+          $ref: '#/definitions/MonitorResourceDetails'
+      type: object
+  monitor_resource_ValidateUpdateDataOutput:
+    schema:
+      properties:
+        monitor_resource:
+          $ref: '#/definitions/MonitorResourceDetails'
+      type: object
+  monitor_resource_alert_CustomizeDeleteOutput:
+    schema:
+      properties:
+        monitor_resource_alert:
+          $ref: '#/definitions/JointResourceBaseDetails'
+      type: object
+  monitor_resource_alert_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        monitor_resource_alert:
+          $ref: '#/definitions/JointResourceBaseDetails'
+      type: object
+  monitor_resource_alert_GetPropertyDistinctFieldOutput: {}
+  monitor_resource_alert_GetPropertySplitableOutput: {}
+  monitor_resource_alert_ListItemFilterOutput:
+    schema:
+      properties:
+        limit:
+          format: int64
+          type: integer
+          x-go-name: Limit
+        monitor_resource_alerts:
+          items:
+            $ref: '#/definitions/JointResourceBaseDetails'
+          type: array
+          x-go-name: Output
+        offset:
+          format: int64
+          type: integer
+          x-go-name: Offset
+        total:
+          format: int64
+          type: integer
+          x-go-name: Total
+      type: object
+  monitor_resource_alert_PerformPurgeSplitableOutput: {}
+  monitor_resource_alert_ValidateCreateDataOutput:
+    schema:
+      properties:
+        monitor_resource_alert:
+          $ref: '#/definitions/JointResourceBaseDetails'
+      type: object
+  monitor_resource_alert_ValidateUpdateDataOutput:
+    schema:
+      properties:
+        monitor_resource_alert:
+          $ref: '#/definitions/JointResourceBaseDetails'
       type: object
   node_alert_CustomizeDeleteOutput:
+    schema:
+      properties:
+        node_alert:
+          $ref: '#/definitions/NodeAlertDetails'
+      type: object
+  node_alert_FetchCustomizeColumnsOutput:
     schema:
       properties:
         node_alert:
@@ -9855,14 +11840,17 @@ responses:
         node_alert:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  node_alert_GetExtraDetailsOutput:
+  node_alert_GetPropertyDistinctFieldOutput: {}
+  node_alert_GetPropertySplitableOutput: {}
+  node_alert_GetPropertyStatisticsOutput:
     schema:
       properties:
         node_alert:
-          $ref: '#/definitions/NodeAlertDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  node_alert_GetPropertyDistinctFieldOutput: {}
-  node_alert_GetPropertySplitableOutput: {}
   node_alert_ListItemFilterOutput:
     schema:
       properties:
@@ -9914,6 +11902,12 @@ responses:
         v1_alert:
           $ref: '#/definitions/AlertV1Details'
       type: object
+  v1_alert_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        v1_alert:
+          $ref: '#/definitions/AlertV1Details'
+      type: object
   v1_alert_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -9929,14 +11923,17 @@ responses:
         v1_alert:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  v1_alert_GetExtraDetailsOutput:
+  v1_alert_GetPropertyDistinctFieldOutput: {}
+  v1_alert_GetPropertySplitableOutput: {}
+  v1_alert_GetPropertyStatisticsOutput:
     schema:
       properties:
         v1_alert:
-          $ref: '#/definitions/AlertV1Details'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  v1_alert_GetPropertyDistinctFieldOutput: {}
-  v1_alert_GetPropertySplitableOutput: {}
   v1_alert_ListItemFilterOutput:
     schema:
       properties:
