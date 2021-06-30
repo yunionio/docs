@@ -1,218 +1,25 @@
 ---
-title: "开发贡献"
+title: "提交贡献代码"
 weight: 2
 description: >
-  介绍如何搭建开发环境，编译组件以及提交代码的流程
+  介绍 github 发起 pull requests 和提交代码的流程
 ---
 
-## 安装 Go
+## Fork 仓库
 
-Golang 版本要求 1.12 以上
+访问 https://github.com/yunionio/cloudpods ，将仓库 fork 到自己的 github 用户下。
 
-安装go环境参考: [Install doc](https://golang.org/doc/install)
+## Clone 源码
 
-## 安装 ceph 依赖
-
-On rpm based systems (dnf, yum, etc):
-```sh
-sudo rpm --import https://download.ceph.com/keys/release.asc
-sudo yum install -y https://download.ceph.com/rpm-luminous/el7/noarch/ceph-release-1-1.el7.noarch.rpm
-sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-sudo yum install -y libcephfs-devel librbd-devel librados-devel
-```
-
-On debian systems (apt):
-```sh
-wget -q -O- 'https://download.ceph.com/keys/release.asc' | sudo apt-key add -
-echo deb https://download.ceph.com/debian-luminous/ $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list
-apt-get update && apt-get install -y libcephfs-dev librbd-dev librados-dev
-```
-
-
-## 编译 云联壹云 组件
-
-### Fork 仓库
-
-访问 https://github.com/yunionio/onecloud ，将仓库 fork 到自己的 github 用户下。
-
-### Clone 源码
-
-git clone 前确保 GOPATH 等环境变量已经设置好，clone 你自己 fork 的仓库
-
-```sh
-$ git clone  https://github.com/<your_name>/onecloud $GOPATH/src/yunion.io/x/onecloud
-$ cd $GOPATH/src/yunion.io/x/onecloud
-$ git remote add upstream https://github.com/yunionio/onecloud
-```
-
-### 编译
-
-```sh
-# 编译所有组件
-$ make
-
-# cmd 目录下面存放着所有的组件:
-$ ls cmd
-...
-ansibleserver    climc      glance      keystone  qcloudcli     ucloudcli
-awscli           cloudir    host        lbagent   region        webconsole
-
-# 可以编译cmd下制定的组件，比如：编译 region 和 host 组件
-$ make cmd/region cmd/host
-
-# 查看编译好的二进制文件
-$ ls _output/bin
-region host
-```
-## 本地开发调试
-
-3.0 版本后我们的服务都已经容器化运行在 k8s 集群中，快速开发调试并不方便。
-通过Telepresence 提供远程k8s上下文，可以在本地开发调试。
-
-### 安装配置 kubectl
-
-需要在本地安装 [kubectl](https://kubernetes.io/zh/docs/tasks/tools/install-kubectl/)。
-
-需要在本地配置好集群信息，以通过 kubectl 访问；将云联壹云控制节点上的`$KUBECONFIG`文件拷贝到本地`~/.kube/config`;
-如果本地已经有此文件，参考 [配置多集群访问](https://kubernetes.io/zh/docs/tasks/access-application-cluster/configure-access-multiple-clusters/) 进行合并。
-
-### 安装配置 climc
-
-climc 的本地安装参考 [源码编译安装](../../howto/climc/#源码编译安装)
-
-climc 的本地配置参考 [非控制节点认证配置](../../howto/climc/#非控制节点认证配置)
-
-### 安装 telepresence
-
-确保有一个已部署的云联壹云 k8s集群，参考[安装部署](/docs/setup/)。
-这里介绍 CentOS 7 的本地环境安装，其他发行版可参考官方文档：[Installing Telepresence](https://www.telepresence.io/reference/install)。
-
-> 不建议k8s集群的部署和开发在同一个环境，使用Telepresence会有端口冲突。
+clone 自己 fork 的仓库，并设置 upstream 为源仓库。
 
 ```bash
-# 安装依赖
-$ yum install -y python3 sshfs conntrack iptables torsocks sshuttle sudo yum-utils
-# 安装 kubectl 用于连接 k8s 集群
-$ cat <<EOF >/etc/yum.repos.d/kubernetes.repo
-[kubernetes]
-name=Kubernetes
-baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
-enabled=1
-gpgcheck=0
-repo_gpgcheck=0
-gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
-EOF
-$ yum install -y kubectl-1.15.8-0
-# 需要自行配置kubctl config
-# 测试kubctl可以访问之前部署的k8s集群
-$ kubctl version
-# 源码安装 telepresence 到 /usr/local/bin/telepresence
-$ git clone https://github.com/telepresenceio/telepresence
-$ cd telepresence
-$ sudo env PREFIX=/usr/local ./install.sh
+$ git clone https://github.com/<your_name>/cloudpods
+$ cd cloudpods
+$ git remote add upstream https://github.com/yunionio/cloudpods
 ```
 
-### 使用
-利用 telepresence 本地连通远端 k8s 的特性，我们就可以做到在本地编译运行 region，keystone 等服务，同时又能访问远端 k8s 其它服务的环境。
-
-
-**macOS中或Linux中本地编译运行 region 服务**
-
-```bash
-# 切换到 云联壹云 代码目录
-$ cd $GOPATH/src/yunion.io/x/onecloud
- 
-# 编译 region 服务
-$ make cmd/region
- 
-# 使用 telepresence 替换 k8s 里面的 default-region deployment
-# 该命令在 k8s 集群中启动一个 deployment 替换掉原来的 default-regoin
-# 然后把流量的访问导向本地
-# 如果想要使用特定的 shell，比如 zsh，可以在后面加上"--run /bin/zsh"
-$ telepresence --swap-deployment default-region --namespace onecloud
-```
-到这里已经进入到 telepresence 隔离的 namespace 里面了，
-$TELEPRESENCE_ROOT 这个目录 是通过 sshfs 挂载的远端 k8s pod 的文件系统。
-接下来我们就可以在这个 namespace 里面运行 region 服务了：
-```bash
-$ sudo chmod 777 /etc
- 
-# 将 $TELEPRESENCE_ROOT/etc/yunion 链接到本地的 /etc
-$ ln -s $TELEPRESENCE_ROOT/etc/yunion /etc
- 
-# 启动 region 服务
-$ ./_output/bin/region --config /etc/yunion/region.conf
-```
-
-这个时候如果我们在外部调用 climc 就会发现相关的请求已经被转发到本地开发机启动 region 服务了。
-
-```bash
-$ climc network-list
-```
-
-调试完成后需要进行清理操作
-
-```bash
-# 退出 telepresence
-$ exit
-# 会看到类似下面的输出
-T: Your process exited with return code 127.
-T: Exit cleanup in progress
-T: Cleaning up Pod
-
-# 删除链接文件
-$ rm /etc/yunion
-```
-
-**Linux系统中本地编译运行 region 服务**
-
-这种方式相比上一种方式，更加干净；但是相对复杂
-
-```bash
-# 切换到 云联壹云 代码目录
-$ cd $GOPATH/src/yunion.io/x/onecloud
- 
-# 编译 region 服务
-$ make cmd/region
- 
-# 使用 telepresence 替换 k8s 里面的 default-region deployment
-# 该命令在 k8s 集群中启动一个 deployment 替换掉原来的 default-regoin
-# 然后把流量的访问导向本地
-# 如果想要使用特定的 shell，比如 zsh，可以在后面加上"--run /bin/zsh"
-$ telepresence --swap-deployment default-region --namespace onecloud
-```
-到这里已经进入到 telepresence 隔离的 namespace 里面了，
-$TELEPRESENCE_ROOT 这个目录 是通过 sshfs 挂载的远端 k8s pod 的文件系统。
-接下来我们就可以在这个 namespace 里面运行 region 服务了：
-```bash
-# 设置 max_user_namespaces
-$ cat /proc/sys/user/max_user_namespaces
-0
-# 如果 max_user_namespaces 为 0，需要设置下 user_namespaces
-$ echo 640 > /proc/sys/user/max_user_namespaces
- 
-# 启动一个新的 namespace , 但不共享 mount namespace，这样接下来的 mount bind 操作就不会影响到宿主机
-$ unshare --map-root-user --mount
-# bind k8s /var/run/secrets
-$ mount --bind $TELEPRESENCE_ROOT/var/run /var/run
-$ ls /var/run/
-secrets
-# bind 云联壹云 config
-$ mkdir /etc/yunion
-$ mount --bind $TELEPRESENCE_ROOT/etc/yunion /etc/yunion
-$ ls /etc/yunion/
-pki  region.conf
- 
-# 启动 region 服务
-$ ./_output/bin/region --config /etc/yunion/region.conf
-# 这个时候如果我们在外部调用 climc
-$ climc network-list
-# 就会发现相关的请求已经被转发到本地开发机启动 region 服务了
-```
-
-更多用法，以及 telepresence 的原理请参考[官方文档](https://www.telepresence.io/discussion/overview)。
-
-## 开发流程
+## 提交代码流程
 
 - 从 master checkout 出 feature 或者 bugfix 分支
 
@@ -257,8 +64,8 @@ $ git push origin feature/implement-x # push 分支到自己的 repo
 $ export GITHUB_USER=<your_username>
 
 # 使用脚本自动 cherry-pick PR 到 release 分支
-# 比如现在有一个提交的PR的编号为8，要把它合并到 release/2.8.0
-$ ./scripts/cherry_pick_pull.sh upstream/release/2.8.0 8
+# 比如现在有一个提交的PR的编号为18，要把它合并到 release/3.4
+$ ./scripts/cherry_pick_pull.sh upstream/release/3.4 18
  
 # cherry pick 可能会出现冲突，冲突时开另外一个 terminal，解决好冲突，再输入 'y' 进行提交
 $ git add xxx # 解决完冲突后
@@ -266,21 +73,9 @@ $ git am --continue
 # 回到执行 cherry-pick 脚本的 terminal 输入 'y' 即可
 ```
 
-去 upstream 的 [PR 页面](https://github.com/yunionio/onecloud/pulls), 就能看到自动生成的 cherry-pick PR，上面操作的PR的标题前缀就应该为：`Automated cherry pick of #8`，然后重复 PR review 流程合并到 release
-
-## FAQ
-
-### 1. 本地调试启动 region 服务，报以下错误
-![](../images/region_error.png)
-
-使用`climc service-config-edit region2`编辑 region 服务的配置，修改参数：
->     fetch_etcd_service_info_and_use_etcd_lock: false 
->     enable_host_health_check: false  
+去 upstream 的 [PR 页面](https://github.com/yunionio/cloudpods/pulls), 就能看到自动生成的 cherry-pick PR，上面操作的PR的标题前缀就应该为：`Automated cherry pick of #18`，然后重复 PR review 流程合并到 release
 
 
-### 2. 使用 telepresence 时，上次未正常退出，再次使用一直报错
-
-尝试手动清理: 
-1. 使用 kubectl 删除 onecloud namespace 下除 default-region-dns-xxxxx 外，所有以 default-region 开头的Pod；
-2. 使用`kubectl edit deployment default-region -n onecloud`，将 spec 下的 replicas 从0改为1.
-
+{{% alert title="注意" %}}
+提交 git 代码后需要书写 commit 内容，规范请参考: [Git 提交内容规范](../git-convention)。
+{{% /alert %}}

@@ -5,7 +5,7 @@ description: >
   介绍云平台后端服务所用的框架和相关库的使用方法
 ---
 
-介绍云平台后端服务所用的框架和相关库的使用方法，建议先阅读 ["开发相关/服务组件介绍"](/docs/contribute/services/) 了解各个服务大概的功能。
+介绍云平台后端服务所用的框架和相关库的使用方法，建议先阅读 ["开发相关/服务组件介绍"](../../contribute/services/) 了解各个服务大概的功能。
 
 ## 后端服务框架
 
@@ -24,16 +24,16 @@ keystone, region, glance 等后端服务，都是用的同一套后端服务框�
 
 ## 云联壹云 代码结构
 
-- [build](https://github.com/yunionio/onecloud/tree/master/build): 打包rpm脚本
-- [cmd](https://github.com/yunionio/onecloud/tree/master/cmd): 可执行binary入口程序
-- [pkg](https://github.com/yunionio/onecloud/tree/master/pkg): 库
-  - [appsrv](https://github.com/yunionio/onecloud/tree/master/pkg/appsrv): 通用http服务框架
-  - [cloudcommon](https://github.com/yunionio/onecloud/tree/master/pkg/cloudcommon): 云平台服务框架，基于appsrv扩展
-    - [cloudcommon/options](https://github.com/yunionio/onecloud/tree/master/pkg/cloudcommon/options): 通用options
-    - [cloudcommon/app](https://github.com/yunionio/onecloud/tree/master/pkg/cloudcommon/app): 通用服务初始化代码
-    - [cloudcommon/db](https://github.com/yunionio/onecloud/tree/master/pkg/cloudcommon/db): Model dispatcher和Models的基础实现
-    - [cloudcommon/db/lockman](https://github.com/yunionio/onecloud/tree/master/pkg/cloudcommon/db/lockman): 锁实现
-    - [cloudcommon/db/taskman](https://github.com/yunionio/onecloud/tree/master/pkg/cloudcommon/db/taskman): 异步任务框架
+- [build](https://github.com/yunionio/cloudpods/tree/master/build): 打包rpm脚本
+- [cmd](https://github.com/yunionio/cloudpods/tree/master/cmd): 可执行binary入口程序
+- [pkg](https://github.com/yunionio/cloudpods/tree/master/pkg): 库
+  - [appsrv](https://github.com/yunionio/cloudpods/tree/master/pkg/appsrv): 通用http服务框架
+  - [cloudcommon](https://github.com/yunionio/cloudpods/tree/master/pkg/cloudcommon): 云平台服务框架，基于appsrv扩展
+    - [cloudcommon/options](https://github.com/yunionio/cloudpods/tree/master/pkg/cloudcommon/options): 通用options
+    - [cloudcommon/app](https://github.com/yunionio/cloudpods/tree/master/pkg/cloudcommon/app): 通用服务初始化代码
+    - [cloudcommon/db](https://github.com/yunionio/cloudpods/tree/master/pkg/cloudcommon/db): Model dispatcher和Models的基础实现
+    - [cloudcommon/db/lockman](https://github.com/yunionio/cloudpods/tree/master/pkg/cloudcommon/db/lockman): 锁实现
+    - [cloudcommon/db/taskman](https://github.com/yunionio/cloudpods/tree/master/pkg/cloudcommon/db/taskman): 异步任务框架
 
 ## 认证部分
 
@@ -78,11 +78,11 @@ keystone, region, glance 等后端服务，都是用的同一套后端服务框�
 | -                                         | Delete                       | 执行删除操作                   |
 | -                                         | PostDelete                   | 删除后的hook                   |
 
-具体 restful 请求的绑定函数在: [pkg/appsrv/dispatcher/dispatcher.go](https://github.com/yunionio/onecloud/blob/master/pkg/appsrv/dispatcher/dispatcher.go#L33) 文件中的 **AddModelDispatcher** 函数。
+具体 restful 请求的绑定函数在: [pkg/appsrv/dispatcher/dispatcher.go](https://github.com/yunionio/cloudpods/blob/master/pkg/appsrv/dispatcher/dispatcher.go#L33) 文件中的 **AddModelDispatcher** 函数。
 
 ## 数据库 ORM 模型
 
-代码位于 [cloudcommon/db](https://github.com/yunionio/onecloud/tree/master/pkg/cloudcommon/db)
+代码位于 [cloudcommon/db](https://github.com/yunionio/cloudpods/tree/master/pkg/cloudcommon/db)
 
 - 接口
   - IModelManager: 对应资源在数据库里面的表
@@ -97,14 +97,14 @@ keystone, region, glance 等后端服务，都是用的同一套后端服务框�
 
 ### 举例
 
-用虚拟机的 model 来举例，代码在: [pkg/compute/models/guests.go](https://github.com/yunionio/onecloud/blob/master/pkg/compute/models/guests.go)。
+用虚拟机的 model 来举例，代码在: [pkg/compute/models/guests.go](https://github.com/yunionio/cloudpods/blob/master/pkg/compute/models/guests.go)。
 
 GuestManager 对应数据库里面的 guests_tbl，该对象嵌套 db.SVirtualResourceBaseManager 表示是虚拟资源的 Manager，这样会默认实现 db.IModelManager 接口，然后根据业务需要重写一些方法会比较方便。
 
 SGuest 对应 guests_tbl 数据库里面的每一行数据，由 GuestManager 管理，嵌套 db.SVirtualResourceBase 结构，默认就会有虚拟资源所需要的表结构，然后再定义一些虚拟机独有的属性比如 VcpuCount 表示 cpu 核数，VmemSize 表示内存大小。 在代码抽象后表示虚拟机实例，该对象会绑定对虚拟机具体的业务操作实现函数。
 
 ```golang
-import "yunion.io/x/onecloud/pkg/cloudcommon/db"
+import "yunion.io/x/cloudpods/pkg/cloudcommon/db"
 
 ......
 
@@ -175,7 +175,7 @@ type SGuest struct {
 
 ### 举例
 
-[pkg/cloudcommon/db/db_dispatcher.go](https://github.com/yunionio/onecloud/blob/master/pkg/cloudcommon/db/db_dispatcher.go#L900) 里面的 DoCreate 函数会创建对应 Model 的对象并插入数据到数据库，这个时候就需要加锁。
+[pkg/cloudcommon/db/db_dispatcher.go](https://github.com/yunionio/cloudpods/blob/master/pkg/cloudcommon/db/db_dispatcher.go#L900) 里面的 DoCreate 函数会创建对应 Model 的对象并插入数据到数据库，这个时候就需要加锁。
 
 ```golang
 func DoCreate(manager IModelManager, ctx context.Context, userCred mcclient.TokenCredential, query jsonutils.JSONObject, data jsonutils.JSONObject, ownerId mcclient.IIdentityProvider) (IModel, error) {
@@ -201,7 +201,7 @@ workerman.Run(func() {…}, nil, nil)
 
 云平台的异步耗时任务会放在 Task 机制里面去执行，比如创建虚拟机操作，用户提交了请求，region 控制器校验参数合格后，会记录数据到数据库，然后马上返回客户端对应的虚拟机记录，与此同时，会开始执行创建虚拟机的 task，这个 task 会立即在后台执行，会通过更新虚拟机 SGuest model 的状态和记录操作日志来表示执行的成功或失败。
 
-task 也是记录在数据库 tasks_tbl 里面的记录，对应的定义在: [pkg/cloudcommon/db/taskman/tasks.go](https://github.com/yunionio/onecloud/blob/master/pkg/cloudcommon/db/taskman/tasks.go) 里面，数据结构如下:
+task 也是记录在数据库 tasks_tbl 里面的记录，对应的定义在: [pkg/cloudcommon/db/taskman/tasks.go](https://github.com/yunionio/cloudpods/blob/master/pkg/cloudcommon/db/taskman/tasks.go) 里面，数据结构如下:
 
 ```golang
 type STaskManager struct {
@@ -258,7 +258,7 @@ ser"` // Column(VARCHAR(64, charset='ascii'), nullable=False, default='on_init')
 
 以虚拟机关机这个操作来举例:
 
-- 客户端发起 POST /servers/\<server_id\>/stop 请求后，通过服务框架会执行 `func (self *SGuest) PerformStop` 函数，代码片段如下(位于: [pkg/compute/models/guest_actions.go](https://github.com/yunionio/onecloud/blob/2003c44264f1a244f32fd0584e7ce0d23df78705/pkg/compute/models/guest_actions.go#L2357)):
+- 客户端发起 POST /servers/\<server_id\>/stop 请求后，通过服务框架会执行 `func (self *SGuest) PerformStop` 函数，代码片段如下(位于: [pkg/compute/models/guest_actions.go](https://github.com/yunionio/cloudpods/blob/2003c44264f1a244f32fd0584e7ce0d23df78705/pkg/compute/models/guest_actions.go#L2357)):
 
 ```golang
 func (self *SGuest) PerformStop(ctx context.Context, userCred mcclient.TokenCredential, query jsonutils.JSONObject,
@@ -283,7 +283,7 @@ func (self *SGuest) StartGuestStopTask(ctx context.Context, userCred mcclient.To
 }
 
 // pkg/compute/guestdrivers/virtualization.go
-import "yunion.io/x/onecloud/pkg/cloudcommon/db/taskman"
+import "yunion.io/x/cloudpods/pkg/cloudcommon/db/taskman"
 ......
 func (self *SVirtualizedGuestDriver) StartGuestStopTask(guest *models.SGuest, ctx context.Context, userCred mcclient.TokenCredential, params *jsonutils.JSONDict, parentTaskId string) error {
     task, err := taskman.TaskManager.NewTask(ctx, "GuestStopTask", guest, userCred, params, parentTaskId, "", nil)
@@ -296,7 +296,7 @@ func (self *SVirtualizedGuestDriver) StartGuestStopTask(guest *models.SGuest, ct
 ......
 ```
 
-- **taskman.TaskManager.NewTask(ctx, "GuestStopTask", ...)** 这里面的 GuestStopTask 对应 [pkg/compute/tasks/guest_stop_task.go](https://github.com/yunionio/onecloud/blob/master/pkg/compute/tasks/guest_stop_task.go) 里面的 GuestStopTask，是通过 taskman 里面维护的一个 map 查找的。
+- **taskman.TaskManager.NewTask(ctx, "GuestStopTask", ...)** 这里面的 GuestStopTask 对应 [pkg/compute/tasks/guest_stop_task.go](https://github.com/yunionio/cloudpods/blob/master/pkg/compute/tasks/guest_stop_task.go) 里面的 GuestStopTask，是通过 taskman 里面维护的一个 map 查找的。
 
 - **task.ScheduleRun(nil)** 会开始执行对应的 Task，默认会从 task 的默认 Stage OnInit 函数开始执行，所以通过 task 机制就会执行到 GuestStopTask.OnInit 函数。OnInit 函数最终会调用对应虚拟机的 driver 执行 RequestStopOnHost 函数并更新设置自己的 Stage 为 OnMasterStopTaskComplete。
 
@@ -359,7 +359,7 @@ func (self *GuestStopTask) OnGuestStopTaskCompleteFailed(ctx context.Context, gu
 
 - 在keystone注册一个服务启用用的账户
 - 在keystone注册service和endpoint
-- 参考 onecloud/pkg/logger实现服务代码
+- 参考 cloudpods/pkg/logger实现服务代码
 - 为服务准备一个配置文件，包含以下基础信息
 
 假设服务名为 svc，用户和密码为 svcuser, svcuserpassword，服务监听地址为: http://localhost:8866, region 为 LocalTest，对应操作如下:
