@@ -36,7 +36,7 @@ description: >
 本地环境即用户进行实际操作部署的环境。本次测试的本地环境为 MAC 操作系统的笔记本，也可在待部署机器上进行操作。
 
 - ssh: 开启 ssh 免密登录
-- 本地环境安装部署 ansbile，Windows操作系统不支持安装 ansible
+- 本地环境安装部署 ansbile（Windows操作系统不支持安装 ansible）
 
 #### 配置 ssh 免密登录
 
@@ -51,7 +51,7 @@ $ ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.168.26.216
 $ ssh root@10.168.26.216 "hostname"
 ```
 
-### 安装ansible和git
+#### 安装ansible和git
 
 首先需要安装ansible和git
 
@@ -79,18 +79,16 @@ $ pip install ansible
 
 {{< /tabs >}}
 
-### 安装cloudpods
+## 安装Cloudpods
 
 部署的工具是 https://github.com/yunionio/ocboot , 然后根据需要部署机器的配置， 利用 ansbile 远程登录到待部署的机器安装配置 Cloudpods 服务，以下操作都在本地环境上进行操作。操作步骤如下:
-
-#### 下载 ocboot
 
 ```bash
 # 下载 ocboot 工具到本地
 $ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
-#### 快速部署
+### 快速部署
 
 可以直接执行run.py来快速部署一个AllInOne的Cloudpods实例，其中<host_ip>为部署所在主机的主IP地址。
 
@@ -100,7 +98,7 @@ $ ./run.py <host_ip>
 
 这种方式其实是自动在当前目录生成一个名为config-allinone-current.yaml的配置文件，基于该配置文件的参数来执行部署。
 
-#### 自定义配置部署
+### 自定义配置部署
 
 也可以我们手工编辑一个配置文件，基于该配置文件，采用run.py来实现部署。
 
@@ -151,7 +149,7 @@ EOF
 $ ./run.py ./config-allinone.yml
 ```
 
-#### 部署完成
+## 部署完成
 
 ```bash
 ....
@@ -167,6 +165,8 @@ Password: admin@123
 然后用浏览器访问 https://10.168.26.216 ，用户名输入 `admin`，密码输入 `admin@123` 就会进入 Cloudpods 的界面。
 
 ![登录页](../images/index.png)
+
+## 开始使用Cloudpods
 
 ### 创建第一台虚拟机
 

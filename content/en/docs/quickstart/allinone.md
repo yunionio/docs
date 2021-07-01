@@ -45,7 +45,7 @@ $ ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.168.26.216
 $ ssh root@10.168.26.216 "hostname"
 ```
 
-### Install ansible and git
+#### Install ansible and git
 
 We first install ansible and git. The commends depends on the OS of the box.
 
@@ -73,7 +73,7 @@ $ pip install ansible
 
 {{< /tabs >}}
 
-### Install cloudpods
+## Install Cloudpods
 
 The installation tool is https://github.com/yunionio/ocboot, then according to the configuration of the machine to be deployed, use ansbile playbook to install and configure the Cloudpods. The following commands are performed on the local environment and steps are as follows:
 
@@ -82,7 +82,7 @@ The installation tool is https://github.com/yunionio/ocboot, then according to t
 $ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
-#### Quick installation
+### Quick installation
 
 Simplely execute run.py with the IP address of the Linux box to start the AllInOne installation.
 
@@ -92,7 +92,7 @@ Simplely execute run.py with the IP address of the Linux box to start the AllInO
 
 This command will automatically generate a configuration yaml config-allinone-current.yaml in the working directory. You may check the default values of the installation parameters in this YAML.
 
-#### Customized installation
+### Customized installation
 
 You may also use a customized installation YAML to start the installation. An example configuration file is shown as following.
 
@@ -150,11 +150,13 @@ User: admin
 Password: admin@123
 ```
 
-### Done
+## Done
 
 Then use your browser to visit https://10.168.26.216, enter `admin` for username and `admin@123` for password and you will see the Web UI.
 
 ![Login UI](../images/index.png)
+
+## Start using Cloudpods
 
 ### Create the first virtual machine
 
