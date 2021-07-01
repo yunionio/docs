@@ -16,9 +16,9 @@ description: >
 
 接下来介绍如何搭建开发环境。
 
-## 部署云联壹云服务
+## 部署 cloudpods 服务
 
-在开始开发之前，请先参考 [All in One 安装](../../quickstart/allinone) 或者 [MiniKube 安装](../../quickstart/minikube) 部署云联壹云服务。我们的服务全部使用容器的方式运行在 Kubernetes 集群里面，所以需要先搭建好我们的服务，把这个环境作为自己的开发环境。
+在开始开发之前，请先参考 [All in One 安装](../../quickstart/allinone) 或者 [MiniKube 安装](../../quickstart/minikube) 部署 cloudpods 服务。我们的服务全部使用容器的方式运行在 Kubernetes 集群里面，所以需要先搭建好我们的服务，把这个环境作为自己的开发环境。
 
 这里建议使用一个单独的 CentOS 7 虚拟机，配置(至少 4C8G + 100G 系统盘)，安装部署我们的服务。
 
@@ -71,20 +71,20 @@ $ systemctl restart docker
 $ docker buildx create --use --name build --node build --driver-opt network=host
 ```
 
-## 编译 云联壹云 组件
+## 编译 cloudpods 组件
 
 ### Fork 仓库
 
-访问 https://github.com/yunionio/onecloud ，将仓库 fork 到自己的 github 用户下。
+访问 https://github.com/yunionio/cloudpods ，将仓库 fork 到自己的 github 用户下。
 
 ### Clone 源码
 
 git clone 前确保 GOPATH 等环境变量已经设置好，clone 你自己 fork 的仓库
 
 ```sh
-$ git clone https://github.com/<your_name>/onecloud $GOPATH/src/yunion.io/x/onecloud
-$ cd $GOPATH/src/yunion.io/x/onecloud
-$ git remote add upstream https://github.com/yunionio/onecloud
+$ git clone https://github.com/<your_name>/cloudpods $GOPATH/src/yunion.io/x/cloudpods
+$ cd $GOPATH/src/yunion.io/x/cloudpods
+$ git remote add upstream https://github.com/yunionio/cloudpods
 ```
 
 ### 二进制编译
@@ -264,7 +264,7 @@ climc 的使用简介参考: [climc 使用](../../howto/climc/#使用)
 
 需要在本地安装 [kubectl](https://kubernetes.io/zh/docs/tasks/tools/install-kubectl/)。
 
-需要在本地配置好集群信息，以通过 kubectl 访问；将云联壹云控制节点上的`$KUBECONFIG`文件拷贝到本地`~/.kube/config`;
+需要在本地配置好集群信息，以通过 kubectl 访问；将 cloudpods 控制节点上的`$KUBECONFIG`文件拷贝到本地`~/.kube/config`;
 如果本地已经有此文件，参考 [配置多集群访问](https://kubernetes.io/zh/docs/tasks/access-application-cluster/configure-access-multiple-clusters/) 进行合并。
 
 ### 安装 telepresence
@@ -304,8 +304,8 @@ $ sudo env PREFIX=/usr/local ./install.sh
 **macOS 或 linux 中本地编译运行 region 服务**
 
 ```bash
-# 切换到 云联壹云 代码目录
-$ cd $GOPATH/src/yunion.io/x/onecloud
+# 切换到 cloudpods 代码目录
+$ cd $GOPATH/src/yunion.io/x/cloudpods
  
 # 编译 region 服务
 $ make cmd/region
@@ -354,8 +354,8 @@ $ rm /etc/yunion
 这种方式相比上一种方式，更加干净；但是相对复杂
 
 ```bash
-# 切换到 云联壹云 代码目录
-$ cd $GOPATH/src/yunion.io/x/onecloud
+# 切换到 cloudpods 代码目录
+$ cd $GOPATH/src/yunion.io/x/cloudpods
  
 # 编译 region 服务
 $ make cmd/region
@@ -382,7 +382,7 @@ $ unshare --map-root-user --mount
 $ mount --bind $TELEPRESENCE_ROOT/var/run /var/run
 $ ls /var/run/
 secrets
-# bind 云联壹云 config
+# bind cloudpods config
 $ mkdir /etc/yunion
 $ mount --bind $TELEPRESENCE_ROOT/etc/yunion /etc/yunion
 $ ls /etc/yunion/
