@@ -1357,6 +1357,157 @@ definitions:
     - name
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/cloudid
+  SAMLProviderDetails:
+    properties:
+      auth_url:
+        type: string
+        x-go-name: AuthUrl
+      brand:
+        description: 品牌信息
+        type: string
+        x-go-name: Brand
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      cloudaccount:
+        description: 云账号名称
+        type: string
+        x-go-name: Cloudaccount
+      cloudaccount_id:
+        description: 云账号Id
+        type: string
+        x-go-name: CloudaccountId
+      created_at:
+        description: 资源创建时间
+        format: date-time
+        type: string
+        x-go-name: CreatedAt
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      deleted:
+        description: 资源是否被删除
+        type: boolean
+        x-go-name: Deleted
+      deleted_at:
+        description: 资源删除时间
+        format: date-time
+        type: string
+        x-go-name: DeletedAt
+      description:
+        description: 资源描述信息
+        type: string
+        x-go-name: Description
+      domain_id:
+        description: 域Id
+        type: string
+        x-go-name: DomainId
+      domain_src:
+        description: '归属Domain信息的来源, local: 本地设置, cloud: 从云上同步过来'
+        example: local
+        type: string
+        x-go-name: DomainSrc
+      entity_id:
+        type: string
+        x-go-name: EntityId
+      external_id:
+        description: 外部Id, 对用公有云私有资源自身的Id
+        type: string
+        x-go-name: ExternalId
+      iam_login_url:
+        description: 公有云账号登录地址
+        type: string
+        x-go-name: IamLoginUrl
+      id:
+        description: 资源UUID
+        type: string
+        x-go-name: Id
+      imported_at:
+        description: 资源导入时间
+        format: date-time
+        type: string
+        x-go-name: ImportedAt
+      is_emulated:
+        description: |-
+          是否是模拟资源, 部分从公有云上同步的资源并不真实存在, 例如宿主机
+          list 接口默认不会返回这类资源，除非显示指定 is_emulate=true 过滤参数
+        type: boolean
+        x-go-name: IsEmulated
+      is_public:
+        description: 是否共享
+        type: boolean
+        x-go-name: IsPublic
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      metadata_document:
+        type: string
+        x-go-name: MetadataDocument
+      name:
+        description: 资源名称
+        type: string
+        x-go-name: Name
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      provider:
+        description: 平台信息
+        type: string
+        x-go-name: Provider
+      public_scope:
+        description: 默认共享范围
+        type: string
+        x-go-name: PublicScope
+      public_src:
+        description: '共享设置的来源, local: 本地设置, cloud: 从云上同步过来'
+        example: local
+        type: string
+        x-go-name: PublicSrc
+      shared_domains:
+        description: 共享的域列表
+        items:
+          $ref: '#/definitions/SharedDomain'
+        type: array
+        x-go-name: SharedDomains
+      shared_projects:
+        description: 共享的项目列表
+        items:
+          $ref: '#/definitions/SharedProject'
+        type: array
+        x-go-name: SharedProjects
+      source:
+        type: string
+        x-go-name: Source
+      status:
+        description: 资源状态
+        type: string
+        x-go-name: Status
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+      update_version:
+        description: 资源被更新次数
+        format: int64
+        type: integer
+        x-go-name: UpdateVersion
+      updated_at:
+        description: 资源更新时间
+        format: date-time
+        type: string
+        x-go-name: UpdatedAt
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/cloudid
   SCloudIdBaseResource:
     properties:
       id:
@@ -1440,6 +1591,142 @@ definitions:
     - name
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/cloudid
+  SamluserDetails:
+    properties:
+      brand:
+        description: 品牌信息
+        type: string
+        x-go-name: Brand
+      can_delete:
+        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanDelete
+      can_update:
+        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
+        example: true
+        type: boolean
+        x-go-name: CanUpdate
+      cloudaccount:
+        description: 云账号名称
+        type: string
+        x-go-name: Cloudaccount
+      cloudaccount_id:
+        description: 云账号Id
+        type: string
+        x-go-name: CloudaccountId
+      cloudgroup:
+        description: 公有云用户名称
+        type: string
+        x-go-name: Cloudgroup
+      cloudgroup_id:
+        type: string
+        x-go-name: CloudgroupId
+      created_at:
+        description: 资源创建时间
+        format: date-time
+        type: string
+        x-go-name: CreatedAt
+      delete_fail_reason:
+        $ref: '#/definitions/Error'
+      deleted:
+        description: 资源是否被删除
+        type: boolean
+        x-go-name: Deleted
+      deleted_at:
+        description: 资源删除时间
+        format: date-time
+        type: string
+        x-go-name: DeletedAt
+      description:
+        description: 资源描述信息
+        type: string
+        x-go-name: Description
+      domain_id:
+        description: 域Id
+        type: string
+        x-go-name: DomainId
+      domain_src:
+        description: '归属Domain信息的来源, local: 本地设置, cloud: 从云上同步过来'
+        example: local
+        type: string
+        x-go-name: DomainSrc
+      email:
+        description: 邮箱地址
+        type: string
+        x-go-name: Email
+      external_id:
+        description: 外部Id, 对用公有云私有资源自身的Id
+        type: string
+        x-go-name: ExternalId
+      iam_login_url:
+        description: 公有云账号登录地址
+        type: string
+        x-go-name: IamLoginUrl
+      id:
+        description: 资源UUID
+        type: string
+        x-go-name: Id
+      imported_at:
+        description: 资源导入时间
+        format: date-time
+        type: string
+        x-go-name: ImportedAt
+      is_emulated:
+        description: |-
+          是否是模拟资源, 部分从公有云上同步的资源并不真实存在, 例如宿主机
+          list 接口默认不会返回这类资源，除非显示指定 is_emulate=true 过滤参数
+        type: boolean
+        x-go-name: IsEmulated
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签
+        type: object
+        x-go-name: Metadata
+      name:
+        description: 资源名称
+        type: string
+        x-go-name: Name
+      owner_id:
+        description: 本地用户Id
+        type: string
+        x-go-name: OwnerId
+      owner_name:
+        description: 用户名称
+        type: string
+        x-go-name: OwnerName
+      project_domain:
+        description: 资源归属项目的域名称
+        type: string
+        x-go-name: ProjectDomain
+      provider:
+        description: 平台信息
+        type: string
+        x-go-name: Provider
+      source:
+        type: string
+        x-go-name: Source
+      status:
+        description: 资源状态
+        type: string
+        x-go-name: Status
+      update_fail_reason:
+        description: 资源不能更新的原因
+        type: string
+        x-go-name: UpdateFailReason
+      update_version:
+        description: 资源被更新次数
+        format: int64
+        type: integer
+        x-go-name: UpdateVersion
+      updated_at:
+        description: 资源更新时间
+        format: date-time
+        type: string
+        x-go-name: UpdatedAt
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/cloudid
   SharedDomain:
     properties:
       id:
@@ -1476,40 +1763,6 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
-    type: object
-    x-go-package: yunion.io/x/onecloud/pkg/apis
-  StatusDomainLevelUserResourceDetails:
-    properties:
-      can_delete:
-        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
-        example: true
-        type: boolean
-        x-go-name: CanDelete
-      can_update:
-        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
-        example: true
-        type: boolean
-        x-go-name: CanUpdate
-      delete_fail_reason:
-        $ref: '#/definitions/Error'
-      metadata:
-        additionalProperties:
-          type: string
-        description: 标签
-        type: object
-        x-go-name: Metadata
-      owner_name:
-        description: 用户名称
-        type: string
-        x-go-name: OwnerName
-      project_domain:
-        description: 资源归属项目的域名称
-        type: string
-        x-go-name: ProjectDomain
-      update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   StatusInfrasResourceBaseCreateInput:
@@ -1566,48 +1819,6 @@ definitions:
         x-go-name: Status
     required:
     - name
-    type: object
-    x-go-package: yunion.io/x/onecloud/pkg/apis
-  StatusInfrasResourceBaseDetails:
-    properties:
-      can_delete:
-        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
-        example: true
-        type: boolean
-        x-go-name: CanDelete
-      can_update:
-        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
-        example: true
-        type: boolean
-        x-go-name: CanUpdate
-      delete_fail_reason:
-        $ref: '#/definitions/Error'
-      metadata:
-        additionalProperties:
-          type: string
-        description: 标签
-        type: object
-        x-go-name: Metadata
-      project_domain:
-        description: 资源归属项目的域名称
-        type: string
-        x-go-name: ProjectDomain
-      shared_domains:
-        description: 共享的域列表
-        items:
-          $ref: '#/definitions/SharedDomain'
-        type: array
-        x-go-name: SharedDomains
-      shared_projects:
-        description: 共享的项目列表
-        items:
-          $ref: '#/definitions/SharedProject'
-        type: array
-        x-go-name: SharedProjects
-      update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   StatusInfrasResourceBaseUpdateInput:
@@ -1676,6 +1887,22 @@ definitions:
         x-go-name: Status
     required:
     - name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  StatusStatistic:
+    properties:
+      pending_deleted_count:
+        description: |-
+          回收站数量
+          需要指定pending_delete=all
+        format: int64
+        type: integer
+        x-go-name: PendingDeletedCount
+      total_count:
+        description: 资源总数
+        format: int64
+        type: integer
+        x-go-name: TotalCount
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
 host: '"127.0.0.1:8889"'
@@ -1904,7 +2131,7 @@ paths:
       - cloudgroupcache
     get:
       description: 获取详情
-      operationId: cloudgroupcache_GetExtraDetails
+      operationId: cloudgroupcache_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of cloudgroupcache
         in: path
@@ -1914,7 +2141,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/cloudgroupcache_GetExtraDetailsOutput'
+          $ref: '#/responses/cloudgroupcache_FetchCustomizeColumnsOutput'
       summary: 获取权限组缓存详情
       tags:
       - cloudgroupcache
@@ -2077,6 +2304,16 @@ paths:
         "200":
           $ref: '#/responses/cloudgroupcache_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - cloudgroupcache
+  /cloudgroupcaches/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: cloudgroupcache_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroupcache_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
       tags:
       - cloudgroupcache
   /cloudgroups:
@@ -2350,7 +2587,7 @@ paths:
       - cloudgroup
     get:
       description: 获取详情
-      operationId: cloudgroup_GetExtraDetails
+      operationId: cloudgroup_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of cloudgroup
         in: path
@@ -2360,7 +2597,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/cloudgroup_GetExtraDetailsOutput'
+          $ref: '#/responses/cloudgroup_FetchCustomizeColumnsOutput'
       summary: 获取权限组详情
       tags:
       - cloudgroup
@@ -3073,7 +3310,7 @@ paths:
       - cloudpolicy
     get:
       description: 获取详情
-      operationId: cloudpolicy_GetExtraDetails
+      operationId: cloudpolicy_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of cloudpolicy
         in: path
@@ -3083,7 +3320,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/cloudpolicy_GetExtraDetailsOutput'
+          $ref: '#/responses/cloudpolicy_FetchCustomizeColumnsOutput'
       summary: 获取公有云权限详情
       tags:
       - cloudpolicy
@@ -3690,7 +3927,7 @@ paths:
       - cloudpolicycache
     get:
       description: 获取详情
-      operationId: cloudpolicycache_GetExtraDetails
+      operationId: cloudpolicycache_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of cloudpolicycache
         in: path
@@ -3700,7 +3937,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/cloudpolicycache_GetExtraDetailsOutput'
+          $ref: '#/responses/cloudpolicycache_FetchCustomizeColumnsOutput'
       summary: 获取公有云权限缓存详情
       tags:
       - cloudpolicycache
@@ -3862,6 +4099,16 @@ paths:
         "200":
           $ref: '#/responses/cloudpolicycache_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - cloudpolicycache
+  /cloudpolicycaches/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: cloudpolicycache_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicycache_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
       tags:
       - cloudpolicycache
   /cloudroles:
@@ -4130,7 +4377,7 @@ paths:
       - cloudrole
     get:
       description: 获取详情
-      operationId: cloudrole_GetExtraDetails
+      operationId: cloudrole_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of cloudrole
         in: path
@@ -4140,7 +4387,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/cloudrole_GetExtraDetailsOutput'
+          $ref: '#/responses/cloudrole_FetchCustomizeColumnsOutput'
       summary: 获取公有云角色详情
       tags:
       - cloudrole
@@ -4737,7 +4984,7 @@ paths:
       - clouduser
     get:
       description: 获取详情
-      operationId: clouduser_GetExtraDetails
+      operationId: clouduser_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of clouduser
         in: path
@@ -4747,7 +4994,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/clouduser_GetExtraDetailsOutput'
+          $ref: '#/responses/clouduser_FetchCustomizeColumnsOutput'
       summary: 获取公有云用户详情
       tags:
       - clouduser
@@ -5415,7 +5662,7 @@ paths:
       - saml_provider
     get:
       description: 获取详情
-      operationId: saml_provider_GetExtraDetails
+      operationId: saml_provider_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of saml_provider
         in: path
@@ -5425,7 +5672,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/saml_provider_GetExtraDetailsOutput'
+          $ref: '#/responses/saml_provider_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - saml_provider
@@ -5942,7 +6189,7 @@ paths:
       - samluser
     get:
       description: 获取详情
-      operationId: samluser_GetExtraDetails
+      operationId: samluser_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of samluser
         in: path
@@ -5952,7 +6199,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/samluser_GetExtraDetailsOutput'
+          $ref: '#/responses/samluser_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - samluser
@@ -6167,6 +6414,12 @@ responses:
         cloudgroup:
           $ref: '#/definitions/CloudgroupDetails'
       type: object
+  cloudgroup_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        cloudgroup:
+          $ref: '#/definitions/CloudgroupDetails'
+      type: object
   cloudgroup_GetDetailsChangeOwnerCandidateDomainsOutput:
     schema:
       properties:
@@ -6187,12 +6440,6 @@ responses:
       properties:
         cloudgroup:
           $ref: '#/definitions/GetDetailsStatusOutput'
-      type: object
-  cloudgroup_GetExtraDetailsOutput:
-    schema:
-      properties:
-        cloudgroup:
-          $ref: '#/definitions/CloudgroupDetails'
       type: object
   cloudgroup_GetPropertyDistinctFieldOutput: {}
   cloudgroup_GetPropertySplitableOutput: {}
@@ -6248,6 +6495,12 @@ responses:
         cloudgroupcache:
           $ref: '#/definitions/CloudgroupcacheDetails'
       type: object
+  cloudgroupcache_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        cloudgroupcache:
+          $ref: '#/definitions/CloudgroupcacheDetails'
+      type: object
   cloudgroupcache_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6263,14 +6516,17 @@ responses:
         cloudgroupcache:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  cloudgroupcache_GetExtraDetailsOutput:
+  cloudgroupcache_GetPropertyDistinctFieldOutput: {}
+  cloudgroupcache_GetPropertySplitableOutput: {}
+  cloudgroupcache_GetPropertyStatisticsOutput:
     schema:
       properties:
         cloudgroupcache:
-          $ref: '#/definitions/CloudgroupcacheDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  cloudgroupcache_GetPropertyDistinctFieldOutput: {}
-  cloudgroupcache_GetPropertySplitableOutput: {}
   cloudgroupcache_ListItemFilterOutput:
     schema:
       properties:
@@ -6302,6 +6558,12 @@ responses:
         cloudpolicy:
           $ref: '#/definitions/CloudpolicyDetails'
       type: object
+  cloudpolicy_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        cloudpolicy:
+          $ref: '#/definitions/CloudpolicyDetails'
+      type: object
   cloudpolicy_GetDetailsChangeOwnerCandidateDomainsOutput:
     schema:
       properties:
@@ -6322,12 +6584,6 @@ responses:
       properties:
         cloudpolicy:
           $ref: '#/definitions/GetDetailsStatusOutput'
-      type: object
-  cloudpolicy_GetExtraDetailsOutput:
-    schema:
-      properties:
-        cloudpolicy:
-          $ref: '#/definitions/CloudpolicyDetails'
       type: object
   cloudpolicy_GetPropertyDistinctFieldOutput: {}
   cloudpolicy_GetPropertySplitableOutput: {}
@@ -6381,6 +6637,12 @@ responses:
         cloudpolicycache:
           $ref: '#/definitions/CloudpolicycacheDetails'
       type: object
+  cloudpolicycache_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        cloudpolicycache:
+          $ref: '#/definitions/CloudpolicycacheDetails'
+      type: object
   cloudpolicycache_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6396,14 +6658,17 @@ responses:
         cloudpolicycache:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  cloudpolicycache_GetExtraDetailsOutput:
+  cloudpolicycache_GetPropertyDistinctFieldOutput: {}
+  cloudpolicycache_GetPropertySplitableOutput: {}
+  cloudpolicycache_GetPropertyStatisticsOutput:
     schema:
       properties:
         cloudpolicycache:
-          $ref: '#/definitions/CloudpolicycacheDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  cloudpolicycache_GetPropertyDistinctFieldOutput: {}
-  cloudpolicycache_GetPropertySplitableOutput: {}
   cloudpolicycache_ListItemFilterOutput:
     schema:
       properties:
@@ -6446,6 +6711,12 @@ responses:
         cloudrole:
           $ref: '#/definitions/CloudroleDetails'
       type: object
+  cloudrole_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        cloudrole:
+          $ref: '#/definitions/CloudroleDetails'
+      type: object
   cloudrole_GetDetailsChangeOwnerCandidateDomainsOutput:
     schema:
       properties:
@@ -6466,12 +6737,6 @@ responses:
       properties:
         cloudrole:
           $ref: '#/definitions/GetDetailsStatusOutput'
-      type: object
-  cloudrole_GetExtraDetailsOutput:
-    schema:
-      properties:
-        cloudrole:
-          $ref: '#/definitions/CloudroleDetails'
       type: object
   cloudrole_GetPropertyDistinctFieldOutput: {}
   cloudrole_GetPropertySplitableOutput: {}
@@ -6523,6 +6788,12 @@ responses:
         clouduser:
           $ref: '#/definitions/ClouduserDetails'
       type: object
+  clouduser_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        clouduser:
+          $ref: '#/definitions/ClouduserDetails'
+      type: object
   clouduser_GetDetailsChangeOwnerCandidateDomainsOutput:
     schema:
       properties:
@@ -6543,12 +6814,6 @@ responses:
       properties:
         clouduser:
           $ref: '#/definitions/GetDetailsStatusOutput'
-      type: object
-  clouduser_GetExtraDetailsOutput:
-    schema:
-      properties:
-        clouduser:
-          $ref: '#/definitions/ClouduserDetails'
       type: object
   clouduser_GetPropertyDistinctFieldOutput: {}
   clouduser_GetPropertySplitableOutput: {}
@@ -6596,7 +6861,13 @@ responses:
     schema:
       properties:
         saml_provider:
-          $ref: '#/definitions/StatusInfrasResourceBaseDetails'
+          $ref: '#/definitions/SAMLProviderDetails'
+      type: object
+  saml_provider_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        saml_provider:
+          $ref: '#/definitions/SAMLProviderDetails'
       type: object
   saml_provider_GetDetailsChangeOwnerCandidateDomainsOutput:
     schema:
@@ -6619,12 +6890,6 @@ responses:
         saml_provider:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  saml_provider_GetExtraDetailsOutput:
-    schema:
-      properties:
-        saml_provider:
-          $ref: '#/definitions/StatusInfrasResourceBaseDetails'
-      type: object
   saml_provider_GetPropertyDistinctFieldOutput: {}
   saml_provider_GetPropertySplitableOutput: {}
   saml_provider_ListItemFilterOutput:
@@ -6640,7 +6905,7 @@ responses:
           x-go-name: Offset
         saml_providers:
           items:
-            $ref: '#/definitions/StatusInfrasResourceBaseDetails'
+            $ref: '#/definitions/SAMLProviderDetails'
           type: array
           x-go-name: Output
         total:
@@ -6658,19 +6923,25 @@ responses:
     schema:
       properties:
         saml_provider:
-          $ref: '#/definitions/StatusInfrasResourceBaseDetails'
+          $ref: '#/definitions/SAMLProviderDetails'
       type: object
   saml_provider_ValidateUpdateDataOutput:
     schema:
       properties:
         saml_provider:
-          $ref: '#/definitions/StatusInfrasResourceBaseDetails'
+          $ref: '#/definitions/SAMLProviderDetails'
       type: object
   samluser_CustomizeDeleteOutput:
     schema:
       properties:
         samluser:
-          $ref: '#/definitions/StatusDomainLevelUserResourceDetails'
+          $ref: '#/definitions/SamluserDetails'
+      type: object
+  samluser_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        samluser:
+          $ref: '#/definitions/SamluserDetails'
       type: object
   samluser_GetDetailsChangeOwnerCandidateDomainsOutput:
     schema:
@@ -6693,12 +6964,6 @@ responses:
         samluser:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  samluser_GetExtraDetailsOutput:
-    schema:
-      properties:
-        samluser:
-          $ref: '#/definitions/StatusDomainLevelUserResourceDetails'
-      type: object
   samluser_GetPropertyDistinctFieldOutput: {}
   samluser_GetPropertySplitableOutput: {}
   samluser_ListItemFilterOutput:
@@ -6714,7 +6979,7 @@ responses:
           x-go-name: Offset
         samlusers:
           items:
-            $ref: '#/definitions/StatusDomainLevelUserResourceDetails'
+            $ref: '#/definitions/SamluserDetails'
           type: array
           x-go-name: Output
         total:
@@ -6730,13 +6995,13 @@ responses:
     schema:
       properties:
         samluser:
-          $ref: '#/definitions/StatusDomainLevelUserResourceDetails'
+          $ref: '#/definitions/SamluserDetails'
       type: object
   samluser_ValidateUpdateDataOutput:
     schema:
       properties:
         samluser:
-          $ref: '#/definitions/StatusDomainLevelUserResourceDetails'
+          $ref: '#/definitions/SamluserDetails'
       type: object
 schemes:
 - https
