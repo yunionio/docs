@@ -769,6 +769,22 @@ definitions:
         x-go-name: Name
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
+  StatusStatistic:
+    properties:
+      pending_deleted_count:
+        description: |-
+          回收站数量
+          需要指定pending_delete=all
+        format: int64
+        type: integer
+        x-go-name: PendingDeletedCount
+      total_count:
+        description: 资源总数
+        format: int64
+        type: integer
+        x-go-name: TotalCount
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
   SubImageInfo:
     properties:
       created_at:
@@ -1087,7 +1103,7 @@ paths:
       - guest_image
     get:
       description: 获取详情
-      operationId: guest_image_GetExtraDetails
+      operationId: guest_image_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of guest_image
         in: path
@@ -1097,7 +1113,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/guest_image_GetExtraDetailsOutput'
+          $ref: '#/responses/guest_image_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - guest_image
@@ -1420,6 +1436,16 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - guest_image
+  /guest_images/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: guest_image_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/guest_image_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - guest_image
   /image_quotas/{scope}:
     get:
       description: 获取所有项目或者域的镜像配额
@@ -1470,18 +1496,18 @@ paths:
         name: refresh
         type: boolean
         x-go-name: Refresh
-      - description: 配额所属范围，可能值为projects和domains，分别代表项目的配额和域的配额
-        in: path
-        name: scope
-        required: true
-        type: string
-        x-go-name: Scope
       - description: 指定项目或者域的ID
         in: path
         name: scopeId
         required: true
         type: string
         x-go-name: ScopeId
+      - description: 配额所属范围，可能值为projects和domains，分别代表项目的配额和域的配额
+        in: path
+        name: scope
+        required: true
+        type: string
+        x-go-name: Scope
       responses:
         "200":
           $ref: '#/responses/models_GetImageQuotaOutput'
@@ -1838,7 +1864,7 @@ paths:
       - image
     get:
       description: 获取详情
-      operationId: image_GetExtraDetails
+      operationId: image_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of image
         in: path
@@ -1848,7 +1874,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/image_GetExtraDetailsOutput'
+          $ref: '#/responses/image_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - image
@@ -2129,9 +2155,7 @@ paths:
       - image
   /images/{id}/subformats:
     get:
-      description: |-
-        output error: invalid type yunion.io/x/jsonutils.JSONObject
-        获取指定信息Subformats
+      description: 获取指定信息Subformats
       operationId: image_GetDetailsSubformats
       parameters:
       - description: The Id or Name of image
@@ -2143,7 +2167,7 @@ paths:
       responses:
         "200":
           $ref: '#/responses/image_GetDetailsSubformatsOutput'
-      summary: input or output error exists
+      summary: 获取指定信息Subformats
       tags:
       - image
   /images/{id}/unfreeze:
@@ -2253,10 +2277,26 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - image
+  /images/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: image_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/image_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - image
 produces:
 - application/json
 responses:
   guest_image_CustomizeDeleteOutput:
+    schema:
+      properties:
+        guest_image:
+          $ref: '#/definitions/GuestImageDetails'
+      type: object
+  guest_image_FetchCustomizeColumnsOutput:
     schema:
       properties:
         guest_image:
@@ -2283,14 +2323,17 @@ responses:
         guest_image:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  guest_image_GetExtraDetailsOutput:
+  guest_image_GetPropertyDistinctFieldOutput: {}
+  guest_image_GetPropertySplitableOutput: {}
+  guest_image_GetPropertyStatisticsOutput:
     schema:
       properties:
         guest_image:
-          $ref: '#/definitions/GuestImageDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  guest_image_GetPropertyDistinctFieldOutput: {}
-  guest_image_GetPropertySplitableOutput: {}
   guest_image_ListItemFilterOutput:
     schema:
       properties:
@@ -2339,6 +2382,12 @@ responses:
         image:
           $ref: '#/definitions/ImageDetails'
       type: object
+  image_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        image:
+          $ref: '#/definitions/ImageDetails'
+      type: object
   image_GetDetailsChangeOwnerCandidateDomainsOutput:
     schema:
       properties:
@@ -2361,15 +2410,18 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   image_GetDetailsSubformatsOutput: {}
-  image_GetExtraDetailsOutput:
-    schema:
-      properties:
-        image:
-          $ref: '#/definitions/ImageDetails'
-      type: object
   image_GetPropertyDetailOutput: {}
   image_GetPropertyDistinctFieldOutput: {}
   image_GetPropertySplitableOutput: {}
+  image_GetPropertyStatisticsOutput:
+    schema:
+      properties:
+        image:
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
+      type: object
   image_ListItemFilterOutput:
     schema:
       properties:

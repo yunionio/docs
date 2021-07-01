@@ -222,6 +222,22 @@ definitions:
         type: string
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
+  StatusStatistic:
+    properties:
+      pending_deleted_count:
+        description: |-
+          回收站数量
+          需要指定pending_delete=all
+        format: int64
+        type: integer
+        x-go-name: PendingDeletedCount
+      total_count:
+        description: 资源总数
+        format: int64
+        type: integer
+        x-go-name: TotalCount
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
 host: '"127.0.0.1:8889"'
 info:
   contact:
@@ -541,7 +557,7 @@ paths:
       - cloudevent
     get:
       description: 获取详情
-      operationId: cloudevent_GetExtraDetails
+      operationId: cloudevent_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of cloudevent
         in: path
@@ -551,7 +567,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/cloudevent_GetExtraDetailsOutput'
+          $ref: '#/responses/cloudevent_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - cloudevent
@@ -841,7 +857,7 @@ paths:
       - cloudprovider
     get:
       description: 获取详情
-      operationId: cloudprovider_GetExtraDetails
+      operationId: cloudprovider_FetchCustomizeColumns
       parameters:
       - description: The Id or Name of cloudprovider
         in: path
@@ -851,7 +867,7 @@ paths:
         x-go-name: Id
       responses:
         "200":
-          $ref: '#/responses/cloudprovider_GetExtraDetailsOutput'
+          $ref: '#/responses/cloudprovider_FetchCustomizeColumnsOutput'
       summary: 获取详情
       tags:
       - cloudprovider
@@ -1065,6 +1081,16 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - cloudprovider
+  /cloudproviders/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: cloudprovider_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/cloudprovider_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - cloudprovider
 produces:
 - application/json
 responses:
@@ -1074,7 +1100,7 @@ responses:
         cloudevent:
           $ref: '#/definitions/CloudeventDetails'
       type: object
-  cloudevent_GetExtraDetailsOutput:
+  cloudevent_FetchCustomizeColumnsOutput:
     schema:
       properties:
         cloudevent:
@@ -1122,6 +1148,12 @@ responses:
         cloudprovider:
           $ref: '#/definitions/EnabledStatusStandaloneResourceDetails'
       type: object
+  cloudprovider_FetchCustomizeColumnsOutput:
+    schema:
+      properties:
+        cloudprovider:
+          $ref: '#/definitions/EnabledStatusStandaloneResourceDetails'
+      type: object
   cloudprovider_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -1137,14 +1169,17 @@ responses:
         cloudprovider:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
-  cloudprovider_GetExtraDetailsOutput:
+  cloudprovider_GetPropertyDistinctFieldOutput: {}
+  cloudprovider_GetPropertySplitableOutput: {}
+  cloudprovider_GetPropertyStatisticsOutput:
     schema:
       properties:
         cloudprovider:
-          $ref: '#/definitions/EnabledStatusStandaloneResourceDetails'
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
       type: object
-  cloudprovider_GetPropertyDistinctFieldOutput: {}
-  cloudprovider_GetPropertySplitableOutput: {}
   cloudprovider_ListItemFilterOutput:
     schema:
       properties:
