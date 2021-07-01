@@ -5,6 +5,20 @@ description: >
   How to initiate a pull request on GitHub to contribute codes
 ---
 
+## Fork Repository
+
+Visit https://github.com/yunionio/cloudpods , fork it.
+
+## Clone source 
+
+Clone your fork repository and set upstream.
+
+```bash
+$ git clone https://github.com/<your_name>/cloudpods
+$ cd cloudpods
+$ git remote add upstream https://github.com/yunionio/cloudpods
+```
+
 ## How to make a Pull Request?
 
 - Checkout a branch from master, either for a new feature or a bugfix
