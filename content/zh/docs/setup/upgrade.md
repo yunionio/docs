@@ -57,7 +57,7 @@ $ git checkout release/3.7
 $ git pull
 ```
 
-## 更新 云联壹云 服务
+## 更新 Cloudpods 服务
 
 更新服务的原理是通过本机 ssh 免密码远程登录到集群的第一个控制节点，获取所有节点的信息后，然后通过 ansible 执行 playbook 更新，所以有以下要求：
 
