@@ -16,7 +16,7 @@ description: >
 
 两个节点上面分别部署 keepalived 和 haproxy 组成负载均衡集群，haproxy 的 backend 为后端的 kubernetes control plane node，vip(虚ip) 在这两个节点之间漂移形成高可用。
 
-另外 云联壹云 服务使用 Mariadb，如果没有专门的数据库集群，可以单独拿两个节点部署 Mariadb 高可用。参考 [部署 DB HA 环境](../../setup/db-ha) 。
+另外 Cloudpods 服务使用 Mariadb，如果没有专门的数据库集群，可以单独拿两个节点部署 Mariadb 高可用。参考 [部署 DB HA 环境](../../setup/db-ha) 。
 
 ## 部署
 

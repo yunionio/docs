@@ -2,12 +2,12 @@
 title: "ARM(AArch64) 部署"
 weight: 101
 description: >
-  介绍如何在 ARM(AArch64) 架构的机器上部署“云联壹云”服务
+  介绍如何在 ARM(AArch64) 架构的机器上部署“Cloudpods”服务
 ---
 
 ## 简介
 
-从 v3.6.10 版本开始，可以将”云联壹云“部署到 ARM(AArch64) 架构的机器上，目前我们适配的 Linux 发行版是 [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 和 [统信 UOS](https://www.chinauos.com/) 。
+从 v3.6.10 版本开始，可以将”Cloudpods“部署到 ARM(AArch64) 架构的机器上，目前我们适配的 Linux 发行版是 [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 和 [统信 UOS](https://www.chinauos.com/) 。
 
 因为服务是容器化运行在 Kubernetes 之上的，为了在 ARM 架构的机器上运行容器，我们使用了 [docker buildx](https://github.com/docker/buildx/) 和交叉编译的技术编译打包了同时支持 x86_64 和 arm64 的统一容器镜像。这样的可以让 Kubernetes 屏蔽 CPU 架构的差异性，我们制作的支持多架构的容器镜像可以在不同架构的机器上运行服务，实现 X86 和 ARM 机器混合部署的效果。
 
@@ -23,7 +23,7 @@ description: >
 
 ### 单节点 All in One 部署
 
-单节点 All in One 部署是指把整个”云联壹云“全部部署到一个节点，ARM 的部署和 X86 的部署没有任何区别，准备好环境后，直接参考 [All in One 安装](../../quickstart/allinone) 的部署流程即可。
+单节点 All in One 部署是指把整个”Cloudpods“全部部署到一个节点，ARM 的部署和 X86 的部署没有任何区别，准备好环境后，直接参考 [All in One 安装](../../quickstart/allinone) 的部署流程即可。
 
 ### 多节点混合部署
 
@@ -46,7 +46,7 @@ mariadb_node:
   db_user: root
   db_password: your-sql-password
 # primary_master_node 表示将 10.127.40.252 作为第一个部署的 master 节点
-# 上面会运行云联壹云必要的控制服务
+# 上面会运行Cloudpods必要的控制服务
 primary_master_node:
   onecloud_version: v3.7.0
   hostname: 10.127.40.252
