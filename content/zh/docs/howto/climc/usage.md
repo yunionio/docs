@@ -5,7 +5,7 @@ weight: 1
 
 云平台的命令行管理工具是 `climc`, 可以通过该工具向后端各个服务发送API请求, 实现对资源的操控。
 
-通过快速开始的[All in One安装](../../../quickstart/allinone/)或[安装部署](../../../setup)章节搭建开源版云联壹云环境时，控制节点都会安装climc，可直接跳过安装climc章节直接查看使用climc章节。
+通过快速开始的[All in One安装](../../../quickstart/allinone/)或[安装部署](../../../setup)章节搭建开源版Cloudpods环境时，控制节点都会安装climc，可直接跳过安装climc章节直接查看使用climc章节。
 
 下面介绍如何在非控制节点上安装climc。
 
