@@ -42,3 +42,11 @@ $ cd public && python3 -m http.server 1313
 $ git submodule update --recursive
 $ git pull --recurse-submodules
 ```
+
+## 查看最新版本的效果
+
+```bash
+# 编译最新版本的文档，放到public目录中
+make test
+# 打开浏览器访问 http://localhost:1313
+```

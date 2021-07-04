@@ -42,3 +42,11 @@ $ cd public && python3 -m http.server 1313
 $ git submodule update --recursive
 $ git pull --recurse-submodules
 ```
+
+## View lastest verion of documentation
+
+```
+# compile the documentation of latest version
+make test
+# open browse to visit http://localhost:1313
+```

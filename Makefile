@@ -36,3 +36,7 @@ sync-changelog:
 local-serve:
 	HOST=http://localhost:1313 EXIT_AFTER_BUILD=true ./scripts/build.sh
 	cd public && python3 -m http.server 1313
+
+test:
+	HOST=http://localhost:1313 EXIT_AFTER_BUILD=true ./scripts/build.sh test
+	cd public && python3 -m http.server 1313
