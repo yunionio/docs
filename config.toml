@@ -12,7 +12,7 @@ enableGitInfo = true
 # Language settings
 contentDir = "content/zh"
 defaultContentLanguage = "zh"
-defaultContentLanguageInSubdir = false
+defaultContentLanguageInSubdir = true
 # Useful when translating.
 enableMissingTranslationPlaceholders = true
 
@@ -56,10 +56,61 @@ id = "UA-00000000-0"
 title = "Cloudpods"
 version_menu = "版本"
 description = "Cloudpods文档"
-languageName ="Chinese"
+languageName ="中文"
 contentDir = "content/zh"
 time_format_default = "02.01.2006"
 time_format_blog = "02.01.2006"
+
+# Additional menu items
+[[languages.zh.menu.main]]
+    name = "快速开始"
+    weight = -100
+    url = "docs/quickstart/"
+
+[[languages.zh.menu.main]]
+    name = "GitHub"
+    url = "https://github.com/yunionio/cloudpods"
+    pre = "<i class='fab fa-github'></i>"
+    weight = 50
+
+#[[languages.zh.menu.main]]
+#    name = "CHANGELOG"
+#    weight = 59
+#    url = "docs/changelog"
+
+#[[languages.zh.menu.main]]
+#    name = "联系我们"
+#    weight = 60
+#    url = "docs/contact"
+
+[languages.en]
+version_menu = "Version"
+description = "Documentation for Cloudpods"
+languageName = "English"
+contentDir = "content/en"
+time_format_default = "02.01.2006"
+time_format_blog = "02.01.2006"
+
+[[languages.en.menu.main]]
+    name = "Quick Start"
+    weight = -100
+    url = "docs/quickstart/"
+
+[[languages.en.menu.main]]
+    name = "GitHub"
+    url = "https://github.com/yunionio/cloudpods"
+    pre = "<i class='fab fa-github'></i>"
+    weight = 50
+
+#[[languages.en.menu.main]]
+#    name = "CHANGELOG"
+#    weight = 59
+#    url = "docs/changelog"
+
+#[[languages.en.menu.main]]
+#    name = "Contact us"
+#    weight = 60
+#    url = "docs/contact"
 
 [markup]
   [markup.goldmark]
@@ -74,7 +125,7 @@ time_format_blog = "02.01.2006"
 ### Everything below this are Site Params ###
 
 [params]
-copyright = "Copyright 2017 - 2020 | 北京云联万维技术有限公司 京ICP备17065753号"
+copyright = "The Cloudpods Authors."
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
@@ -85,12 +136,12 @@ version_menu = "Releases"
 multi_versions = true
 
 RSSLink = "/index.xml"
-author = "yunionio.org" # add your company name
+author = "cloudpods.org" # add your company name
 github = "yunionio" # add your github profile name
 twitter = "yunionio" # add your twitter profile
 github_repo = "https://github.com/yunionio/docs"
-github_project_repo = "https://github.com/yunionio/onecloud"
-#email = "myemail@myaddress.xxx"
+github_project_repo = "https://github.com/yunionio/cloudpods"
+email = "info@cloudpods.org"
 
 # Google Custom Search Engine ID. Remove or comment out to disable search.
 # gcs_engine_id = "011737558837375720776:fsdu1nryfng"
@@ -130,23 +181,3 @@ no = 'Sorry to hear that. Please <a href="https://github.com/yunionio/docs/issue
 [params.ui.readingtime]
 enable = false
 
-# Additional menu items
-[[menu.main]]
-    name = "快速开始"
-    weight = -100
-    url = "docs/quickstart/"
-
-[[menu.main]]
-    name = "Github"
-    weight = 50
-    url = "https://github.com/yunionio/onecloud"
-
-[[menu.main]]
-    name = "CHANGELOG"
-    weight = 59
-    url = "docs/changelog"
-
-[[menu.main]]
-    name = "联系我们"
-    weight = 60
-    url = "docs/contact"
