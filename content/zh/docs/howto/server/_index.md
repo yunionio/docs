@@ -15,8 +15,8 @@ weight: 10
 
 |    类型   |          平台          |
 |:---------:|:----------------------:|
-|    kvm    |  云联壹云 私有云虚拟机 |
-| baremetal |  云联壹云 私有云裸金属 |
+|    kvm    |  Cloudpods 私有云虚拟机 |
+| baremetal |  Cloudpods 私有云裸金属 |
 |    esxi   |      vmware 虚拟机     |
 | openstack | openstack 私有云虚拟机 |
 |   zstack  |   zstack 私有云虚拟机  |

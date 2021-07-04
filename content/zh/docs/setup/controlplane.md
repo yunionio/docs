@@ -3,12 +3,12 @@ title: "部署集群"
 date: 2019-04-13T13:01:57+08:00
 weight: 4
 description: >
-  部署 kubernetes 和 云联壹云 服务，创建第一个控制节点
+  部署 kubernetes 和 Cloudpods 服务，创建第一个控制节点
 ---
 
 ## 环境准备
 
-云联壹云 相关的组件运行在 kubernetes 之上，环境以及相关的软件依赖如下:
+Cloudpods 相关的组件运行在 kubernetes 之上，环境以及相关的软件依赖如下:
 
 - 操作系统: CentOS 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 150G
@@ -76,7 +76,7 @@ $ systemctl restart mariadb
 
 ```bash
 $ yum install -y yum-utils bash-completion
-# 添加 yunion 云联壹云 rpm 源
+# 添加 yunion Cloudpods rpm 源
 $ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.6/yunion.repo
 $ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
 ```
@@ -116,7 +116,7 @@ EOF
 $ systemctl enable --now docker
 ```
 
-### 安装 云联壹云 依赖内核
+### 安装 Cloudpods 依赖内核
 
 这里需要安装我们编译的内核，这个内核是基于上游 CentOS 3.10.0-1062 编译的，默认添加了 nbd 模块，nbd 模块用于镜像相关的操作。
 
@@ -138,7 +138,7 @@ $ uname -r
 
 ### 安装配置 kubelet
 
-从 云联壹云 rpm 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
+从 Cloudpods rpm 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
 
 ```bash
 $ yum install -y bridge-utils ipvsadm conntrack-tools \
@@ -215,7 +215,7 @@ $ yum install -y yunion-executor && systemctl enable --now yunion-executor
 
 ### 部署 kubernetes 集群
 
-接下来会现在当前节点启动 v1.15.8 的 kubernetes 服务，然后部署 云联壹云 控制节点相关的服务到 kubernetes 集群。
+接下来会现在当前节点启动 v1.15.8 的 kubernetes 服务，然后部署 Cloudpods 控制节点相关的服务到 kubernetes 集群。
 
 拉取必要的 docker 镜像
 
@@ -237,7 +237,7 @@ $ MYSQL_HOST=$(ip route get 1 | awk '{print $NF;exit}')
 $ EXTRA_OPT=""
 $ #EXTRA_OPT=' --control-plane-endpoint 10.168.222.18:6443'
 
-# 开始部署 kubernetes 以及 云联壹云 必要的控制服务，稍等 3 分钟左右，kubernetes 集群会部署完成
+# 开始部署 kubernetes 以及 Cloudpods 必要的控制服务，稍等 3 分钟左右，kubernetes 集群会部署完成
 $ ocadm init --mysql-host $MYSQL_HOST \
     --mysql-user root --mysql-password $MYSQL_PASSWD $EXTRA_OPT
 
@@ -272,9 +272,9 @@ local-path-storage   local-path-provisioner-5978cff7b7-7h8df    1/1     Running 
 onecloud             onecloud-operator-6d4bddb8c4-tkjkh         1/1     Running   0          3h37m
 ```
 
-### 创建 云联壹云 集群
+### 创建 Cloudpods 集群
 
-当 kubernetes 集群部署完成后，就可以通过 `ocadm cluster create` 创建 云联壹云 集群，该集群由 onecloud namespace 里面 **onecloud-operator** deployment 自动部署和维护。
+当 kubernetes 集群部署完成后，就可以通过 `ocadm cluster create` 创建 Cloudpods 集群，该集群由 onecloud namespace 里面 **onecloud-operator** deployment 自动部署和维护。
 
 ```bash
 # 创建集群
@@ -289,7 +289,7 @@ $ ocadm cluster create --wait
 当控制节点部署完成后，需要创建一个用于前端登录的用户。云平台的管理员认证信息由 `ocadm cluster rcadmin` 命令可以得到 , 这些认证信息在使用 climc 控制云平台资源时会用到。
 
 ```bash
-# 获取连接 云联壹云 集群的环境变量
+# 获取连接 Cloudpods 集群的环境变量
 $ ocadm cluster rcadmin
 export OS_AUTH_URL=https://10.168.222.218:30357/v3
 export OS_USERNAME=sysadmin
@@ -348,7 +348,7 @@ $ ocadm reset --force
 
 ## 后续
 
-如果没有意外，现在应该已经部署好了 云联壹云 on kubernetes 的集群，以下是一些后续的环节说明，可以根据自己的需要来进行额外的操作。
+如果没有意外，现在应该已经部署好了 Cloudpods on kubernetes 的集群，以下是一些后续的环节说明，可以根据自己的需要来进行额外的操作。
 
 ### 添加计算节点
 

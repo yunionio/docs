@@ -53,9 +53,9 @@ id = "UA-00000000-0"
 
 [languages]
 [languages.zh]
-title = "云联壹云"
+title = "Cloudpods"
 version_menu = "版本"
-description = "云联壹云文档"
+description = "Cloudpods文档"
 languageName ="中文"
 contentDir = "content/zh"
 time_format_default = "02.01.2006"

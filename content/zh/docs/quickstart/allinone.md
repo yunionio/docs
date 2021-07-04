@@ -3,13 +3,13 @@ title: "All in One 安装"
 linkTitle: "All in One 安装"
 weight: 1
 description: >
-  使用 ocboot 部署工具快速在已有的节点上以 All in One 的方式部署”云联壹云“服务
+  使用 ocboot 部署工具快速在已有的节点上以 All in One 的方式部署”Cloudpods“服务
 ---
 
 ## 前提
 
 {{% alert title="注意" color="warning" %}}
-本章内容是通过部署工具快速搭建 云联壹云 服务，如果想了解部署的细节或者部署高可用环境请参考: [安装部署](../../setup/) 。
+本章内容是通过部署工具快速搭建 Cloudpods 服务，如果想了解部署的细节或者部署高可用环境请参考: [安装部署](../../setup/) 。
 {{% /alert %}}
 
 ## 环境准备
@@ -53,7 +53,7 @@ $ ssh root@10.168.26.216 "hostname"
 
 ## 开始安装
 
-部署的工具是 https://github.com/yunionio/ocboot , 然后根据需要部署机器的配置， 利用 ansbile 远程登录到待部署的机器安装配置 云联壹云 服务，以下操作都在本地环境上进行操作。操作步骤如下:
+部署的工具是 https://github.com/yunionio/ocboot , 然后根据需要部署机器的配置， 利用 ansbile 远程登录到待部署的机器安装配置 Cloudpods 服务，以下操作都在本地环境上进行操作。操作步骤如下:
 
 ### 下载 ocboot
 
@@ -105,7 +105,7 @@ mariadb_node:
   db_user: root
   # mariadb 用户密码
   db_password: your-sql-password
-# primary_master_node 表示运行 k8s 和 云联壹云 服务的节点
+# primary_master_node 表示运行 k8s 和 Cloudpods 服务的节点
 primary_master_node:
   hostname: 10.168.26.216
   user: root
@@ -119,13 +119,13 @@ primary_master_node:
   controlplane_host: 10.168.26.216
   # k8s 控制节点的端口
   controlplane_port: "6443"
-  # 云联壹云 版本
+  # Cloudpods 版本
   onecloud_version: 'v3.6.18'
-  # 云联壹云 登录用户
+  # Cloudpods 登录用户
   onecloud_user: admin
-  # 云联壹云 登录用户密码
+  # Cloudpods 登录用户密码
   onecloud_user_password: admin@123
-  # 该节点作为 云联壹云 私有云计算节点
+  # 该节点作为 Cloudpods 私有云计算节点
   as_host: true
 EOF
 ```
@@ -147,7 +147,7 @@ User: admin
 Password: admin@123
 ```
 
-然后用浏览器访问 https://10.168.26.216 ，用户名输入 `admin`，密码输入 `admin@123` 就会进入 云联壹云 的界面。
+然后用浏览器访问 https://10.168.26.216 ，用户名输入 `admin`，密码输入 `admin@123` 就会进入 Cloudpods 的界面。
 
 ![登录页](../images/index.png)
 
@@ -175,9 +175,9 @@ Password: admin@123
 
 ### 导入公有云或者其它私有云平台资源
 
-云联壹云自身是一个完整的私有云，同时也可以统一纳管其他云平台的资源。
+Cloudpods自身是一个完整的私有云，同时也可以统一纳管其他云平台的资源。
 
-在 `多云管理` 菜单，选择 `云账号` 并新建，根据自己的需求填写对应云平台的认证信息，配置完云账号后 云联壹云 服务就会同步相应云平台的资源，同步完成后即可在前端查看。
+在 `多云管理` 菜单，选择 `云账号` 并新建，根据自己的需求填写对应云平台的认证信息，配置完云账号后 Cloudpods 服务就会同步相应云平台的资源，同步完成后即可在前端查看。
 
 ![多云管理](../images/cloudaccount.png)
 
@@ -185,12 +185,12 @@ Password: admin@123
 
 ### 1. 在 All in One 中找不到虚拟机界面？
 
-All in One 部署的节点会部署 云联壹云 host 计算服务，作为宿主机，具有创建和管理私有云虚拟机的能力。没有虚拟机界面应该是 云联壹云 环境中没有启用宿主机。
+All in One 部署的节点会部署 Cloudpods host 计算服务，作为宿主机，具有创建和管理私有云虚拟机的能力。没有虚拟机界面应该是 Cloudpods 环境中没有启用宿主机。
 
 请到 `管理后台` 界面，点击 `主机/基础资源/宿主机` 查看宿主机列表，启用相应的宿主机，刷新界面就会出现虚拟机界面。
 
 {{% alert title="注意" color="warning" %}}
-如果要使用 云联壹云 私有云虚拟机，需要宿主机使用 云联壹云 编译的内核，可使用以下命令查看宿主机是否使用 云联壹云 内核(包含 yn 关键字)。
+如果要使用 Cloudpods 私有云虚拟机，需要宿主机使用 Cloudpods 编译的内核，可使用以下命令查看宿主机是否使用 Cloudpods 内核(包含 yn 关键字)。
 
 ```bash
 # 查看是否使用 yn 内核
@@ -219,4 +219,4 @@ k8s 管理节点，依赖于 hostname，请改回去。
 
 ### 4. 其它问题？
 
-其它问题欢迎在 云联壹云 github issues 界面提交: https://github.com/yunionio/onecloud/issues , 我们会尽快回复。
+其它问题欢迎在 Cloudpods github issues 界面提交: https://github.com/yunionio/onecloud/issues , 我们会尽快回复。
