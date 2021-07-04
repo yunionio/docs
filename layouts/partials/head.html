@@ -9,7 +9,7 @@
 {{ range .AlternativeOutputFormats -}}
 <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}">
 {{ end -}}
-<!--{{ partialCached "favicons.html" . }}-->
+{{ partialCached "favicons.html" . }}
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{ end }}</title>
 {{- template "_internal/opengraph.html" . -}}
 {{- template "_internal/google_news.html" . -}}
@@ -20,9 +20,22 @@
 {{ end }}
 {{ partialCached "head-css.html" . "asdf" }}
 <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
   crossorigin="anonymous"></script>
+{{ if .Site.Params.offlineSearch }}
+<!--
+   - <script
+   -   src="https://unpkg.com/lunr@2.3.8/lunr.min.js"
+   -   integrity="sha384-vRQ9bDyE0Wnu+lMfm57BlYLO0/XauFuKpVsZPs7KEDwYKktWi5+Kz3MP8++DFlRY"
+   -   crossorigin="anonymous"></script>
+   -->
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.3"></script>
+{{end}}
+{{ with .Site.Params.prism_syntax_highlighting }}
+<!-- stylesheet for Prism -->
+<link rel="stylesheet" href="/css/prism.css" />
+{{ end }}
 {{ partial "hooks/head-end.html" . }}
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LX0MD5KG60"></script>
