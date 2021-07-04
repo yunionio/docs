@@ -67,7 +67,7 @@ do
 
     rsync -a --delete .layouts/* layouts/
 
-    cp .config.yaml config.toml
+    cp .config.toml config.toml
 
     if [[ $(find_git_dirty) == "*" ]]; then
         TS=$(date '+%Y%m%d%H%M')
