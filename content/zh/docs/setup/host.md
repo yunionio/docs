@@ -2,7 +2,7 @@
 title: "添加计算节点"
 weight: 10
 description: >
-  如果要运行 云联壹云 私有云虚拟机，需要添加对应的计算节点，本节介绍如何部署相应组件
+  如果要运行 Cloudpods 私有云虚拟机，需要添加对应的计算节点，本节介绍如何部署相应组件
 ---
 
 如果需要构建内部私有云，就需要部署计算节点(宿主机)。计算节点主要负责虚拟机、网络和存储的管理，需要安装的组件如下:
@@ -14,7 +14,7 @@ description: >
 |   sdnagent  |  管理虚拟机网络和安全组  |    -   |  docker |
 | openvswitch | 虚拟机网络端口和流表配置 |    rpm   |  systemd |
 |     qemu    |        运行虚拟机        |    rpm   |  process |
-|    kernel   |    云联壹云 提供的内核   |    rpm   |     -    |
+|    kernel   |    Cloudpods 提供的内核   |    rpm   |     -    |
 
 ## 环境
 
@@ -82,7 +82,7 @@ $ uname -r
 
 ```bash
 $ yum install -y yum-utils bash-completion
-# 添加 yunion 云联壹云 rpm 源
+# 添加 yunion Cloudpods rpm 源
 $ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.4/yunion.repo
 $ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
 ```
@@ -124,7 +124,7 @@ $ systemctl enable --now docker
 
 #### 安装配置 kubelet
 
-从 云联壹云 rpm 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
+从 Cloudpods rpm 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
 
 ```bash
 $ yum install -y bridge-utils ipvsadm conntrack-tools \

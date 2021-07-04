@@ -6,7 +6,7 @@ description: >
   部署高可用数据库集群
 ---
 
-云联壹云 服务使用 Mariadb，这里使用 keepalived 和 Mariadb 的主主复制功能来实现 DB 的高可用。
+Cloudpods 服务使用 Mariadb，这里使用 keepalived 和 Mariadb 的主主复制功能来实现 DB 的高可用。
 
 ## 部署
 

@@ -3,12 +3,12 @@ title: "MiniKube 安装"
 linkTitle: "MiniKube 安装"
 weight: 1
 description: >
-  使用 MiniKube, 快速部署体验单机版本的云联壹云服务
+  使用 MiniKube, 快速部署体验单机版本的Cloudpods服务
 ---
 
 ## 前提
 {{% alert title="注意" color="warning" %}}
-本章内容是方便快速体验云联壹云, 通过 MiniKube 快速搭建云联壹云服务，无法在生产环境使用，也无法验证云联内置私有云相关功能(因为内置私有云需要节点上面安装配置 qemu, openvswitch 等各种虚拟化软件)。
+本章内容是方便快速体验Cloudpods, 通过 MiniKube 快速搭建Cloudpods服务，无法在生产环境使用，也无法验证云联内置私有云相关功能(因为内置私有云需要节点上面安装配置 qemu, openvswitch 等各种虚拟化软件)。
 
 仅适用于多云管理功能的体验，比如管理 VMware, 公有云(aws, 阿里云, 腾讯云等)或者其它私有云(zstack, openstack 等)。
 
@@ -17,7 +17,7 @@ description: >
 
 ## 环境准备
 
-云联壹云 相关的组件运行在 MiniKube 之上，环境以及相关的软件依赖如下:
+Cloudpods 相关的组件运行在 MiniKube 之上，环境以及相关的软件依赖如下:
 
 - 操作系统: CentOS 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 100G
@@ -35,9 +35,9 @@ $ minikube config -p onecloud set memory 8192
 # 启动 kubernetes 集群, 并且从 aliyun 拉取镜像，这样速度会快一点
 $ minikube start  -p onecloud --image-repository=registry.aliyuncs.com/google_containers
 ```
-### 部署云联壹云 onecloud operator
+### 部署Cloudpods onecloud operator
 
-云联壹云 k8s operator地址： https://github.com/yunionio/onecloud-operator
+Cloudpods k8s operator地址： https://github.com/yunionio/onecloud-operator
 
 ```bash
 # 下载 onecloud-operator 的 yaml 文件
@@ -59,13 +59,13 @@ NAME                                 READY   STATUS    RESTARTS   AGE
 onecloud-operator-7fd65d6489-kwdkr   1/1     Running   0          5m2s
 ```
 
-### 部署云联壹云服务
+### 部署Cloudpods服务
 
 ```bash
 # 下载 onecloud cluster 的 yaml 文件
 $ wget https://raw.githubusercontent.com/yunionio/onecloud-operator/master/manifests/example-onecloud-cluster.yaml -O onecloud-cluster.yaml
 
-# 部署云联壹云服务
+# 部署Cloudpods服务
 # 将 onecloud-cluster.yaml 部署到 kubernetes 集群
 $ kubectl apply -f onecloud-cluster.yaml
 
@@ -151,4 +151,4 @@ $ minikube -p onecloud delete
 
 ## 待解决的问题
 
-- default-host-deployer pod 无法启动，会处于 ContainerCreating 状态，这个是没有用 ocadm 部署集群导致的。未来会想办法支持该服务在 minikube 的集群里面运行，目前启动不了，不影响体验云联壹云。[issue #8910](https://github.com/yunionio/onecloud/issues/8910)
+- default-host-deployer pod 无法启动，会处于 ContainerCreating 状态，这个是没有用 ocadm 部署集群导致的。未来会想办法支持该服务在 minikube 的集群里面运行，目前启动不了，不影响体验Cloudpods。[issue #8910](https://github.com/yunionio/onecloud/issues/8910)

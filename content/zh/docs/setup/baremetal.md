@@ -2,10 +2,10 @@
 title: "物理机管理服务"
 weight: 11
 description: >
-  如果要使用 云联壹云 私有云物理机管理功能，需要启用物理机管理服务(baremetal-agent)，本节介绍如何部署相应组件
+  如果要使用 Cloudpods 私有云物理机管理功能，需要启用物理机管理服务(baremetal-agent)，本节介绍如何部署相应组件
 ---
 
-启用 baremetal-agent 之前需要部署 云联壹云 集群，详见 ["安装部署/部署集群"](/docs/setup/controlplane) 。
+启用 baremetal-agent 之前需要部署 Cloudpods 集群，详见 ["安装部署/部署集群"](/docs/setup/controlplane) 。
 
 待集群准备完毕后需要指定集群中的一个 node 来部署 baremetal-agent 服务。
 
@@ -15,7 +15,7 @@ description: >
 
 ## 启用 baremetal-agent
 
-在通过 pxe 引导流程中，baremetal-agent 只会处理来自 dhcp relay 服务器的请求, 所以你需要事先在交换机配置 dhcp relay 或者使用 云联壹云 host 服务的 dhcp relay 功能。
+在通过 pxe 引导流程中，baremetal-agent 只会处理来自 dhcp relay 服务器的请求, 所以你需要事先在交换机配置 dhcp relay 或者使用 Cloudpods host 服务的 dhcp relay 功能。
 
 ### 如何配置 host 服务 启用 dhcp relay
 

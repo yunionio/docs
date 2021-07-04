@@ -22,7 +22,7 @@ description: >
 总体来说，升级的步骤如下:
 
 1. 更新 rpm 源，升级 ocadm
-2. 使用 ocadm 升级 云联壹云 服务
+2. 使用 ocadm 升级 Cloudpods 服务
 
 ## 查看当前版本
 
@@ -36,7 +36,7 @@ v3.3.3
 
 ## 更新 rpm repo
 
-ocadm 和 climc 这些命令行工具是以 yum rpm 包的方式安装，所以升级之前需要先更新这两个工具，然后再使用 ocadm 升级 云联壹云 服务。
+ocadm 和 climc 这些命令行工具是以 yum rpm 包的方式安装，所以升级之前需要先更新这两个工具，然后再使用 ocadm 升级 Cloudpods 服务。
 
 ```bash
 # 修改 baseurl，把 3.3 改成 3.4
@@ -51,7 +51,7 @@ $ ocadm version -o short
 tags/v3.4.3(99f04e620101609)
 ```
 
-## 更新 云联壹云 服务
+## 更新 Cloudpods 服务
 
 ```bash
 # 使用 ocadm 更新 operator 以及相关服务到 v3.4.3 版本
