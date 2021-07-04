@@ -6,8 +6,28 @@ Add styles or override variables from the theme here.
 
 $td-enable-google-fonts: false;
 
-$primary: #1688f7 !default;
-$dark: #fff !default;
+// $primary: #1688f7 !default;
+$primary: #076f38 !default;
+$secondary: #fe7740 !default;
+// $dark: #fff !default;
+
+.showcase img {
+    margin: 0 30px;
+}
+
+.navbar-bg-onscroll {
+    box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+    #cloudpods-top {
+        display: block !important;
+    }
+}
+
+.td-navbar-cover {
+  &.navbar-bg-onscroll .nav-link {
+    text-shadow: none;
+    color: #ffffff;
+  }
+}
 
 h2.title {
   font-size: 2vw;
@@ -45,6 +65,8 @@ h2.title {
   a.nav-link {
     font-weight: 600;
     // font-size: 1.2vw;
+    color: #404448;
+    text-shadow: none;
   }
 }
 
@@ -454,4 +476,58 @@ footer.d-print-none {
 
 #td-block-1{
   padding-top: 65px;
+}
+
+//
+// Left side navigation
+//
+.td-sidebar-nav {
+
+  .td-sidebar-link {
+    &__page {
+      // line-height: 1rem!important;
+      margin-bottom: 0.5rem;
+      line-height: 1rem;
+    }
+  }
+
+  &__section-title > a:before {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: -1.7em;
+    margin-right: 15px;
+    content: '';
+    width: 0px;
+    height: 0px;
+
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-color: transparent transparent transparent grey;
+
+    /*
+     * font-family: 'FontAwesome';
+     * content: '\f105';
+     * margin-left: -1.7em;
+     * margin-right: 10px;
+     * width: 15px !important;
+     * display: inline-block;
+     * &.active {
+     *   content: '\f107'
+     * }
+     */
+  }
+
+  &__section-title > a.active:before {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: -1.7em;
+    margin-right: 15px;
+    content: '';
+    width: 0px;
+    height: 0px;
+
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: grey transparent transparent transparent;
+  }
 }
