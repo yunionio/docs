@@ -1,5 +1,6 @@
 {{ $cover := .HasShortcode "blocks/cover" }}
-<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+<nav class="js-navbar-scroll navbar navbar-expand {{ if $cover }} td-navbar-cover {{ else }} navbar-dark {{ end }} flex-column flex-md-row td-navbar">
+
   <!--
      - <a class="navbar-brand" href="{{ .Site.Home.RelPermalink }}">
      -   <span class="navbar-logo">
@@ -7,17 +8,12 @@
      -   </span>
      - </a>
      -->
-  <a href="{{ .Site.Home.RelPermalink }}" class="logo flex-shrink-0 navbar-brand">
-    <img src="{{ .Site.BaseURL }}/images/cloudpods_logo_white.png" height="46" />
+  <a id="cloudpods-top" href="{{ .Site.Home.RelPermalink }}" {{ if $cover }} style="display: none;" {{end}} class="logo flex-shrink-0 navbar-brand">
+    <img src="/images/cloudpods_logo_white.png" height="46" />
   </a>
 
 	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
 		<ul class="navbar-nav mt-2 mt-lg-0">
-      {{ if .Site.Params.multi_versions }}
-			<li class="nav-item dropdown d-none d-lg-block">
-				{{ partial "navbar-version-selector.html" . }}
-			</li>
-      {{ end }}
 			{{ $p := . }}
 			{{ range .Site.Menus.main }}
 			<li class="nav-item mr-4 mb-2 mb-lg-0">
@@ -30,6 +26,11 @@
 				<a class="nav-link{{if $active }} active{{end}}" href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}" {{ if ne $url.Host $baseurl.Host }}target="_blank" {{ end }}><span{{if $active }} class="active"{{end}}>{{ .Name }}</span></a>
 			</li>
 			{{ end }}
+            {{ if .Site.Params.multi_versions }}
+			<li class="nav-item dropdown d-none d-lg-block">
+				{{ partial "navbar-version-selector.html" . }}
+			</li>
+            {{ end }}
 			{{ if  (gt (len .Site.Home.Translations) 0) }}
 			<li class="nav-item dropdown d-none d-lg-block">
 				{{ partial "navbar-lang-selector.html" . }}
