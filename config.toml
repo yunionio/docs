@@ -69,13 +69,14 @@ time_format_blog = "02.01.2006"
 
 [[languages.zh.menu.main]]
     name = "GitHub"
-    weight = 50
     url = "https://github.com/yunionio/cloudpods"
+    pre = "<i class='fab fa-github'></i>"
+    weight = 50
 
-[[languages.zh.menu.main]]
-    name = "CHANGELOG"
-    weight = 59
-    url = "docs/changelog"
+#[[languages.zh.menu.main]]
+#    name = "CHANGELOG"
+#    weight = 59
+#    url = "docs/changelog"
 
 #[[languages.zh.menu.main]]
 #    name = "联系我们"
@@ -97,13 +98,14 @@ time_format_blog = "02.01.2006"
 
 [[languages.en.menu.main]]
     name = "GitHub"
-    weight = 50
     url = "https://github.com/yunionio/cloudpods"
+    pre = "<i class='fab fa-github'></i>"
+    weight = 50
 
-[[languages.en.menu.main]]
-    name = "CHANGELOG"
-    weight = 59
-    url = "docs/changelog"
+#[[languages.en.menu.main]]
+#    name = "CHANGELOG"
+#    weight = 59
+#    url = "docs/changelog"
 
 #[[languages.en.menu.main]]
 #    name = "Contact us"
@@ -123,7 +125,7 @@ time_format_blog = "02.01.2006"
 ### Everything below this are Site Params ###
 
 [params]
-copyright = "Copyright 2017 - 2021 | www.cloudpods.org"
+copyright = "The Cloudpods Authors."
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
@@ -139,7 +141,7 @@ github = "yunionio" # add your github profile name
 twitter = "yunionio" # add your twitter profile
 github_repo = "https://github.com/yunionio/docs"
 github_project_repo = "https://github.com/yunionio/cloudpods"
-#email = "myemail@myaddress.xxx"
+email = "info@cloudpods.org"
 
 # Google Custom Search Engine ID. Remove or comment out to disable search.
 # gcs_engine_id = "011737558837375720776:fsdu1nryfng"
