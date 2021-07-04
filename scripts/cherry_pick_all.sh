@@ -38,7 +38,7 @@ fi
 
 git fetch upstream
 
-for dir in content assets static
+for dir in content assets static layouts config.toml
 do
     rm -fr ".${dir}"
     cp -r "${dir}" ".${dir}"
@@ -61,15 +61,19 @@ do
         .content/* \
         content/
 
-    rsync -a --delete assets/* assets/
+    rsync -a --delete .assets/* assets/
 
-    rsync -a --delete static/* static/
+    rsync -a --delete .static/* static/
+
+    rsync -a --delete .layouts/* layouts/
+
+    cp .config.yaml config.toml
 
     if [[ $(find_git_dirty) == "*" ]]; then
         TS=$(date '+%Y%m%d%H%M')
         BRNAME="fix/${LOCAL_BR}-${TS}"
         git checkout -b "$BRNAME"
-        git add content static assets
+        git add content static assets layouts config.toml
         git commit -m "Merge common files to $LOCAL_BR"
         echo -n "$LOCAL_BR has a modification, should we do a PR? (y/N)"
         read YES
@@ -81,6 +85,6 @@ do
     fi
 done
 
-rm -fr .content .assets .static
+rm -fr .content .assets .static .layouts .config.toml
 
 git checkout $CUR_BRANCH
