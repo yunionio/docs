@@ -31,7 +31,7 @@ version() {
 }
 
 rebuild() {
-    echo -e "$(date) $GREEN Updateing docs for branch: $1.$RESET"
+    echo -e "$(date) $GREEN Updating docs for branch: $1.$RESET"
 
     # The latest documentation is generated in the root of /public dir
     # Older documentations are generated in their respective `/public/vx.x.x` dirs
@@ -99,6 +99,13 @@ check_and_update() {
         rebuild "$branch" "$version"
     fi
 }
+
+if [[ "$1" == "test" ]]; then
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    version=${VERSION_ARRAY[0]}
+    rebuild "$branch" "$version"
+    exit 0
+fi
 
 first_run=1
 while true; do
