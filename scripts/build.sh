@@ -34,7 +34,7 @@ rebuild() {
     # The latest documentation is generated in the root of /public dir
     # Older documentations are generated in their respective `/public/vx.x.x` dirs
     dir=''
-    title='OneCloud'
+    title='Cloudpods'
     if [[ $2 != "${VERSION_ARRAY[0]}" ]]; then
         dir=$2
         title="$title $2"
