@@ -483,6 +483,8 @@ footer.d-print-none {
 //
 .td-sidebar-nav {
 
+  margin-left: 0px;
+
   .td-sidebar-link {
     &__page {
       // line-height: 1rem!important;
@@ -494,7 +496,7 @@ footer.d-print-none {
   &__section-title > a:before {
     display: inline-block;
     vertical-align: middle;
-    margin-left: -1.7em;
+    // margin-left: -1.7em;
     margin-right: 15px;
     content: '';
     width: 0px;
@@ -520,7 +522,7 @@ footer.d-print-none {
   &__section-title > a.active:before {
     display: inline-block;
     vertical-align: middle;
-    margin-left: -1.7em;
+    // margin-left: -1.7em;
     margin-right: 15px;
     content: '';
     width: 0px;
