@@ -29,6 +29,10 @@ $secondary: #fe7740 !default;
   }
 }
 
+.h4>p {
+    font-weight: 100;
+}
+
 h2.title {
   font-size: 2vw;
   font-weight: 600;
@@ -64,7 +68,6 @@ h2.title {
   }
   a.nav-link {
     font-weight: 600;
-    // font-size: 1.2vw;
     color: #404448;
     text-shadow: none;
   }
@@ -323,7 +326,11 @@ footer.d-print-none {
     .logo > img {
       // width: 8vw !important;
     }
-
+    a.nav-link {
+      font-weight: 600;
+      color: #ffffff;
+      text-shadow: none;
+    }
   }
 }
 
@@ -345,9 +352,12 @@ footer.d-print-none {
     // padding-top: 9rem;
     padding:5rem 5vw 2rem 5vw !important
   }
-  .nav-link {
-    padding: 0 !important;
-    margin: .7rem 0 0 0;
+
+  .td-navbar {
+    a.nav-link {
+      padding: 0 !important;
+      margin: .7rem 0 0 0;
+    }
   }
 
   .home-time {
