@@ -69,22 +69,23 @@ time_format_blog = "02.01.2006"
 
 [[languages.zh.menu.main]]
     name = "GitHub"
+    url = "https://github.com/yunionio/cloudpods"
+    pre = "<i class='fab fa-github'></i>"
     weight = 50
-    url = "https://github.com/yunionio/onecloud"
 
-[[languages.zh.menu.main]]
-    name = "CHANGELOG"
-    weight = 59
-    url = "docs/changelog"
+#[[languages.zh.menu.main]]
+#    name = "CHANGELOG"
+#    weight = 59
+#    url = "docs/changelog"
 
-[[languages.zh.menu.main]]
-    name = "联系我们"
-    weight = 60
-    url = "docs/contact"
+#[[languages.zh.menu.main]]
+#    name = "联系我们"
+#    weight = 60
+#    url = "docs/contact"
 
 [languages.en]
 version_menu = "Version"
-description = "Documentation for OneCloud"
+description = "Documentation for Cloudpods"
 languageName = "English"
 contentDir = "content/en"
 time_format_default = "02.01.2006"
@@ -97,8 +98,9 @@ time_format_blog = "02.01.2006"
 
 [[languages.en.menu.main]]
     name = "GitHub"
+    url = "https://github.com/yunionio/cloudpods"
+    pre = "<i class='fab fa-github'></i>"
     weight = 50
-    url = "https://github.com/yunionio/onecloud"
 
 #[[languages.en.menu.main]]
 #    name = "CHANGELOG"
@@ -123,7 +125,7 @@ time_format_blog = "02.01.2006"
 ### Everything below this are Site Params ###
 
 [params]
-copyright = "Copyright 2017 - 2020 | 北京云联万维技术有限公司 京ICP备17065753号"
+copyright = "The Cloudpods Authors."
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
@@ -134,12 +136,12 @@ version_menu = "Releases"
 multi_versions = true
 
 RSSLink = "/index.xml"
-author = "yunionio.org" # add your company name
+author = "cloudpods.org" # add your company name
 github = "yunionio" # add your github profile name
 twitter = "yunionio" # add your twitter profile
 github_repo = "https://github.com/yunionio/docs"
-github_project_repo = "https://github.com/yunionio/onecloud"
-#email = "myemail@myaddress.xxx"
+github_project_repo = "https://github.com/yunionio/cloudpods"
+email = "info@cloudpods.org"
 
 # Google Custom Search Engine ID. Remove or comment out to disable search.
 # gcs_engine_id = "011737558837375720776:fsdu1nryfng"
