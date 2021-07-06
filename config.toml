@@ -140,3 +140,8 @@ enable = false
     name = "Github"
     weight = 50
     url = "https://github.com/yunionio/onecloud"
+
+[[menu.main]]
+    name = "API"
+    url = "docs/swagger"
+    weight = 70
