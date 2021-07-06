@@ -83,6 +83,11 @@ time_format_blog = "02.01.2006"
 #    weight = 60
 #    url = "docs/contact"
 
+[[languages.zh.menu.main]]
+    name = "API"
+    url = "docs/swagger"
+    weight = 70
+
 [languages.en]
 version_menu = "Version"
 description = "Documentation for Cloudpods"
@@ -111,6 +116,11 @@ time_format_blog = "02.01.2006"
 #    name = "Contact us"
 #    weight = 60
 #    url = "docs/contact"
+
+[[languages.en.menu.main]]
+    name = "API"
+    url = "docs/swagger"
+    weight = 70
 
 [markup]
   [markup.goldmark]
