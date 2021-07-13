@@ -38,7 +38,7 @@ $ kubectl edit ingress -n onecloud default-web
 设置完 default-web ingress 规则后，可以重启下 ingress controller 服务，让证书生效。
 
 ```bash
-$ kubectl rollout restart daemonset -n kube-system traefik-ingress-controller
+$ kubectl get pods -n kube-system | grep traefik | awk '{print $1}' | xargs kubectl delete pods -n kube-system
 ```
 
 ### 4. 修改服务 api_server 入口配置
