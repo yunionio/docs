@@ -14,7 +14,7 @@ description: >
 
 ## 前提条件
 
-- [导入云账号]({{< relref "../../../../multicloud/cloudaccounts/tutorial/create" >}})
+- [导入云账号]({{< relref "../../../../cloudaccounts/tutorial/create" >}})
 - 创建IP子网
 
 
