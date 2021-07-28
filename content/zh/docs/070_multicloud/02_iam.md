@@ -1,6 +1,6 @@
 ---
 title: "多云纳管权限表"
-weight: 2
+weight: 200
 description: >
     云平台各功能需要权限情况
 ---
