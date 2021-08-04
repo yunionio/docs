@@ -1,6 +1,6 @@
 ---
 title: "CHANGELOG"
-weight: 100
+weight: 160
 description: >
   CHANGELOG of each release Version
 ---
