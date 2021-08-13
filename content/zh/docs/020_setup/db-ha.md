@@ -69,6 +69,7 @@ skip_name_resolve
 expire_logs_days=30
 innodb_file_per_table=ON
 max_connections = 300
+max_allowed_packet=20M
  
 server-id = 1
 auto_increment_offset = 1
@@ -119,6 +120,7 @@ skip_name_resolve
 expire_logs_days=30
 innodb_file_per_table=ON
 max_connections = 300
+max_allowed_packet=20M
  
 server-id = 2
 auto_increment_offset = 2
