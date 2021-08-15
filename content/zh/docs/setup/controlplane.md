@@ -34,6 +34,7 @@ mariadb 作为服务数据持久化的数据库，可以部署在其它节点或
 * expire_logs_days=30：设置binlog的超时时间为30天，超过30天的binglog自动删除
 * innodb_file_per_table=ON: 设置innodb的每张表都用一个独立文件存储数据，便于后期数据清理
 * max_connections=300: 设置最大连接数为300
+* max_allowed_packet=20M: 设置最大数据包大小为20M
 
 ```bash
 $ MYSQL_PASSWD='your-sql-passwd'
@@ -57,6 +58,7 @@ skip_name_resolve
 expire_logs_days=30
 innodb_file_per_table=ON
 max_connections = 300
+max_allowed_packet=20M
 
 [mysqld_safe]
 log-error=/var/log/mariadb/mariadb.log
