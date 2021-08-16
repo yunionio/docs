@@ -1,10 +1,10 @@
 ---
 title: "libvirt 管理虚机导入"
 date: 2019-11-26T16:57:43+08:00
-weight: 40
+weight: 45
 ---
 
-支持将libvirt管理的虚拟机导入到Cloudpods平台。
+支持将libvirt管理的虚拟机导入到 {{<oem_name>}}平台。
 
 ## 注意事项
 

@@ -19,9 +19,26 @@ weight: 1
 
 参考: [制作镜像](../create/)
 
-## 上传
+## 上传镜像
 
-下载或者制作完镜像后，使用 `climc image-upload` 上传到云平台的 glance 服务，下面以下载 CentOS 提供的 CentOS-7-x86_64-GenericCloud-1711 举例:
+下载或者制作完镜像后，可以通过界面操作和Climc命令行的形式将镜像上传到平台的 glance 服务。
+
+### 界面操作
+
+1. 在系统镜像页面，单击 **_"上传"_** 按钮，进入上传镜像页面。
+2. 设置以下参数：
+   - 指定项目：选择系统镜像的所属项目。
+   - 镜像名称：设置镜像的名称，建议名称与镜像的发行版本相关。
+   - 发行版、版本号：镜像的发行版本。
+   - CPU架构：支持x86和ARM架构。
+   - 系统位数：支持32bit和64bit。请根据实际情况选择CPU架构和系统位数。
+   - 上传方式：支持上传镜像文件和输入镜像URL两种方式。虚拟机镜像列表支持上传后缀为QCOW2、VMDK、RAW、VHD格式的镜像。ISO镜像列表仅支持上传ISO后缀的镜像。
+     - 上传镜像文件：表示选择当前浏览器可访问的镜像直接上传。
+     - 输入镜像URL：通过URL路径来添加镜像。目前仅支持以http、https开头的url链接。格式为 [http://path/file](http://path/file) 或 [https://path/file](https://path/file)。
+
+### Climc命令
+
+使用 `climc image-upload` 上传到云平台的 glance 服务，下面以下载 CentOS 提供的 CentOS-7-x86_64-GenericCloud-1711 举例:
 
 ```bash
 # 下载 CentOS-7-x86_64-GenericCloud-1711.qcow2 
@@ -37,7 +54,7 @@ $ climc image-upload --format qcow2 --os-type Linux --os-arch x86_64 --standard 
 $ climc image-show CentOS-7-x86_64-GenericCloud-1711.qcow2 | grep status
 | status          | active |
 ```
-
-## 上传参数
-
 使用 `climc help image-upload` 获取各个参数解释。
+
+
+
