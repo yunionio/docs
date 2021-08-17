@@ -73,7 +73,7 @@ $ git pull
 # 该步骤会因为拉取 docker 镜像等待较长时间，请耐心等待
 # PRIMARY_MASTER_HOST 是指部署集群的第一个节点的 ip 地址
 # 需要本机能够使用 ssh 密钥登录上去
-$ ./ocboot.py upgrade <PRIMARY_MASTER_HOST> v3.7.1
+$ ./ocboot.py upgrade <PRIMARY_MASTER_HOST> v3.7.6
 
 # 另外可以使用 `./ocboot.py upgrade --help` 查看其它可选参数
 # 比如:
