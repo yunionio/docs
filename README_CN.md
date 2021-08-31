@@ -25,6 +25,19 @@ $ make container-serve
 
 文档在 content/{en,zh} 目录下，选择需要的部分进行编辑或者添加，内容组织请参考：https://gohugo.io/content-management/organization/。
 
+### 文档头部 meta 元信息
+
+```
+# edition 标记文档包含在ce(开源版)或者ee(企业版)，如果不设置则表示两个版本都会包含
+edition: ce
+
+# docscope 表示文档所属的作用域，这个在离线编译模式会用到，默认为 system ，可以设置为 domain 和 project
+docscope: project
+
+# oem_ignore 表示该文档会在 oem 模式下编译被忽略
+oem_ignore: true
+```
+
 ## 编译文档
 
 开发阶段的文档是没有多版本的，如果要查看多版本文档的效果，可以运行以下命令。
