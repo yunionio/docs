@@ -9,8 +9,9 @@ RUN apk add --no-cache \
     rsync \
     build-base \
     libc6-compat \
-    npm && \
-    npm install -D autoprefixer postcss-cli
+    make \
+    python3 py3-yaml \
+    npm
 
 ARG HUGO_VERSION
 
@@ -22,6 +23,12 @@ RUN mkdir -p /usr/local/src && \
     adduser -Sg hugo -u 1000 -h /src hugo
 
 RUN apk add --no-cache bash
+
+RUN npm install -g npm
+
+RUN npm install -g postcss postcss-cli autoprefixer
+
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 WORKDIR /src
 

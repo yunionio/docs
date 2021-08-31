@@ -1,0 +1,23 @@
+REGISTRY ?= "registry.cn-beijing.aliyuncs.com/yunionio"
+TAG ?= $(shell git describe --exact-match 2> /dev/null || \
+                       git describe --match=$(git rev-parse --short=8 HEAD) --always --dirty --abbrev=8)
+ROOT_DIR = $(CURDIR)
+
+clean:
+	rm -rf ./public
+
+online-build: clean
+	./scripts/build.py \
+		--host=https://docs.yunion.cn \
+		--edition=ee \
+		--multi-versions
+
+offline-build: clean
+	./scripts/build.py \
+		--mode=offline \
+		--edition=ee
+
+image-step:
+	REGISTRY=${REGISTRY} ARCH=${ARCH} DEBUG=${DEBUG} TAG=${TAG} NAME=docs-ee $(CURDIR)/scripts/docker-push.sh
+
+image: offline-build image-step

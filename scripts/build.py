@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+import argparse
+import textwrap
+
+from converter import processor
+from builder.consts import MODE_ONLINE, MODE_OFFLINE, MODE_OEM
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Use processor and hugo build document website.",
+        formatter_class=argparse.RawTextHelpFormatter)
+
+    parser.add_argument('--mode',
+                        choices=[MODE_ONLINE, MODE_OFFLINE, MODE_OEM],
+                        default=MODE_ONLINE,
+                        help='''\
+                            Build mode
+                                online: Public website
+                                offline: Docs inside ee edition
+                                oem: Docs inside ee OEM edition
+                            ''')
+    # TODO: impl OEM build
+    parser.add_argument('--oem-name', help="OEM NAME")
+    parser.add_argument('--host', help="Hugo base url", default="")
+    parser.add_argument('--edition', help="Build edition",
+                        choices=[processor.EDITION_CE, processor.EDITION_EE],
+                        default=processor.EDITION_CE)
+    parser.add_argument('--multi-versions', help="Enable multi versions",
+                        action=argparse.BooleanOptionalAction)
+    parser.add_argument('--out-fetch', help="Not fetch upstream",
+                        action=argparse.BooleanOptionalAction)
+
+    args = parser.parse_args()
+
+    return args
+
+
+def start_build(args):
+    mode = args.mode
+    drv = get_build_driver(mode)
+    drv.start('./content', args)
+
+
+def get_build_driver(mode):
+    from builder.drivers import get_driver
+    return get_driver(mode)
+
+
+if __name__ == '__main__':
+    args = parse_args()
+    start_build(args)
