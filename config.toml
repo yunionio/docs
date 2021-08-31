@@ -135,6 +135,8 @@ time_format_blog = "02.01.2006"
 ### Everything below this are Site Params ###
 
 [params]
+oem = "cloudpods"
+oem_name = "Cloudpods"
 copyright = "The Cloudpods Authors."
 
 # First one is picked as the Twitter card image if not set on page.
