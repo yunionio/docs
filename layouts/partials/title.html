@@ -1,0 +1,5 @@
+{{ if .IsHome }}
+{{ .Site.Title }}
+{{ else }}
+{{ replace .Title "var_oem_name" .Site.Params.oem_name }}
+{{ end }}
