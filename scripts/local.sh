@@ -1,9 +1,11 @@
 #!/bin/bash
 
+CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+source "$CUR_DIR/function.sh"
+
 VERSIONS_ARRAY=(
-    'master'
-    'v2.12'
-    'v2.11'
+    'dev'
 )
 
 join_versions() {
@@ -14,13 +16,28 @@ join_versions() {
 VERSIONS_STRING=$(join_versions)
 
 run() {
-    export CURRENT_BRANCH="master"
+    export CURRENT_BRANCH="$(git name-rev --name-only HEAD)"
     export CURRENT_VERSION=${VERSIONS_ARRAY[0]}
     export VERSIONS=${VERSIONS_STRING}
     HUGO_TITLE="Onecloud Doc - local"
-    CURRENT_BRANCH="master"
 
-    CURRENT_VERSION=${CURRENT_VERSION} hugo server -w
+    pushd $(dirname "$0")/.. > /dev/null
+
+    if [ -z "$NOT_SYNC_SUBMOD" ]; then
+        pushd themes > /dev/null
+        if [ ! -d "docsy" ]; then
+            git clone --recurse-submodules --depth 1 https://github.com/google/docsy.git
+        else
+            pushd docsy > /dev/null
+            git pull --recurse-submodules --depth 1
+            popd > /dev/null
+        fi
+        popd > /dev/null
+    fi
+
+    local config_file=$(generate_config "$CUR_DIR/../config.toml")
+    CURRENT_VERSION=${CURRENT_VERSION} hugo server -w --config "$config_file"
+    popd > /dev/null
 }
 
 run
