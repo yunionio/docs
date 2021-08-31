@@ -10,7 +10,10 @@
 <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}">
 {{ end -}}
 {{ partialCached "favicons.html" . }}
-<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{ end }}</title>
+<!-- <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{ end }}</title> -->
+<title>
+  {{ partial "title.html" . }}
+</title>
 {{- template "_internal/opengraph.html" . -}}
 {{- template "_internal/google_news.html" . -}}
 {{- template "_internal/schema.html" . -}}
