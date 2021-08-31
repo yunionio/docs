@@ -1,6 +1,7 @@
 ---
 title: "ROADMAP"
 weight: 101
+edition: ce
 description: >
   Roadmap
 ---

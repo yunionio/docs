@@ -1,7 +1,7 @@
 HUGO_VERSION = 0.83.1
 IMAGE_VERSION=$(shell scripts/hash-files.sh Dockerfile | cut -c 1-12)
 CONTAINER_IMAGE = registry.cn-beijing.aliyuncs.com/yunionio/docs-hugo:v$(HUGO_VERSION)-$(IMAGE_VERSION)
-CONTAINER_RUN = docker run --rm --interactive --tty --volume $(CURDIR):/src
+CONTAINER_RUN = docker run --rm --interactive --tty --volume $(CURDIR):/src --user $(shell id -u):$(shell id -g)
 HOST := http://localhost:1313
 
 .PHONY: setup
@@ -12,6 +12,9 @@ module-check:
 setup:
 	bash -x ./scripts/setup.sh
 
+setup-upstream:
+	bash -x ./scripts/setup-upstream.sh
+
 container-image:
 	docker build . \
 		--network=host \
@@ -20,7 +23,7 @@ container-image:
 
 container-build: setup
 	$(CONTAINER_RUN) --read-only --mount type=tmpfs,destination=/tmp,tmpfs-mode=01777 $(CONTAINER_IMAGE) \
-		sh -c "HOST=$(HOST) EXIT_AFTER_BUILD=true ./scripts/build.sh"
+		sh -c "make ce-build"
 
 container-serve: setup
 	$(CONTAINER_RUN) --read-only --mount type=tmpfs,destination=/tmp,tmpfs-mode=01777 -p 1313:1313 $(CONTAINER_IMAGE) hugo server --buildFuture --bind 0.0.0.0 --destination /tmp/hugo --cleanDestinationDir
@@ -33,10 +36,22 @@ sync-changelog:
 			s|发布时间|Release time:|g; \
 			s|仓库地址|Repo|g"
 
-local-serve:
-	HOST=http://localhost:1313 EXIT_AFTER_BUILD=true ./scripts/build.sh
+local-serve: setup
+	./scripts/build.py --host=http://localhost:1313 --edition=ce
 	cd public && python3 -m http.server 1313
 
-test:
-	HOST=http://localhost:1313 EXIT_AFTER_BUILD=true ./scripts/build.sh test
-	cd public && python3 -m http.server 1313
+ce-build:
+	./scripts/build.py \
+		--host=https://www.cloudpods.org \
+		--edition=ce \
+		--multi-versions
+
+
+######### For EE ####################
+ee-image: setup
+	make -f ./Makefile.ee image
+
+ee-local-serve: 
+
+ee-build: setup
+	make -f ./Makefile.ee online-build
