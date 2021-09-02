@@ -1,6 +1,7 @@
 ---
 title: "联系我们"
 weight: 150
+oem_ignore: true
 description: >
   联系Cloudpods的方式和渠道
 ---
