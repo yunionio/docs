@@ -2,6 +2,7 @@
 title: "新建经典网络IP子网"
 weight: 30
 description: >
+  介绍如何创建经典网络的IP子网。
 ---
 
 ## 新建经典网络IP子网

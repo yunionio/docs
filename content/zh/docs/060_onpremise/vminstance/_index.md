@@ -6,20 +6,6 @@ description: >
   虚拟机是采用虚拟化技术构建的运行在私有云或者公有云上的实例。
 ---
 
-云平台的虚拟机有时也又叫做云服务器、云主机等，包括我们提供的 kvm 虚拟机、vmware、openstack 和各个公有云的虚拟机。
+**入口**：在云管平台单击左上角![](../../../images/intro/nav.png)导航菜单，在弹出的左侧菜单栏中单击 **_"主机/主机/虚拟机"_** 菜单项，进入虚拟机页面。
 
-现在支持的主机和平台的对应关系如下：
-
-
-|    类型   |          平台          |
-|:---------:|:----------------------:|
-|    kvm    |  cloudpods 私有云虚拟机 |
-|    esxi   |      vmware 虚拟机     |
-| openstack | openstack 私有云虚拟机 |
-|   zstack  |   zstack 私有云虚拟机  |
-|   aliyun  |      阿里云虚拟机      |
-|   qcloud  |      腾讯云虚拟机      |
-|    aws    |       AWS 虚拟机       |
-|   azure   |      Azure 虚拟机      |
-|   huawei  |      华为云虚拟机      |
-|   ucloud  |      UCloud 虚拟机     |
+![](./images/vm.png)
