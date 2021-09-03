@@ -2,6 +2,7 @@
 title: "新建VPC网络"
 weight: 10
 description: >
+  介绍如何创建VPC。
 ---
 
 专有网络VPC（Virtual Private Cloud）是一块逻辑隔离的网络空间。

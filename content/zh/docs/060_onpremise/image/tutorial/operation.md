@@ -2,11 +2,13 @@
 title: "其他操作"
 date: 2019-07-19T17:29:09+08:00
 weight: 100
+description: >
+  介绍镜像相关操作。
 ---
 
-## 导入镜像
+## Web界面操作
 
-### 界面操作
+### 导入镜像
 
 该功能用于上传系统镜像文件，用户上传的镜像文件默认为自定义镜像。
 
@@ -21,33 +23,7 @@ weight: 100
      - 上传镜像文件：表示选择当前浏览器可访问的镜像直接上传。
      - 输入镜像URL：通过URL路径来添加镜像。目前仅支持以http、https开头的url链接。格式为 [http://path/file](http://path/file) 或 [https://path/file](https://path/file)。
 
-### climc
-
-云平台的 glance 镜像服务支持从外部 url 导入镜像，对应 climc 的子命令为 `image-import`　。
-
-```bash
-# 导入 https://iso.yunion.cn/yumrepo-3.2/images/cirros-0.4.0-x86_64-disk.qcow2 镜像
-$ climc image-import --format qcow2 --os-type Linux cirros-test.qcow2 https://iso.yunion.cn/yumrepo-3.2/images/cirros-0.4.0-x86_64-disk.qcow2
-```
-
-使用 `image-list` 或 `image-show` 查询导入镜像的状态，变为 active 时表明可以使用。
-
-## 下载镜像
-
-如果需要将云平台的镜像导出到本地，就需要用 `climc image-download` 把 glance 存的镜像下载下来。
-
-参考 [查询镜像](../query/) 查询你想要下载的镜像，获取镜像 id 或 name。
-
-下载镜像:
-
-```bash
-# OUTPUT 指定镜像的保存路径和文件名称，如/root/test.qcow2
-$ climc image-download [--output OUTPUT] <image_id>
-```
-
-## 删除镜像
-
-### 界面操作
+### 删除镜像
 
 该功能用于删除系统镜像，当系统镜像名称项右侧有![](../../../images/computing/delprotect1.png)图标，表示系统镜像启用了删除保护，无法删除系统镜像，如需删除系统镜像，需要先禁用删除保护。从镜像市场导入的系统镜像删除后将重新回到未导入页面。
 
@@ -71,7 +47,33 @@ $ climc image-download [--output OUTPUT] <image_id>
 3. 在系统镜像列表中选择一个或多个镜像，单击列表上方 **_"批量操作"_** 按钮，选择下拉菜单 **_"删除"_** 菜单项，弹出操作确认对话框。
 4. 单击 **_"确定"_** 按钮，完成操作。
 
-### Climc
+## Climc命令行操作
+
+### 导入镜像
+
+云平台的 glance 镜像服务支持从外部 url 导入镜像，对应 climc 的子命令为 `image-import`　。
+
+```bash
+# 导入 https://iso.yunion.cn/yumrepo-3.2/images/cirros-0.4.0-x86_64-disk.qcow2 镜像
+$ climc image-import --format qcow2 --os-type Linux cirros-test.qcow2 https://iso.yunion.cn/yumrepo-3.2/images/cirros-0.4.0-x86_64-disk.qcow2
+```
+
+使用 `image-list` 或 `image-show` 查询导入镜像的状态，变为 active 时表明可以使用。
+
+### 下载镜像
+
+如果需要将云平台的镜像导出到本地，就需要用 `climc image-download` 把 glance 存的镜像下载下来。
+
+参考 [查询镜像](../query/) 查询你想要下载的镜像，获取镜像 id 或 name。
+
+下载镜像:
+
+```bash
+# OUTPUT 指定镜像的保存路径和文件名称，如/root/test.qcow2
+$ climc image-download [--output OUTPUT] <image_id>
+```
+
+### 删除镜像
 
 镜像默认启用了删除保护，当镜像确定不用了，需要先通过`climc image-update`禁用删除保护，再通过 `climc image-delete` 删除镜像。
 

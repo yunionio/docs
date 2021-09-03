@@ -2,7 +2,7 @@
 title: "镜像"
 weight: 60
 description: >
-  镜像服务
+  镜像是用于新建虚拟机、裸金属使用的模板文件。
 ---
 
 - 镜像(image): 是用于新建云服务器(虚拟机)、裸金属(物理机)使用的模板文件，常用类型为 qcow2, vmdk, raw, vhd, iso。

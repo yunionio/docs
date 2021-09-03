@@ -2,6 +2,7 @@
 title: "新建二层网络"
 weight: 10
 description: >
+  介绍如何创建二层网络。
 ---
 
 ## 新建二层网络

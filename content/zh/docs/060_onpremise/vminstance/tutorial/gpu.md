@@ -2,11 +2,13 @@
 title: "GPU相关"
 date: 2019-07-19T18:32:40+08:00
 weight: 40
+description: >
+  介绍如何在虚拟机上使用GPU设备。
 ---
 
 目前仅支持 {{<oem_name>}} kvm 虚拟机使用 GPU，使用的 PCI Passthrough 的方式将宿主机上的 Nvidia/AMD GPU 透传给虚拟机使用。
 
-## 界面操作
+## Web界面操作
 
 ### 设置GPU卡
 

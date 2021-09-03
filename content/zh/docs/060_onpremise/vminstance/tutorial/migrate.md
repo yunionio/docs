@@ -1,6 +1,6 @@
 ---
 title: "迁移相关"
-weight: 3
+weight: 30
 description: >
   介绍如何迁移虚拟机，以及迁移虚拟机相关的注意事项。
 ---
@@ -24,7 +24,7 @@ $ cat /proc/cpuinfo | grep microcode | uniq
 microcode       : 0xca
 ```
 
-## 界面操作
+## Web界面操作
 
 ### 迁移
 

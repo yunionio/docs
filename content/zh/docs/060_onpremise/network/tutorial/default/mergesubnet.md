@@ -2,6 +2,7 @@
 title: "合并/分割IP子网"
 weight: 35
 description: >
+  介绍如何合并或分割IP子网。
 ---
 
 ## 分割IP子网
