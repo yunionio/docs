@@ -25,8 +25,15 @@ description: >
 # 此功能开关影响所有云账号
 
 # 关闭云账号健康检查
-$ climc service-config --config cloudaccount_health_status_check=false region
+$ climc service-config --config cloudaccount_health_status_check=false region2
 
 # 开启云账号健康检查
-$ climc service-config --config cloudaccount_health_status_check=true region
+$ climc service-config --config cloudaccount_health_status_check=true region2
+
 ```
+
+{{% alert title="注意" color="warning" %}}
+功能的开关不会立刻影响云账号状态，可以等待几分钟后云账号状态会更新
+或者到云账号列表选定云账号，点击连接状态，云账号健康状态会随即更新
+{{% /alert %}}
+ 
