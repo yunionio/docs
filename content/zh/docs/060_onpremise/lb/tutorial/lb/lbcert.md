@@ -1,7 +1,8 @@
 ---
 title: "证书"
 weight: 50
-description: 
+description:
+   当在负载均衡实例上配置HTTPS监听转发来自HTTPS协议的请求时，需要配置证书。
 ---
 
 当在负载均衡实例上配置HTTPS监听转发来自HTTPS协议的请求时，需要配置证书。负载均衡只支持PEM格式的证书。
