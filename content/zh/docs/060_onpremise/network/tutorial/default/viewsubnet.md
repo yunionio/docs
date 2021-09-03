@@ -2,6 +2,7 @@
 title: "查看IP子网下信息"
 weight: 50
 description: >
+  查看IP子网的详细信息及使用情况。
 ---
 
 ## 查看IP子网详情

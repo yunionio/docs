@@ -1,7 +1,8 @@
 ---
-title: "创建VPC网络IP子网"
+title: "新建VPC网络IP子网"
 weight: 30
 description: >
+  介绍如何新建VPC网络的IP子网。
 ---
 
 ## 新建VPC网络IP子网
