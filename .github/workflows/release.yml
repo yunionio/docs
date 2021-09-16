@@ -3,9 +3,9 @@ name: Release github pages
 on:
   push:
     branches:
-      - release/*  # Set a branch to deploy
-      #- master  # Set a branch to deploy
-      #- feature/*  # Set a branch to deploy
+      - release/3.8  # Set a branch to deploy
+      # - release/*  # Set a branch to deploy
+      # - master  # Set a branch to deploy
 
 jobs:
   build:
@@ -37,9 +37,18 @@ jobs:
 
     - run: npm install
 
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9.7'
+
+    - name: Install python requirements
+      run: |
+        pip3 install pyyaml
+
     - name: Build public site
       run: |
-        EXIT_AFTER_BUILD=1 ./scripts/build.sh
+        ./scripts/build.py --host=https://www.cloudpods.org --edition=ce --multi-versions --no-out-fetch
         ls -alh ./public
 
     - name: Publish site
