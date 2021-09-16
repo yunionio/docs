@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 git remote add upstream https://github.com/yunionio/docs.git
 
