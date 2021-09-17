@@ -69,11 +69,11 @@ $ git pull
 升级的版本号可以到 [CHANGELOG release/3.7 页面](../../160_changelog/release-3.7/) 查询。
 
 ```bash
-# 使用 ocboot 相关服务到 v3.7.1 版本
+# 使用 ocboot 相关服务到 v3.7.7 版本
 # 该步骤会因为拉取 docker 镜像等待较长时间，请耐心等待
 # PRIMARY_MASTER_HOST 是指部署集群的第一个节点的 ip 地址
 # 需要本机能够使用 ssh 密钥登录上去
-$ ./ocboot.py upgrade <PRIMARY_MASTER_HOST> v3.7.6
+$ ./ocboot.py upgrade <PRIMARY_MASTER_HOST> v3.7.7
 
 # 另外可以使用 `./ocboot.py upgrade --help` 查看其它可选参数
 # 比如:
