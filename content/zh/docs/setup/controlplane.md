@@ -13,7 +13,7 @@ Cloudpods 相关的组件运行在 kubernetes 之上，环境以及相关的软�
 - 操作系统: CentOS 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 150G
 - 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
-- docker: ce-19.03.9
+- docker: ce-20.10.5
 - kubernetes: v1.15.8
 
 需要能访问如下网址，如果企业有外网隔离规则，则需要打开相应白名单：
@@ -83,8 +83,8 @@ $ systemctl restart mariadb
 ```bash
 $ yum install -y yum-utils bash-completion
 # 添加 yunion Cloudpods rpm 源
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.6/yunion.repo
-$ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.7/yunion.repo
+$ yum install -y docker-ce docker-ce-cli containerd.io
 ```
 
 配置 docker
@@ -129,17 +129,17 @@ $ systemctl enable --now docker
 ```bash
 # 安装内核
 $ yum install -y \
-  kernel-3.10.0-1062.4.3.el7.yn20191203 \
-  kernel-devel-3.10.0-1062.4.3.el7.yn20191203 \
-  kernel-headers-3.10.0-1062.4.3.el7.yn20191203
+  kernel-3.10.0-1160.6.1.el7.yn20201125 \
+  kernel-devel-3.10.0-1160.6.1.el7.yn20201125 \
+  kernel-headers-3.10.0-1160.6.1.el7.yn20201125
 
 # 重启系统进入内核
 $ reboot
 
 # 重启完成后，查看当前节点内核信息
-# 确保为 3.10.0-1062.4.3.el7.yn20191203.x86_64
+# 确保为 3.10.0-1160.6.1.el7.yn20201125.x86_64
 $ uname -r
-3.10.0-1062.4.3.el7.yn20191203.x86_64
+3.10.0-1160.6.1.el7.yn20201125.x86_64
 ```
 
 ### 安装配置 kubelet
