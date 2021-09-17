@@ -130,7 +130,7 @@ primary_master_node:
   # k8s 控制节点的端口
   controlplane_port: "6443"
   # Cloudpods 版本
-  onecloud_version: 'v3.7.1'
+  onecloud_version: 'v3.7.7'
   # Cloudpods 登录用户
   onecloud_user: admin
   # Cloudpods 登录用户密码
