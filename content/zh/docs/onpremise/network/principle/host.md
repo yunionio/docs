@@ -18,6 +18,41 @@ description: >
 
 当创建一台经典网络的虚拟机，调度器会查看虚拟机准备对接的IP子网，根据IP子网的二层网络过滤出对接的宿主机，把这些宿主机作为候选宿主机。
 
+### VLAN支持
+
+{{<oem_name>}}经典网络支持VLAN（802.1Q）。同一个经典网络下的二层网络的IP子网可以归属于不同的VLAN，这时需要设置IP子网的VLAN ID。IP子网的VLAN ID默认为1。
+
+当一个IP子网的VLAN ID不为1时，则虚拟机接入该IP子网的网络接口将自动加入该VLAN。其底层实现原理为，在把虚拟机的虚拟网络接口加入OVS网桥时，设置该接口的VLAN tag为指定tag。为了允许一台宿主机上的虚拟机能够加入不同的VLAN，需要将宿主机的物理网口设置为Trunk模式，以允许同一条物理链路上不同VLAN tag的报文能够同时通过。
+
+<img src="./vm_vlan_access.png" width="500">
+
+#### Host VLAN
+
+为了允许虚拟机接入VLAN，宿主机对应的网络接口必须以TRUNK模式接入交换机。这时，如果宿主机也需要通过该网络接口通信，则需要根据情况进行设置。1）如果宿主机该网络接口的VLAN ID为默认VLAN（VLAN=1）时，则宿主机不需要做特殊配置。2）如果宿主机该网络接口的VLAN ID不为1，则有两种解决方案：
+
+（1）为该网络接口设置一个VLAN tag为宿主机VLAN的别名网口(Alias Interface)，将宿主机的IP地址配置在该别名网口上，宿主机将使用该别名网口通信。
+
+<img src="./host_alias_vlan_nic.png" width="500">
+
+以物理机的网口为em1，VLAN ID为100，em1的虚拟机网桥br0为例，以下为配置脚本：
+
+```bash
+ip link add link em1 name em1.100 type vlan id 100 && ip addr flush dev br0 && ip addr add 10.192.4.20/22 dev em1.100 && ip link set dev em1.100 up
+```
+
+（2）在交换机设置该trunk接口的默认VLAN ID为宿主机的VLAN ID。
+
+#### BRTRUNK模式
+
+在某些应用场景，例如用户在虚拟机内通过macvlan或网桥等技术为多个容器提供接入网络，用户可能有需要在虚拟机同一个网口虚拟多个vlan接口，发送多个VLAN tag的报文，这种情况下，需要做如下特殊设置，才能允许虚拟机的一个网口发送携带多个不同VLAN tag的报文：
+
+1）该网口对应的IP子网的VLAN ID为1（默认VLAN），这样从该网口发出的报文只会被OVS网桥透明转发，不会再打上VLAN tag。
+2）该虚拟机需要关闭“源IP和MAC地址检查”（在主机菜单：网络与安全-设置源/目标检查）。
+3）宿主机对应网口为trunk模式。
+4）交换机在对应网口放行对应的VLAN tag。
+
+<img src="./brtrunk.png" width="500">
+
 ## VPC网络
 
 在host服务启动后，会在宿主机内创建用于vpc通信的网桥（默认名称为brvpc），所有对接VPC网络的虚拟机的虚拟网卡都要加入这个网桥。
