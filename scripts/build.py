@@ -14,6 +14,9 @@ def parse_args():
         description="Use processor and hugo build document website.",
         formatter_class=argparse.RawTextHelpFormatter)
 
+    bool_action = 'store_true'
+    if hasattr(argparse, 'BooleanOptionalAction'):
+        bool_action = argparse.BooleanOptionalAction
     parser.add_argument('--mode',
                         choices=[MODE_ONLINE, MODE_OFFLINE, MODE_OEM],
                         default=MODE_ONLINE,
@@ -30,9 +33,9 @@ def parse_args():
                         choices=[processor.EDITION_CE, processor.EDITION_EE],
                         default=processor.EDITION_CE)
     parser.add_argument('--multi-versions', help="Enable multi versions",
-                        action=argparse.BooleanOptionalAction)
+                        action=bool_action)
     parser.add_argument('--out-fetch', help="Not fetch upstream",
-                        action=argparse.BooleanOptionalAction)
+                        action=bool_action)
 
     args = parser.parse_args()
 
