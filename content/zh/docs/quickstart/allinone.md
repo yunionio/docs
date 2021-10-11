@@ -20,6 +20,8 @@ description: >
     - X86_64: [CentOS 7](http://isoredirect.centos.org/centos/7/isos/x86_64/)
     - ARM64: [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 或者 [统信 UOS](https://www.chinauos.com/) 
 - 最低配置要求: CPU 4核, 内存 8GiB, 存储 100GiB
+- 虚拟机和服务使用的存储路径都在 **/opt** 目录下，所以理想环境下建议单独给 **/opt** 目录设置挂载点
+    - 比如把 /dev/sdb1 单独分区做 ext4 然后通过 /etc/fstab 挂载到 /opt 目录
 
 以下为待部署机器的环境:
 
@@ -85,7 +87,7 @@ $ pip install ansible
 
 ```bash
 # 下载 ocboot 工具到本地
-$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.8 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
 ### 快速部署
@@ -130,7 +132,7 @@ primary_master_node:
   # k8s 控制节点的端口
   controlplane_port: "6443"
   # Cloudpods 版本
-  onecloud_version: 'v3.7.7'
+  onecloud_version: 'v3.8.2'
   # Cloudpods 登录用户
   onecloud_user: admin
   # Cloudpods 登录用户密码
