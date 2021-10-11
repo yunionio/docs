@@ -12,6 +12,8 @@ Cloudpods 相关的组件运行在 kubernetes 之上，环境以及相关的软�
 
 - 操作系统: CentOS 7.6
 - 最低配置要求: CPU 4核, 内存 8G, 存储 150G
+- 虚拟机和服务使用的存储路径都在 **/opt** 目录下，所以理想环境下建议单独给 **/opt** 目录设置挂载点
+    - 比如把 /dev/sdb1 单独分区做 ext4 然后通过 /etc/fstab 挂载到 /opt 目录
 - 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
 - docker: ce-20.10.5
 - kubernetes: v1.15.8
@@ -83,7 +85,7 @@ $ systemctl restart mariadb
 ```bash
 $ yum install -y yum-utils bash-completion
 # 添加 yunion Cloudpods rpm 源
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.7/yunion.repo
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.8/yunion.repo
 $ yum install -y docker-ce docker-ce-cli containerd.io
 ```
 
@@ -371,7 +373,7 @@ $ ocadm reset --force
 $ yum --disablerepo='*' --enablerepo='yunion*' install -y \
   epel-release libaio jq libusb lvm2 nc ntp yunion-fetcherfs fuse fuse-devel fuse-libs \
   oniguruma pciutils spice spice-protocol sysstat tcpdump usbredir \
-  yunion-qemu-2.12.1 yunion-executor \
+  yunion-qemu-2.12.1 yunion-executor ceph-common \
   kmod-openvswitch \
   openvswitch net-tools
 

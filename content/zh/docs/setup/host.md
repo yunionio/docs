@@ -24,6 +24,8 @@ description: >
 	- 打开 iommu，VT-d: 用于 GPU 透传(不用GPU可以不开)
 - 网络:
 	- 当前可用的网段: 虚拟机可以直接使用和计算节点所在的扁平网段，需要预先划分保留对应端给云平台虚拟机使用，防止被其它设备占用，最后 IP 冲突
+- 虚拟机和服务使用的存储路径都在 **/opt** 目录下，所以理想环境下建议单独给 **/opt** 目录设置挂载点
+    - 比如把 /dev/sdb1 单独分区做 ext4 然后通过 /etc/fstab 挂载到 /opt 目录
 
 - 备注:
 	- 如果是以测试为目的，可以拿一台虚拟机部署计算节点的服务，但可能无法使用 KVM 加速和 GPU 透传
@@ -37,7 +39,7 @@ description: >
 $ cat <<EOF >/etc/yum.repos.d/yunion.repo
 [yunion]
 name=Packages for Yunion Multi-Cloud Platform
-baseurl=https://iso.yunion.cn/yumrepo-3.6
+baseurl=https://iso.yunion.cn/yumrepo-3.8
 sslverify=0
 failovermethod=priority
 enabled=1
@@ -60,7 +62,7 @@ $ yum --disablerepo='*' --enablerepo='yunion*' install -y \
   kernel-devel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-headers-3.10.0-1062.4.3.el7.yn20191203 \
   kmod-openvswitch \
-  openvswitch net-tools
+  openvswitch net-tools ceph-common
 
 $ systemctl enable --now yunion-executor
 
@@ -83,8 +85,8 @@ $ uname -r
 ```bash
 $ yum install -y yum-utils bash-completion
 # 添加 yunion Cloudpods rpm 源
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.6/yunion.repo
-$ yum install -y docker-ce-19.03.9 docker-ce-cli-19.03.9 containerd.io
+$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.8/yunion.repo
+$ yum install -y docker-ce docker-ce-cli containerd.io
 ```
 
 配置 docker
