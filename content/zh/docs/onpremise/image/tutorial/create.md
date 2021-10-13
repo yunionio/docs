@@ -207,7 +207,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     ```bash
     $ sudo vi /etc/apt/apt.conf.d/10periodic
     # 配置修改
-    APT::Periodic::Update-Package-Lists "1";
+    APT::Periodic::Update-Package-Lists "0";
     ```
 
 6. 至此，虚拟机优化完成。
@@ -314,19 +314,30 @@ Windows虚拟机上的时间默认会与北京时间差8个小时，需要对系
 
 3. 至此虚拟机优化完成。
 
-### Linux系统安装配置Cloud-init
+### Linux系统安装配置Cloud-init（可选）
 
 Cloud-init用于为Linux操作系统的虚拟机做系统初始化配置。详细介绍内容请参考[cloud-init官网](https://cloudinit.readthedocs.io/en/latest/?spm=a2c4g.11186623.2.16.2aec3fcaVGJZo7)。
 
 #### 安装cloud-init
 
-在Linux操作系统中执行以下命令安装cloud-init。
+在Linux操作系统中使用软件源上的cloud-init包安装cloud-init，命令如下：
 
+{{< tabs name="cloudinit" >}}
+{{% tab name="CentOS 7" %}}
 ```bash
-$ apt-get/yum install cloud-init
+$ yum install cloud-init
 ```
+{{% /tab %}}
 
-离线安装方式请参考[腾讯云文档中心-Linux系统安装cloud-init](https://cloud.tencent.com/document/product/213/12587)或[阿里云文档中心-安装cloud-init](https://help.aliyun.com/document_detail/57803.html?spm=5176.10695662.1996646101.searchclickresult.9b2c5db8X8v4Tq&aly_as=gOLD2vtr)等。
+{{% tab name="Ubuntu/Debian 10" %}}
+```bash
+$ apt install cloud-init
+```
+{{% /tab %}}
+
+{{< /tabs >}}
+
+Linux操作系统安装Cloud-init更多请参考[腾讯云文档中心-Linux系统安装cloud-init](https://cloud.tencent.com/document/product/213/12587)或[阿里云文档中心-安装cloud-init](https://help.aliyun.com/document_detail/57803.html?spm=5176.10695662.1996646101.searchclickresult.9b2c5db8X8v4Tq&aly_as=gOLD2vtr)等。
 
 #### 配置cloud-init
 
@@ -339,7 +350,7 @@ disable_root: 0
 ssh_pwauth:   1
 ```
 
-### Windows系统安装配置Cloudbase-init
+### Windows系统安装配置Cloudbase-init（可选）
 
 请参考[腾讯云文档中心-Windows操作系统安装Cloudbase-Init](https://cloud.tencent.com/document/product/213/30000)。
 
