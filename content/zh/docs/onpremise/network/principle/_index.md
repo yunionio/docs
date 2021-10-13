@@ -41,7 +41,7 @@ Default VPC代表的是一个区域内的经典网络（Underlay）。其他的V
 
 如图所示，宿主机1通过物理网口eth0和二层网络WIRE2对接，则该宿主机上分配经典网络的IP子网必须归属于WIRE2。这是物理网络拓扑施加的约束，无法逾越。同时，该宿主机上的虚拟机也可以接入VPC网络，则该宿主机可以接入其所在Region的任意VPC网阔，并且该宿主机上的虚拟机可以分配对应VPC里的任意IP子网的IP地址。
 
-<img src="./../network.png" alt="Example of Wire and Network" width="600">
+<img src="./network.png" alt="Example of Wire and Network" width="600">
 
 从模型设计上，VPC与二层网络是一对多的关系。具体来说，经典网络VPC可以对应多个二层网络，例如，经典网络中可以有管理网、业务网等二层网络的划分。对于普通VPC来说，通常一个可用区对应一个二层网络，这个二层网络更多是为了保持核经典网络在模型上的统一，因此在使用VPC时通常不将二层网络考虑在内。
 
