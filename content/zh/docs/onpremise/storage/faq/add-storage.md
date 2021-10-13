@@ -23,7 +23,7 @@ local_image_path:
 host服务重启后，稍等片刻，查看宿主机的存储列表，就能看到这个新的存储注册上来了。
 
 ```bash
-climc storage-list --host <HOST>
+climc storage-list --host <host_id>
 ```
 
 ## 如何删除本地存储？
@@ -40,13 +40,13 @@ climc disk-list --storage <storage_id> --scope system --system --pending-delete
 2. 解除存储和宿主机的关联关系：
 
 ```bash
-climc host-storage-detach <HOST> <STORAGE>
+climc host-storage-detach <host_id> <storage_id>
 ```
 
 3. 删除存储
 
 ```bash
-climc storage-delete <STORAGE>
+climc storage-delete <storage_id>
 ```
 
 4. 到宿主机，修改 /etc/yunion/host.conf，将该存储所在路径从 local_image_path 删除
