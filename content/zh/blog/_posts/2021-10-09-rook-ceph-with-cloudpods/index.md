@@ -1,5 +1,5 @@
 ---
-title: "Cloudpods + Rook + Ceph: 实现云原生的超融合私有云"
+title: "Cloudpods + Rook + Ceph: 轻松实现云原生的超融合私有云"
 date: 2021-10-09
 slug: rook-ceph-with-cloudpods
 ---
@@ -13,27 +13,30 @@ slug: rook-ceph-with-cloudpods
 - [Ceph](https://docs.ceph.com/): 是开源的分布式存储系统，主要功能包含 RBD 块存储以及 CephFS 分布式文件系统存储。
 
 Cloudpods 服务以容器化的方式运行在 Kubernetes 集群之上，按照 [部署文档/多节点安装](/zh/docs/quickstart/nodes/) 文档部署完 Cloudpods 之后，环境就有了一个完整的 Kubernetes 集群。
-但 Cloudpods 内置私有云虚拟机使用的是本地存储，本文主要介绍使用 Rook 在 Cloudpods Kubernetes 集群里面部署 Ceph 集群，然后把 Ceph 集群暴露出来对接 Cloudpods 的私有云虚拟机，实现一个云原生的超融合私有云。
+
+但 Cloudpods 内置私有云虚拟机使用的是本地存储，本文主要介绍使用 Rook 在 Cloudpods Kubernetes 集群里面的计算节点上部署 Ceph 集群，然后把 Rook 管理的 Ceph 集群暴露出来对接 Cloudpods 的私有云虚拟机。
+
+Cloudpods 内置私有云提供虚拟化功能， Rook 管理的 Ceph 提供分布式存储，并且这些服务都是容器化，基于 Kubernetes 运行的。Cloudpods 运行虚拟机的节点也叫计算节点，计算节点也是 Kubernetes 的 Node，只要计算节点上有独立的裸盘，就可以使用 Rook 把 Ceph 部署到计算节点上，把这些技术结合起来可以轻松实现一个云原生的超融合私有云。
 
 ## 环境准备
 
-- Cloudpods：v3.6 以上的版本
+- Cloudpods：v3.6 以上的多节点部署版本
+    - 3 台计算节点，有单独的裸盘给 Ceph 使用(同时作为存储节点使用)
 - Kubernetes：v1.15.9 版本(Cloudpods 默认的集群)
 - Rook: v1.7 版本
 - 操作系统：CentOS 7
 - 内核版本：3.10.0-1062.4.3.el7.yn20191203.x86_64
     - 如果使用 CephFS 建议的内核版本是 4.17 以上的版本，可以升级我们官方提供的 5.4 版本内核
-- 3 台机器作为存储节点，有单独的裸盘给 Ceph 使用
 
 其中 Ceph 相关的环境准备工作和限制可以参考 Rook 提供的文档：[https://rook.io/docs/rook/v1.7/pre-reqs.html](https://rook.io/docs/rook/v1.7/pre-reqs.html) 。
 
 ## 使用 Rook 部署 Ceph
 
-接下来介绍使用 Rook 在已有的 Kubernetes 集群上部署 Ceph 集群，首先我们需要把准备好的 3 个存储节点加入到 Kubernetes 集群。
+接下来介绍使用 Rook 在已有的 Cloudpods Kubernetes 集群上部署 Ceph 集群，这里有个前提是已经按照 [部署文档/多节点安装](/zh/docs/quickstart/nodes/) 文档，部署了一个多节点的 Cloudpods 集群。
 
-### 存储节点加入 Kubernetes 集群
+### 节点信息
 
-准备的3个存储节点为 storage-node-{0,1,2}，每个存储节点的磁盘信息为：
+假设已有的 3 个节点为 node-{0,1,2}，每个节点的磁盘信息如下，sd{b,c,d} 都是没有分区的裸盘，留给 Ceph 使用：
 
 ```bash
 $ lsblk
@@ -47,35 +50,45 @@ sdc      8:32   0   3.7T  0 disk
 sdd      8:48   0   3.7T  0 disk
 ```
 
-然后可以参考文档[添加K8s节点](https://www.cloudpods.org/zh/docs/setup/components/)把节点都添加到已有的 Kubernetes 集群中。
-
-添加完成后，使用 `kubectl get nodes` 可以看到对应的节点：
+使用 `kubectl get nodes` 可以看到已经在 Kubernetes 集群中的节点：
 
 ```bash
 $ kubectl get nodes
-kubectl get nodes
-NAME              STATUS   ROLES    AGE   VERSION
-cloudbox          Ready    master   34d   v1.15.9-beta.0
-storage-node-0    Ready    <none>   12d   v1.15.9-beta.0
-storage-node-1    Ready    <none>   11d   v1.15.9-beta.0
-storage-node-2    Ready    <none>   11d   v1.15.9-beta.0
+NAME      STATUS   ROLES    AGE   VERSION
+cloudbox  Ready    master   34d   v1.15.9-beta.0
+node-0    Ready    <none>   12d   v1.15.9-beta.0
+node-1    Ready    <none>   11d   v1.15.9-beta.0
+node-2    Ready    <none>   11d   v1.15.9-beta.0
 ```
 
 然后给对应的节点打上 role=storage-node 的标签：
 
 ```bash
 # 打标签
-$ kubectl label node storage-node-0 role=storage-node
-$ kubectl label node storage-node-1 role=storage-node
-$ kubectl label node storage-node-2 role=storage-node
+$ kubectl label node node-0 role=storage-node
+$ kubectl label node node-1 role=storage-node
+$ kubectl label node node-2 role=storage-node
 
-# 查看
+# 查看标签对应的节点
 $ kubectl get nodes -L role
-NAME               STATUS   ROLES    AGE   VERSION          ROLE
-cloudbox           Ready    master   34d   v1.15.9-beta.0
-storage-node-0     Ready    <none>   12d   v1.15.9-beta.0   storage-node
-storage-node-1     Ready    <none>   11d   v1.15.9-beta.0   storage-node
-storage-node-2     Ready    <none>   11d   v1.15.9-beta.0   storage-node
+NAME       STATUS   ROLES    AGE   VERSION          ROLE
+cloudbox   Ready    master   34d   v1.15.9-beta.0
+node-0     Ready    <none>   12d   v1.15.9-beta.0   storage-node
+node-1     Ready    <none>   11d   v1.15.9-beta.0   storage-node
+node-2     Ready    <none>   11d   v1.15.9-beta.0   storage-node
+```
+
+另外执行 `climc host-list` 命令(climc 是云平台的命令行工具)，也可以看到这 3 个节点作为 Cloudpods 的计算节点加入到了云平台:
+
+```bash
+$ climc host-list
++--------------------------------------+----------+-------------------+----------------+--------------+-----------------------------+---------+---------+-------------+----------+-----------+------------+------------+--------------+------------+
+|                  ID                  |   Name   |    Access_mac     |   Access_ip    |   Ipmi_Ip    |         Manager_URI         | Status  | enabled | host_status | mem_size | cpu_count | node_count |     sn     | storage_type | host_type  |
++--------------------------------------+----------+-------------------+----------------+--------------+-----------------------------+---------+---------+-------------+----------+-----------+------------+------------+--------------+------------+
+| 0d8023ad-ebf9-4a3c-8294-fd170f4ce5c6 | node-0   | 38:ea:a7:8d:94:78 | 172.16.254.127 | 172.16.254.2 | https://172.16.254.127:8885 | running | true    | online      | 128695   | 32        | 2          | 6CU3505M2G | rotate       | hypervisor |
+| c02470b3-9666-46f7-852e-9bda8074a72e | node-1   | ec:f4:bb:d7:c4:e0 | 172.16.254.124 | 172.16.254.5 | https://172.16.254.124:8885 | running | true    | online      | 96432    | 48        | 2          | 62CNF52    | rotate       | hypervisor |
+| 5811c2d9-2b45-47e4-8c08-a5d479d03009 | node-2   | d4:ae:52:7e:90:9c | 172.16.254.126 | 172.16.254.3 | https://172.16.254.126:8885 | running | true    | online      | 128723   | 24        | 2          | 8Q1PB3X    | rotate       | hypervisor |
++--------------------------------------+----------+-------------------+----------------+--------------+-----------------------------+---------+---------+-------------+----------+-----------+------------+------------+--------------+------------+
 ```
 
 ### 部署 Rook 组件
@@ -215,17 +228,17 @@ $ diff -u cluster.yaml cluster-env.yaml
 -    #   - name: "172.17.4.301"
 -    #     deviceFilter: "^sd."
 +    nodes:
-+      - name: "storage-node-0"
++      - name: "node-0"
 +        devices: # specific devices to use for storage can be specified for each node
 +          - name: "sdb"
 +          - name: "sdc"
 +          - name: "sdd"
-+      - name: "storage-node-1"
++      - name: "node-1"
 +        devices:
 +          - name: "sdb"
 +          - name: "sdc"
 +          - name: "sdd"
-+      - name: "storage-node-2"
++      - name: "node-2"
 +        devices:
 +          - name: "sdb"
 +          - name: "sdc"
@@ -316,16 +329,16 @@ key = AQBHTWFhFQzrORAALLIngo/OOTDdnUf4vNPRoA==
 
 # 查看 osd 状态，可以发现对应节点的设备都添加了进来
 [root@rook-ceph-tools-885579f55-qpnhh /]$ ceph osd status
-ID  HOST            USED  AVAIL  WR OPS  WR DATA  RD OPS  RD DATA  STATE
- 0  storage-node-0  6172k  3725G      0        0       0        0   exists,up
- 1  storage-node-1  7836k   279G      0        0       0        0   exists,up
- 2  storage-node-2  5596k   931G      0        0       0        0   exists,up
- 3  storage-node-0  6044k  3725G      0        0       0        0   exists,up
- 4  storage-node-1  5980k   279G      0        0       0        0   exists,up
- 5  storage-node-1  5980k   279G      0        0       0        0   exists,up
- 6  storage-node-2  6236k  3726G      0        0       0        0   exists,up
- 7  storage-node-0  7772k  3725G      0        0       0        0   exists,up
- 8  storage-node-2  7836k  3726G      0        0       0        0   exists,up
+ID  HOST    USED  AVAIL  WR OPS  WR DATA  RD OPS  RD DATA  STATE
+ 0  node-0  6172k  3725G      0        0       0        0   exists,up
+ 1  node-1  7836k   279G      0        0       0        0   exists,up
+ 2  node-2  5596k   931G      0        0       0        0   exists,up
+ 3  node-0  6044k  3725G      0        0       0        0   exists,up
+ 4  node-1  5980k   279G      0        0       0        0   exists,up
+ 5  node-1  5980k   279G      0        0       0        0   exists,up
+ 6  node-2  6236k  3726G      0        0       0        0   exists,up
+ 7  node-0  7772k  3725G      0        0       0        0   exists,up
+ 8  node-2  7836k  3726G      0        0       0        0   exists,up
 
 # 创建一个 cloudpods-test 的 pool 用于后面的虚拟机测试
 [root@rook-ceph-tools-885579f55-qpnhh /]$ ceph osd pool create cloudpods-test 64 64
@@ -371,6 +384,17 @@ pool 'cloudpods-test' created
 ![](./vm-running.png)
 
 可以发现虚拟机里面挂载了 /dev/sda(系统盘) 和 /dev/sdb(数据盘)，底层都为 ceph 的 RBD 块设备，因为 ceph 底层块设备用的机械盘，用 dd 简单测试速度在 99 MB/s ，符合预期。
+
+6. 然后使用平台的 climc 命令查看虚拟机所在的宿主机，发现虚拟机 ceph-test-vm 运行在 node-1 计算节点上，同时改节点也是 Ceph 集群的存储节点，实现了超融合的架构：
+
+```bash
+$ climc server-list --details --search ceph-test-vm
++--------------------------------------+--------------+--------+---------------+--------+---------+------------+-----------+------------+---------+
+|                  ID                  |     Name     |  Host  |     IPs       |  Disk  | Status  | vcpu_count | vmem_size | Hypervisor | os_type |
++--------------------------------------+--------------+--------+---------------+--------+---------+------------+-----------+------------+---------+
+| ffd8ec7c-1e2d-4427-89e0-81b6ce184185 | ceph-test-vm | node-1 | 172.16.254.252| 235520 | running | 2          | 2048      | kvm        | Linux   |
++--------------------------------------+--------------+--------+---------------+--------+---------+------------+-----------+------------+---------+
+```
 
 ## 其它操作
 
