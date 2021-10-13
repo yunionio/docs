@@ -181,12 +181,17 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     $ sudo chmod +x /etc/init.d/ssh-initkey
     ```
 
-    ```bash
-    $ sudo /usr/sbin/update-rc.d ssh-initkey defaults
-    ```
+    Ubuntu 20.04之前版本，请执行以下脚本启用脚本：
 
     ```bash
+    $ sudo /usr/sbin/update-rc.d ssh-initkey defaults
     $ sudo /usr/sbin/update-rc.d ssh-initkey enable
+    ```
+
+    Ubuntu 20.04版本以及之后版本，请执行以下脚本启用脚本：
+
+    ```bash
+    $ sudo /lib/systemd/systemd-sysv-install enable init-sshkey
     ```
 
 4. （Ubuntu 16.04以上版本设置）关闭网卡持久化功能，保证网卡名称为“eth0，eth1”形式。修改/etc/default/grub文件，在GRUB_CMDLINE_LINUX中添加"net.ifnames=0 biosdevname=0"参数。
@@ -231,7 +236,16 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
 | Windows Server 2012 R2 | 2k12R2 |
 | Windows Server 2016 | 2k16 |
 
-1. 在镜像市场的ISO页面导入Virtio驱动，并挂载到虚拟机上。
+1. 上传Virtio驱动ISO并挂载到虚拟机上。Virtio驱动可以从以下URL下载：
+
+    ```
+    https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md
+    ```
+
+如果使用的是企业版，则可以直接从镜像市场的ISO页面导入Virtio驱动。
+
+需要注意的是，如果是Windows Server 2008及以前版本的Windows，推荐使用版本[0.1.135](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.135-2/virtio-win-0.1.135.iso) 的virtio驱动。
+
 2. 在虚拟机中打开挂载的驱动文件夹，根据虚拟机的操作系统版本（如本例为Windows server 2016），在驱动文件夹页面的搜索框中搜索“2k16”，并将所有包含2k16的文件夹复制到虚拟机的其他文件夹中（如文档文件夹）。
 
    ![](../images/image/search2k16.png)
@@ -311,6 +325,25 @@ Windows虚拟机上的时间默认会与北京时间差8个小时，需要对系
 ```bash
 > sysprep /generalize /oobe /shutdown /unattend:unattend.xml
 ```
+
+*注意*：Windows 10 1803版本之后，存在sysprep失败的情况。一般来说，失败原因主要是如果系统安装了来自Windows store的软件，sysprep卸载来自Windows store的软件时报错。需要逐个手工卸载导致报错的软件包。每个软件包卸载的方法为：
+
+1) 每次sysprep报错后，可以查看报错日志：C:\Windows\System32\Sysprep\Panther\setupact.log 。日志有类似如下的报错信息：
+
+```
+2018-06-21 13:35:59, Error SYSPRP Package Microsoft.LanguageExperiencePackhu-hu_17134.2.4.0_neutral__8wekyb3d8bbwe was installed for a user, but not provisioned for all users. This package will not function properly in the sysprep image.
+```
+
+其中，Package后即为卸载失败的package名称，采用如下命令手工卸载该package：
+
+2) 手工卸载指定的package，其中<packagefullname>替换为第一步找到的package名称。
+
+```
+remove-appxpackage -allusers -package '<packagefullname>'
+```
+
+如此反复尝试执行sysprep，如果失败则执行以上1)和2)步骤删除package，直到sysprep执行成功。
+
 
 3. 至此虚拟机优化完成。
 

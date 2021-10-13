@@ -18,6 +18,6 @@ BMC网口是网络访问物理服务器BMC带外管理服务的网络接口，�
 
 庆幸的是，目前一些新型交换机已经为此场景设计了专门的命令，用来解决这个问题。例如，H3C的交换机就增加配置聚合管理VLAN和聚合管理端口的专用命令，如下图所示。
 
-<img src="./link-aggregation-management.png">
+<img src="../link-aggregation-management.png">
 
 具体请参见：https://www.h3c.com/cn/d_201903/1157320_30005_0.htm#_Toc4502224

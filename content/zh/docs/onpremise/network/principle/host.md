@@ -24,7 +24,7 @@ description: >
 
 当一个IP子网的VLAN ID不为1时，则虚拟机接入该IP子网的网络接口将自动加入该VLAN。其底层实现原理为，在把虚拟机的虚拟网络接口加入OVS网桥时，设置该接口的VLAN tag为指定tag。为了允许一台宿主机上的虚拟机能够加入不同的VLAN，需要将宿主机的物理网口设置为Trunk模式，以允许同一条物理链路上不同VLAN tag的报文能够同时通过。
 
-<img src="./vm_vlan_access.png" width="500">
+<img src="../vm_vlan_access.png" width="500">
 
 #### Host VLAN
 
@@ -32,7 +32,7 @@ description: >
 
 （1）为该网络接口设置一个VLAN tag为宿主机VLAN的别名网口(Alias Interface)，将宿主机的IP地址配置在该别名网口上，宿主机将使用该别名网口通信。
 
-<img src="./host_alias_vlan_nic.png" width="500">
+<img src="../host_alias_vlan_nic.png" width="500">
 
 以物理机的网口为em1，VLAN ID为100，em1的虚拟机网桥br0为例，以下为配置脚本：
 
@@ -51,7 +51,7 @@ ip link add link em1 name em1.100 type vlan id 100 && ip addr flush dev br0 && i
 3）宿主机对应网口为trunk模式。
 4）交换机在对应网口放行对应的VLAN tag。
 
-<img src="./brtrunk.png" width="500">
+<img src="../brtrunk.png" width="500">
 
 ## VPC网络
 
