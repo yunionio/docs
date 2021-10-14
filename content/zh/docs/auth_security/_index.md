@@ -4,7 +4,7 @@ date: 2019-07-19T20:51:23+08:00
 weight: 90
 edition: ee
 description: >
-  介绍{{<oem_name>}}平台认证服务的概念和工作原理
+  介绍var_oem_name平台认证服务的概念和工作原理
 ---
 
 适用版本：2.10.0及后续版本
