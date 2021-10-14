@@ -6,13 +6,14 @@ description: >
   介绍如何升级服务版本
 ---
 
-本文介绍从 v3.6.x 升级到 v3.7.x 的步骤以及注意事项。
+本文介绍从 v3.7.x 升级到 v3.8.x 的步骤以及注意事项。
 
-版本升级建议从相邻的版本升级，比如从 v3.2.x 升级到 v3.6.x 需要以下的步骤：
+版本升级建议从相邻的版本升级，比如从 v3.2.x 升级到 v3.7.x 需要以下的步骤：
 
 1. v3.2.x => v3.3.x
 2. v3.3.x => v3.4.x
-4. v3.4.x => v3.6.x
+3. v3.4.x => v3.6.x
+4. v3.6.x => v3.7.x
 
 直接跨多个版本升级可能会出现问题，建议参考以下的内容选择升级步骤:
 
@@ -20,12 +21,13 @@ description: >
 - [v3.2.x 升级到 v3.3.x](https://www.cloudpods.org/v3.3/docs/setup/upgrade)
 - [v3.3.x 升级到 v3.4.x](https://www.cloudpods.org/v3.4/docs/setup/upgrade)
 - [v3.4.x 升级到 v3.6.x](https://www.cloudpods.org/v3.6/zh/docs/setup/upgrade)
+- [v3.6.x 升级到 v3.7.x](https://www.cloudpods.org/v3.7/zh/docs/setup/upgrade)
 
 总体来说，升级的步骤如下:
 
 使用我们编写的 [ocboot](https://github.com/yunionio/ocboot) 工具进行升级，这个工具主要是调用 ansible 来升级集群里面的所有节点。
 
-1. 使用 git 拉取最新的 [ocboot](https://github.com/yunionio/ocboot) 代码，切换到 release/3.7 分支
+1. 使用 git 拉取最新的 [ocboot](https://github.com/yunionio/ocboot) 代码，切换到 release/3.8 分支
 2. 使用 [ocboot](https://github.com/yunionio/ocboot) 进行大版本升级
 
 ## 查看当前版本
@@ -33,9 +35,9 @@ description: >
 可以使用 kubectl 查看当前集群的版本
 
 ```bash
-# 使用 kubectl 获得当前集群的版本为 v3.6.10
+# 使用 kubectl 获得当前集群的版本为 v3.7.5
 $ kubectl -n onecloud get onecloudclusters default -o=jsonpath='{.spec.version}'
-v3.6.10
+v3.7.5
 ```
 
 ## 拉取 ocboot 工具
@@ -47,13 +49,13 @@ v3.6.10
 $ yum install -y ansible python-paramiko
 
 # 下载 ocboot 工具到本地
-$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.8 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
 ## 更新 ocboot 代码
 
 ```bash
-$ git checkout release/3.7
+$ git checkout release/3.8
 $ git pull
 ```
 
@@ -66,14 +68,14 @@ $ git pull
 
 如果没有设置免密码登录，请使用 *ssh-copy-id -i ~/.ssh/id_rsa.pub root@PRIMARY_MASTER_HOST* 命令把公钥下发到自己环境对应的节点。
 
-升级的版本号可以到 [CHANGELOG release/3.7 页面](../../160_changelog/release-3.7/) 查询。
+升级的版本号可以到 [CHANGELOG release/3.8 页面](../../160_changelog/release-3.8/) 查询。
 
 ```bash
-# 使用 ocboot 相关服务到 v3.7.7 版本
+# 使用 ocboot 相关服务到 v3.8.3 版本
 # 该步骤会因为拉取 docker 镜像等待较长时间，请耐心等待
 # PRIMARY_MASTER_HOST 是指部署集群的第一个节点的 ip 地址
 # 需要本机能够使用 ssh 密钥登录上去
-$ ./ocboot.py upgrade <PRIMARY_MASTER_HOST> v3.7.7
+$ ./ocboot.py upgrade <PRIMARY_MASTER_HOST> v3.8.3
 
 # 另外可以使用 `./ocboot.py upgrade --help` 查看其它可选参数
 # 比如:
