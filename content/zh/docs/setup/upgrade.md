@@ -68,7 +68,7 @@ $ git pull
 
 如果没有设置免密码登录，请使用 *ssh-copy-id -i ~/.ssh/id_rsa.pub root@PRIMARY_MASTER_HOST* 命令把公钥下发到自己环境对应的节点。
 
-升级的版本号可以到 [CHANGELOG release/3.8 页面](../../160_changelog/release-3.8/) 查询。
+升级的版本号可以到 [CHANGELOG release/3.8 页面](../../changelog/release-3.8/) 查询。
 
 ```bash
 # 使用 ocboot 相关服务到 v3.8.3 版本
