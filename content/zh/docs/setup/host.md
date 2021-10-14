@@ -57,7 +57,7 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 $ yum --disablerepo='*' --enablerepo='yunion*' install -y \
   epel-release libaio jq libusb lvm2 nc ntp yunion-fetcherfs fuse fuse-devel fuse-libs \
   oniguruma pciutils spice spice-protocol sysstat tcpdump usbredir \
-  yunion-qemu-2.12.1 yunion-executor \
+  yunion-qemu-2.12.1 yunion-executor yunion-ocadm \
   kernel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-devel-3.10.0-1062.4.3.el7.yn20191203 \
   kernel-headers-3.10.0-1062.4.3.el7.yn20191203 \
