@@ -257,13 +257,6 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     pnputil -i -a *.inf
     ```
 
-#### 设置系统时间
-
-Windows虚拟机上的时间默认会与北京时间差8个小时，需要对系统进行配置，将其显示为北京时间。
-
-1. 在运行栏中输入regedit，打开注册表。
-2. 在HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation下，鼠标右键新建DWORD(32-bit)，命名为RealTimeIsUniversal，值设置为1。
-
 #### 禁用快速启动
 
 （可选）若是Windows 10操作系统的虚拟机需要禁用快速启动。请参考[禁用方法](https://jingyan.baidu.com/article/ca00d56c7a40e6e99febcf4f.html)。
@@ -292,6 +285,15 @@ Windows虚拟机上的时间默认会与北京时间差8个小时，需要对系
     </settings>
     <settings pass="oobeSystem">
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+            <AutoLogon>
+                <Password>
+                    <Value>123@yunion</Value>
+                    <PlainText>true</PlainText> 
+                </Password>
+                <Username>Administrator</Username> 
+                <Enabled>true</Enabled> 
+                <LogonCount>5</LogonCount> 
+            </AutoLogon>
             <UserAccounts>
                 <AdministratorPassword>
                     <Value>123@yunion</Value>
@@ -343,6 +345,8 @@ remove-appxpackage -allusers -package '<packagefullname>'
 ```
 
 如此反复尝试执行sysprep，如果失败则执行以上1)和2)步骤删除package，直到sysprep执行成功。
+
+如果卸载软件后还无法执行sysprep，则请尝试修改unattend.xml，将 "PersistAllDeviceInstalls" 改为 "false"。
 
 
 3. 至此虚拟机优化完成。
