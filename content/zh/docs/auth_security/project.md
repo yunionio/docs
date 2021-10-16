@@ -90,7 +90,7 @@ project_editor | 是       | 项目操作员   | 一般给项目内管理员，�
 project_viwer  | 是       | 项目只读人员 | 一般给项目的普通成员，只能查看，无法操作，创建和删除资源
 domainadmin    | 是       | 域管理员     | 一般给域管理员分配
 domaineditor   | 是       | 域管理员     | 一般给域管理员分配
-domainviwer    | 是       | 域管理员     | 一般给域管理员分配
+domainviewer   | 是       | 域管理员     | 一般给域管理员分配
 
 ## 权限策略（Policies） 
 
@@ -148,7 +148,9 @@ policy:
 scope: project
 policy:
   compute:
-    '*': allow
+    get: allow
+    list: allow
+    '*': deny
 ```
 
 * 域内计算服务操作者（不能创建和删除资源）
