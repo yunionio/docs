@@ -368,7 +368,7 @@ $ ocadm reset --force
 
 ```bash
 # 安装rpm包
-$ yum --disablerepo='*' --enablerepo='yunion*' install -y \
+$ yum install -y \
   epel-release libaio jq libusb lvm2 nc ntp yunion-fetcherfs fuse fuse-devel fuse-libs \
   oniguruma pciutils spice spice-protocol sysstat tcpdump usbredir \
   yunion-qemu-2.12.1 yunion-executor \
