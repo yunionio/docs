@@ -54,7 +54,7 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 安装 rpm 包
 
 ```bash
-$ yum --disablerepo='*' --enablerepo='yunion*' install -y \
+$ yum install -y \
   epel-release libaio jq libusb lvm2 nc ntp yunion-fetcherfs fuse fuse-devel fuse-libs \
   oniguruma pciutils spice spice-protocol sysstat tcpdump usbredir \
   yunion-qemu-2.12.1 yunion-executor yunion-ocadm \
