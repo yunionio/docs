@@ -293,6 +293,8 @@ $ kubctl version
 # 源码安装 telepresence 到 /usr/local/bin/telepresence
 $ git clone https://github.com/telepresenceio/telepresence
 $ cd telepresence
+$ git checkout 0.109
+$ sed -i 's/https:\/\/github.com\/datawire\/sshuttle.git/git@github.com:datawire\/sshuttle.git/g' packaging/build-sshuttle.py
 $ sudo env PREFIX=/usr/local ./install.sh
 ```
 
