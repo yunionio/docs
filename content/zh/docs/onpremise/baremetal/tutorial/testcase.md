@@ -24,7 +24,7 @@ description: >
 
 物理服务器的网络接口（NIC）分为BMC NIC和服务器NIC，BMC NIC用于通过网络访问物理机的BMC控制功能，BMC NIC可以配置为和服务器NIC共享物理机接口，也可以配置为独立的网络接口。
 
-<img src="../baremetal_test.png" width="400">
+<img src="../baremetal_test.png" width="700">
  
 其中，交换机0为部署服务的节点接入的三层交换机，交换机1为待管理物理服务器的服务器NIC接入三层交换机，交换机2为待管理物理服务器的BMC NIC接入三层交换机。
 
