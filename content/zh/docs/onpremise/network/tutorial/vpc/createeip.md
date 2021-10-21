@@ -1,5 +1,5 @@
 ---
-title: "新建弹性公网IP"
+title: "EIP地址池"
 weight: 60
 description: >
   介绍如何新建弹性公网IP。
