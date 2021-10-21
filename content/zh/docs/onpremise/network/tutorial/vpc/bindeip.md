@@ -1,5 +1,5 @@
 ---
-title: "绑定/解绑弹性公网IP"
+title: "绑定/解绑EIP"
 weight: 70
 description: >
   介绍如何为VPC网络的虚拟机绑定或解绑弹性公网IP。
