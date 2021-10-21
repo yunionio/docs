@@ -1,5 +1,5 @@
 ---
-title: "弹性公网IP其他操作"
+title: "EIP其他操作"
 weight: 80
 description: >
   介绍弹性公网IP的常用操作。

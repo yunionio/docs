@@ -32,7 +32,7 @@ description: >
 
 物理机管理服务架构如下:
 
-![物理机管理架构](../images/baremetal-arch.png)
+![物理机管理架构](../../images/baremetal-arch.png)
 
 - Baremetal <-> DHCP Relay： 处理 PXE 网络启动
 - DHCP Relay <-> Baremetal Agent:
