@@ -26,7 +26,7 @@ description: >
 ```bash
 # 登录到已经部署好计算节点的服务器上修改 /etc/yunion/host.conf，添加 dhcp_relay 配置项：
 dhcp_relay:
-- 10.168.222.198 # baremetal agent dhcp服务监听地址
+- 10.168.222.150 # baremetal agent dhcp服务监听地址
 - 67             # baremetal agent dhcp服务监听端口
 # 然后重启host服务
 $ kubectl get pods -n onecloud -o wide | grep host
