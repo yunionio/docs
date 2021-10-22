@@ -1,6 +1,6 @@
 ---
 title: "部署EIP网关"
-weight: 59
+weight: 61
 description: >
   介绍如何部署弹性公网IP网关。
 ---
@@ -9,13 +9,25 @@ description: >
 
 系统部署后，默认不部署EIP网关。需要手工部署。本节介绍如何部署EIP网关。
 
+## EIP网关网络要求
+
+EIP网关是VPC网络和外部网络（underlay网络）的交换节点，因此在需要在underlay网络进行正确配置，确保源和目的地址为EIP地址池的流量能够通过EIP网关，这样才能起到EIP网关的作用。
+
+<img src="../eipgwnet.png" width="700">
+
+EIP网关的网络要求如下：
+
+1）EIP网关的IP或EIP在underlay网络中是EIP地址池IP的下一跳（Nexthop），也就是underlay网络中，目的地址为EIP地址池的流量都需要经过EIP网关
+
+2) EIP网关能够通过underlay网络访问所有的宿主机的sdn_encap_ip（默认为宿主机的管理IP）
+
 ## 在计算节点部署EIP网关
 
-EIP网关需要依赖ovn-controller, sdnagent等软件包，都已经在计算节点部署好了，因此在计算节点部署EIP网关，只需要配置即可，比较方便。
+EIP网关需要依赖ovn-controller, sdnagent等软件包，这些软件包都已经在计算节点部署好了，因此在计算节点部署EIP网关，在网络配置正确的前提下，可以比较容易实现EIP网关配置。
 
 ### 单节点EIP网关
 
-这是最简单的场景，只需要修改/etc/yunion/host.conf，将 sdn_enable_eip_man 设置为 true，重启该计算节点的 default-host pod，即可生效。
+这是最简单的场景，选择一台符合EIP网关网络要求的计算节点，修改该节点的 /etc/yunion/host.conf，将 sdn_enable_eip_man 设置为 true，重启该计算节点的 default-host pod，即可生效。
 
 ### 主备高可用EIP网关
 
@@ -51,9 +63,9 @@ ansible-playbook -i a-inventory playbook.yaml
 
 ## 在非计算节点部署EIP网关
 
-EIP网关也可部署到单独的宿主机、虚拟机中，只要满足EIP的流量可以路由到EIP网关的三层网络通信需求即可。
+EIP网关也可部署到非计算节点的单独的宿主机或者虚拟机中，只要满足EIP的网络要求即可。
 
-需要使用ISO中的.rpm安装包预先安装、配置好网关所需组件。以下对这部分进行描述
+需要使用ISO中的.rpm安装包预先安装、配置好网关所需组件。以下对这部分进行描述。
 
 以3.8为例，所需安装的包的名字和所在位置如下
 
@@ -90,6 +102,12 @@ systemctl enable --now ovn-controller
 
 部署结束后，应当可以看到至少一个名为brvpc的openvswitch网桥，ovs-vsctl show命令的输出中可以看到名为ovn-xx，类型为geneve的隧道port，remote-ip指向计算节点的ovn-encap-ip。
 
-部署完成后，用上述ansible脚本进行部署。
+以上ovs的配置，可以使用如下命令查看配置是否正确：
+
+```bash
+ovs-vsctl list Open_vSwitch
+```
+
+部署完成后，用上述部署两台计算节点的ansible脚本进行部署。
 
 样例inventory的hosts描述了两台主机用作主备高可用，如果无需高可用，可将其中的一个主机描述删除，仅部署一台。
