@@ -9,6 +9,46 @@ weight: 10
 - [获取云平台AccessKey]({{< relref "aksk" >}})
 - [AccessKey授权]({{< relref "aksk_grant" >}})
 
+## 注意事项
+
+如果纳管的私有云平台认证地址是域名时，还需要在控制节点上配置域名解析，否则会因为无法解析域名导致无法同步对应平台的资源。
+
+步骤如下：
+
+```bash
+# 修改coredns的configmap
+$ kubectl edit cm -n kube-system coredns
+   Corefile: |
+       .:53 {
+           errors
+           health
+           kubernetes cluster.local in-addr.arpa ip6.arpa {
+              pods insecure
+              upstream
+              fallthrough in-addr.arpa ip6.arpa
+              ttl 30
+           }
+           hosts {
+               192.168.1.2 domain
+               fallthrough
+           }
+           prometheus :9153
+           forward . /etc/resolv.conf
+           cache 30
+           loop
+           reload
+           loadbalance
+       }
+# 在“prometheus :9153”上方添加hosts相关信息，配置IP地址和域名。
+   hosts {
+               192.168.1.2 domain
+               fallthrough
+           }
+# 配置完成后，重启coredns
+$ kubectl rollout restart deployment -n kube-system coredns 
+```
+
+
 
 ## 控制台新建
 
