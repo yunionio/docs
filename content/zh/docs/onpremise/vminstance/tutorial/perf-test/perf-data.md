@@ -1,62 +1,13 @@
 ---
-title: "虚拟机性能测试"
+title: "虚拟机性能测试数据"
 date: 2019-07-19T17:38:36+08:00
-weight: 50
+weight: 100 
 description: >
-  测试内置私有云虚拟机的性能。
+  性能测试的详细数据
 ---
-
-## 测试环境
-
-操作系统: CentOS 7
-云平台版本: >= v3.7.7
-宿主机: Dell PowerEdge R730xd
-    - CPU: Intel(R) Xeon(R) CPU E5-2678 v3 @ 2.50GHz
-    - 内存: DDR4 2133 MHz 256GB (16GB x 16)
-    - 磁盘: 机械盘 20TB PERC H730P Mini (RAID 10)
-    - 网卡: 10000Mb/s
-
-## 安装测试软件
-
-测试工具:
-
-- UnixBench: 测试虚拟机CPU性能
-- mbw: 测试内存性能
-- fio: 测试 IO 性能
-- iperf3: 测试网络性能
-
-```bash
-# 安装 UnixBench
-$ yum install -y git gcc autoconf gcc-c++ time perl-Time-HiRes
-$ git clone https://github.com/kdlucas/byte-unixbench.git
-
-# 安装 mbw
-$ git clone https://github.com/raas/mbw.git && cd mbw
-$ make && ./mbw 512
-
-# 安装 iperf 和 fio
-$ yum  -y install iperf fio
-```
-
-## 性能测试
 
 ### CPU 测试
 
-结论:
-
-| 指标                       | 物理机         | 虚拟机         | 虚拟化开销（物理机-虚拟机/ 物理机） |
-|----------------------------|----------------|----------------|-------------------------------------|
-| Dhrystone                  | 34839728.4 lps | 33964545.0 lps | 2.5%                                |
-| Double-Precision Whetstone | 4368.3 MWIPS   | 4244.3 MWIPS   | 2.8%                                |
-| File Copy                  | 1825548.4 KBps | 1788048.3 KBps | 2.1%                                |
-
-
-测试命令:
-
-```bash
-$ cd byte-unixbench/UnixBench
-$ ./Run -c 1 whetstone-double dhry2reg fsdisk
-```
 输出结果:
 
 - 物理机:
@@ -100,12 +51,6 @@ System Call Overhead                         920352.7 lps   (10.0 s, 7 samples)
 ```
 
 ### 内存测试
-
-结论:
-
-| 指标       | 物理机         | 虚拟机         | 虚拟化开销（物理机-虚拟机/物理机） |
-|------------|----------------|----------------|------------------------------------|
-| MEMCPY AVG | 7578.348 MiB/s | 6254.520 MiB/s | 1.7%                               |
 
 输出结果：
 
@@ -195,91 +140,6 @@ AVG     Method: MCBLOCK Elapsed: 0.09411        MiB: 512.00000  Copy: 5440.575 M
 
 ### 本地存储IO测试
 
-#### 测试方法
-
-采用fio，分别用如下场景和命令测试：
-
-* 4KB随机读
-
-```bash
-fio --name=random-read --ioengine=posixaio --rw=randread --bs=4k --size=4g --numjobs=1 --iodepth=16 --runtime=60 --time_based --direct=1
-```
-
-* 4KB随机写
-
-```bash
-fio --name=random-write --ioengine=posixaio --rw=randwrite --bs=4k --size=4g --numjobs=1 --iodepth=16 --runtime=60 --time_based --direct=1 --end_fsync=1
-```
-
-* 4K顺序读
-
-```bash
-fio --name=random-read --ioengine=posixaio --rw=read --bs=4k --size=4g --numjobs=1 --iodepth=16 --runtime=60 --time_based --direct=1
-```
-
-* 4K顺序写
-
-```bash
-fio --name=random-write --ioengine=posixaio --rw=write --bs=4k --size=4g --numjobs=1 --iodepth=16 --runtime=60 --time_based --direct=1 --end_fsync=1
-```
-
-* 1MB顺序读
-
-```bash
-fio --name=seq-read --ioengine=posixaio --rw=read --bs=1m --size=16g --numjobs=1 --iodepth=1 --runtime=60 --time_based --direct=1
-```
-
-* 1MB顺序写
-
-```bash
-fio --name=seq-write --ioengine=posixaio --rw=write --bs=1m --size=16g --numjobs=1 --iodepth=1 --runtime=60 --time_based --direct=1 --end_fsync=1
-```
-
-#### 测试环境
-
-* 物理机
-
-    OS: CentOS Linux release 7.9.2009 (Core)
-    内核：3.10.0-1062.4.3.el7.yn20191203.x86_64
-    CPU: Intel(R) Xeon(R) CPU E5-2678 v3 @ 2.50GHz
-    内存：256G
-    RAID控制器：Broadcom / LSI MegaRAID SAS-3 3108
-    RAID Level: RAID10
-
-* Linxu 虚拟机
-
-    OS: CentOS Linux release 7.6.1810 (Core)
-    内核：3.10.0-957.12.1.el7.x86_64
-    配置：4核CPU4G内存30G系统盘100G数据盘
-
-* Windows 虚拟机
-
-    OS: Windows Server 2008 R2 Datacenter 6.1
-    配置：4核CPU4G内存40G系统盘100G数据盘
- 
-#### 测试结论
-
-| 场景           <td colspan=2> 4KB随机读 <td colspan=2> 4KB随机写 <td colspan=2> 4KB顺序读 <td colspan=2> 4KB顺序写 <td colspan=2> 1MB顺序读 <td colspan=2> 1MB顺序写 
-|                            | IOPS     | Throughput | IOPS   | Throughput | IOPS   | Throughput | IOPS   | Throughput | IOPS   | Throughput | IOPS   | Throughput |
-|----------------------------|----------|------------|--------|------------|--------|------------|--------|------------|--------|------------|--------|------------|
-| 物理机                     | 195      | 782KiB/s   | 7349   | 28.7MiB/s  | 22.1k  | 86.3MiB/s  | 24.5k  | 95.8MiB/s  | 1055   | 1056MiB/s  | 1117   | 1118MiB/s  |
-|                            | (100%)   | (100%)     | (100%) | (100%)     | (100%) | (100%)     | (100%) | (100%)     | (100%) | (100%)     | (100%) | (100%)     |
-| Linux 虚拟机               | 245      | 981KiB/s   | 6096   | 23.8MiB/s  | 9458   | 36.9MiB/s  | 6278   | 24.5MiB/s  | 979    | 980MiB/s   | 1058   | 1059MiB/s  |
-| (cache=none)               | (126%)   | (125%)     | (83%)  | (83%)      | (43%)  | (43%)      | (26%)  | (26%)      | (93%)  | (93%)      | (95%)  | (95%)      |
-| Linux 虚拟机               | 243      | 973KiB/s   | 7483   | 29.2MiB/s  | 11.5k  | 44.9MiB/s  | 7271   | 28.4MiB/s  | 958    | 959MiB/s   | 1052   | 1052MiB/s  |
-| (cache=none,queues=4)      | (125%)   | (124%)     | (102%) | (102%)     | (52%)  | (52%)      | (30%)  | (30%)      | (91%)  | (91%)      | (94%)  | (94%)      |
-| Linux 虚拟机               | 13.0k    | 54.5MiB/s  | 8360   | 32.7MiB/s  | 13.1k  | 51.3MiB/s  | 8976   | 35.1MiB/s  | 2550   | 2551MiB/s  | 1045   | 1046MiB/s  |
-| (cache=writeback)          | (6667%)  | (6969%)    | (114%) | (114%)     | (59%)  | (59%)      | (37%)  | (37%)      | (242%) | (242%)     | (94%)  | (94%)      |
-| Linux 虚拟机               | 28.7k    | 112MiB/s   | 12.2k  | 47.5MiB/s  | 29.6k  | 116MiB/s   | 11.2k  | 43.8MiB/s  | 2931   | 2932MiB/s  | 1220   | 1220MiB/s  |
-| (cache=writeback,queues=4) | (14718%) | (14322%)   | (166%) | (166%)     | (134%) | (134%)     | (46%)  | (46%)      | (278%) | (278%)     | (109%) | (109%)     |
-| Windows 虚拟机             | 2811     | 11.0MiB/s  | 6002   | 23.4MiB/s  | 11.8k  | 46.1MiB/s  | 4289   | 16.8MiB/s  | 1009   | 1009MiB/s  | 685    | 686MiB/s   |
-| (cache=none)               | (1441%)  | (1407%)    | (82%)  | (82%)      | (53%)  | (53%)      | (18%)  | (18%)      | (96%)  | (96%)      | (61%)  | (61%)      |
-| Windows 虚拟机             | 2794     | 10.9MiB/s  | 7448   | 29.1MiB/s  | 21.1k  | 82.6MiB/s  | 25.5k  | 99.7MiB/s  | 930    | 930MiB/s   | 1013   | 1014MiB/s  |
-| (cache=none,queues=4)      | (1432%)  | (1394%)    | (101%) | (101%)     | (95%)  | (96%)      | (104%) | (104%)     | (88%)  | (88%)      | (91%)  | (91%)      |
-| Windows 虚拟机             | 2483     | 9935KiB/s  | 7430   | 29.0MiB/s  | 10.9k  | 42.8MiB/s  | 13.6k  | 53.0MiB/s  | 1993   | 1994MiB/s  | 920    | 920MiB/s   |
-| (cache=writeback)          | (1273%)  | (1270%)    | (101%) | (101%)     | (49%)  | (50%)      | (56%)  | (55%)      | (189%) | (189%)     | (82%)  | (82%)      |
-| Windows 虚拟机             | 4520     | 17.7MiB/s  | 18.8k  | 73.6MiB/s  | 23.3k  | 90.8MiB/s  | 21.8k  | 85.1MiB/s  | 2628   | 2628MiB/s  | 1191   | 1192MiB/s  |
-| (cache=writeback,queues=4) | (2317%)  | (2263%)    | (2558%) | (2564%)   | (105%) | (105%)     | (89%)  | (89%)      | (249%) | (249%)     | (106%) | (106%)     |
 
 #### 测试数据
 
@@ -696,7 +556,7 @@ Disk stats (read/write):
   sdb: ios=0/190623, merge=0/1, ticks=0/134765, in_queue=133681, util=85.12%
 ```
 
-* Linux虚拟机（cache=none, multiqueue=2)
+* Linux虚拟机（cache=none,queues=4)
 
 ```bash
 
@@ -1117,7 +977,7 @@ Disk stats (read/write):
   sdb: ios=0/225300, merge=0/1, ticks=0/212470, in_queue=211023, util=90.99%
 ```
 
-* Linux虚拟机(cache=writeback, queues=4)
+* Linux虚拟机(cache=writeback,queues=4)
 
 ```bash
 
@@ -2184,49 +2044,828 @@ Run status group 0 (all jobs):
   WRITE: bw=1192MiB/s (1250MB/s), 1192MiB/s-1192MiB/s (1250MB/s-1250MB/s), io=83.1GiB (89.2GB), run=71391-71391msec
 ```
 
-### 网络测试
+### 共享存储（ceph）IO性能测试
 
-#### 测试条件
+#### 测试数据
 
-1) 默认情况下虚拟机有流量限制，需要在前端或者用命令行工具 `climc server-change-bandwidth` 把带宽改为 0 ，表示取消限速。
-
-2) 默认情况下，VPC虚拟机的EIP也有带宽限制（默认30Mbps），也需要在前端，或者用climc修改限制为0，表示取消限制。
-
-#### 测试方法:
+* Linux虚拟机 (cache=none)
 
 ```bash
-# 找一台机器运行 iperf server 模式，假设 ip 是 10.127.100.3
-$ iperf3 -s --bind 10.127.100.3
 
-# 在另外一台机器作为 iperf client 模式连接 server
-$ iperf3 -c 10.127.100.3 -t 30
+# 4KB随机读
+
+random-read: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+random-read: Laying out IO file (1 file / 4096MiB)
+Jobs: 1 (f=1): [r(1)][100.0%][r=4436KiB/s,w=0KiB/s][r=1109,w=0 IOPS][eta 00m:00s]
+random-read: (groupid=0, jobs=1): err= 0: pid=1531: Mon Nov  1 17:01:59 2021
+   read: IOPS=1054, BW=4217KiB/s (4318kB/s)(247MiB/60014msec)
+    slat (nsec): min=776, max=1030.1k, avg=4559.89, stdev=5863.28
+    clat (usec): min=9767, max=50045, avg=15115.37, stdev=1982.74
+     lat (usec): min=9772, max=50050, avg=15119.93, stdev=1982.80
+    clat percentiles (usec):
+     |  1.00th=[12387],  5.00th=[13042], 10.00th=[13435], 20.00th=[13829],
+     | 30.00th=[14222], 40.00th=[14484], 50.00th=[14877], 60.00th=[15270],
+     | 70.00th=[15533], 80.00th=[16057], 90.00th=[16909], 95.00th=[17695],
+     | 99.00th=[22676], 99.50th=[26608], 99.90th=[35914], 99.95th=[45876],
+     | 99.99th=[49546]
+   bw (  KiB/s): min= 3704, max= 4992, per=99.99%, avg=4215.57, stdev=267.66, samples=120
+   iops        : min=  926, max= 1248, avg=1053.83, stdev=66.90, samples=120
+  lat (msec)   : 10=0.01%, 20=98.72%, 50=1.27%, 100=0.01%
+  cpu          : usr=3.51%, sys=2.62%, ctx=31649, majf=0, minf=51
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.1%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=63264,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+   READ: bw=4217KiB/s (4318kB/s), 4217KiB/s-4217KiB/s (4318kB/s-4318kB/s), io=247MiB (259MB), run=60014-60014msec
+
+# 4KB随机写
+
+Disk stats (read/write):
+  sdc: ios=63169/7, merge=0/4, ticks=56012/16, in_queue=55977, util=93.37%
+random-write: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+random-write: Laying out IO file (1 file / 4096MiB)
+Jobs: 1 (f=1): [w(1)][100.0%][r=0KiB/s,w=1600KiB/s][r=0,w=400 IOPS][eta 00m:00s]
+random-write: (groupid=0, jobs=1): err= 0: pid=1549: Mon Nov  1 17:03:00 2021
+  write: IOPS=405, BW=1622KiB/s (1661kB/s)(95.2MiB/60080msec)
+    slat (nsec): min=911, max=792365, avg=5502.29, stdev=6526.82
+    clat (usec): min=27204, max=70981, avg=39357.70, stdev=2721.36
+     lat (usec): min=27213, max=70986, avg=39363.20, stdev=2721.26
+    clat percentiles (usec):
+     |  1.00th=[33817],  5.00th=[35390], 10.00th=[36439], 20.00th=[37487],
+     | 30.00th=[38011], 40.00th=[38536], 50.00th=[39584], 60.00th=[40109],
+     | 70.00th=[40633], 80.00th=[41157], 90.00th=[42206], 95.00th=[42730],
+     | 99.00th=[48497], 99.50th=[51643], 99.90th=[61080], 99.95th=[67634],
+     | 99.99th=[70779]
+   bw (  KiB/s): min= 1464, max= 1792, per=100.00%, avg=1623.00, stdev=65.87, samples=120
+   iops        : min=  366, max=  448, avg=405.75, stdev=16.47, samples=120
+  lat (msec)   : 50=99.13%, 100=0.87%
+  cpu          : usr=2.46%, sys=1.58%, ctx=12188, majf=0, minf=48
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.0%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,24364,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=1622KiB/s (1661kB/s), 1622KiB/s-1622KiB/s (1661kB/s-1661kB/s), io=95.2MiB (99.8MB), run=60080-60080msec
+
+# 4KB顺序读
+
+Disk stats (read/write):
+  sdc: ios=0/24416, merge=0/0, ticks=0/56250, in_queue=56214, util=92.79%
+random-read: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+Jobs: 1 (f=1): [R(1)][100.0%][r=7668KiB/s,w=0KiB/s][r=1917,w=0 IOPS][eta 00m:00s]
+random-read: (groupid=0, jobs=1): err= 0: pid=1554: Mon Nov  1 17:04:00 2021
+   read: IOPS=1864, BW=7456KiB/s (7635kB/s)(437MiB/60005msec)
+    slat (nsec): min=726, max=363502, avg=4053.32, stdev=2934.08
+    clat (usec): min=4751, max=44503, avg=8530.20, stdev=1396.47
+     lat (usec): min=4755, max=44507, avg=8534.26, stdev=1396.48
+    clat percentiles (usec):
+     |  1.00th=[ 5997],  5.00th=[ 6783], 10.00th=[ 7111], 20.00th=[ 7570],
+     | 30.00th=[ 7898], 40.00th=[ 8160], 50.00th=[ 8455], 60.00th=[ 8717],
+     | 70.00th=[ 8979], 80.00th=[ 9372], 90.00th=[10028], 95.00th=[10421],
+     | 99.00th=[11469], 99.50th=[11994], 99.90th=[22938], 99.95th=[25822],
+     | 99.99th=[43779]
+   bw (  KiB/s): min= 6312, max= 9232, per=99.99%, avg=7455.02, stdev=636.53, samples=120
+   iops        : min= 1578, max= 2308, avg=1863.73, stdev=159.15, samples=120
+  lat (msec)   : 10=90.16%, 20=9.68%, 50=0.16%
+  cpu          : usr=5.20%, sys=4.17%, ctx=55930, majf=0, minf=53
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.1%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=111856,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+   READ: bw=7456KiB/s (7635kB/s), 7456KiB/s-7456KiB/s (7635kB/s-7635kB/s), io=437MiB (458MB), run=60005-60005msec
+
+# 4KB顺序写
+
+Disk stats (read/write):
+  sdc: ios=111661/9, merge=0/236, ticks=54941/76, in_queue=54958, util=91.58%
+random-write: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+Jobs: 1 (f=1): [W(1)][100.0%][r=0KiB/s,w=2128KiB/s][r=0,w=532 IOPS][eta 00m:00s]
+random-write: (groupid=0, jobs=1): err= 0: pid=1558: Mon Nov  1 17:05:01 2021
+  write: IOPS=552, BW=2209KiB/s (2262kB/s)(130MiB/60023msec)
+    slat (nsec): min=929, max=151745, avg=5243.52, stdev=3891.39
+    clat (usec): min=13208, max=55880, avg=28901.03, stdev=4556.88
+     lat (usec): min=13209, max=55887, avg=28906.27, stdev=4556.96
+    clat percentiles (usec):
+     |  1.00th=[17695],  5.00th=[20841], 10.00th=[22938], 20.00th=[25560],
+     | 30.00th=[27132], 40.00th=[28181], 50.00th=[29230], 60.00th=[30016],
+     | 70.00th=[31065], 80.00th=[32375], 90.00th=[34341], 95.00th=[35914],
+     | 99.00th=[40109], 99.50th=[41681], 99.90th=[52691], 99.95th=[53740],
+     | 99.99th=[55837]
+   bw (  KiB/s): min= 1720, max= 2944, per=99.98%, avg=2208.57, stdev=224.65, samples=120
+   iops        : min=  430, max=  736, avg=552.08, stdev=56.16, samples=120
+  lat (msec)   : 20=3.88%, 50=95.93%, 100=0.19%
+  cpu          : usr=3.11%, sys=2.10%, ctx=16583, majf=0, minf=50
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.1%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,33152,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=2209KiB/s (2262kB/s), 2209KiB/s-2209KiB/s (2262kB/s-2262kB/s), io=130MiB (136MB), run=60023-60023msec
+
+# 1MB顺序读
+
+Disk stats (read/write):
+  sdc: ios=0/33156, merge=0/0, ticks=0/55067, in_queue=55003, util=91.55%
+seq-read: (g=0): rw=read, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=posixaio, iodepth=1
+fio-3.7
+Starting 1 process
+seq-read: Laying out IO file (1 file / 16384MiB)
+Jobs: 1 (f=1): [R(1)][100.0%][r=160MiB/s,w=0KiB/s][r=160,w=0 IOPS][eta 00m:00s]
+seq-read: (groupid=0, jobs=1): err= 0: pid=1693: Mon Nov  1 17:06:18 2021
+   read: IOPS=159, BW=159MiB/s (167MB/s)(9570MiB/60001msec)
+    slat (usec): min=5, max=397, avg=40.43, stdev=11.29
+    clat (usec): min=4992, max=20537, avg=6209.77, stdev=624.64
+     lat (usec): min=5028, max=20575, avg=6250.19, stdev=625.42
+    clat percentiles (usec):
+     |  1.00th=[ 5473],  5.00th=[ 5669], 10.00th=[ 5735], 20.00th=[ 5866],
+     | 30.00th=[ 5997], 40.00th=[ 6063], 50.00th=[ 6128], 60.00th=[ 6259],
+     | 70.00th=[ 6325], 80.00th=[ 6456], 90.00th=[ 6652], 95.00th=[ 6783],
+     | 99.00th=[ 7439], 99.50th=[ 8586], 99.90th=[15533], 99.95th=[17171],
+     | 99.99th=[20579]
+   bw (  KiB/s): min=151249, max=169984, per=99.97%, avg=163276.76, stdev=2878.69, samples=119
+   iops        : min=  147, max=  166, avg=159.39, stdev= 2.88, samples=119
+  lat (msec)   : 10=99.66%, 20=0.33%, 50=0.01%
+  cpu          : usr=1.39%, sys=1.97%, ctx=9572, majf=0, minf=50
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=9570,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=159MiB/s (167MB/s), 159MiB/s-159MiB/s (167MB/s-167MB/s), io=9570MiB (10.0GB), run=60001-60001msec
+
+# 1MB顺序写
+
+Disk stats (read/write):
+  sdc: ios=28650/4, merge=0/1, ticks=150516/10, in_queue=150027, util=93.26%
+seq-write: (g=0): rw=write, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=posixaio, iodepth=1
+fio-3.7
+Starting 1 process
+seq-write: Laying out IO file (1 file / 16384MiB)
+Jobs: 1 (f=1): [W(1)][100.0%][r=0KiB/s,w=162MiB/s][r=0,w=162 IOPS][eta 00m:00s]
+seq-write: (groupid=0, jobs=1): err= 0: pid=1698: Mon Nov  1 17:07:18 2021
+  write: IOPS=163, BW=164MiB/s (172MB/s)(9831MiB/60006msec)
+    slat (usec): min=25, max=357, avg=105.09, stdev=20.95
+    clat (usec): min=4693, max=19505, avg=5978.97, stdev=532.88
+     lat (usec): min=4764, max=19612, avg=6084.07, stdev=534.17
+    clat percentiles (usec):
+     |  1.00th=[ 5276],  5.00th=[ 5473], 10.00th=[ 5604], 20.00th=[ 5735],
+     | 30.00th=[ 5800], 40.00th=[ 5866], 50.00th=[ 5932], 60.00th=[ 5997],
+     | 70.00th=[ 6063], 80.00th=[ 6194], 90.00th=[ 6325], 95.00th=[ 6456],
+     | 99.00th=[ 6718], 99.50th=[ 6849], 99.90th=[14484], 99.95th=[17171],
+     | 99.99th=[19530]
+   bw (  KiB/s): min=159744, max=176128, per=99.99%, avg=167751.33, stdev=2470.41, samples=120
+   iops        : min=  156, max=  172, avg=163.79, stdev= 2.42, samples=120
+  lat (msec)   : 10=99.75%, 20=0.25%
+  cpu          : usr=2.90%, sys=1.67%, ctx=9836, majf=0, minf=47
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,9831,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=164MiB/s (172MB/s), 164MiB/s-164MiB/s (172MB/s-172MB/s), io=9831MiB (10.3GB), run=60006-60006msec
+
+Disk stats (read/write):
+  sdc: ios=0/29502, merge=0/1, ticks=0/162775, in_queue=162226, util=91.91%
 ```
 
-以上重复执行三次，取最好的一次。
+* Linux虚拟机(cache=none,queues=4)
+
+```bash
+
+# 4KB随机读
+
+random-read: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+random-read: Laying out IO file (1 file / 4096MiB)
+Jobs: 1 (f=1): [r(1)][100.0%][r=4715KiB/s,w=0KiB/s][r=1178,w=0 IOPS][eta 00m:00s]
+random-read: (groupid=0, jobs=1): err= 0: pid=1407: Mon Nov  1 15:58:54 2021
+   read: IOPS=1152, BW=4608KiB/s (4719kB/s)(270MiB/60010msec)
+    slat (nsec): min=794, max=439011, avg=4344.27, stdev=3510.29
+    clat (usec): min=10063, max=27656, avg=13827.04, stdev=1322.77
+     lat (usec): min=10067, max=27660, avg=13831.39, stdev=1322.78
+    clat percentiles (usec):
+     |  1.00th=[11731],  5.00th=[12256], 10.00th=[12518], 20.00th=[12911],
+     | 30.00th=[13173], 40.00th=[13435], 50.00th=[13698], 60.00th=[13960],
+     | 70.00th=[14222], 80.00th=[14484], 90.00th=[15139], 95.00th=[15795],
+     | 99.00th=[17695], 99.50th=[21103], 99.90th=[26870], 99.95th=[27132],
+     | 99.99th=[27395]
+   bw (  KiB/s): min= 4224, max= 5248, per=99.96%, avg=4606.38, stdev=190.03, samples=120
+   iops        : min= 1056, max= 1312, avg=1151.53, stdev=47.56, samples=120
+  lat (msec)   : 20=99.47%, 50=0.53%
+  cpu          : usr=3.70%, sys=2.58%, ctx=34579, majf=0, minf=51
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.1%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=69136,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+   READ: bw=4608KiB/s (4719kB/s), 4608KiB/s-4608KiB/s (4719kB/s-4719kB/s), io=270MiB (283MB), run=60010-60010msec
+
+# 4KB随机写
+
+Disk stats (read/write):
+  sdc: ios=69004/7, merge=0/4, ticks=56048/16, in_queue=56030, util=93.46%
+random-write: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+random-write: Laying out IO file (1 file / 4096MiB)
+Jobs: 1 (f=1): [w(1)][100.0%][r=0KiB/s,w=1856KiB/s][r=0,w=464 IOPS][eta 00m:00s]
+random-write: (groupid=0, jobs=1): err= 0: pid=1413: Mon Nov  1 15:59:54 2021
+  write: IOPS=441, BW=1767KiB/s (1810kB/s)(104MiB/60076msec)
+    slat (nsec): min=835, max=304849, avg=5458.22, stdev=4263.50
+    clat (usec): min=24800, max=73340, avg=36111.87, stdev=2760.31
+     lat (usec): min=24804, max=73346, avg=36117.33, stdev=2760.32
+    clat percentiles (usec):
+     |  1.00th=[30540],  5.00th=[32375], 10.00th=[33162], 20.00th=[33817],
+     | 30.00th=[34866], 40.00th=[35390], 50.00th=[35914], 60.00th=[36439],
+     | 70.00th=[36963], 80.00th=[38011], 90.00th=[39060], 95.00th=[40109],
+     | 99.00th=[43254], 99.50th=[47973], 99.90th=[55837], 99.95th=[72877],
+     | 99.99th=[72877]
+   bw (  KiB/s): min= 1536, max= 1920, per=100.00%, avg=1768.10, stdev=73.45, samples=120
+   iops        : min=  384, max=  480, avg=442.03, stdev=18.36, samples=120
+  lat (msec)   : 50=99.59%, 100=0.41%
+  cpu          : usr=2.52%, sys=1.59%, ctx=13273, majf=0, minf=48
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.1%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,26544,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=1767KiB/s (1810kB/s), 1767KiB/s-1767KiB/s (1810kB/s-1810kB/s), io=104MiB (109MB), run=60076-60076msec
+
+# 4KB顺序读
+
+Disk stats (read/write):
+  sdc: ios=0/26609, merge=0/0, ticks=0/56576, in_queue=56525, util=92.75%
+random-read: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+Jobs: 1 (f=1): [R(1)][100.0%][r=8392KiB/s,w=0KiB/s][r=2098,w=0 IOPS][eta 00m:00s]
+random-read: (groupid=0, jobs=1): err= 0: pid=1418: Mon Nov  1 16:00:55 2021
+   read: IOPS=2066, BW=8265KiB/s (8463kB/s)(484MiB/60006msec)
+    slat (nsec): min=744, max=457916, avg=4120.39, stdev=3331.87
+    clat (usec): min=3786, max=44373, avg=7688.63, stdev=1249.73
+     lat (usec): min=3787, max=44377, avg=7692.75, stdev=1249.79
+    clat percentiles (usec):
+     |  1.00th=[ 5276],  5.00th=[ 5997], 10.00th=[ 6390], 20.00th=[ 6783],
+     | 30.00th=[ 7111], 40.00th=[ 7439], 50.00th=[ 7635], 60.00th=[ 7898],
+     | 70.00th=[ 8160], 80.00th=[ 8455], 90.00th=[ 8979], 95.00th=[ 9372],
+     | 99.00th=[10552], 99.50th=[11731], 99.90th=[19268], 99.95th=[21103],
+     | 99.99th=[43779]
+   bw (  KiB/s): min= 7040, max=10728, per=99.99%, avg=8263.15, stdev=690.54, samples=120
+   iops        : min= 1760, max= 2682, avg=2065.74, stdev=172.65, samples=120
+  lat (msec)   : 4=0.03%, 10=98.19%, 20=1.71%, 50=0.08%
+  cpu          : usr=5.94%, sys=4.37%, ctx=61939, majf=0, minf=53
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.1%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=123984,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+   READ: bw=8265KiB/s (8463kB/s), 8265KiB/s-8265KiB/s (8463kB/s-8463kB/s), io=484MiB (508MB), run=60006-60006msec
+
+# 4KB顺序写
+
+Disk stats (read/write):
+  sdc: ios=123792/9, merge=0/253, ticks=54685/32, in_queue=54656, util=91.15%
+random-write: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+Jobs: 1 (f=1): [W(1)][2.9%][r=0KiB/s,w=0KiB/s][r=0,w=0 IOPS][eta 45m:41s]      
+random-write: (groupid=0, jobs=1): err= 0: pid=1423: Mon Nov  1 16:02:18 2021
+  write: IOPS=368, BW=1472KiB/s (1508kB/s)(119MiB/82766msec)
+    slat (nsec): min=1021, max=330640, avg=5245.94, stdev=4051.13
+    clat (msec): min=14, max=26580, avg=43.40, stdev=613.63
+     lat (msec): min=14, max=26580, avg=43.41, stdev=613.63
+    clat percentiles (msec):
+     |  1.00th=[   16],  5.00th=[   18], 10.00th=[   19], 20.00th=[   22],
+     | 30.00th=[   24], 40.00th=[   26], 50.00th=[   27], 60.00th=[   28],
+     | 70.00th=[   30], 80.00th=[   31], 90.00th=[   33], 95.00th=[   35],
+     | 99.00th=[   40], 99.50th=[   49], 99.90th=[ 3373], 99.95th=[17113],
+     | 99.99th=[17113]
+   bw (  KiB/s): min=  128, max= 3320, per=100.00%, avg=2276.17, stdev=591.39, samples=107
+   iops        : min=   32, max=  830, avg=569.01, stdev=147.84, samples=107
+  lat (msec)   : 20=14.82%, 50=84.71%, 100=0.05%, 500=0.21%, 750=0.05%
+  lat (msec)   : 1000=0.05%
+  cpu          : usr=1.76%, sys=1.30%, ctx=15236, majf=0, minf=51
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.1%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,30464,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=1472KiB/s (1508kB/s), 1472KiB/s-1472KiB/s (1508kB/s-1508kB/s), io=119MiB (125MB), run=82766-82766msec
+
+# 1MB顺序读
+
+Disk stats (read/write):
+  sdc: ios=0/30469, merge=0/0, ticks=0/93251, in_queue=93214, util=95.22%
+seq-read: (g=0): rw=read, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=posixaio, iodepth=1
+fio-3.7
+Starting 1 process
+seq-read: Laying out IO file (1 file / 16384MiB)
+Jobs: 1 (f=1): [R(1)][100.0%][r=171MiB/s,w=0KiB/s][r=171,w=0 IOPS][eta 00m:00s]
+seq-read: (groupid=0, jobs=1): err= 0: pid=1698: Mon Nov  1 16:03:41 2021
+   read: IOPS=168, BW=169MiB/s (177MB/s)(9.90GiB/60005msec)
+    slat (usec): min=4, max=248, avg=37.64, stdev=11.31
+    clat (usec): min=2070, max=24238, avg=5864.65, stdev=750.98
+     lat (usec): min=2151, max=24274, avg=5902.29, stdev=751.62
+    clat percentiles (usec):
+     |  1.00th=[ 3064],  5.00th=[ 5145], 10.00th=[ 5342], 20.00th=[ 5538],
+     | 30.00th=[ 5669], 40.00th=[ 5800], 50.00th=[ 5866], 60.00th=[ 5997],
+     | 70.00th=[ 6063], 80.00th=[ 6194], 90.00th=[ 6390], 95.00th=[ 6587],
+     | 99.00th=[ 7308], 99.50th=[ 8029], 99.90th=[14353], 99.95th=[16581],
+     | 99.99th=[18744]
+   bw (  KiB/s): min=161792, max=198656, per=99.98%, avg=172916.57, stdev=5682.61, samples=120
+   iops        : min=  158, max=  194, avg=168.79, stdev= 5.58, samples=120
+  lat (msec)   : 4=1.91%, 10=97.82%, 20=0.26%, 50=0.01%
+  cpu          : usr=1.28%, sys=1.96%, ctx=10138, majf=0, minf=51
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=10135,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=169MiB/s (177MB/s), 169MiB/s-169MiB/s (177MB/s-177MB/s), io=9.90GiB (10.6GB), run=60005-60005msec
+
+# 1MB顺序写
+
+Disk stats (read/write):
+  sdc: ios=30312/4, merge=0/1, ticks=140893/12, in_queue=140411, util=93.45%
+seq-write: (g=0): rw=write, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=posixaio, iodepth=1
+fio-3.7
+Starting 1 process
+seq-write: Laying out IO file (1 file / 16384MiB)
+Jobs: 1 (f=1): [W(1)][100.0%][r=0KiB/s,w=166MiB/s][r=0,w=166 IOPS][eta 00m:00s]
+seq-write: (groupid=0, jobs=1): err= 0: pid=1702: Mon Nov  1 16:04:41 2021
+  write: IOPS=168, BW=168MiB/s (176MB/s)(9.85GiB/60004msec)
+    slat (usec): min=30, max=433, avg=101.35, stdev=22.23
+    clat (usec): min=4575, max=18939, avg=5828.79, stdev=571.24
+     lat (usec): min=4661, max=19022, avg=5930.14, stdev=572.50
+    clat percentiles (usec):
+     |  1.00th=[ 5014],  5.00th=[ 5276], 10.00th=[ 5407], 20.00th=[ 5538],
+     | 30.00th=[ 5669], 40.00th=[ 5735], 50.00th=[ 5800], 60.00th=[ 5866],
+     | 70.00th=[ 5932], 80.00th=[ 6063], 90.00th=[ 6194], 95.00th=[ 6325],
+     | 99.00th=[ 6980], 99.50th=[ 8029], 99.90th=[14222], 99.95th=[16909],
+     | 99.99th=[18744]
+   bw (  KiB/s): min=165556, max=178176, per=100.00%, avg=172120.71, stdev=2727.46, samples=119
+   iops        : min=  161, max=  174, avg=168.03, stdev= 2.69, samples=119
+  lat (msec)   : 10=99.73%, 20=0.27%
+  cpu          : usr=2.78%, sys=1.62%, ctx=10088, majf=0, minf=47
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,10085,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=168MiB/s (176MB/s), 168MiB/s-168MiB/s (176MB/s-176MB/s), io=9.85GiB (10.6GB), run=60004-60004msec
+
+Disk stats (read/write):
+  sdc: ios=0/30264, merge=0/1, ticks=0/162607, in_queue=162158, util=91.96%
+```
+
+* Linux虚拟机(cache=writeback)
+
+```bash
+
+# 4KB随机读
+
+random-read: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+random-read: Laying out IO file (1 file / 4096MiB)
+Jobs: 1 (f=1): [r(1)][100.0%][r=4044KiB/s,w=0KiB/s][r=1011,w=0 IOPS][eta 00m:00s]
+random-read: (groupid=0, jobs=1): err= 0: pid=1412: Mon Nov  1 12:57:14 2021
+   read: IOPS=978, BW=3913KiB/s (4006kB/s)(229MiB/60016msec)
+    slat (nsec): min=752, max=581841, avg=4320.80, stdev=3787.00
+    clat (usec): min=10929, max=53119, avg=16296.60, stdev=1831.63
+     lat (usec): min=10933, max=53121, avg=16300.92, stdev=1831.63
+    clat percentiles (usec):
+     |  1.00th=[13435],  5.00th=[14353], 10.00th=[14746], 20.00th=[15139],
+     | 30.00th=[15533], 40.00th=[15795], 50.00th=[16057], 60.00th=[16319],
+     | 70.00th=[16712], 80.00th=[17171], 90.00th=[17957], 95.00th=[18744],
+     | 99.00th=[22938], 99.50th=[27132], 99.90th=[33424], 99.95th=[33817],
+     | 99.99th=[53216]
+   bw (  KiB/s): min= 3432, max= 4423, per=99.97%, avg=3910.99, stdev=146.62, samples=120
+   iops        : min=  858, max= 1105, avg=977.69, stdev=36.58, samples=120
+  lat (msec)   : 20=97.87%, 50=2.11%, 100=0.03%
+  cpu          : usr=3.29%, sys=2.44%, ctx=29349, majf=0, minf=51
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.1%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=58704,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+   READ: bw=3913KiB/s (4006kB/s), 3913KiB/s-3913KiB/s (4006kB/s-4006kB/s), io=229MiB (240MB), run=60016-60016msec
+
+# 4KB随机写
+
+Disk stats (read/write):
+  sdc: ios=58691/7, merge=0/4, ticks=56420/3, in_queue=56400, util=93.92%
+random-write: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+random-write: Laying out IO file (1 file / 4096MiB)
+Jobs: 1 (f=1): [w(1)][100.0%][r=0KiB/s,w=39.3MiB/s][r=0,w=10.1k IOPS][eta 00m:00s]
+random-write: (groupid=0, jobs=1): err= 0: pid=1416: Mon Nov  1 12:58:15 2021
+  write: IOPS=9425, BW=36.8MiB/s (38.6MB/s)(2219MiB/60257msec)
+    slat (nsec): min=747, max=613065, avg=1764.96, stdev=1296.73
+    clat (usec): min=115, max=60312, avg=1671.98, stdev=1573.22
+     lat (usec): min=133, max=60313, avg=1673.74, stdev=1573.24
+    clat percentiles (usec):
+     |  1.00th=[ 1123],  5.00th=[ 1172], 10.00th=[ 1205], 20.00th=[ 1254],
+     | 30.00th=[ 1303], 40.00th=[ 1450], 50.00th=[ 1549], 60.00th=[ 1614],
+     | 70.00th=[ 1696], 80.00th=[ 1811], 90.00th=[ 2040], 95.00th=[ 2343],
+     | 99.00th=[ 3392], 99.50th=[ 5014], 99.90th=[30802], 99.95th=[38011],
+     | 99.99th=[56361]
+   bw (  KiB/s): min=30032, max=44848, per=100.00%, avg=37854.69, stdev=2638.83, samples=120
+   iops        : min= 7508, max=11212, avg=9463.64, stdev=659.71, samples=120
+  lat (usec)   : 250=0.01%, 750=0.01%, 1000=0.01%
+  lat (msec)   : 2=88.69%, 4=10.60%, 10=0.40%, 20=0.12%, 50=0.17%
+  lat (msec)   : 100=0.01%
+  cpu          : usr=9.61%, sys=6.77%, ctx=279981, majf=0, minf=49
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=96.2%, 8=1.7%, 16=2.1%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,567952,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=36.8MiB/s (38.6MB/s), 36.8MiB/s-36.8MiB/s (38.6MB/s-38.6MB/s), io=2219MiB (2326MB), run=60257-60257msec
+
+# 4KB顺序读
+
+Disk stats (read/write):
+  sdc: ios=0/586493, merge=0/21, ticks=0/219865, in_queue=219751, util=85.11%
+random-read: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+Jobs: 1 (f=1): [R(1)][100.0%][r=6410KiB/s,w=0KiB/s][r=1602,w=0 IOPS][eta 00m:00s]
+random-read: (groupid=0, jobs=1): err= 0: pid=1422: Mon Nov  1 12:59:16 2021
+   read: IOPS=1623, BW=6494KiB/s (6649kB/s)(381MiB/60009msec)
+    slat (nsec): min=772, max=424289, avg=4095.25, stdev=3245.01
+    clat (usec): min=5375, max=43394, avg=9801.13, stdev=1741.75
+     lat (usec): min=5377, max=43399, avg=9805.23, stdev=1741.80
+    clat percentiles (usec):
+     |  1.00th=[ 6915],  5.00th=[ 7635], 10.00th=[ 8029], 20.00th=[ 8455],
+     | 30.00th=[ 8979], 40.00th=[ 9241], 50.00th=[ 9634], 60.00th=[10028],
+     | 70.00th=[10421], 80.00th=[10945], 90.00th=[11600], 95.00th=[12256],
+     | 99.00th=[14746], 99.50th=[16909], 99.90th=[23200], 99.95th=[28705],
+     | 99.99th=[42730]
+   bw (  KiB/s): min= 5160, max= 7736, per=99.99%, avg=6492.65, stdev=507.78, samples=120
+   iops        : min= 1290, max= 1934, avg=1623.12, stdev=126.96, samples=120
+  lat (msec)   : 10=59.76%, 20=39.96%, 50=0.28%
+  cpu          : usr=4.71%, sys=3.69%, ctx=48720, majf=0, minf=53
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.0%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=97418,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+   READ: bw=6494KiB/s (6649kB/s), 6494KiB/s-6494KiB/s (6649kB/s-6649kB/s), io=381MiB (399MB), run=60009-60009msec
+
+# 4KB顺序写
+
+Disk stats (read/write):
+  sdc: ios=97204/21, merge=0/2090, ticks=55284/88, in_queue=55314, util=92.16%
+random-write: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+Jobs: 1 (f=1): [W(1)][100.0%][r=0KiB/s,w=39.2MiB/s][r=0,w=10.0k IOPS][eta 00m:00s]
+random-write: (groupid=0, jobs=1): err= 0: pid=1426: Mon Nov  1 13:00:16 2021
+  write: IOPS=10.7k, BW=41.7MiB/s (43.8MB/s)(2507MiB/60060msec)
+    slat (nsec): min=744, max=1235.1k, avg=1527.84, stdev=1680.34
+    clat (usec): min=674, max=43657, avg=1478.62, stdev=442.29
+     lat (usec): min=676, max=43659, avg=1480.14, stdev=442.32
+    clat percentiles (usec):
+     |  1.00th=[ 1074],  5.00th=[ 1139], 10.00th=[ 1172], 20.00th=[ 1221],
+     | 30.00th=[ 1303], 40.00th=[ 1385], 50.00th=[ 1450], 60.00th=[ 1500],
+     | 70.00th=[ 1565], 80.00th=[ 1647], 90.00th=[ 1762], 95.00th=[ 1909],
+     | 99.00th=[ 2606], 99.50th=[ 2933], 99.90th=[ 4113], 99.95th=[ 5211],
+     | 99.99th=[11469]
+   bw (  KiB/s): min=38016, max=47032, per=100.00%, avg=42802.82, stdev=1577.02, samples=119
+   iops        : min= 9504, max=11758, avg=10700.68, stdev=394.24, samples=119
+  lat (usec)   : 750=0.01%, 1000=0.09%
+  lat (msec)   : 2=96.06%, 4=3.75%, 10=0.09%, 20=0.01%, 50=0.01%
+  cpu          : usr=8.99%, sys=6.64%, ctx=319186, majf=0, minf=52
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.7%, 8=2.1%, 16=2.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,641777,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=41.7MiB/s (43.8MB/s), 41.7MiB/s-41.7MiB/s (43.8MB/s-43.8MB/s), io=2507MiB (2629MB), run=60060-60060msec
+
+# 1MB顺序读
+
+Disk stats (read/write):
+  sdc: ios=0/641789, merge=0/0, ticks=0/50335, in_queue=50248, util=83.10%
+seq-read: (g=0): rw=read, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=posixaio, iodepth=1
+fio-3.7
+Starting 1 process
+seq-read: Laying out IO file (1 file / 16384MiB)
+Jobs: 1 (f=1): [R(1)][100.0%][r=172MiB/s,w=0KiB/s][r=172,w=0 IOPS][eta 00m:00s]
+seq-read: (groupid=0, jobs=1): err= 0: pid=1431: Mon Nov  1 13:01:34 2021
+   read: IOPS=149, BW=149MiB/s (156MB/s)(8952MiB/60003msec)
+    slat (usec): min=4, max=480, avg=36.74, stdev=12.35
+    clat (msec): min=3, max=2006, avg= 6.65, stdev=42.25
+     lat (msec): min=3, max=2006, avg= 6.68, stdev=42.25
+    clat percentiles (msec):
+     |  1.00th=[    5],  5.00th=[    5], 10.00th=[    5], 20.00th=[    5],
+     | 30.00th=[    6], 40.00th=[    6], 50.00th=[    6], 60.00th=[    6],
+     | 70.00th=[    7], 80.00th=[    7], 90.00th=[    7], 95.00th=[    7],
+     | 99.00th=[    9], 99.50th=[   12], 99.90th=[   16], 99.95th=[   19],
+     | 99.99th=[ 2005]
+   bw (  KiB/s): min= 2048, max=186368, per=100.00%, avg=169651.27, stdev=29789.32, samples=108
+   iops        : min=    2, max=  182, avg=165.51, stdev=29.08, samples=108
+  lat (msec)   : 4=0.80%, 10=98.57%, 20=0.58%
+  cpu          : usr=1.07%, sys=1.72%, ctx=8956, majf=0, minf=51
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=8952,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=149MiB/s (156MB/s), 149MiB/s-149MiB/s (156MB/s-156MB/s), io=8952MiB (9387MB), run=60003-60003msec
+
+# 1MB顺序写
+
+Disk stats (read/write):
+  sdc: ios=26854/6, merge=0/2, ticks=138547/6, in_queue=138084, util=94.31%
+seq-write: (g=0): rw=write, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=posixaio, iodepth=1
+fio-3.7
+Starting 1 process
+seq-write: Laying out IO file (1 file / 16384MiB)
+Jobs: 1 (f=1): [W(1)][100.0%][r=0KiB/s,w=478MiB/s][r=0,w=478 IOPS][eta 00m:00s]
+seq-write: (groupid=0, jobs=1): err= 0: pid=1449: Mon Nov  1 13:02:35 2021
+  write: IOPS=474, BW=474MiB/s (497MB/s)(27.8GiB/60038msec)
+    slat (usec): min=18, max=472, avg=77.45, stdev=20.60
+    clat (usec): min=482, max=25324, avg=2016.70, stdev=3079.65
+     lat (usec): min=517, max=25398, avg=2094.15, stdev=3077.88
+    clat percentiles (usec):
+     |  1.00th=[  635],  5.00th=[  693], 10.00th=[  725], 20.00th=[  766],
+     | 30.00th=[  791], 40.00th=[  816], 50.00th=[  840], 60.00th=[  873],
+     | 70.00th=[  914], 80.00th=[ 1057], 90.00th=[ 5866], 95.00th=[10028],
+     | 99.00th=[14484], 99.50th=[16188], 99.90th=[20055], 99.95th=[21103],
+     | 99.99th=[23200]
+   bw (  KiB/s): min=438272, max=507904, per=100.00%, avg=485662.79, stdev=12253.35, samples=120
+   iops        : min=  428, max=  496, avg=474.27, stdev=11.97, samples=120
+  lat (usec)   : 500=0.01%, 750=15.96%, 1000=62.64%
+  lat (msec)   : 2=4.01%, 4=3.84%, 10=8.56%, 20=4.87%, 50=0.10%
+  cpu          : usr=5.04%, sys=2.55%, ctx=28502, majf=0, minf=48
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,28464,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=474MiB/s (497MB/s), 474MiB/s-474MiB/s (497MB/s-497MB/s), io=27.8GiB (29.8GB), run=60038-60038msec
+
+Disk stats (read/write):
+  sdc: ios=0/85401, merge=0/1, ticks=0/151025, in_queue=150169, util=85.69%
+```
+
+```bash
+
+#4KB随机读
+
+random-read: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+random-read: Laying out IO file (1 file / 4096MiB)
+Jobs: 1 (f=1): [r(1)][100.0%][r=4288KiB/s,w=0KiB/s][r=1072,w=0 IOPS][eta 00m:00s]
+random-read: (groupid=0, jobs=1): err= 0: pid=1411: Mon Nov  1 13:12:42 2021
+   read: IOPS=1071, BW=4284KiB/s (4387kB/s)(251MiB/60009msec)
+    slat (nsec): min=826, max=318013, avg=4466.50, stdev=3194.04
+    clat (usec): min=9835, max=32483, avg=14876.69, stdev=1454.66
+     lat (usec): min=9838, max=32487, avg=14881.15, stdev=1454.67
+    clat percentiles (usec):
+     |  1.00th=[12518],  5.00th=[13173], 10.00th=[13566], 20.00th=[13960],
+     | 30.00th=[14222], 40.00th=[14484], 50.00th=[14746], 60.00th=[15008],
+     | 70.00th=[15270], 80.00th=[15664], 90.00th=[16188], 95.00th=[16909],
+     | 99.00th=[19006], 99.50th=[24511], 99.90th=[28443], 99.95th=[29754],
+     | 99.99th=[31851]
+   bw (  KiB/s): min= 3968, max= 4864, per=99.97%, avg=4282.57, stdev=169.14, samples=120
+   iops        : min=  992, max= 1216, avg=1070.58, stdev=42.28, samples=120
+  lat (msec)   : 10=0.01%, 20=99.30%, 50=0.69%
+  cpu          : usr=3.46%, sys=2.56%, ctx=32128, majf=0, minf=51
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.1%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=64272,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+   READ: bw=4284KiB/s (4387kB/s), 4284KiB/s-4284KiB/s (4387kB/s-4387kB/s), io=251MiB (263MB), run=60009-60009msec
+
+# 4KB随机写
+
+Disk stats (read/write):
+  sdc: ios=64228/7, merge=0/5, ticks=56562/11, in_queue=56535, util=94.21%
+random-write: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+random-write: Laying out IO file (1 file / 4096MiB)
+Jobs: 1 (f=1): [w(1)][100.0%][r=0KiB/s,w=47.5MiB/s][r=0,w=12.2k IOPS][eta 00m:00s]
+random-write: (groupid=0, jobs=1): err= 0: pid=1415: Mon Nov  1 13:13:42 2021
+  write: IOPS=12.6k, BW=49.3MiB/s (51.7MB/s)(2969MiB/60163msec)
+    slat (nsec): min=718, max=1177.9k, avg=1558.39, stdev=1588.82
+    clat (usec): min=286, max=56193, avg=1246.86, stdev=1371.70
+     lat (usec): min=288, max=56194, avg=1248.42, stdev=1371.72
+    clat percentiles (usec):
+     |  1.00th=[  734],  5.00th=[  783], 10.00th=[  807], 20.00th=[  848],
+     | 30.00th=[  906], 40.00th=[ 1004], 50.00th=[ 1090], 60.00th=[ 1156],
+     | 70.00th=[ 1237], 80.00th=[ 1418], 90.00th=[ 1729], 95.00th=[ 2114],
+     | 99.00th=[ 2868], 99.50th=[ 4015], 99.90th=[24249], 99.95th=[33817],
+     | 99.99th=[46400]
+   bw (  KiB/s): min=43000, max=58944, per=100.00%, avg=50652.78, stdev=3182.35, samples=120
+   iops        : min=10750, max=14736, avg=12663.15, stdev=795.57, samples=120
+  lat (usec)   : 500=0.01%, 750=1.81%, 1000=38.10%
+  lat (msec)   : 2=53.77%, 4=5.81%, 10=0.26%, 20=0.10%, 50=0.14%
+  lat (msec)   : 100=0.01%
+  cpu          : usr=10.89%, sys=7.73%, ctx=361847, majf=0, minf=49
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=49.9%, 16=50.1%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=96.2%, 8=2.2%, 16=1.6%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,760012,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=49.3MiB/s (51.7MB/s), 49.3MiB/s-49.3MiB/s (51.7MB/s-51.7MB/s), io=2969MiB (3113MB), run=60163-60163msec
+
+# 4KB顺序读
+
+Disk stats (read/write):
+  sdc: ios=0/789401, merge=0/19, ticks=0/298587, in_queue=298419, util=84.25%
+random-read: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+Jobs: 1 (f=1): [R(1)][100.0%][r=7051KiB/s,w=0KiB/s][r=1762,w=0 IOPS][eta 00m:00s]
+random-read: (groupid=0, jobs=1): err= 0: pid=1422: Mon Nov  1 13:14:43 2021
+   read: IOPS=1711, BW=6848KiB/s (7012kB/s)(401MiB/60010msec)
+    slat (nsec): min=743, max=319538, avg=4090.56, stdev=2958.29
+    clat (usec): min=5427, max=41575, avg=9291.36, stdev=1699.89
+     lat (usec): min=5431, max=41581, avg=9295.45, stdev=1699.93
+    clat percentiles (usec):
+     |  1.00th=[ 6652],  5.00th=[ 7439], 10.00th=[ 7767], 20.00th=[ 8160],
+     | 30.00th=[ 8455], 40.00th=[ 8848], 50.00th=[ 9110], 60.00th=[ 9372],
+     | 70.00th=[ 9765], 80.00th=[10159], 90.00th=[10814], 95.00th=[11469],
+     | 99.00th=[14222], 99.50th=[18220], 99.90th=[26084], 99.95th=[28705],
+     | 99.99th=[41681]
+   bw (  KiB/s): min= 5760, max= 7824, per=100.00%, avg=6847.47, stdev=466.18, samples=120
+   iops        : min= 1440, max= 1956, avg=1711.83, stdev=116.53, samples=120
+  lat (msec)   : 10=76.19%, 20=23.45%, 50=0.36%
+  cpu          : usr=5.05%, sys=3.72%, ctx=51374, majf=0, minf=53
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=0.0%, 16=4.2%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=102734,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+   READ: bw=6848KiB/s (7012kB/s), 6848KiB/s-6848KiB/s (7012kB/s-7012kB/s), io=401MiB (421MB), run=60010-60010msec
+
+# 4KB顺序写
+
+Disk stats (read/write):
+  sdc: ios=102525/127, merge=0/1855, ticks=55303/651, in_queue=55902, util=92.20%
+random-write: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=16
+fio-3.7
+Starting 1 process
+Jobs: 1 (f=1): [W(1)][100.0%][r=0KiB/s,w=59.4MiB/s][r=0,w=15.2k IOPS][eta 00m:00s]
+random-write: (groupid=0, jobs=1): err= 0: pid=1427: Mon Nov  1 13:15:44 2021
+  write: IOPS=15.1k, BW=59.1MiB/s (62.0MB/s)(3552MiB/60044msec)
+    slat (nsec): min=718, max=575107, avg=1440.13, stdev=949.88
+    clat (usec): min=187, max=41588, avg=1040.16, stdev=506.15
+     lat (usec): min=191, max=41589, avg=1041.60, stdev=506.16
+    clat percentiles (usec):
+     |  1.00th=[  644],  5.00th=[  709], 10.00th=[  742], 20.00th=[  783],
+     | 30.00th=[  816], 40.00th=[  873], 50.00th=[ 1012], 60.00th=[ 1090],
+     | 70.00th=[ 1172], 80.00th=[ 1254], 90.00th=[ 1369], 95.00th=[ 1450],
+     | 99.00th=[ 1942], 99.50th=[ 2114], 99.90th=[ 3687], 99.95th=[ 6390],
+     | 99.99th=[28443]
+   bw (  KiB/s): min=52064, max=71257, per=100.00%, avg=60605.82, stdev=3661.06, samples=120
+   iops        : min=13016, max=17814, avg=15151.44, stdev=915.26, samples=120
+  lat (usec)   : 250=0.01%, 500=0.01%, 750=12.18%, 1000=36.57%
+  lat (msec)   : 2=50.44%, 4=0.70%, 10=0.07%, 20=0.01%, 50=0.01%
+  cpu          : usr=11.10%, sys=8.37%, ctx=432283, majf=0, minf=52
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=50.0%, 16=50.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=95.8%, 8=1.6%, 16=2.6%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,909196,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=59.1MiB/s (62.0MB/s), 59.1MiB/s-59.1MiB/s (62.0MB/s-62.0MB/s), io=3552MiB (3724MB), run=60044-60044msec
+
+# 1MB顺序读
+
+Disk stats (read/write):
+  sdc: ios=0/909211, merge=0/0, ticks=0/47331, in_queue=47190, util=78.00%
+seq-read: (g=0): rw=read, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=posixaio, iodepth=1
+fio-3.7
+Starting 1 process
+seq-read: Laying out IO file (1 file / 16384MiB)
+Jobs: 1 (f=1): [R(1)][100.0%][r=172MiB/s,w=0KiB/s][r=172,w=0 IOPS][eta 00m:00s]
+seq-read: (groupid=0, jobs=1): err= 0: pid=1431: Mon Nov  1 13:17:02 2021
+   read: IOPS=161, BW=161MiB/s (169MB/s)(9668MiB/60006msec)
+    slat (usec): min=3, max=476, avg=36.76, stdev=13.91
+    clat (msec): min=3, max=2004, avg= 6.15, stdev=28.76
+     lat (msec): min=3, max=2004, avg= 6.19, stdev=28.76
+    clat percentiles (msec):
+     |  1.00th=[    5],  5.00th=[    5], 10.00th=[    5], 20.00th=[    6],
+     | 30.00th=[    6], 40.00th=[    6], 50.00th=[    6], 60.00th=[    6],
+     | 70.00th=[    7], 80.00th=[    7], 90.00th=[    7], 95.00th=[    7],
+     | 99.00th=[    8], 99.50th=[   10], 99.90th=[   16], 99.95th=[   18],
+     | 99.99th=[ 2005]
+   bw (  KiB/s): min=20480, max=186368, per=100.00%, avg=173629.19, stdev=19275.58, samples=114
+   iops        : min=   20, max=  182, avg=169.49, stdev=18.81, samples=114
+  lat (msec)   : 4=0.57%, 10=98.94%, 20=0.47%
+  cpu          : usr=1.21%, sys=1.80%, ctx=9675, majf=0, minf=51
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=9668,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=161MiB/s (169MB/s), 161MiB/s-161MiB/s (169MB/s-169MB/s), io=9668MiB (10.1GB), run=60006-60006msec
+
+# 1MB顺序写
+
+Disk stats (read/write):
+  sdc: ios=28972/5, merge=0/3, ticks=144884/7, in_queue=144375, util=93.66%
+seq-write: (g=0): rw=write, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=posixaio, iodepth=1
+fio-3.7
+Starting 1 process
+seq-write: Laying out IO file (1 file / 16384MiB)
+Jobs: 1 (f=1): [W(1)][100.0%][r=0KiB/s,w=475MiB/s][r=0,w=475 IOPS][eta 00m:00s]
+seq-write: (groupid=0, jobs=1): err= 0: pid=1435: Mon Nov  1 13:18:02 2021
+  write: IOPS=475, BW=475MiB/s (498MB/s)(27.9GiB/60035msec)
+    slat (usec): min=21, max=466, avg=86.43, stdev=21.91
+    clat (usec): min=504, max=33838, avg=2002.40, stdev=2933.35
+     lat (usec): min=549, max=33915, avg=2088.83, stdev=2931.69
+    clat percentiles (usec):
+     |  1.00th=[  693],  5.00th=[  758], 10.00th=[  791], 20.00th=[  832],
+     | 30.00th=[  857], 40.00th=[  881], 50.00th=[  906], 60.00th=[  930],
+     | 70.00th=[  971], 80.00th=[ 1057], 90.00th=[ 5538], 95.00th=[ 9503],
+     | 99.00th=[13698], 99.50th=[15926], 99.90th=[19792], 99.95th=[21103],
+     | 99.99th=[23725]
+   bw (  KiB/s): min=454656, max=518144, per=100.00%, avg=486784.61, stdev=12450.43, samples=119
+   iops        : min=  444, max=  506, avg=475.37, stdev=12.16, samples=119
+  lat (usec)   : 750=4.25%, 1000=70.86%
+  lat (msec)   : 2=7.98%, 4=3.72%, 10=8.85%, 20=4.27%, 50=0.09%
+  cpu          : usr=5.70%, sys=2.63%, ctx=28533, majf=0, minf=48
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,28520,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=475MiB/s (498MB/s), 475MiB/s-475MiB/s (498MB/s-498MB/s), io=27.9GiB (29.9GB), run=60035-60035msec
+
+Disk stats (read/write):
+  sdc: ios=0/85569, merge=0/1, ticks=0/150421, in_queue=149476, util=85.20%
+```
+
+### 网络测试
 
 #### 经典网络性能测试
-
-##### 环境
-
-1、宿主机配置：
-
-    OS: CentOS Linux release 7.9.2009 (Core)
-    内核：3.10.0-1062.4.3.el7.yn20191203.x86_64
-    CPU: Intel(R) Xeon(R) CPU E5-2678 v3 @ 2.50GHz
-    内存：256GB
-
-2、虚拟机配置：
-
-    OS: CentOS Linux release 7.6.1810 (Core)
-    内核：3.10.0-957.12.1.el7.x86_64
-    配置：2核CPU 2G内存 30G系统盘
-
-##### 结论
-
-| 源 \ 目的 | 物理机           | 虚拟机            |
-|-----------|------------------|-------------------|
-| 物理机    | 8.35 Gbps (100%) | 8.40 Gbps (101%)  |
-| 虚拟机    | 8.41 Gbps (101%) | 8.33 Gbps (99.7%) |
 
 ##### 测试数据
 
@@ -2403,27 +3042,6 @@ Connecting to host 10.127.100.4, port 5201
 ```
 
 #### VPC网络性能测试
-
-##### 测试环境
-
-1、宿主机配置：
-
-    OS: CentOS Linux release 7.7.1908 (Core)
-    内核：5.4.130-1.yn20210710.el7.x86_64
-    CPU: Intel(R) Xeon(R) Gold 5218R CPU @ 2.10GHz
-    内存：256GB
-
-2、虚拟机配置：
-
-    OS: CentOS Linux release 7.8.2003
-    内核：3.10.0-1127.el7.x86_64
-    配置：2核CPU 2G内存 30G系统盘
-
-##### 结论
-
-| 场景        | 物理机到物理机 | 虚拟机到虚拟机 | 虚拟机EIP到虚拟机EIP |
-|-------------|----------------|----------------|----------------------|
-| 性能 (Gbps) | 9.19 (100%)    | 8.96 (97%)     | 5.83 (63%)           |
 
 ##### 测试数据
 
