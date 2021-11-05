@@ -12,13 +12,13 @@ description: >
 
 物理机设置要求如下：
 
-1) 物理机的启动方式推荐采用legacy（BIOS）方式，UEFI方式不推荐。只有在必须采用UEFI时才选用UEFI。经测试，不支持Dell PowerEdge系列服务器的UEFI启动。
+1) 物理机的启动方式推荐采用legacy（BIOS）方式，UEFI方式不推荐。只有在必须采用UEFI时才选用UEFI。
 
 2) 物理机的默认启动方式为网络PXE启动，硬盘启动为第二顺位的启动介质
 
-3) 需要允许物理机网卡的PXE启动（BIOS开启）
+3) 需要允许物理机网卡的PXE启动（BIOS开启IPMI-over-LAN）
 
-4) 需要允许网络访问物理机的BMC（BIOS开启）
+4) 需要允许网络访问物理机的BMC（BIOS开启网卡PXE）
 
 ### 1.2 测试网络设置
 
@@ -43,6 +43,14 @@ description: >
 为了允许物理机能够网络PXE启动，需要设置交换机1的dhcp_relay为bareemetal_agent所在节点IP地址的UDP 67端口。
 
 如果采用“预注册”方式注册物理机，则也需要设置交换机2的dhcp_relay为baremetal_agent所在节点IP地址的UDP 67端口。
+
+在最简网络模式下，依旧是上文所说的服务和待管理物理机在同一个IP子网的网络配置下，如果不方便开启三层交换机的dhcp_relay，则可以借用{{<oem_name>}}的Host服务，开启其dhcp_relay功能，作为测试IP子网的dhcp relay服务器。具体开启方法为：修改该Host服务所在宿主机的配置文件 /etc/yunion/host.conf，增加 dhcp_relay 的配置项，内容为baremetal_agent部署节点IP的UDP 67端口。配置好后，记得重启该host服务。
+
+```yaml
+dhcp_relay:
+- 192.168.222.101
+- 67
+```
 
 ### 1.5 物理机硬件信息要求
 
