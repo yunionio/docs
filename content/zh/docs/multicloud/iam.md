@@ -81,7 +81,7 @@ description: >
 
 {{% /tab %}}
 
-{{% tab name="Aws" %}}
+{{% tab name="AWS" %}}
 | 功能                                              | 只读权限                                          | 可读可写权限                                 |
 | :----------                                       | :--------                                         | :----------                                  |
 | 所有功能总和                                      | ReadOnlyAccess                                    | AdministratorAccess                          |

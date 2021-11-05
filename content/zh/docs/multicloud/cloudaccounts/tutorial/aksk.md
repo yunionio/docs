@@ -1,15 +1,17 @@
 ---
 title: "获取云平台AccessKey"
 date: 2021-06-11T08:22:33+08:00
-weight: 200
+weight: 210
 ---
+
+## 获取云平台AccessKey
 
 {{< tabs >}}
 {{% tab name="阿里云" %}}
 
-##### 主账号获取AccessKey
+### 主账号获取AccessKey
 
-1. 使用主账号登录阿里云控制台，单击页面右上角个人信息，展开下拉菜单，单击 **_"accesskeys** "_** 菜单项进入安全信息管理页面。
+1. 使用主账号登录阿里云控制台，单击页面右上角个人信息，展开下拉菜单，单击 **_"Accesskeys"_** 菜单项进入安全信息管理页面。
    ![](../../images/aliyun-accesskeys1.png)
 
 2. 在安全信息管理页面，可以查看已存在的AccessKey信息，也可以单击 **_"创建AccessKey"_** 按钮新建用户AccessKey，新建AccessKey时阿里云会向账号联系人手机发送验证码，验证通过后才可以创建AccessKey。
@@ -18,7 +20,7 @@ weight: 200
 3. Access Key Secret默认不显示，单击"**显示** "链接，阿里云将向账号所属的联系人手机发送一个验证码，验证通过后，才会显示Access Key Secret。
    ![](../../images/aliyun-get_access_key_secret.png)
 
-##### RAM子账号如何获取Access Key
+### RAM子账号如何获取Access Key
 
 1. 使用子账号登录阿里云控制台，单击页面右上角个人信息，展开下拉菜单，单击 "**accesskey...**" 进入安全信息管理页面。
    ![](../../images/aliyun_ram_get_access_key.png)
@@ -37,12 +39,13 @@ weight: 200
 {{% /tab %}}
 
 
-{{% tab name="Aws" %}}
+{{% tab name="AWS" %}}
 
 {{% alert title="注意" color="warning" %}}
 私有访问密钥仅创建时可见，请复制另存，如果不慎丢失，重新创建即可。
 {{% /alert %}}
 
+### 主账号获取AccessKey
 
 1. 使用AWS主账号（或拥有Administrator Access管理权限的子账号）登录AWS管理控制台，单击 **_"IAM"_** 菜单项，进入IAM控制面板页面。
    ![](../../images/faq_account_aws_1.png) 
@@ -55,6 +58,55 @@ weight: 200
 
 4. 单击 **_"创建访问密钥"_** 按钮，在弹出的创建访问密钥对话框中即可看到密钥信息，即密钥ID（Access Key ID）、密码（Access Key Secret）。
    ![](../../images/faq_account_aws_4.png)
+
+### 如何纳管AWS Organizations组织账户?
+
+1. 配置AWS Organizations：使用AWS组织账号关联AWS账户，支持创建新的AWS账户和邀请现有的AWS账户；被邀请的AWS账户上需要存在“OrganizationAccountAccessRole”角色。
+2. 获取访问密钥：在AWS组织账号上的管理账号的IAM用户创建访问密钥，建议使用具有AdministratorAccess权限的用户。
+
+#### 配置AWS Organizations
+
+1. 使用AWS主账号（或拥有AdministratorAccess管理权限的子账号）登录AWS管理控制台，单击右上角[用户名]的下拉菜单 **_"我的账单控制面板"_** 菜单项，进入账单和成本管理控制面板页面。
+
+    ![](../../images/awsbilling.png)
+
+2. 单击右侧 **_"整合账单"_** 菜单项，进入AWS Organizations页面。
+
+    ![](../../images/awsorgmenu.png)
+
+3. 在AWS Organizations - AWS 账户页面，添加AWS账户，目前支持两种将AWS账号添加到Organization的方式。
+    - 创建AWS账户：设置AWS账户名、账户拥有者的电子邮件地址以及IAM角色名称（OrganizationAccountAccessRole），单击 **_"创建AWS账户"_** 按钮，创建AWS账户。
+        
+        ![](../../images/awscreateorgaccount.png)
+    - 邀请现有AWS账户：设置要邀请的AWS账户的电子邮件地址或账户ID，单击 **_"发送邀请"_** 按钮，等待账户拥有者接收请求，加入Organizations，此外还需要现有的AWS账号存在OrganizationAccountAccessRole的角色，请参考下面步骤配置OrganizationAccountAccessRole的角色。
+        
+        ![](../../images/awsorginviteaccount.png)
+
+#### 获取访问密钥
+
+1. 在AWS Organizations的管理账户上获取访问密钥，建议使用具有AdministratorAccess权限的IAM用户，创建访问密钥。
+2. 获取访问密钥的具体步骤
+
+#### 如何在AWS账户中添加OrganizationAccountAccessRole的角色?
+
+1. 使用AWS主账号（或拥有AdministratorAccess管理权限的子账号）登录AWS管理控制台，单击 **_"IAM"_** 菜单项，进入IAM控制面板页面。
+2. 单击右侧 **_"角色"_** 菜单项，在角色页面，单击 **_"创建角色"_** 按钮，进入创建角色页面。
+
+    ![](../../images/awscreaterole.png)
+
+3. 选择受信任实体的类型为“其他AWS账户”,并填入管理AWS组织的账号ID，单击 **_"下一步：权限"_** 按钮。
+    
+    ![](../../images/awsroleconfig.png)
+
+4. Attach 权限策略选择“AdministratorAccess”，单击 **_"下一步：标签"_** 按钮。
+    
+    ![](../../images/awsroleconfigpolicy.png)
+
+5. 请根据需求配置标签，配置完成后，单击 **_"下一步：审核"_** 按钮。
+6. 配置角色名称为“OrganizationAccountAccessRole”，单击 **_"创建角色"_** 按钮。
+
+    ![](../../images/awsroleconfigconfirm.png)
+
 
 {{% /tab %}}
 
@@ -85,6 +137,8 @@ weight: 200
 
 {{% tab name="华为云" %}}
 
+### 获取访问密钥
+
 **新版**
 
 1. 登录华为云控制台，鼠标悬停在右上角用户名处，选择下拉菜单 **_"我的凭证"_** 菜单项，进入我的凭证页面。
@@ -112,6 +166,8 @@ weight: 200
 
 {{% tab name="腾讯云" %}}
 
+### 获取访问密钥
+
 1. 登录腾讯云控制台，单击右上角 **_"云产品"_** 菜单项，在展开的菜单中搜索 **_"云API密钥"_** 菜单项，单击进入API密钥管理页面。
    ![](../../images/faq_account_qcloud_1.png)
 
@@ -121,6 +177,8 @@ weight: 200
 {{% /tab %}}
 
 {{% tab name="UCloud" %}}
+
+### 获取访问密钥
 
 1. 登录 UCloud 控制台，单击顶部 **_"全部产品"_** ，搜索或选择 **_"开放API UAPI"_** 菜单项 ，进入 API 产品页面；
     
@@ -143,6 +201,8 @@ weight: 200
 
 
 {{% tab name="Google云" %}}
+
+### 获取访问密钥
 
 **纳管指定项目**
 
@@ -200,7 +260,7 @@ weight: 200
 
 3. 重复上面的步骤，纳管更多项目。
 
-##### 启用相关API
+### 启用相关API
 
 {{% alert title="说明" %}}
 谷歌云的API具有项目属性，当需要纳管谷歌云上多个项目时，需要分别在每个项目中启用相关API。
@@ -220,6 +280,29 @@ weight: 200
 
 1. 在API库的[Cloud SQL Admin API](https://console.developers.google.com/apis/library/sqladmin.googleapis.com)页面中启用Cloud SQL Admin API。可通过顶部切换授权项目。
    ![](../../images/cloudsqladminapi.png)
+
+{{% /tab %}}
+
+{{% tab name="天翼云 " %}}
+
+### 获取访问密钥
+
+1. {{<oem_name>}}平台部署完成后，需要记录所在服务器的出口公网IP。
+
+```
+# 联系网管或通过工具获取
+$ curl 'https://api.ipify.org?format=json'
+{"ip":"8.210.190.83"}
+
+```
+2. 联系天翼云技术支持，将此公网IP加入到天翼云白名单中。
+3. 联系天翼云技术支持，获取api 访问所需的AccessKey。
+
+{{% alert title="注意" color="warning" %}}
+
+{{% /alert %}}
+- 自行从天翼云web控制台生成的AccessKey，有可能无法正常使用。请联系天翼云技术支持获取AccessKey。
+- 只支持天翼云线下账号。由于天翼云省公司CRM线上账号权限限制，VPC列表始终返回空，因此无法完成网络同步。
 
 {{% /tab %}}
 
@@ -253,7 +336,7 @@ weight: 200
 5. 在弹出的下拉菜单中，选择 **_"获取AccessKey"_** 。
 6. 在弹出的对话框中，查看组织Accesskey信息。
 
-##### 飞天云获取Endpoint
+### 飞天云获取Endpoint
 
 1. 在地址栏中，输入ASO的访问地址region-id.aso.intranet-domain-id.com，按回车键。
 2. 输入正确的用户名及密码，单击 **_"登录"_** ，进入ASO页面。
@@ -266,7 +349,7 @@ weight: 200
 
 {{% /tab %}}
 
-{{% tab name="" %}}
-{{% /tab %}}
 
 {{< /tabs >}}
+
+
