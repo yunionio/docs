@@ -15,6 +15,6 @@ weight: 20
 | 京东云   | N       | N    | Y        | N    | N        | N          | Y        | N        | N    | N            |  Y       |
 | 微软云   | N       | N    | Y        | N    | N        | N          | Y        | N        | -    | -            |  Y       |
 | Google云 | Y       | Y    | Y        | Y    | Y        | Y          | Y        | Y        | -    | -            |  Y       |
-| Aws      | N       | N    | Y        | N    | N        | N          | Y        | N        | -    | -            |  Y       |
+| AWS      | N       | N    | Y        | N    | N        | N          | Y        | N        | -    | -            |  Y       |
 | Apsara   | N       | N    | Y        | Y    | N        | N          | Y        | N        | -    | -            |  Y       |
 

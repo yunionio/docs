@@ -43,7 +43,7 @@ weight: 200
 
 {{% /tab %}}
 
-{{% tab name="Aws" %}}
+{{% tab name="AWS" %}}
 - Failed to create specification c6g.medium.Unsupported: The requested configuration is currently not supported. Please check the documentation for supported configurations
     - 当前账号不支持c6g.medium套餐，未找到原因，其他账号可能支持
     - 目前出现这个错误只能去更换套餐
