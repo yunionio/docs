@@ -18,7 +18,7 @@ description: >
 | 华为云(Huawei)        | Y     |
 | 微软云(Azure)         | Y     |
 | 谷歌云(Google)        | Y     |
-| Aws(Aws)              | Y     |
+| AWS(AWS)              | Y     |
 | 优刻得(Ucloud)        | N     |
 | 天翼云(Ctyun)         | N     |
 | 移动云(Ecloud)        | N     |
