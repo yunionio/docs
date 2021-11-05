@@ -8,7 +8,7 @@ description: >
 
 本章节介绍Cloudpods API的调用方法。
 
-[详细的API内容请参考API](../swagger)。
+[详细的API内容请参考API](../../swagger)。
 
 ## 请求方法
 
