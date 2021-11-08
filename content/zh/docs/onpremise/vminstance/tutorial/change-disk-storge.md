@@ -119,7 +119,9 @@ $ climc disk-show vdisk-tvm-wz-1636104909252150575 | grep storage
 
 ## Ceph RBD 磁盘迁移到另一个 Ceph 存储
 
-**注意**：目前 Ceph 迁移到另一个 Ceph 存储要求两边的版本相同，依赖的 rbd 动态库一致才行，不然会失败。
+### 两个 Ceph 集群接口兼容
+
+**注意**：这种方法适用于源 Ceph 和目标 Ceph 集群兼容的情况，依赖的 rbd 动态库一致才行，不然会失败。
 
 假设环境中有另外一个叫做 wz_rbd 的 Ceph 存储，下面命令测试创建一台虚拟机到 h3c_blockpool1 Ceph 存储，然后把磁盘迁移到一个名为 wz_rbd 的 Ceph 存储。
 
@@ -173,6 +175,18 @@ $ climc server-stop tvm
 # 执行下面的 server-change-disk-storage 命令把 tvm 虚拟机的 vdisk-tvm-1636100820075603665 磁盘迁移到 wz_rbd 存储
 $ climc server-change-disk-storage tvm vdisk-tvm-1636100820075603665 wz_rbd
 ```
+
+### 两个 Ceph 集群不兼容
+
+如果两个 Ceph 集群不兼容，比如一边用的开源 Ceph 集群，另外一边用的是商业 Ceph 集群，两套集群的动态库不一致就无法把两个 Ceph 存储挂载到平台的一台宿主机上。
+
+遇到这种情况可以采取一个利用 NFS 存储作为中转的变通解决方案，假设 host1 计算节点挂载了 Ceph1，上面有台虚拟机 vm 使用了 Ceph1，要把 vm 迁移到 host2 的 Ceph2 集群里面，步骤如下：
+
+1. 自己搭建一个 NFS 服务，在云平台前端创建 NFS 存储
+2. 然后在平台前端把这个 NFS 存储分别挂载到 host1 和 host2
+3. 把 host1 上的 vm 调用 server-change-disk-storage 把 Ceph1 里面的磁盘迁移到 NFS 存储
+4. 然后调用 server-migrate 命令或者去前段进行迁移操作，把 vm 迁移到 host2
+5. 最后再调用 server-change-disk-storage 把 host2 上的 vm 磁盘迁移到 Ceph2
 
 ## 其他注意事项
 
