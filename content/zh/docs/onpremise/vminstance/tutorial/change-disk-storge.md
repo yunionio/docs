@@ -188,6 +188,66 @@ $ climc server-change-disk-storage tvm vdisk-tvm-1636100820075603665 wz_rbd
 4. 然后调用 server-migrate 命令或者去前段进行迁移操作，把 vm 迁移到 host2
 5. 最后再调用 server-change-disk-storage 把 host2 上的 vm 磁盘迁移到 Ceph2
 
+接下来是操作的命令行步骤：
+
+```bash
+# 假设 NFS 服务器的地址为 172.16.254.124
+# 共享的目录为 /opt/nfs_data
+# 在平台创建对应的 nfs-store 存储
+$ climc storage-create --storage-type nfs \
+    --capacity 1024000 \ # 容量根据实际情况填写
+    --nfs-host 172.16.254.124 \
+    --nfs-shared-dir '/opt/nfs_data' \
+    nfs-store zone0
+
+# 然后把 nfs-store 挂载到 host1 和 host2 的 /opt/nfs_share 目录
+# 需要登录 host1 和 host2 创建 /opt/nfs_share 目录
+[root@host1] $ mkdir -p /opt/nfs_share
+[root@host2] $ mkdir -p /opt/nfs_share
+
+# 在平台挂载 nfs-store 到 host1 和 host2 
+$ climc host-storage-attach --mount-point /opt/nfs_share host1 nfs-store
+$ climc host-storage-attach --mount-point /opt/nfs_share host2 nfs-store
+
+# 把 host1 上的 vm 磁盘改为 nfs-store
+$ climc server-disk-list --server vm --details
++-------+--------------------------------------+-------------------------------+-----------+--------+------------+-------+--------+-----------+--------------+
+| Guest |               Disk_ID                |             Disk              | Disk_size | Driver | Cache_mode | Index | Status | Disk_type | Storage_type |
++-------+--------------------------------------+-------------------------------+-----------+--------+------------+-------+--------+-----------+--------------+
+| vm| 65ca88b1-186f-440a-8930-b4914e62cb3d | vdisk-vm-wz-1636100820075603665 | 30720     | scsi   | none       | 0     | ready  | sys       | rbd       |
++-------+--------------------------------------+-------------------------------+-----------+--------+------------+-------+--------+-----------+--------------+
+
+# 执行下面的 server-change-disk-storage 命令把 vm 虚拟机的磁盘迁移到 nfs-store
+$ climc server-change-disk-storage vm vdisk-vm-wz-1636100820075603665 nfs-store
+
+# 等待虚拟机 vm 状态变为 ready 后
+# 再把虚拟机迁移到 host2
+$ climc server-migrate --prefer-host host2 vm
+
+# 然后再调用 server-change-disk-storage 把 vm 虚拟机磁盘迁移到 ceph2 存储
+# 找到现在磁盘为 vdisk-vm-1636100820075603665，发现类型 Storage_type 为 nfs
+$ climc server-disk-list --server vm --details
++-------+--------------------------------------+-------------------------------+-----------+--------+------------+-------+--------+-----------+--------------+
+| Guest |               Disk_ID                |             Disk              | Disk_size | Driver | Cache_mode | Index | Status | Disk_type | Storage_type |
++-------+--------------------------------------+-------------------------------+-----------+--------+------------+-------+--------+-----------+--------------+
+| vm| 65ca88b1-186f-440a-8930-b4914e62cb3d | vdisk-vm-1636100820075603665 | 30720     | scsi   | none       | 0     | ready  | sys       | nfs       |
++-------+--------------------------------------+-------------------------------+-----------+--------+------------+-------+--------+-----------+--------------+
+
+# 查看宿主机 host2 上挂载的存储
+# 发现有 nfs-store 和 ceph2
+$ climc host-storage-list --host host2 --details
++----------------------------------+----------------------------+-----------+
+|             Storage              |        Mount_point         | Capacity  |
++----------------------------------+----------------------------+-----------+
+| ceph2                           | rbd:rbd                    | 241018691 | 
+| nfs                   | /opt/nfs_share           | 1024000 | 122880      | 
+| host_10.1.180.13_local_storage_0 | /opt/cloud/workspace/disks | 681664    |
++----------------------------------+----------------------------+-----------++
+
+# 把虚拟机 vm 磁盘迁移到 ceph2
+$ climc server-change-disk-storage vm vdisk-vm-1636100820075603665 ceph2
+```
+
 ## 其他注意事项
 
 - 更改存储的旧磁盘会删除到回收站，会占用实际的物理空间，如果确定这些旧的磁盘不使用了，可以在回收站里面清理。
