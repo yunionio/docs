@@ -91,7 +91,10 @@ class Hugo(object):
             dest = os.path.join(dest, ver_dir)
             base_url = base_url + '/' + ver_dir
 
-        cmd = ['hugo', '--minify',
+        cmd = ['hugo',
+               '--minify',
+               '--config=config.toml,config-ce-online.toml',
+               '--contentDir=%s' % self._content_dir,
                '--destination=%s' % dest,
                '--baseURL=%s' % base_url]
         run_process(['rm', '-rf', dest])
