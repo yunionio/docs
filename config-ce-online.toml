@@ -1,8 +1,0 @@
-contentDir = "_output/content_ce_system/zh"
-
-[languages]
-[languages.zh]
-contentDir = "_output/content_ce_system/zh"
-
-[languages.en]
-contentDir = "_output/content_ce_system/en"
