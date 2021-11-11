@@ -1,4 +1,5 @@
 import os
+import tempfile
 
 from utils import run_process
 
@@ -61,6 +62,23 @@ class Hugo(object):
     def get_dest_dir(self):
         return self._dest_dir
 
+    def generate_config_toml(self):
+        config_content = '''contentDir = "%s"
+
+[languages]
+[languages.zh]
+contentDir = "%s"
+
+[languages.en]
+contentDir = "%s"''' % (
+            self._content_dir,
+            os.path.join(self._content_dir, 'zh'),
+            os.path.join(self._content_dir, 'en'),
+        )
+        fp = tempfile.NamedTemporaryFile(delete=False, prefix='cloudpods-docs', suffix='.toml')
+        fp.write(config_content.encode(encoding='utf-8'))
+        return fp.name
+
     def execute(self):
         env = {}
         env['CONTENT_DIR'] = self._content_dir
@@ -91,9 +109,10 @@ class Hugo(object):
             dest = os.path.join(dest, ver_dir)
             base_url = base_url + '/' + ver_dir
 
+        temp_config_file = self.generate_config_toml()
         cmd = ['hugo',
                '--minify',
-               '--config=config.toml,config-ce-online.toml',
+               '--config=config.toml,%s' % temp_config_file,
                '--contentDir=%s' % self._content_dir,
                '--destination=%s' % dest,
                '--baseURL=%s' % base_url]
