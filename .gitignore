@@ -27,6 +27,8 @@ package-lock.json
 *.so
 *.swp
 
+# hugo
+.hugo_build.lock
 .content
 .assets
 .static
