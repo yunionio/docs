@@ -150,7 +150,7 @@ $ uname -r
 
 ```bash
 $ yum install -y bridge-utils ipvsadm conntrack-tools \
-    jq kubelet-1.15.8-0 kubectl-1.15.8-0 kubeadm-1.15.8-0
+    jq kubelet-1.15.12-0 kubectl-1.15.12-0 kubeadm-1.15.12-0
 $ echo 'source <(kubectl completion bash)' >> ~/.bashrc && source ~/.bashrc
 $ source /etc/profile
 $ systemctl enable kubelet
