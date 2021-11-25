@@ -54,6 +54,10 @@ description: >
 | DNS                                           | QcloudDNSPodReadOnlyAccess<br>QcloudPrivateDNSReadOnlyAccess                                                         | QcloudPrivateDNSFullAccess<br>QcloudDNSPodFullAccess                                                 |
 | 账单,余额,费用                                | -                                                                                                                 | QCloudFinanceFullAccess                                                                           |
 | 监控                                          | QcloudMonitorReadOnlyAccess                                                                                       | QcloudMonitorFullAccess                                                                           |
+| Kafka                                         | QcloudCkafkaReadOnlyAccess                                                                                        | QcloudCKafkaFullAccess                                                                           |
+| MongoDB                                       | QcloudMongoDBReadOnlyAccess                                                                                       | QcloudMongoDBFullAccess                                                                           |
+| CDN                                           | QcloudCDNReadOnlyAccess                                                                                           | QcloudCDNFullAccess                                                                           |
+| 容器                                          | QcloudTKEReadOnlyAccess                                                                                           | QcloudTKEFullAccess                                                                           |
 {{% /tab %}}
 
 {{% tab name="华为云" %}}
