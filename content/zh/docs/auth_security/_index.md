@@ -6,8 +6,6 @@ description: >
   介绍var_oem_name平台认证服务的概念和工作原理
 ---
 
-适用版本：2.10.0及后续版本
-
 ## 认证服务原理
 
 {{<oem_name>}}认证服务最早采用OpenStack的keystone组件，2019年采用golang重构实现了keystone组件，保持和OpenStack Keystone v3.0 API的兼容，并且扩展了认证源（identity_provider）和权限（policy）的实现，使得更容易实现复杂的认证源（如SAML 2.0）和权限体系。
