@@ -4,7 +4,7 @@ date: 2021-11-10T15:43:09+08:00
 weight: 40
 ---
 
-部署管理工具ocadm类似于Kubernetes集群中的kubeadm工具，下面介绍ocadm的.
+部署管理工具ocadm类似于Kubernetes集群中的kubeadm工具，下面介绍ocadm的常用命令.
 
 ```bash
 # 创建集群 

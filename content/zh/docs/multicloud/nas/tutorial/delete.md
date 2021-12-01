@@ -2,6 +2,8 @@
 title: "删除NAS文件系统"
 date: 2021-11-26T15:19:32+08:00
 weight: 30
+description: >
+    删除NAS文件系统
 ---
 
 ### 设置删除保护

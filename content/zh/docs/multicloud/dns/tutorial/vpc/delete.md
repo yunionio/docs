@@ -2,6 +2,8 @@
 title: "解绑VPC"
 date: 2021-11-25T18:35:23+08:00
 weight: 20
+description: >
+    解除PrivateZone类型域名与VPC的绑定关系
 ---
 
 该功能用于解除域名与VPC的绑定，解绑后将同步删除缓存记录及公有云平台对应的解析域名等。
