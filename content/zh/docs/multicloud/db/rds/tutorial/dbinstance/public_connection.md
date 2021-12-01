@@ -1,34 +1,18 @@
 ---
 title: "开关闭外网地址"
 date: 2021-06-23T08:22:33+08:00
-weight: 50
+weight: 110
 description: >
    开关RDS实例外网地址
 ---
 
-## 限制
-- 仅阿里云，腾讯云，Google云支持此操作
+该功能用于开启或关闭RDS实例的外网地址。仅阿里云，腾讯云，Google云支持此操作
+
+1. 在RDS实例页面，单击RDS实例名称项，进入RDS实例详情页面。
+2. 在链接信息处单击“开启外网地址”超链接开启外网地址，开启后需要等待一分钟所有才会开启成功，开启成功后用户可通过外网地址和端口后连接数据库。
+3. 在链接信息处单击“关闭外网地址”超链接关闭外网地址。
 
 
-{{< tabs >}}
-{{% tab name="控制台" %}}
-
-## 开启RDS实例外网地址
-　 
-　 
-　 
- ![开启RDS实例外网地址](../../../images/rds_public_connection_open.png)
-## 关闭RDS实例外网地址
-　
-　
-　
-　
- ![关闭RDS实例外网地址](../../../images/rds_public_connection_close.png)
-
-
-{{% /tab %}}
-
-{{% tab name="命令行" %}}
 ```bash
 # 开启外网地址
 climc dbinstance-public-connection f39bc936-32dd-4151-8ca0-09834318b482 true
@@ -174,8 +158,3 @@ $ climc dbinstance-public-connection f39bc936-32dd-4151-8ca0-09834318b482 false
 | zone1_name              | 阿里云 华北 2 可用区 H                          |
 +-------------------------+-------------------------------------------------+
 ```
-{{% /tab %}}
-
-{{% /tabs %}}
-
-

@@ -2,6 +2,8 @@
 title: "查看DNS解析详情"
 date: 2021-11-25T18:47:34+08:00
 weight: 70
+description: >
+    查看DNS解析详情页
 ---
 
 该功能用于查看DNS解析的详细信息。
