@@ -1,22 +1,18 @@
 ---
-title: "创建"
+title: "新建备份"
 date: 2021-06-23T08:22:33+08:00
 weight: 1
 description: >
    新建RDS实例备份
 ---
 
-## 前提条件
-- 仅RDS实例状态为 运行中(running) 时才可进行此操作
+该功能用于为RDS实例创建备份，仅RDS实例状态为 运行中(running) 时才可进行此操作。
 
+1. 在RDS实例页面，单击RDS实例的名称项，进入RDS实例详情页面。
+2. 单击“备份管理”页签，进入备份管理页面。
+2. 单击列表上方 **_"新建"_** 按钮，弹出创建备份对话框。
+3. 输入备份名称、描述，单击 **_"确定"_** 按钮，为RDS实例创建备份。
 
-{{< tabs >}}
-{{% tab name="控制台" %}}
-
- ![RDS实例备份创建](../../../images/rds_backup_create.png)
-
-{{% /tab %}}
-{{% tab name="命令行" %}}
 
 ```bash
 $ climc dbinstance-backup-create f39bc936-32dd-4151-8ca0-09834318b482 test-backup
@@ -70,6 +66,3 @@ $ climc dbinstance-backup-create f39bc936-32dd-4151-8ca0-09834318b482 test-backu
 | updated_at         | 2021-06-24T06:30:34.000000Z          |
 +--------------------+--------------------------------------+
 ```
-
-{{% /tab %}}
-{{< /tabs >}}

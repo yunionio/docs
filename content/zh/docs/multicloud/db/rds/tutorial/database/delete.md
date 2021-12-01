@@ -1,22 +1,19 @@
 ---
-title: "删除"
+title: "删除数据库"
 date: 2021-06-23T08:22:33+08:00
-weight: 10
+weight: 20
 description: >
    删除RDS实例数据库
 ---
 
+该功能用于删除数据库。
 
-{{< tabs >}}
-{{% tab name="控制台" %}}
-
- ![删除RDS实例数据库](../../../images/rds_database_delete.png)
-
-
-{{% /tab %}}
+1. 在RDS实例页面，单击RDS实例的名称项，进入RDS实例详情页面。
+2. 单击“数据库管理”页签，进入数据库管理页面。
+2. 单击数据库右侧操作列 **_"删除"_** 按钮，弹出操作确认对话框。
+3. 单击 **_"确定"_** 按钮，完成操作。
 
 
-{{% tab name="命令行" %}}
 ```bash
 # 删除RDS实例数据库
 $ climc dbinstance-database-delete 667e37a0-eacf-420b-82e2-5bb21a418d6c
@@ -66,5 +63,3 @@ $ climc dbinstance-database-delete 667e37a0-eacf-420b-82e2-5bb21a418d6c
 | vpc_id             | c3652c98-ebc6-4c71-85a0-5eccc8583104 |
 +--------------------+--------------------------------------+
 ```
-{{% /tab %}}
-{{< /tabs >}}

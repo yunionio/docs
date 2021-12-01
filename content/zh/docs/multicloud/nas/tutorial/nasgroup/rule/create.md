@@ -2,6 +2,8 @@
 title: "新建NAS权限组规则"
 date: 2021-11-26T15:41:43+08:00
 weight: 10
+description: >
+    新建NAS权限组规则
 ---
 
 该功能用于新建NAS权限组规则。
