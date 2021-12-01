@@ -2,6 +2,8 @@
 title: "新建PublicZone域名"
 date: 2021-11-25T14:39:13+08:00
 weight: 20
+description: >
+    新建PublicZone类型域名并将其同步到公有云
 ---
 
 

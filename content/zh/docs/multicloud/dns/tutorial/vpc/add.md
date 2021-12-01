@@ -2,6 +2,8 @@
 title: "关联VPC"
 date: 2021-11-25T18:35:18+08:00
 weight: 10
+description: >
+    将PrivateZone类型域名关联VPC
 ---
 
 该功能用于将PrivateZone类型的解析域名关联到VPC。仅域名状态可用时才支持该操作。

@@ -2,6 +2,8 @@
 title: "新建NAS文件系统"
 date: 2021-11-26T14:55:27+08:00
 weight: 10
+description: >
+    新建NAS文件系统
 ---
 
 该功能用于创建文件系统。

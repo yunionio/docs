@@ -2,6 +2,8 @@
 title: "新建缓存"
 date: 2021-11-25T18:44:25+08:00
 weight: 10
+description: >
+    将PublicZone类型的域名同步到公有云平台
 ---
 
 该功能用于将PublicZone类型的DNS解析同步到公有云平台。

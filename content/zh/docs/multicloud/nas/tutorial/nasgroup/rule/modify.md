@@ -2,6 +2,8 @@
 title: "修改权限组规则"
 date: 2021-11-26T15:42:17+08:00
 weight: 20
+description: >
+    修改NAS权限组规则
 ---
 
 该功能用于修改NAS权限组。

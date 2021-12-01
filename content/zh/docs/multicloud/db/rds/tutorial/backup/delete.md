@@ -1,22 +1,22 @@
 ---
-title: "删除"
+title: "删除备份"
 date: 2021-06-23T08:22:33+08:00
-weight: 10
+weight: 40
 description: >
    删除RDS实例备份
 ---
 
+该功能用于删除备份。
 
-{{< tabs >}}
-{{% tab name="控制台" %}}
+{{% alert title="注意" color="warning" %}}
+阿里云暂不支持删除备份。
+{{% /alert %}}
 
- ![删除RDS实例备份](../../../images/rds_backup_delete.png)
+1. 在RDS实例页面，单击RDS实例的名称项，进入RDS实例详情页面。
+2. 单击“备份列表”页签，进入备份管理页面。
+2. 单击RDS实例备份右侧操作列 **_"删除"_** 按钮，弹出操作确认对话框。
+3. 单击 **_"确定"_** 按钮，完成操作。
 
-
-{{% /tab %}}
-
-
-{{% tab name="命令行" %}}
 ```bash
 # 删除RDS实例备份
 $ climc dbinstance-backup-delete 4eca9256-f998-402e-83bf-db7b0860c5c3
@@ -70,5 +70,3 @@ $ climc dbinstance-backup-delete 4eca9256-f998-402e-83bf-db7b0860c5c3
 | updated_at         | 2021-06-24T06:14:28.000000Z          |
 +--------------------+--------------------------------------+
 ```
-{{% /tab %}}
-{{< /tabs >}}

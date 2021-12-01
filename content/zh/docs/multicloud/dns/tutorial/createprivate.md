@@ -2,6 +2,8 @@
 title: "新建PrivateZone域名"
 date: 2021-11-25T15:16:18+08:00
 weight: 20
+description: >
+    新建PrivateZone类型的域名并将其同步到公有云
 ---
 
 PrivateZone域名是基于VPC网络的私有DNS服务，支持使用私有域名来解析VPC环境中的资源，私有域名在VPC外无法访问。
