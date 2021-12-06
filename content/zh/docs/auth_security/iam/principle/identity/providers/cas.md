@@ -2,6 +2,7 @@
 title: "CAS认证源"
 date: 2019-08-04T20:51:23+08:00
 weight: 04
+edition: ee
 description: >
   CAS认证源
 ---
@@ -17,4 +18,4 @@ Apereo CAS（Central Authentication Server)是开源的企业级SSO（single sig
 
 keystone集成CAS SSO认证流程如图所示：
 
-<img src="../keystone_cas.png">
+<img src="../../../../images/keystone_cas.png">
