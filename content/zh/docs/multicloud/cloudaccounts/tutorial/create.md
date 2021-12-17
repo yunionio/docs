@@ -244,7 +244,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 2. 选择云平台为OpenStack，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
    - 名称：OpenStack账号的名称。 
-   - 认证地址：OpenStack管理平台的认证地址，如[http://host:port/v3](http://host:port/v3)。
+   - 认证地址：OpenStack管理平台的认证地址，如[http://host:port/v3](http://host:port/v3)。若OpenStack管理平台的认证地址为域名，请参考上面[注意事项](#注意事项)配置认证地址的域名解析。
    - 账号：OpenStack平台的管理员用户名，如admin。
    - 密码：OpenStack平台管理员用户的密码。 
    - 项目：OpenStack平台上的项目，如admin项目。
