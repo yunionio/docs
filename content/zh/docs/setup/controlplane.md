@@ -16,7 +16,7 @@ Cloudpods 相关的组件运行在 kubernetes 之上，环境以及相关的软�
     - 比如把 /dev/sdb1 单独分区做 ext4 然后通过 /etc/fstab 挂载到 /opt 目录
 - 数据库: mariadb (CentOS 7自带的版本：Ver 15.1 Distrib 5.5.56-MariaDB）
 - docker: ce-20.10.5
-- kubernetes: v1.15.8
+- kubernetes: v1.15.12
 
 需要能访问如下网址，如果企业有外网隔离规则，则需要打开相应白名单：
 
@@ -146,7 +146,7 @@ $ uname -r
 
 ### 安装配置 kubelet
 
-从 Cloudpods rpm 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
+从 Cloudpods rpm 的 yum 源安装 kubernetes 1.15.12，并设置 kubelet 开机自启动
 
 ```bash
 $ yum install -y bridge-utils ipvsadm conntrack-tools \
@@ -223,7 +223,7 @@ $ yum install -y yunion-executor && systemctl enable --now yunion-executor
 
 ### 部署 kubernetes 集群
 
-接下来会现在当前节点启动 v1.15.8 的 kubernetes 服务，然后部署 Cloudpods 控制节点相关的服务到 kubernetes 集群。
+接下来会现在当前节点启动 v1.15.12 的 kubernetes 服务，然后部署 Cloudpods 控制节点相关的服务到 kubernetes 集群。
 
 拉取必要的 docker 镜像
 
