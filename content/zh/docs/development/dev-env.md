@@ -286,7 +286,7 @@ gpgcheck=0
 repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
-$ yum install -y kubectl-1.15.8-0
+$ yum install -y kubectl-1.15.12-0
 # 需要自行配置kubctl config
 # 测试kubctl可以访问之前部署的K8S集群
 $ kubctl version
