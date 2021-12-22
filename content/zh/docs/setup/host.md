@@ -124,11 +124,11 @@ $ systemctl enable --now docker
 
 #### 安装配置 kubelet
 
-从 Cloudpods rpm 的 yum 源安装 kubernetes 1.15.8，并设置 kubelet 开机自启动
+从 Cloudpods rpm 的 yum 源安装 kubernetes 1.15.12，并设置 kubelet 开机自启动
 
 ```bash
 $ yum install -y bridge-utils ipvsadm conntrack-tools \
-    jq kubelet-1.15.8-0 kubectl-1.15.8-0 kubeadm-1.15.8-0
+    jq kubelet-1.15.12-0 kubectl-1.15.12-0 kubeadm-1.15.12-0
 $ echo 'source <(kubectl completion bash)' >> ~/.bashrc && source ~/.bashrc
 $ source /etc/profile
 $ systemctl enable kubelet
