@@ -1,9 +1,9 @@
 ---
-title: "云主机(VM)"
+title: "操作指南"
 date: 2021-11-11
-weight: 30
+weight: 10
 description: >
-    公有云和私有云云主机
+    介绍公有云和私有云虚拟机的相关操作
 ---
 
 
