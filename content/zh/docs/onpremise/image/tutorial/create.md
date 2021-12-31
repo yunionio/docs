@@ -261,9 +261,9 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
 
 （可选）若是Windows 10操作系统的虚拟机需要禁用快速启动。请参考[禁用方法](https://jingyan.baidu.com/article/ca00d56c7a40e6e99febcf4f.html)。
 
-#### 系统激活
+#### 安装Spice Tool
 
-请通过正规渠道激活Windows系统。
+为了获得最好的图形显示效果，Windows虚拟机建议安装Windows Spice Guest Tool [下载地址](https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe)。
 
 #### sysprep封装
 
@@ -320,6 +320,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
 
 {{% alert title="说明" %}}
 由于Windows系统只支持VNC连接，无法直接将内容拷贝到虚拟机，可通过发送文字功能，在虚拟机输入法处于英文模式的时候，发送上述内容。
+Windows 10默认会创建一个非Administration的用户。如果制作镜像前未删除该用户，则会用该用户作为登录用户。否则，制作镜像前须删除该用户。
 {{% /alert %}}
 
 2. 在该目录的地址显示框中输入cmd或同时按“shift”键和鼠标右键，在此处打开命令窗口，打开命令提示符对话框。输入以下命令，执行sysprep封装并关闭虚拟机。
