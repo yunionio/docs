@@ -1,6 +1,7 @@
 HUGO_VERSION = 0.83.1
 IMAGE_VERSION=$(shell scripts/hash-files.sh Dockerfile | cut -c 1-12)
-CONTAINER_IMAGE = registry.cn-beijing.aliyuncs.com/yunionio/docs-hugo:v$(HUGO_VERSION)-$(IMAGE_VERSION)
+#CONTAINER_IMAGE = registry.cn-beijing.aliyuncs.com/yunionio/docs-hugo:v$(HUGO_VERSION)-$(IMAGE_VERSION)
+CONTAINER_IMAGE = registry.cn-beijing.aliyuncs.com/yunionio/docs-hugo:v$(HUGO_VERSION)
 CONTAINER_RUN = docker run --rm --interactive --tty --volume $(CURDIR):/src --user $(shell id -u):$(shell id -g)
 HOST := http://localhost:1313
 
