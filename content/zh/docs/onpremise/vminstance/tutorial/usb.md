@@ -1,6 +1,7 @@
 ---
 title: "USB相关"
 date: 2019-07-19T18:32:40+08:00
+draft: true
 weight: 41
 description: >
   介绍如何在虚拟机上透传宿主机的USB设备。
