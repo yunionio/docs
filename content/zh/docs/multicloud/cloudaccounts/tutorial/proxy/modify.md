@@ -1,7 +1,8 @@
 ---
 title: "修改代理"
 weight: 40
-description: 
+description: >
+    修改代理的配置信息
 ---
 
 该功能用于修改代理信息，Direct（直连）代理不支持修改属性。

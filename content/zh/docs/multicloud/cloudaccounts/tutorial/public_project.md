@@ -1,7 +1,8 @@
 ---
 title: "公有云资源归属"
-weight: 180
-description: 介绍公有云平台上资源如何同步到var_oem_name平台
+weight: 180 
+description: >
+    介绍公有云平台上资源如何同步到var_oem_name平台
 ---
 
 公有云平台上的资源与 {{<oem_name>}} 平台的项目对应关系由以下几个因素决定的。

@@ -3,6 +3,8 @@ title: "公有云账单对接"
 date: 2021-06-11T08:22:33+08:00
 weight: 20
 edition: ee
+description: >
+    如何在var_oem_name平台上配置公有云账单信息
 ---
 
 目前支持对接公有云账单的平台如下：
