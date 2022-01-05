@@ -2,6 +2,8 @@
 title: "Ocadm部署工具常用命令"
 date: 2021-11-10T15:43:09+08:00
 weight: 40
+description: >
+    介绍ocadm工具的常用命令，例如切换镜像源、启用/禁用服务、切换开源版/商业版等
 ---
 
 部署管理工具ocadm类似于Kubernetes集群中的kubeadm工具，下面介绍ocadm的常用命令.

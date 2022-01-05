@@ -2,6 +2,8 @@
 title: "组件pod常用运维命令"
 date: 2021-11-10T18:54:59+08:00
 weight: 20
+description: >
+    介绍如何重启组件服务、查看组件日志等
 ---
 
 ### 查看组件pod运行情况
@@ -25,18 +27,20 @@ $ kubectl get pods -n onecloud -o wide --field-selector=spec.nodeName=<host-name
 ```
 ### 重启组件服务
 
-在Kubernetes集群上，组件pods大部分通过deployment管理的，当删除pod时将会自动重建新的pod，所以重启组件服务时可以直接删除对应组件的pod。
-
 ```
-# 重启web服务，如删除web前端pod
-$ kubectl delete pods $web_pod_name -n onecloud
+# 重启web服务
+$ kubectl rollout restart deployment -n onecloud default-web
 ```
 ```
 # 重启host服务，如删除所有host pod
-$ kubectl get pods -n onecloud  -o wide | grep default-host  | awk '{print 1}' | xargs kubectl delete pods -n onecloud
+$ kubectl rollout restart deployment -n onecloud default-host
 
 # 重启所有服务，平台服务都以default开头
-$ kubectl get pods -n onecloud  |grep default | awk '{print $1}' | xargs kubectl delete pods -n onecloud
+$ kubectl get deployment -n onecloud |grep default | awk '{print $1}' | xargs kubectl rollout restart deployment -n onecloud
+
+# 重启onecloud命名空间下的所有pod
+$  kubectl get ds -n onecloud | awk '{print $1}' | xargs kubectl rollout ds -n onecloud
+
 ```
 
 ### 更新服务配置并重启服务
@@ -48,11 +52,13 @@ $ kubectl get pods -n onecloud  |grep default | awk '{print $1}' | xargs kubectl
 $ kubectl edit configmaps default-region -n onecloud
 ```
 ```
-# 修改完成后，删除对应服务的pod即可生效
-$ kubectl get pods -n onecloud |grep region
-$ kubectl delete $region_pod_name -n onecloud
+# 修改完成后，重启服务
+$ kubectl -n onecloud rollout restart deployment default-region
+
 ```
 ### 查看服务日志
+
+查看持久化服务日志，请参考[持久化后端日志]({{< relref "backendlogs" >}})
 
 以region组件为例介绍如何查看region组件的日志信息。
 ```

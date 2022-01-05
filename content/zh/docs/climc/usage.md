@@ -1,11 +1,15 @@
 ---
 title: "climc 使用介绍"
 weight: 1
+description: >
+    介绍如何安装部署Climc命令行工具，并使用。
 ---
 
 云平台的命令行管理工具是 `climc`, 可以通过该工具向后端各个服务发送API请求, 实现对资源的操控。
 
 通过快速开始的[All in One安装](../../quickstart/allinone/)或[安装部署](../../setup)章节搭建开源版Cloudpods环境时，控制节点都会安装climc，可直接跳过安装climc章节直接查看使用climc章节。
+
+目前Web控制台已支持cloudshell功能，可以在管理后台视图，单击web控制台右上角cloudshell图标，直接进入climc所在容器内使用climc命令。
 
 下面介绍如何在非控制节点上安装climc。
 

@@ -1,7 +1,8 @@
 ---
 title: "新建免密登录用户"
 weight: 20
-description: 
+description: >
+    将var_oem_name平台内用户设置为公有云平台的免密登录用户
 ---
 
 该功能用于将系统内的本地用户设置为公有云平台的免密登录用户。
