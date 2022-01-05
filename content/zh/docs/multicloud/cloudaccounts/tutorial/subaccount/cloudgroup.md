@@ -1,6 +1,8 @@
 ---
 title: "云用户组"
 weight: 40
+description: >
+    云用户组即公有云平台上的权限组
 ---
 
 

@@ -2,6 +2,8 @@
 title: "组件介绍"
 date: 2021-11-10T19:02:10+08:00
 weight: 10
+description: >
+    介绍var_oem_name平台服务组件的功能
 ---
 
 {{<oem_name>}} 平台部署在Kubernetes上，平台服务将支持容器化方式部署运行在Kubernetes集群。下面将介绍下平台的组件服务。

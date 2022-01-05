@@ -1,7 +1,8 @@
 ---
 title: "删除代理"
 weight: 50
-description: 
+description: >
+    删除未被云账号使用的代理
 ---
 
 该功能用于删除未被云账号使用的代理。Direct（直连）代理不支持删除。

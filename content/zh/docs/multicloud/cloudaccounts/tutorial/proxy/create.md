@@ -1,7 +1,8 @@
 ---
 title: "新建代理"
 weight: 10
-description: 
+description: >
+    新建proxy代理
 ---
 
 该功能用于为指定域创建代理，当在指定域新建云账号时可选择域下的代理连接访问云平台。
