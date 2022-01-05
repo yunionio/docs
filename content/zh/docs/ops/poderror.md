@@ -1,7 +1,9 @@
 ---
-title: "排查Kubernetes pod异常"
+title: "排查pod异常"
 date: 2021-11-10T16:02:27+08:00
 weight: 30
+description: >
+    根据pod状态排查错误
 ---
 
 ### 确认Pod状态

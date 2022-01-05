@@ -2,6 +2,8 @@
 title: "获取云平台AccessKey"
 date: 2021-06-11T08:22:33+08:00
 weight: 210
+description: >
+    介绍如何获取公有云平台的AccessKey
 ---
 
 ## 获取云平台AccessKey

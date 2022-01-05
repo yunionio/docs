@@ -1,7 +1,8 @@
 ---
 title: "删除免密登录用户"
 weight: 30
-description: 
+description: >
+    删除免密登录用户使其无法再免密登录到公有云
 ---
 
 

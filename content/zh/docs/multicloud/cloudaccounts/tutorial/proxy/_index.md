@@ -1,7 +1,8 @@
 ---
 title: "代理"
 weight: 180
-description: 
+description: >
+    代理用于建立公有云平台账号与var_oem_name平台之间的联系
 ---
 
 代理使用场景如下：
