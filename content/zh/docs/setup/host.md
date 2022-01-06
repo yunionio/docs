@@ -30,216 +30,43 @@ description: >
 - 备注:
 	- 如果是以测试为目的，可以拿一台虚拟机部署计算节点的服务，但可能无法使用 KVM 加速和 GPU 透传
 
-## 安装依赖
+## 使用 ocboot 添加对应节点
 
-计算节点所需的依赖以 rpm 的方式安装
+以下操作在控制节点进行，在控制节点使用 `ocboot add-node` 命令把对应计算节点添加进来。
 
-```bash
-# 添加 yum 源
-$ cat <<EOF >/etc/yum.repos.d/yunion.repo
-[yunion]
-name=Packages for Yunion Multi-Cloud Platform
-baseurl=https://iso.yunion.cn/yumrepo-3.8
-sslverify=0
-failovermethod=priority
-enabled=1
-gpgcheck=0
-EOF
-
-# 禁用防火墙和selinux
-$ systemctl disable firewalld
-$ sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-```
-
-安装 rpm 包
+假设要给控制节点 10.168.26.216 添加计算节点 10.168.222.140 首先需要 ssh root 免密码登录对应的计算节点以及控制节点自身。
 
 ```bash
-$ yum install -y \
-  epel-release libaio jq libusb lvm2 nc ntp yunion-fetcherfs fuse fuse-devel fuse-libs \
-  oniguruma pciutils spice spice-protocol sysstat tcpdump usbredir \
-  yunion-qemu-2.12.1 yunion-executor yunion-ocadm \
-  kernel-lt \
-  kmod-openvswitch \
-  openvswitch net-tools ceph-common
+# 将控制节点自己设置成免密登录
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.168.26.216
 
-$ systemctl enable --now yunion-executor
+# 尝试免密登录控制节点是否成功
+$ ssh root@10.168.26.216 "hostname"
 
-# 安装完成后需要重启进入我们的内核
-$ reboot
+# 将生成的 ~/.ssh/id_rsa.pub 公钥拷贝到待部署的计算机器
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.168.222.140
 
-# 重启完成后，查看当前节点内核信息，确保为 yn 内核
-$ uname -r
-3.10.0-1062.4.3.el7.yn20191203.x86_64
+# 尝试免密登录待部署机器，应该不需要输入登录密码即可拿到部署机器的 hostname
+$ ssh root@10.168.222.140 "hostname"
 ```
 
-### 安装 docker 和 kubelet
-
-参考 ["部署集群/环境准备"](../../setup/controlplane/#安装配置-docker) 的流程，安装好 docker 和 kubelet。
-
-#### 安装配置 docker
-
-安装 docker
+控制节点应该已经部署好了 docker，为了环境干净，可以直接在容器里面使用 ocboot 的添加计算节点，步骤如下：
 
 ```bash
-$ yum install -y yum-utils bash-completion
-# 添加 yunion Cloudpods rpm 源
-$ yum-config-manager --add-repo https://iso.yunion.cn/yumrepo-3.8/yunion.repo
-$ yum install -y docker-ce docker-ce-cli containerd.io
+# 下载 ocboot 代码
+$ git clone https://github.com/yunionio/ocboot
+$ cd ocboot
+
+# 使用 run-in-docker.sh 添加节点
+$ ./run-docker.sh add-node 10.168.26.216 10.168.222.140
 ```
 
-配置 docker
-
-```bash
-$ mkdir -p /etc/docker
-$ cat <<EOF >/etc/docker/daemon.json
-{
-  "bridge": "none",
-  "iptables": false,
-  "exec-opts":
-    [
-      "native.cgroupdriver=systemd"
-    ],
-  "data-root": "/opt/docker",
-  "live-restore": true,
-  "log-driver": "json-file",
-  "log-opts":
-    {
-      "max-size": "100m"
-    },
-  "registry-mirrors":
-    [
-      "https://lje6zxpk.mirror.aliyuncs.com",
-      "https://lms7sxqp.mirror.aliyuncs.com",
-      "https://registry.docker-cn.com"
-    ]
-}
-EOF
-```
-
-启动 docker
-
-```bash
-$ systemctl enable --now docker
-```
-
-#### 安装配置 kubelet
-
-从 Cloudpods rpm 的 yum 源安装 kubernetes 1.15.12，并设置 kubelet 开机自启动
-
-```bash
-$ yum install -y bridge-utils ipvsadm conntrack-tools \
-    jq kubelet-1.15.12-0 kubectl-1.15.12-0 kubeadm-1.15.12-0
-$ echo 'source <(kubectl completion bash)' >> ~/.bashrc && source ~/.bashrc
-$ source /etc/profile
-$ systemctl enable kubelet
-```
-
-安装完 kubernetes 相关的二进制后，还需要对系统做一些配置并启用 ipvs 作为 kube-proxy 内部的 service 负载均衡
-
-```bash
-# 禁用 swap
-$ swapoff -a
-# 如果设置了自动挂载 swap，需要去 /etc/fstab 里面注释掉挂载 swap 那一行
-
-# 关闭 selinux
-$ setenforce  0
-$ sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
-
-# 禁用 firewalld
-$ systemctl stop firewalld
-$ systemctl disable firewalld
-
-# 禁用 NetworkManager
-$ systemctl stop NetworkManager
-$ systemctl disable NetworkManager
-$ ps -ef|grep dhcp | awk '{print $2}' |xargs kill -9
- 
-# 做一些 sysctl 的配置, kubernetes 要求
-$ modprobe br_netfilter
-
-$ cat <<EOF >> /etc/sysctl.conf
-net.bridge.bridge-nf-call-iptables=1
-net.bridge.bridge-nf-call-ip6tables=1
-net.ipv4.ip_forward=1
-EOF
-
-$ sysctl -p
-
-# 配置并开启 ipvs
-$ cat <<EOF > /etc/sysconfig/modules/ipvs.modules
-#!/bin/bash
-ipvs_modules="ip_vs ip_vs_lc ip_vs_wlc ip_vs_rr ip_vs_wrr ip_vs_lblc ip_vs_lblcr ip_vs_dh ip_vs_sh ip_vs_fo ip_vs_nq ip_vs_sed ip_vs_ftp nf_conntrack_ipv4"
-for kernel_module in \${ipvs_modules}; do
-    /sbin/modinfo -F filename \${kernel_module} > /dev/null 2>&1
-    if [ $? -eq 0 ]; then
-        /sbin/modprobe \${kernel_module}
-    fi
-done
-EOF
-
-$ chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules && lsmod | grep ip_vs
-```
+等 ocboot 容器镜像拉取完后，就会调用 ansible-playbook 把对应的计算节点加入进来。
 
 
-## 控制节点操作
+### 启用计算节点(宿主机)
 
-以下操作在控制节点进行。
-
-### 创建计算节点所在的网段
-
-我的环境**计算节点**的 ip 为 10.168.222.140，就创建一个对应的 **计算节点(host)网段**。
-
-{{% alert title="提示" %}}
-需要根据自己的计算节点环境创建对应的网段，如果不创建该网段，计算节点就没法注册进来。
-{{% /alert %}}
-
-```bash
-# 查看当前环境的 zone
-$ climc zone-list
-+--------------------------------------+-------+--------+----------------+
-| ID                                   | Name  | Status | Cloudregion_ID |
-+--------------------------------------+-------+--------+----------------+
-| f73a2120-1206-45fa-8d43-de374ab0f494 | zone0 | enable | default        |
-+--------------------------------------+-------+--------+----------------+
-
-# 在 zone0 里面创建一个 wire bcast0，该资源抽象计算节点所在的二层广播域信息
-$ climc wire-create zone0 bcast0 1000
-
-# 在 wire bcast0 之上创建一个计算节点的网络，计算节点的 host 服务注册会用到，如果 host 注册时没有在云平台找到对应的网络，将会注册失败
-$ climc network-create --gateway 10.168.222.1 --server-type baremetal bcast0 adm0 10.168.222.140 10.168.222.140 24
-```
-
-## 计算节点(host)操作
-
-以下操作在计算节点进行，计算节点也叫 host，私有云计算节点上面会运行 host 服务来管理 kvm 虚拟机。
-
-### 配置 host 服务
-
-参考 ["添加节点/获取加入集群token"](../../setup/components/#获取加入集群-token) 的流程获取join所需的信息
-
-```bash
-# 使用 ocadm join 来创建一台计算节点
-# 可选参数 --host-networks: 配置host服务的网络，比如: 'eth0/br0/10.168.222.140', eth0是物理网卡，br0是网桥名称，10.168.222.140是宿主机的ip
-# 获取计算节点 IP
-$ host_addr=$(ip route get 1 | awk '{print $NF;exit}')
-$ echo $host_addr
-10.168.222.140
-
-# 可选参数 --host-local-image-path: 配置host服务磁盘的存储路径，比如: '/opt/cloud/workspace/disks'
-# 注意：容器部署的host服务只会挂载/opt/cloud目录
-# 如果有其他挂载点需要bind mount到/opt/cloud下，可在fstab中添加一行如'/src /opt/cloud/dst none defaults,bind 0 0'
-# 可选参数 --host-hostname: 配置宿主机的hostname, 比如: 'node1'
-$ ./ocadm join $api_server_addr \
-    --enable-host-agent \
-    --token $token \
-    --discovery-token-unsafe-skip-ca-verification
-
-# 然后等待宿主机上的host pod和host-deployer pod为running状态
-```
-
-## 控制节点启用 host
-
-回到控制节点，启用刚才上报的计算节点，只有启用的宿主机才能运行虚拟机。
+等计算节点添加完成后，需要启用刚才上报的计算节点，只有启用的宿主机才能运行虚拟机。
 
 ```bash
 # 使用 climc 查看注册的 host 列表

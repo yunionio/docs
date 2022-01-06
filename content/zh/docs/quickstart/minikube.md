@@ -1,41 +1,46 @@
 ---
-title: "MiniKube 安装"
-linkTitle: "MiniKube 安装"
+title: "Kubernetes 安装"
+linkTitle: "Kubernetes 安装"
 weight: 3
+draft: true
 description: >
-  使用 MiniKube, 快速部署体验单机版本的Cloudpods服务
+  在已有的 Kubernetes 集群上面部署云管服务
 ---
 
 ## 前提
 {{% alert title="注意" color="warning" %}}
-本章内容是方便快速体验Cloudpods, 通过 MiniKube 快速搭建Cloudpods服务，无法在生产环境使用，也无法验证云联内置私有云相关功能(因为内置私有云需要节点上面安装配置 qemu, openvswitch 等各种虚拟化软件)。
+通过在已有的 Kubernetes 集群上部署 Cloudpods 云管服务，无法验证内置私有云相关功能(因为内置私有云需要节点上面安装配置 qemu, openvswitch 等各种虚拟化软件)。
 
 仅适用于多云管理功能的体验，比如管理 VMware, 公有云(aws, 阿里云, 腾讯云等)或者其它私有云(zstack, openstack 等)。
-
-如果想部署生产可用的环境请参考: [安装部署](../../setup/) 。
 {{% /alert %}}
 
 ## 环境准备
 
-Cloudpods 相关的组件运行在 MiniKube 之上，环境以及相关的软件依赖如下:
+Cloudpods 相关的组件运行在 Kubernetes 之上，环境以及相关的软件依赖如下:
 
-- 操作系统: CentOS 7.6
-- 最低配置要求: CPU 4核, 内存 8G, 存储 100G
+- Kubernetes 集群配置最低要求:
+    - CPU 4核, 内存 8G, 节点有存储 100G
+    - 版本 v1.15 - v1.20
+    - 节点需要能够访问公网
+    - 提供 ingress controller
+    - 内部 coredns 解析
+- 提供 Mysql 数据库
 
 ## 部署
 
-### 启动 minikube 集群
+### 查看 Kubernetes 环境
 
-下载 minikue/kubectl, 并启动 minikube 集群, 具体请参考： https://kubernetes.io/docs/tasks/tools/install-minikube/
+以下部署在阿里云的 3 节点 Kubernetes 集群进行，查看节点信息：
 
 ```bash
-# 配置 minikube
-$ minikube config -p onecloud set memory 8192 
-
-# 启动 kubernetes 集群, 并且从 aliyun 拉取镜像，这样速度会快一点
-$ minikube start  -p onecloud --image-repository=registry.aliyuncs.com/google_containers
+$ kubectl get nodes
+NAME                      STATUS   ROLES    AGE   VERSION
+cn-shanghai.10.71.69.80   Ready    <none>   20h   v1.20.11-aliyun.1
+cn-shanghai.10.71.69.81   Ready    <none>   20h   v1.20.11-aliyun.1
+cn-shanghai.10.71.69.82   Ready    <none>   20h   v1.20.11-aliyun.1
 ```
-### 部署Cloudpods onecloud operator
+
+### 部署 Cloudpods operator
 
 Cloudpods k8s operator地址： https://github.com/yunionio/cloudpods-operator
 
@@ -47,11 +52,14 @@ $ kubectl apply -f onecloud-operator.yaml
 
 # 将 kubernetes node 打上 onecloud.yunion.io/controller=enable 标签
 # 如果不打标签，operator 服务就不会把对应的后端服务调度到这个节点
-$ kubectl get nodes
-NAME       STATUS   ROLES    AGE   VERSION
-onecloud   Ready    master   20m   v1.15.9-beta.0
-# 加上标签，这个 node 就可以运行 onecloud 相关服务
-$ kubectl label nodes onecloud onecloud.yunion.io/controller=enable
+# 另外如果没有 master role ，还需要加上标签 node-role.kubernetes.io/master=
+# 这个 node 就可以运行 onecloud 相关服务
+$ kubectl label nodes cn-shanghai.10.71.69.80 onecloud.yunion.io/controller=enable
+$ kubectl label nodes cn-shanghai.10.71.69.80 node-role.kubernetes.io/master=
+$ kubectl label nodes cn-shanghai.10.71.69.81 onecloud.yunion.io/controller=enable
+$ kubectl label nodes cn-shanghai.10.71.69.81 node-role.kubernetes.io/master=
+$ kubectl label nodes cn-shanghai.10.71.69.82 onecloud.yunion.io/controller=enable
+$ kubectl label nodes cn-shanghai.10.71.69.82 node-role.kubernetes.io/master=
 
 # 这里需要等待 onecloud-operator 的 pod 状态变为 Running
 $ kubectl get pods -n onecloud
