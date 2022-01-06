@@ -1,5 +1,6 @@
 ---
-title: "添加 K8S 节点"
+title: "添加 K8S 节点(已废弃)"
+draft: true
 weight: 5
 description: >
   部署完集群后，默认只有一个 k8s 控制节点，介绍如何添加额外的 k8s 节点

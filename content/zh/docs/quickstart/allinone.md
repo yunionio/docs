@@ -3,13 +3,13 @@ title: "All in One 安装"
 linkTitle: "All in One 安装"
 weight: 1
 description: >
-  使用 ocboot 部署工具快速在已有的节点上以 All in One 的方式部署”Cloudpods“服务
+  使用 ocboot 部署工具快速在已有的节点上以 All in One 的方式部署 Cloudpods 服务
 ---
 
 ## 前提
 
 {{% alert title="注意" color="warning" %}}
-本章内容是通过部署工具快速搭建 Cloudpods 服务，如果想了解部署的细节或者部署高可用环境请参考: [安装部署](../../setup/) 。
+本章内容是通过部署工具快速搭建 Cloudpods 服务，如果想在生产环境部署高可用集群请参考: [高可用安装](../ha/) 。
 {{% /alert %}}
 
 ## 环境准备
@@ -87,7 +87,7 @@ $ pip install ansible
 
 ```bash
 # 下载 ocboot 工具到本地
-$ git clone -b release/3.8 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
 ### 快速部署
