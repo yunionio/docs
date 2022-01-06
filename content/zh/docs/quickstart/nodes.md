@@ -1,10 +1,16 @@
 ---
-title: "多节点安装"
-linkTitle: "多节点安装"
-weight: 1
+title: "多节点安装(已废弃)"
+linkTitle: "多节点安装(已废弃)"
+weight: 3
 description: >
-  使用 ocboot 部署工具在多个节点部署”Cloudpods“服务
+  使用 ocboot 部署工具在多个节点部署 Cloudpods 服务
 ---
+
+{{% alert title="注意" color="warning" %}}
+多节点安装的内容已经废弃，不提倡使用这种方式，推荐用户先参考 [All in One 安装](../allinone) 或者 [高可用安装](../ha) 把集群搭建好，然后再使用 [添加计算节点](../../setup/host) 的方式添加计算节点到集群。
+
+以下内容只是作为保留作为参考。
+{{% /alert %}}
 
 多节点安装和 [All in One 安装](../allinone) 一样，都使用 https://github.com/yunionio/ocboot 这个部署工具，根据配置执行 ansible playbook 部署节点。
 
