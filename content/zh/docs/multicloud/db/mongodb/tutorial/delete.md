@@ -13,10 +13,10 @@ description: >
 **单个MongoDB实例设置删除保护**
 
 1. 禁用删除保护：
-    - 单击MongoDB实例名称右侧带有![](../../images/computing/delprotect1.png)图标时，单击MongoDB实例右侧操作列 **_"更多"_** 按钮，选择下拉菜单 **_"设置删除保护"_** 菜单项，弹出设置删除保护对话框。
+    - 单击MongoDB实例名称右侧带有![](../../../../images/delprotect1.png)图标时，单击MongoDB实例右侧操作列 **_"更多"_** 按钮，选择下拉菜单 **_"设置删除保护"_** 菜单项，弹出设置删除保护对话框。
     - 选择"禁用"删除保护，单击 **_"确定"_** 按钮。
 2. 启用删除保护：
-    - 当MongoDB实例名称右侧不带![](../../images/computing/delprotect1.png)图标时，单击MongoDB实例右侧操作列 **_"更多"_** 按钮，选择下拉菜单 **_"设置删除保护"_** 菜单项，弹出设置删除保护对话框。
+    - 当MongoDB实例名称右侧不带![](../../../../images/delprotect1.png)图标时，单击MongoDB实例右侧操作列 **_"更多"_** 按钮，选择下拉菜单 **_"设置删除保护"_** 菜单项，弹出设置删除保护对话框。
     - 选择"启用"删除保护，单击 **_"确定"_** 按钮。
 
 **批量设置删除保护**
@@ -30,7 +30,7 @@ description: >
 
 ## 删除
 
-该功能用于删除MongoDB实例，当MongoDB实例名称项右侧有![](../../images/computing/delprotect1.png)图标，表示MongoDB实例启用了删除保护，无法删除MongoDB实例，如需删除MongoDB实例，需要先禁用删除保护。
+该功能用于删除MongoDB实例，当MongoDB实例名称项右侧有![](../../../../images/delprotect1.png)图标，表示MongoDB实例启用了删除保护，无法删除MongoDB实例，如需删除MongoDB实例，需要先禁用删除保护。
 
 **单个删除**
 

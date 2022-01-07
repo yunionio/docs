@@ -13,9 +13,8 @@ description: >
 {{% alert title="注意" color="warning" %}}
 - OpenStack平台上硬盘以及Ceph盘存在快照时不允许删除；
 - 包年包月类型的硬盘不支持删除。
-- 阿里云、腾讯云、华为云、AWS、Azure、Google、Zstack、Dstack、OpenStack、{{<oem_name>}}等平台支持删除硬盘时同时删除快照。
+- 阿里云、腾讯云、华为云、AWS、Azure、Google、Zstack、Dstack、OpenStack等平台支持删除硬盘时同时删除快照。
 - 华为云删除硬盘时会同时删除硬盘快照；
-- {{<oem_name>}}平台删除Ceph盘时会同时删除硬盘快照；
 {{% /alert %}}
 
 **单个删除**
