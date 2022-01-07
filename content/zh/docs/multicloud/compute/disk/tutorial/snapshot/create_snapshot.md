@@ -11,7 +11,7 @@ description: >
 
 {{% alert title="注意" color="warning" %}}
 
-- VMware平台、UCloud平台的硬盘不支持创建快照。
+- UCloud平台的硬盘不支持创建快照。
 - 硬盘所属虚拟机状态异常或硬盘未挂载到虚拟机时不支持创建快照
 
 {{% /alert %}}

@@ -18,6 +18,7 @@ description: >
 {{% alert title="注意" color="warning" %}}
 - Windows操作系统的虚拟机只支持通过VNC远程终端；
 - 在{{<oem_name>}}平台经典网络的虚拟机可以直接使用Web SSH和VNC远程终端；{{<oem_name>}}平台VPC网络的虚拟机可以直接使用Web SSH和VNC远程终端，也可以绑定EIP后使用EIP的Web SSH。请注意，未绑定EIP的VPC网络的虚拟机只能通过平台的Web SSH连接，无法使用SSH工具进行连接，如需使用SSH工具连接虚拟机，请为虚拟机绑定EIP。
+- 当VMware的虚拟机所在EXSI低于6.5版本时，无法直接打开VNC远程终端，需要用户在本地下载vmrc（VMware Remote Console）客户端。
 - VNC长时间连接黑屏后，按空格键会恢复显示。
 {{% /alert %}}
 

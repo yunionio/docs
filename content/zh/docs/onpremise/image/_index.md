@@ -1,6 +1,6 @@
 ---
 title: "镜像"
-weight: 60
+weight: 5
 description: >
   镜像是用于新建虚拟机、裸金属使用的模板文件。
 ---
