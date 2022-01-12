@@ -1,6 +1,6 @@
 ---
 title: "release/3.8"
 description: >
-  release/3.8 CHANGELOG 汇总，最近发布版本: v3.8.5 , 时间: 2021-12-30
+  release/3.8 CHANGELOG 汇总，最近发布版本: v3.8.6 , 时间: 2022-01-11
 weight: -38
 ---
