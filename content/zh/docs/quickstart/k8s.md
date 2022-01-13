@@ -2,7 +2,6 @@
 title: "Kubernetes 安装"
 linkTitle: "Kubernetes 安装"
 weight: 3
-draft: true
 description: >
   在已有的 Kubernetes 集群上面部署云管服务
 ---
@@ -22,7 +21,7 @@ Cloudpods 相关的组件运行在 Kubernetes 之上，环境以及相关的软�
     - CPU 4核, 内存 8G, 节点有存储 100G
     - 版本 v1.15 - v1.20
     - 节点需要能够访问公网
-    - 提供 ingress controller
+    - 提供 nginx ingress controller
     - 内部 coredns 解析
 - 提供 Mysql 数据库
 
@@ -30,7 +29,7 @@ Cloudpods 相关的组件运行在 Kubernetes 之上，环境以及相关的软�
 
 ### 查看 Kubernetes 环境
 
-以下部署在阿里云的 3 节点 Kubernetes 集群进行，查看节点信息：
+以下部署在阿里云的 3 节点 Kubernetes v1.20.11 集群进行，查看节点信息：
 
 ```bash
 $ kubectl get nodes
@@ -67,12 +66,51 @@ NAME                                 READY   STATUS    RESTARTS   AGE
 onecloud-operator-7fd65d6489-kwdkr   1/1     Running   0          5m2s
 ```
 
-### 部署Cloudpods服务
+### 部署 Cloudpods 服务
 
 ```bash
 # 下载 onecloud cluster 的 yaml 文件
-$ wget https://raw.githubusercontent.com/yunionio/onecloud-operator/master/manifests/example-onecloud-cluster.yaml -O onecloud-cluster.yaml
+$ wget https://raw.githubusercontent.com/yunionio/onecloud-operator/master/manifests/example-aliyun-onecloud-cluster.yaml -O onecloud-cluster.yaml
+```
 
+修改下载的 onecloud-cluster.yaml 文件内容，主要是修改 spec.mysql 里面内容，比如下面是修改 mysql 对应的 host 为 test.mysql.rds.aliyuncs.com，用户为 db_admin，密码为 test@password：
+
+```bash
+$ vim onecloud-cluster.yaml
+```
+
+下面是修改的 diff：
+
+```diff
+ spec:
+   mysql:
+-    host: mysql.rds.aliyuncs.com
+-    username: "root"
+-    password: "password"
++    host: test.mysql.rds.aliyuncs.com
++    username: "db_admin"
++    password: "teste@password"
+   region: "region0"
+   imageRepository: "registry.cn-beijing.aliyuncs.com/yunionio"
+   version: v3.8.6
+```
+
+还有一些服务的 storageClassName ，可以根据自己环境的 csi storageclass 设置，阿里云默认用的 alicloud-disk-ssd，还有以下的 storageclass 可以选择：
+
+```bash
+$ kubectl get storageclass
+NAME                       PROVISIONER                       RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+alibabacloud-cnfs-nas      nasplugin.csi.alibabacloud.com    Delete          Immediate              true                   8d
+alicloud-disk-available    diskplugin.csi.alibabacloud.com   Delete          Immediate              true                   8d
+alicloud-disk-efficiency   diskplugin.csi.alibabacloud.com   Delete          Immediate              true                   8d
+alicloud-disk-essd         diskplugin.csi.alibabacloud.com   Delete          Immediate              true                   8d
+alicloud-disk-ssd          diskplugin.csi.alibabacloud.com   Delete          Immediate              true                   8d
+alicloud-disk-topology     diskplugin.csi.alibabacloud.com   Delete          WaitForFirstConsumer   true                   8d
+```
+
+修改完 onecloud-cluster.yaml 的配置后，使用下面的命令部署：
+
+```bash
 # 部署Cloudpods服务
 # 将 onecloud-cluster.yaml 部署到 kubernetes 集群
 $ kubectl apply -f onecloud-cluster.yaml
@@ -94,7 +132,7 @@ default-esxi-agent-bb555858c-ft6dz                   1/1     Running            
 default-etcd-dvfcg6jfjp                              1/1     Running             0          11m
 default-glance-86d99c66-7v4lg                        1/1     Running             0          9m1s
 # 这里注意下，如果 host-deployer 一直为 ContainerCreating 的状态，可以先忽略，不影响使用
-# 因为是 minikube 部署的，没有注入一些默认的配置，这个问题以后会解决
+# 因为是在 k8s 上部署的，没有注入一些默认的配置，这个问题现在不好解决
 default-host-deployer-vmkxm                          0/1     ContainerCreating   0          8m17s
 default-influxdb-69dcbdb4c-l4lp9                     1/1     Running             0          8m44s
 default-keystone-78f45cc8db-xstk2                    1/1     Running             0          9m48s
@@ -112,18 +150,45 @@ default-vpcagent-8ff58c47d-5b4j8                     1/1     Running            
 default-web-79df8f97b9-c6lgm                         1/1     Running             0          8m52s
 default-webconsole-79cc5cfb9-xd9tk                   1/1     Running             0          8m36s
 default-yunionconf-5f79b9655f-trmls                  1/1     Running             0          8m37s
-mysql-7d4f67979b-8gl4g                               1/1     Running             0          11m
 onecloud-operator-69bf9fb476-dsw6d                   1/1     Running             0          13m
 ```
 
-也可打开 kubernetes dashboard 确认相关服务正常启动完成。
+因为阿里云的 k8s 集群开通了 nginx ingress controller 的 ingress 组件，可以查看 ingress 分配的地址：
 
 ```bash
-# 启用 kubernetes dashboard
-$ minikube dashboard -p onecloud
+$ kubectl get ingress -n onecloud
+NAME          CLASS    HOSTS   ADDRESS           PORTS     AGE
+default-web   <none>   *       139.196.226.11    80, 443   7d2h
+```
+
+然后就可以通过访问 https://139.196.226.11 访问平台前端了，公有云纳管操作请参考：[导入公有云或者其它私有云平台资源](../allinone/#导入公有云或者其它私有云平台资源)。
+
+## 其它问题
+
+### 切换成开源版本
+
+现在默认 k8s 部署的集群是企业版本，可以通过下面的操作切换成开源版本：
+
+```bash
+# 查看 onecloud cluster 配置
+$ kubectl edit oc -n onecloud default
+
+# 修改 metadata.annotations.onecloud.yunion.io/edition 为 ce
+...
+    onecloud.yunion.io/edition: ce
+...
+```
+
+然后对应的企业版本组件就会切换成开源组件，需要注意的是 default-web 的 configmap 和 deployment 需要手动删除下，等待 operator 重建，才能访问前端，操作如下：
+
+```bash
+$ kubectl delete configmap -n onecloud default-web
+$ kubectl delete deployment -n onecloud default-web
 ```
 
 ### 创建账号登录 Web UI
+
+如果是企业版，前端会提示注册，获取 license ，下面的操作适用与开源版本：
 
 - 创建账号: 部署完成后，需要使用我们的命令行工具 climc 创建帐号
 
@@ -135,28 +200,6 @@ $ /opt/yunion/bin/climc user-create demo --password demo123A --enabled
 # 将用户 demo 加入 system 项目，并且赋予 admin 权限
 $ /opt/yunion/bin/climc project-add-user system demo admin
 ```
-
-- 登陆 web 前端 UI 界面
-
-```bash
-# 使用 kubectl port-forward 将 web 前端 forward 到本地 9999 端口
-$ kubectl -n onecloud port-forward `kubectl -n onecloud get pods | grep "default-web-" | cut -f1 -d" "` 9999:443 --address=0.0.0.0
-```
-打开浏览器：https://localhost:9999 
-
-## 集群清理
-
-```bash
-# 删除所有 onecloud 服务
-$ kubectl delete -f onecloud-cluster.yaml
-$ kubectl delete -f onecloud-operator.yaml
-# stop kubernetes 集群，以后还可以用 minikube start 开启
-$ minikube -p onecloud stop
-
-# 以下命令删除整个 minikube 创建的 kubernetes 集群
-$ minikube -p onecloud delete
-```
-
-## 待解决的问题
+### 待解决的问题
 
 - default-host-deployer pod 无法启动，会处于 ContainerCreating 状态，这个是没有用 ocadm 部署集群导致的。未来会想办法支持该服务在 minikube 的集群里面运行，目前启动不了，不影响体验Cloudpods。[issue #8910](https://github.com/yunionio/onecloud/issues/8910)
