@@ -12,7 +12,7 @@ description: >
 
 ### 访问Grafana
 
-1. 访问Grafana的地址默认为 `http://控制节点IP地址/grafana`，默认登录密码为`admin / admin@123`。
+1. 访问Grafana的地址默认为 `https://控制节点IP地址/grafana`，默认登录密码为`admin / admin@123`。
 
 ![](../images/grafanahome.png)
 
