@@ -58,7 +58,7 @@ $ git clone https://github.com/yunionio/ocboot
 $ cd ocboot
 
 # 使用 run-in-docker.sh 添加节点
-$ ./run-docker.sh add-node 10.168.26.216 10.168.222.140
+$ ./run-in-docker.sh add-node 10.168.26.216 10.168.222.140
 ```
 
 等 ocboot 容器镜像拉取完后，就会调用 ansible-playbook 把对应的计算节点加入进来。
