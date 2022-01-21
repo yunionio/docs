@@ -181,7 +181,7 @@ $ systemctl disable firewalld
 $ systemctl stop NetworkManager
 $ systemctl disable NetworkManager
 $ ps -ef|grep dhcp | awk '{print $2}' |xargs kill -9
- 
+
 # 做一些 sysctl 的配置, kubernetes 要求
 $ modprobe br_netfilter
 
@@ -194,13 +194,14 @@ EOF
 $ sysctl -p
 
 # 配置并开启 ipvs
-$ cat <<EOF > /etc/sysconfig/modules/ipvs.modules
+$ cat <<"EOF" > /etc/sysconfig/modules/ipvs.modules
 #!/bin/bash
-ipvs_modules="ip_vs ip_vs_lc ip_vs_wlc ip_vs_rr ip_vs_wrr ip_vs_lblc ip_vs_lblcr ip_vs_dh ip_vs_sh ip_vs_fo ip_vs_nq ip_vs_sed ip_vs_ftp nf_conntrack_ipv4"
-for kernel_module in \${ipvs_modules}; do
-    /sbin/modinfo -F filename \${kernel_module} > /dev/null 2>&1
+
+ipvs_modules="ip_vs ip_vs_lc ip_vs_wlc ip_vs_rr ip_vs_wrr ip_vs_lblc ip_vs_lblcr ip_vs_dh ip_vs_sh ip_vs_fo ip_vs_nq ip_vs_sed ip_vs_ftp nf_conntrack br_netfilter"
+for kernel_module in ${ipvs_modules}; do
+    /sbin/modinfo -F filename ${kernel_module} > /dev/null 2>&1
     if [ $? -eq 0 ]; then
-        /sbin/modprobe \${kernel_module}
+        /sbin/modprobe ${kernel_module}
     fi
 done
 EOF
@@ -391,10 +392,10 @@ $ systemctl enable --now yunion-executor
 ```bash
 # 用 kubectl get nodes 拿到当前的节点名称
 $ kubectl get nodes
-NAME           STATUS   ROLES    AGE 
+NAME           STATUS   ROLES    AGE
 controller01   Ready    master   116d
-controller02   Ready    master   40d 
-node01         Ready    <none>   25d 
+controller02   Ready    master   40d
+node01         Ready    <none>   25d
 
 # 假设我要把 controller01 和 controller02 作为计算节点
 $ ocadm node enable-host-agent \
