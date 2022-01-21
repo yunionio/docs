@@ -112,3 +112,9 @@ ovs-vsctl set int br0 mtu_request=1560
 ```bash
 kubectl -n onecloud rollout restart daemonsets default-host
 ```
+
+### EIP网关设置
+
+如果EIP网关复用计算节点，则无需配置。如果EIP网关独立部署，则同样需要设置 eip网关的 sdnagent 配置文件 (/etc/yunion/sdnagent.conf) 的 ovn_underlay_mtu 设置。
+
+修改完成后，需要重启 yunion-sdnagent-eipgw 服务。
