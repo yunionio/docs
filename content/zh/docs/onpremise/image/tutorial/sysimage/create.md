@@ -63,7 +63,10 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     ```bash
     $ vi /etc/dracut.conf
     # 修改配置文件，去掉add_drivers+前面#注释，并在引号中添加如下内容，修改完成后保存。
+    # 以下为 x86 需要添加的内核驱动
     add_drivers+=" hpsa mptsas mpt2sas mpt3sas megaraid_sas mptspi virtio virtio_ring virtio_pci virtio_scsi virtio_blk vmw_pvscsi "
+    # 以下为 arm 需要添加的内核驱动
+    add_drivers+=" mptsas mpt2sas mpt3sas megaraid_sas mptspi virtio virtio_ring virtio_pci virtio_scsi virtio_blk "
     # 使配置生效
     # dracut -f
     ```
