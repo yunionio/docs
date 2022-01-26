@@ -23,7 +23,16 @@ cd /opt/yunion/scripts/tools/
 clean_host.sh <host_id>
 ```
 
-3. 删除该节点在ovn中的chassis记录，在控制节点执行：
+3. 删除该节点在ovn中的chassis记录
+
+首先，停止该宿主机上的openvswitch服务，清理 /etc/openvswitch 目录：
+
+```bash
+systemctl stop openvswitch
+rm -fr /etc/openvswitch/*
+```
+
+其次，在控制节点执行：
 
 ```bash
 $ kubectl -n onecloude exec -it default-ovn-north-xxxxx /bin/sh # 进入ovn-northd容器执行以下命令

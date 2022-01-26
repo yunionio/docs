@@ -178,3 +178,41 @@ $ climc server-live-migrate \
     vm1
 ```
 
+### 宿主机宕机自动迁移
+
+#### 原理
+
+宿主机宕机自动迁移会自动检测宿主机的在线状况，当控制器（region）检测到宿主机离线，则会自动将宿主机上使用共享存储的虚拟机在别的宿主机上启动起来。宿主机宕机检测原理是 host会维持 etcd 上的一个 key (路径为：/onecloud/kvm/host/health/<host_id>)，region会watch这个key，一旦host离线，这个key会超时删除，region检测到这个事件后，开始把host上的共享存储主机强制迁移到别的宿主机。
+
+#### 开启宕机自动迁移
+
+通过如下步骤开启宕机自动迁移：
+
+##### 修改宿主机host配置
+
+```bash
+vi /etc/yunion/host.conf
+把
+enable_health_checker: false
+改为true
+enable_health_checker: true
+```
+
+##### 修改region服务的配置
+
+```bash
+climc service-config-show region2
+climc service-config-edit region2
+把
+enable_host_health_check: false
+改为
+enable_host_health_check: true
+climc host-auto-migrate-on-host-down --enable  {宿主机ID}
+```
+
+##### 重启服务
+
+```bash
+kubectl -n onecloud rollout restart daemonset default-host
+kubectl -n onecloud rollout restart deployment default-region
+```
