@@ -74,4 +74,4 @@ climc service-config-edit region2
 
 在清除主机的管理安全组后，如果 default_admin_security_group_id 不为空，则会自动恢复为 default_admin_security_group_id 。
 
-
+注意：管理安全组在应用生效时，总是会以比普通安全组高的优先级进行应用。无论如何配置，普通安全组规则无法override管理安全组的规则。
