@@ -1,6 +1,6 @@
 ---
 title: "网络配置"
-weight: 40
+weight: 100
 description: >
   介绍如何DNS, NTP等网络参数配置
 ---
