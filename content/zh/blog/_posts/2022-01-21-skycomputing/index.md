@@ -88,3 +88,5 @@ Stoica教授和他的伯克利同事在 2009 年对云计算的未来有先见�
 这家公司可能会是 Google（毕竟它是开发 Kubernetes 的公司）。但微软也证明了它愿意支持开源并转向新兴的云计算趋势。虽然市场领导者 AWS 迈出第一步的可能性很小，但亚马逊实际上也是发明了云计算的公司。
 
 无论哪个云计算公司迈出第一步，众多新创业公司都将有机会在未来十年构建天空计算平台时大放异彩。
+
+引用参考文章：https://thenewstack.io/sky-computing-the-next-era-after-cloud-computing/
