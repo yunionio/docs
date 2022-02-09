@@ -2,6 +2,7 @@
 title: "费用配置"
 date: 2022-01-21T14:58:57+08:00
 weight: 90
+edition: ee
 description: >
     包括启用二次定价、汇率等配置
 ---
