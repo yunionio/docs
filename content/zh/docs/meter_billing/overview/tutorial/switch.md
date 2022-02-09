@@ -1,6 +1,7 @@
 ---
 title: "切换币种"
 date: 2022-01-27T11:41:41+08:00
+edition: ee
 weight: 30
 description: >
     介绍切换币种组件对应的含义及取值。
