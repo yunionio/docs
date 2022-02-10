@@ -10,8 +10,10 @@ description: >
 
 **单个同步状态**
 
-1. 在Elasticsearch页面，单击列表右侧操作列 **_"同步状态"_** 按钮，同步Elasticsearch状态。
+1. 在左侧导航栏，选择 **_"中间件/数据分析/Elasticsearch"_** 菜单项，进入Elasticsearch页面。
+2. 单击列表右侧操作列 **_"同步状态"_** 按钮，同步Elasticsearch状态。
 
 **批量同步状态**
 
-1. 在Elasticsearch页面，单击列表上方操作列 **_"同步状态"_** 按钮，同步Elasticsearch状态。
+1. 在左侧导航栏，选择 **_"中间件/数据分析/Elasticsearch"_** 菜单项，进入Elasticsearch页面。
+2. 单击列表上方操作列 **_"同步状态"_** 按钮，同步Elasticsearch状态。

@@ -1,7 +1,7 @@
 ---
 title: "界面概览"
 linkTitle: "界面概览"
-weight: 50
+weight: 20
 edition: ce
 oem_ignore: true
 description: >
