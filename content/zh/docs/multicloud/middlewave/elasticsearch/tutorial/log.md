@@ -8,7 +8,8 @@ description: >
 
 该功能用于查看Elasticsearch相关操作的日志信息。
 
-1. 在Elasticsearch页面，单击Elasticsearch的名称项，进入Elasticsearch详情页面。
+1. 在左侧导航栏，选择 **_"中间件/数据分析/Elasticsearch"_** 菜单项，进入Elasticsearch页面。
+2. 单击Elasticsearch的名称项，进入Elasticsearch详情页面。
 2. 单击“操作日志”页签，进入操作日志页面。
     - 加载更多日志：列表默认显示20条操作日志信息，如需查看更多操作日志，请单击 **_"加载更多"_** 按钮，获取更多日志信息。
     - 查看日志详情：单击操作日志右侧操作列 **_"查看"_** 按钮，查看日志的详情信息。支持复制详情内容。
