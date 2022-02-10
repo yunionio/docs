@@ -1,6 +1,7 @@
 ---
 title: "审批工单"
 date: 2022-01-18T15:42:19+08:00
+edition: ee
 weight: 10
 description: >
     介绍如何使用审批工单控制var_oem_name平台资源的分配
