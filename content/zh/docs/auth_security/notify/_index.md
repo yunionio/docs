@@ -1,5 +1,5 @@
 ---
-title: "消息"
+title: "消息中心"
 date: 2021-12-02T16:01:43+08:00
 weight: 100
 description: >
