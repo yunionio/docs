@@ -52,7 +52,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 
 
 
-## 控制台新建
+## 界面操作
 
 
 {{< tabs >}}
@@ -62,6 +62,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 2. 选择云平台为阿里云，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
    - 名称：阿里云账号的名称。
+   - 备注：设置云账号的备注信息。
    - 账号类型：目前支持对接公共云和金融云的阿里云账号。
    - 密钥ID/密码：通过Access Key验证方式对接阿里云平台，Access Key由密钥ID（Access Key ID）和密码（Access Key Secret）组成。获取方式请参考[获取云平台AccessKey]({{< relref "aksk" >}})。
    - 域：选择云账号所属的域。当云账号私有状态下，域下所有项目用户都可以使用云账号创建资源。
@@ -79,6 +80,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 1. 在公有云账号页面单击列表上方 **_"新建"_** 按钮，选择下拉菜单 **_"AWS"_** 菜单项，弹出新建对话框。
 2. 设置以下参数：
    - 名称：AWS账号的名称。
+   - 备注：设置云账号的备注信息。
    - 账号类型：目前支持对接全球区和中国区的AWS云账号。
    - 密钥ID/密码：对接AWS平台的密钥ID和密码信息。获取方式请参考[获取云平台AccessKey]({{< relref "aksk" >}})。
    - 域：选择云账号所属的域。当云账号私有状态下，域下所有项目用户都可以使用云账号创建资源。
@@ -96,6 +98,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 1. 在公有云账号页面单击列表上方 **_"新建"_** 按钮，选择下拉菜单 **_"Azure"_** 菜单项，弹出新建对话框。
 2. 设置以下参数：
    - 名称：Azure账号的名称
+   - 备注：设置云账号的备注信息。
    - 账号类型：目前支持对接全球区、中国区、美国政务区、德国区的Azure云账号。
    - 租户（Tenant）ID/客户端ID/客户端密码，获取方式请参考[获取云平台AccessKey]({{< relref "aksk" >}})。
    - 域：选择云账号所属的域。当云账号私有状态下，域下所有项目用户都可以使用云账号创建资源。
@@ -114,6 +117,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 2. 选择云平台为华为云，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
    - 名称：华为云账号的名称。
+   - 备注：设置云账号的备注信息。
    - 账号类型：目前支持对接全球区和中国区的华为云账号。
    - 密钥ID/密码：对接华为云平台的密钥ID和密码信息。获取方式请参考[获取云平台AccessKey]({{< relref "aksk" >}})。
    - 域：选择云账号所属的域。当云账号私有状态下，域下所有项目用户都可以使用云账号创建资源。
@@ -129,6 +133,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 2. 选择云平台为腾讯云，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
    - 名称：腾讯云平台的名称。
+   - 备注：设置云账号的备注信息。
    - APP ID/密钥ID/密码：腾讯云账号的APP ID与账号ID有唯一对应关系。对接腾讯云平台的APP ID/密钥ID/密码。获取方式请参考[获取云平台AccessKey]({{< relref "aksk" >}})。
    - 域：选择云账号所属的域。当云账号私有状态下，域下所有项目用户都可以使用云账号创建资源。
    - 资源归属项目：选择将云账号上的资源同步到Cloudpods平台的本地项目。如需将云账号上的资源按照云上项目归类，请先指定默认资源归属项目，并勾选自动创建项目。勾选后，将会在Cloudpods平台创建与云上项目同名的本地项目，并将资源同步到对应项目中。云上没有项目归属的资源将会同步到默认资源归属项目。
@@ -146,6 +151,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 1. 在公有云账号页面单击列表上方 **_"新建"_** 按钮，选择下拉菜单 **_"UCloud"_** 菜单项，弹出新建对话框。
 2. 设置以下参数：
    - 名称：UCloud平台的名称。
+   - 备注：设置云账号的备注信息。
    - 公钥/私钥：获取方式请参考[获取云平台AccessKey]({{< relref "aksk" >}})。
    - 域：选择云账号所属的域。当云账号私有状态下，域下所有项目用户都可以使用云账号创建资源。
    - 资源归属项目：选择将云账号上的资源同步到Cloudpods平台的本地项目。如需将云账号上的资源按照云上项目归类，请先指定默认资源归属项目，并勾选自动创建项目。勾选后，将会在Cloudpods平台创建与云上项目同名的本地项目，并将资源同步到对应项目中。云上没有项目归属的资源将会同步到默认资源归属项目。
@@ -168,6 +174,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 2. 选择云平台为“Google”，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
    - 名称：谷歌云的云账号名称。
+   - 备注：设置云账号的备注信息。
    - project_id、private_key_id、private_key、client_email等参数获取方式请参考[获取云平台AccessKey]({{< relref "aksk" >}})。
    - 域：选择云账号所属的域。当云账号私有状态下，域下所有项目用户都可以使用云账号创建资源。
    - 资源归属项目：选择将云账号上的资源同步到Cloudpods平台的本地项目。如需将云账号上的资源按照云上项目归类，请先指定默认资源归属项目，并勾选自动创建项目。勾选后，将会在Cloudpods平台创建与云上项目同名的本地项目，并将资源同步到对应项目中。云上没有项目归属的资源将会同步到默认资源归属项目。
@@ -185,6 +192,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 2. 选择云平台为“天翼云”，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
    - 名称：天翼云的云账号名称。 
+   - 备注：设置云账号的备注信息。
    - 账号类型：目前支持对接全球区和中国区的天翼云账号。
    - 密钥ID、密码获取方式：目前无法直接使用天翼云官网界面上申请的密钥信息，需要用户联系天翼云技术支持获取Access Key Id和Secret Access Key信息，并需要在天翼云上配置ip白名单。如用户不清楚如何获取，可直接联系运维人员寻求帮助。
    - 域：选择云账号所属的域。当云账号私有状态下，域下所有项目用户都可以使用云账号创建资源。
@@ -221,6 +229,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 2. 选择云平台为VMware，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
    - 名称：VMware账号的名称。
+   - 备注：设置云账号的备注信息。
    - vCenter地址：vCenter服务器的域名或IP地址。
    - 端口号：默认为443。
    - 账号：vCenter的管理员用户名。
@@ -245,7 +254,8 @@ $ kubectl rollout restart deployment -n kube-system coredns
 1. 在云账号页面单击列表上方 **_"新建"_** 按钮，进入新建云账号页面。
 2. 选择云平台为OpenStack，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
-   - 名称：OpenStack账号的名称。 
+   - 名称：OpenStack账号的名称。
+   - 备注：设置云账号的备注信息。
    - 认证地址：OpenStack管理平台的认证地址，如[http://host:port/v3](http://host:port/v3)。若OpenStack管理平台的认证地址为域名，请参考上面[注意事项](#注意事项)配置认证地址的域名解析。
    - 账号：OpenStack平台的管理员用户名，如admin。
    - 密码：OpenStack平台管理员用户的密码。 
@@ -272,6 +282,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 3. 设置以下参数：
 
    - 名称：ZStack或DStack账号的名称。
+   - 备注：设置云账号的备注信息。
    - 认证地址：ZStack或DStack平台的认证地址，一般为[http://host:8080/](http://host:8080/)，host为ZStack或DStack控制节点的IP地址。 
    - 密钥ID：即ZStack或DStack平台上的Access Key ID。 
    - 密码：即ZStack或DStack平台上的Access Key Secret。
@@ -296,6 +307,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 2. 选择云平台为飞天，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 配置以下信息：
     - 名称：飞天云账号的名称。
+    - 备注：设置云账号的备注信息。
     - 密钥ID/密码：通过Access Key验证方式对接阿里云平台，Access Key由密钥ID（Access Key ID）和密码（Access Key Secret）组成。获取方式请参考[获取云平台AccessKey]({{< relref "aksk" >}})。
     - 虚拟机端点：必填，通过飞天API的ESC Endpoint信息对接飞天云的虚拟机资源。
     - VPC端点：必填，通过飞天API的VPC Endpoint信息对接飞天云的VPC资源。
@@ -324,6 +336,7 @@ S3即Simple Storage service。在创建S3账号之前需要先部署基于S3协�
 2. 选择云平台为S3，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
     - 名称：S3对象存储服务器的名称。
+    - 备注：设置云账号的备注信息。
     - 接入地址：S3对象存储服务器的接入地址。若部署MinIO服务器，接入地址格式为[http://IP地址:9000](http://IP地址:9000)。
     - 密钥ID：即Access Key。
     - 密码：即Secret Key。
@@ -353,6 +366,7 @@ S3即Simple Storage service。在创建S3账号之前需要先部署基于S3协�
 2. 选择云平台为Ceph，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
    - 名称：ceph对象存储服务器的名称。
+   - 备注：设置云账号的备注信息。
    - 接入地址：ceph对象存储服务器的接入地址。
    - 密钥ID：ceph对象存储服务器的密钥ID。
    - 密码：密钥ID对应的密码信息。
@@ -371,6 +385,7 @@ S3即Simple Storage service。在创建S3账号之前需要先部署基于S3协�
 2. 选择云平台为XSKY，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
    - 名称：XSKY存储服务器的名称。
+   - 备注：设置云账号的备注信息。
    - 接入地址：XSKY存储服务器的接入地址。
    - 密钥ID：XSKY对象存储服务器的密钥ID。
    - 密码：密钥ID对应的密码信息。
