@@ -1,7 +1,7 @@
 ---
 title: "套餐"
 date: 2021-12-22T19:17:27+08:00
-weight: 12
+weight: 18
 description: >
     套餐是虚拟机CPU和内存的组合搭配
 ---
