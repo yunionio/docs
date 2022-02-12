@@ -1,6 +1,6 @@
 ---
 title: "公有云资源归属"
-weight: 180 
+weight: 190 
 description: >
     介绍公有云平台上资源如何同步到var_oem_name平台
 ---
