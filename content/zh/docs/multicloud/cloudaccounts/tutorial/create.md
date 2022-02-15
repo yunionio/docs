@@ -362,6 +362,10 @@ S3即Simple Storage service。在创建S3账号之前需要先部署基于S3协�
 
 {{% tab name="Ceph" %}}
 
+Ceph秘钥创建[参考链接](https://docs.ceph.com/en/pacific/radosgw/admin/#add-remove-a-key)
+- 密钥ID 对应生成结果中 **keys** 中的 *access_key*
+- 密码 对应生成结果中 **keys** 中的 *secret_key*
+
 1. 在云账号页面单击列表上方 **_"新建"_** 按钮，进入新建云账号页面。
 2. 选择云平台为Ceph，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 设置以下参数：
