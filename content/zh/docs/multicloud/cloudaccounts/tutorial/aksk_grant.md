@@ -60,8 +60,8 @@ description: >
 
 区域 | API权限
 ---------|----------
- Azure中国 | Dictionary: Dictionary.Read.All, Dictionary.ReadWrite.All</br> Domain: Domain.Read.All
- Azure国际区 | Dictionary: Dictionary.Read.All, Dictionary.ReadWrite.All</br> Domain: Domain.Read.All, Domain.ReadWrite.All); </br>Member:  Member.Read.Hidden; </br>Policy: Policy.Read.All;
+ Azure中国 | Directory: Directory.Read.All, Directory.ReadWrite.All</br> Domain: Domain.Read.All
+ Azure国际区 | Directory: Directory.Read.All, Directory.ReadWrite.All</br> Domain: Domain.Read.All, Domain.ReadWrite.All); </br>Member:  Member.Read.Hidden; </br>Policy: Policy.Read.All;
  
 **查看及设置步骤**
 
@@ -76,7 +76,7 @@ description: >
 
     ![](../../images/azurerequestapi.png)
 
-4. 选择“Azure Active Directory”，应用程序选择“应用程序权限”，并勾选Dictionary和Domian下的所有权限，单击 **_"添加权限"_** 按钮，完成配置。
+4. 选择“Microsoft Graph”，应用程序选择“应用程序权限”，并勾选Directory和Domian下的所有权限，单击 **_"添加权限"_** 按钮，完成配置。
 
     ![](../../images/azurecreateapi.png)
 

@@ -16,7 +16,7 @@ description: >
 
 该功能用于通过过VNC远程终端或Web SSH远程连接到虚拟机。
 {{% alert title="注意" color="warning" %}}
-- AWS、Azure、Google、天翼云不支持VNC远程终端；
+- AWS、Azure、Google、天翼云、Nutanix不支持VNC远程终端；
 - Windows操作系统的虚拟机只支持通过VNC远程终端；
 - ZStack、DStack、HCSO、阿里云、AWS、Azure、华为云、腾讯云、UCloud需要虚拟机上存在EIP才可以通过Web SSH远程连接。
 - VNC长时间连接黑屏后，按空格键会恢复显示。

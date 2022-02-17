@@ -352,6 +352,26 @@ $ curl 'https://api.ipify.org?format=json'
 {{% /tab %}}
 
 
+{{% tab name="Cloudpods" %}}
+
+### Cloudpods获取AccessKey
+
+1. 登录Cloudpods平台，鼠标悬停在右上角用户名处，选择下拉菜单 **_"访问凭证"_** 菜单项，进入访问凭证页面。
+
+    <img src= "../../images/cloudpodsaksk.png" width="400" alt="aksk">
+
+2. 在AccessKey管理页面中单击 **_"新建"_** 按钮，新建Accesskey。
+
+    ![](../../images/cloudpodsaddaksk.png)
+
+3. 已有AccessKey，则对应的ID、Client Secret即对应的密钥ID和密码信息。
+
+    ![](../../images/cloudpodsaksklist.png)
+
+
+{{% /tab %}}
+
+
 {{< /tabs >}}
 
 
