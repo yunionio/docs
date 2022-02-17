@@ -11,6 +11,7 @@ description: >
 {{% alert title="注意" color="warning" %}}
 
 - 目前ZStack、OpenStack平台的虚拟机在绑定弹性公网IP时不支持创建弹性公网IP，且不支持绑定属于同一IP子网的弹性公网IP；
+- Nutanix平台虚拟机不支持绑定EIP。
 {{% /alert %}}
 
 1. 在左侧导航栏，选择 **_"主机/主机/虚拟机"_** 菜单项，进入虚拟机页面。

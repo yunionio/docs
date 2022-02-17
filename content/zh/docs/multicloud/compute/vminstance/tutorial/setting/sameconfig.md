@@ -9,7 +9,7 @@ description: >
 该功能用于创建相同配置的虚拟机。
 
 {{% alert title="注意" color="warning" %}}
-- OpenStack、ZStack、DStack平台上虚拟机不支持该操作。
+- OpenStack、ZStack、DStack、Nutanix平台上虚拟机不支持该操作。
 {{% /alert %}}
 
 1. 在左侧导航栏，选择 **_"主机/主机/虚拟机"_** 菜单项，进入虚拟机页面。
