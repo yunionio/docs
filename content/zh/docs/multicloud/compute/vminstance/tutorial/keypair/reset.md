@@ -9,7 +9,7 @@ description: >
 该功能用于更新虚拟机上的管理员用户的密码，管理员密码在Linux系统下为root用户的密码、Windows操作系统下为administrator用户的密码。
 
 {{% alert title="注意" color="warning" %}}
-- AWS平台的虚拟机不支持重置密码；
+- AWS、Nutanix平台的虚拟机不支持重置密码；
 - OpenStack、ZStack、DStack、Azure、UCloud平台的虚拟机在运行状态下支持重置密码操作；
 - 在HCSO、阿里云、华为云、腾讯云、Google、天翼云平台的虚拟机在关机状态下支持重置密码操作；
 - 绑定密钥的虚拟机无法进行重置密码操作。
