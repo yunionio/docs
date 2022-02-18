@@ -167,7 +167,7 @@ description: >
 
 {{% alert title="注意" color="warning" %}}
 1. 名称、内存或者套餐类型在创建主机时必须使用;
-2. 系统盘的镜像通过 `image-list` 或者 `cached-image-list`，公有云的镜像列表通过 `cached-image-list` 接口查询，参考: [查询镜像](../../../image/tutorial/query/);
+2. 系统盘的镜像通过 `image-list` 或者 `cached-image-list`，公有云的镜像列表通过 `cached-image-list` 接口查询，参考: [查询镜像](../../../image/tutorial/show/#查询镜像);
 {{% /alert %}}
 
 
