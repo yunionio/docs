@@ -51,7 +51,7 @@ $ wget http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1711
 $ climc image-upload --format qcow2 --os-type Linux --os-arch x86_64 --standard CentOS-7-x86_64-GenericCloud-1711.qcow2 ./CentOS-7-x86_64-GenericCloud-1711.qcow2
 ```
 
-上传时间长短取决于网络环境和镜像大小，上传完成后需要查询镜像的状态，当状态变为 'active' 时，就可以拿来使用了。( 更多的关于镜像的查询参考: [镜像查询](../query/) )
+上传时间长短取决于网络环境和镜像大小，上传完成后需要查询镜像的状态，当状态变为 'active' 时，就可以拿来使用了。( 更多的关于镜像的查询参考: [镜像查询](../show/#查询镜像) )
 
 ```bash
 $ climc image-show CentOS-7-x86_64-GenericCloud-1711.qcow2 | grep status
