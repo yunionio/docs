@@ -265,12 +265,12 @@ CRUD 举例:
 
 ### 使用帮助 help
 
-climc 的子命令有很多参数，参数分为必填参数和可选参数，使用 `climc help <subcommand>` 这种格式，**help** 子命令会获取 <subcommand> 提供的参数和各个参数的解释。
+climc 的子命令有很多参数，参数分为必填参数和可选参数，使用 `climc <subcommand> --help` 这种格式，**help** 子命令会获取 <subcommand> 提供的参数和各个参数的解释。
 
 比如我要查看 `image-upload` 命令的参数和解释:
 
 ```bash
-$ climc help image-upload
+$ climc image-upload --help
 ...
 Upload a local image
 

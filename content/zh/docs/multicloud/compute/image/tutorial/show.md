@@ -94,10 +94,10 @@ $ climc image-list --search ubuntu
 $ climc cached-image-list --search centos --public-cloud
 
 # image-list 支持的查询条件
-$ climc help image-list
+$ climc image-list --help
 
 # cached-image-list 支持的查询条件
-$ climc help cached-image-list
+$ climc cached-image-list --help
 ```
 
 

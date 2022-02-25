@@ -57,7 +57,7 @@ $ climc image-upload --format qcow2 --os-type Linux --os-arch x86_64 --standard 
 $ climc image-show CentOS-7-x86_64-GenericCloud-1711.qcow2 | grep status
 | status          | active |
 ```
-使用 `climc help image-upload` 获取各个参数解释。
+使用 `climc image-upload --help` 获取各个参数解释。
 
 
 

@@ -67,7 +67,7 @@ microcode       : 0xca
 冷迁移的命令为 `climc server-migrate`，通过下面的命令可以查看参数的说明和帮助信息：
 
 ```bash
-$ climc help server-migrate
+$ climc server-migrate --help
 
 Usage: climc server-migrate [--auto-start] [--rescue-mode] [--prefer-host PREFER_HOST] <ID>
 
@@ -140,7 +140,7 @@ $ climc server-migrate --rescue-mode \
 热迁移的命令为 `climc server-live-migrate`，通过下面的命令查看帮助信息：
 
 ```bash
-$ climc help server-live-migrate
+$ climc server-live-migrate --help
 Usage: climc server-live-migrate [--skip-cpu-check] [--prefer-host PREFER_HOST] <ID>
 
 Live-Migrate server
