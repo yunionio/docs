@@ -35,17 +35,18 @@ description: >
         - SAML录入方式选择“上传SAML IDP metadata”，上传在AWS下载的AWS SSO SAML元数据文件。
         - 用户ID、用户名：设置用户ID和用户名的用户属性，如user_id，user_name，同时需要在AWS的SAML应用程序的属性映射页签中，将应用程序的应用属性映射到AWS SSO中的用户属性。
         - 建议勾选“自动创建用户”，并选择用户所属的域、项目、角色等。
-
         ![](../../../images/commonsamlconfig.png)
 
         - 创建完成后，在通用SAML的认证源详情中，下载IDP源数据，该文件即AWS配置SAML应用程序所需的元数据文件。
-
         ![](../../../images/commonsamldownload.png)
 
-    - SAML元数据值获取方式：在{{<oem_name>}}平台的认证源页面，查看“SAML认证协议所需本系统信息”的redirect_uri即应用程序ACS URL；entity_id即应用程序SAML受众。
-    
-    ![](../../../images/commonsamlinfo1.png)
-    ![](../../../images/awssamlappinfo.png)
+    - SAML元数据值获取方式：
+        - 在{{<oem_name>}}平台的认证源页面，查看“SAML认证协议所需本系统信息”中的entity_id即为应用程序SAML受众。
+        ![](../../../images/commonsamlentity.png)
+
+        - 按照上面步骤新建通用SAML认证源，点击SAML认证源名称进入认证源详情页面，查看认证源配置信息中的AssertionURI即应用程序ACS URL。
+        ![](../../../images/commonsamlinfo.png)
+        ![](../../../images/awssamlappinfo.png)
 
 5. 配置完成后，保存更改。
 6. 在应用程序详情-属性映射中，配置以下信息，单击 **_"保存更改"_** 按钮。
