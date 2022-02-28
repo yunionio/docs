@@ -38,7 +38,7 @@ Index 为 1 表示第二块磁盘，对应 Linux 系统里面的 '/dev/sdb'，�
 先看下 server-disk-update 命令的帮助信息。
 
 ```bash
-$ climc help server-disk-update
+$ climc server-disk-update --help
 Usage: climc server-disk-update [--cache {writethrough,none,writeback}] [--aio {native,threads}] [--index INDEX] [--driver {virtio,ide,scsi,pvscsi}] <SERVER> <DISK>
 
 Update details of a virtual disk of a virtual server
