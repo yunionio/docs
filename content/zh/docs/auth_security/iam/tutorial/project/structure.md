@@ -1,6 +1,7 @@
 ---
 title: "配置组织架构"
 date: 2022-03-01T15:44:09+08:00
+edition: ee
 weight: 35
 description: >
     介绍如何根据组织架构配置层级项目
