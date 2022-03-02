@@ -1,6 +1,7 @@
 ---
 title: "项目配额"
 date: 2021-12-07T18:37:35+08:00
+edition: ee
 weight: 20
 description: >
     设置项目配额
