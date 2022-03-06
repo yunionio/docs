@@ -1,6 +1,7 @@
 ---
 title: "部署集群(已废弃)"
 date: 2019-04-13T13:01:57+08:00
+edition: ce
 weight: 4
 description: >
   部署 kubernetes 和 Cloudpods 服务，创建第一个控制节点
