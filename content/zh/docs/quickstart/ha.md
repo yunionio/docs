@@ -1,6 +1,7 @@
 ---
 title: "高可用安装"
 linkTitle: "高可用安装"
+edition: ce
 weight: 2
 description: >
   使用 ocboot 部署工具高可用安装 Cloudpods 服务，更符合生产环境的部署需求

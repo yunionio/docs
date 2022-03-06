@@ -1,6 +1,7 @@
 ---
 title: "All in One 安装"
 linkTitle: "All in One 安装"
+edition: ce
 weight: 1
 description: >
   使用 ocboot 部署工具快速在已有的节点上以 All in One 的方式部署 Cloudpods 服务
