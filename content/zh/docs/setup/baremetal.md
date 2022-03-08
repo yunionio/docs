@@ -9,9 +9,11 @@ description: >
 
 当平台部署成功后，需要选择部署环境中的一个 node 来部署 baremetal-agent 服务。
 
-{{% alert title="注意" color跨节点运行。
-{{% /alert %}}
 
+{{% alert title="注意" color="warning" %}}
+目前只能指定一个 node 来部署运行 baremetal-agent 服务，因为 baremetal-agent 服务是有状态的，不能多副本跨节点运行。
+
+{{% /alert %}}
 ## 启用 baremetal-agent
 
 在通过 pxe 引导流程中，baremetal-agent 只会处理来自 dhcp relay 服务器的请求, 所以你需要事先在交换机配置 dhcp relay 或者使用 {{<oem_name>}} host 服务的 dhcp relay 功能。
