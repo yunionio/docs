@@ -1,7 +1,7 @@
 ---
 title: "部署 DB HA 环境"
 date: 2020-02-12T12:55:46+08:00
-weight: 3
+weight: 4
 description: >
   部署高可用数据库集群
 ---

@@ -1,6 +1,7 @@
 ---
 title: "升级相关"
 linkTitle: "升级相关"
+edition: ce
 weight: 100
 description: >
   介绍如何升级服务版本

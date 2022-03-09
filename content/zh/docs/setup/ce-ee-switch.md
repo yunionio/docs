@@ -1,9 +1,9 @@
 ---
-title: "切换到企业版"
+title: "切换到企业版/开源版"
 date: 2020-02-12T12:55:46+08:00
 weight: 12
 description: >
-  介绍从开源版本切换为企业版本
+  介绍从开源版本切换为企业版本或从企业版本切换到开源版本
 ---
 
 默认情况下部署好的版本是 **开源版本(CE: Community Edition)**，可以使用 `ocadm cluster update` 命令切换成 **企业版本(EE: Enterprise Edition)**。
