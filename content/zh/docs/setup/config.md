@@ -5,11 +5,9 @@ description: >
     介绍部署 var_oem_name 平台的配置要求
 ---
 
-下表为不同场景需要部署的节点及配置要求等。请根据具体使用场景进行规划部署。
+### 硬件配置要求
 
-<style> 
-table tr th, table tr td  { border:1px solid #808080; padding:5px; }
-</style>
+下表为不同场景需要部署的节点及配置要求等。请根据具体使用场景进行规划部署。
 
 <table>
    <tr>
@@ -98,3 +96,10 @@ table tr th, table tr td  { border:1px solid #808080; padding:5px; }
    </tr>
 </table>
 
+### 公有云主机配置注意事项
+
+如在公有云中的云主机上部署{{<oem_name>}}平台，请注意以下事项：
+
+- 由于公有云上的云主机不能设置vip，数据库不是双主模式，因此在公有云上无法安装高可用环境，建议仅配置k8s高可用，{{<oem_name>}}平台部署一个控制节点和两个计算节点。
+- 当在公有云上部署多个节点时，建议云主机之间请放开全部端口。
+- 在公有云上部署环境时，建议部署Mariadb数据库，不要使用mysql 5.6及以下版本，防止索引长度 bug： Index column size too large. The maximum column size is 767 bytes.

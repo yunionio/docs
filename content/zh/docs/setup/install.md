@@ -22,7 +22,7 @@ description: >
 
 ### 配置要求
 
-请按需准备部署环境，详细请参考[配置要求](./config)
+请按需准备部署环境，详细请参考[配置要求](../config)
 
 ### 安装组件介绍
 
@@ -40,8 +40,8 @@ description: >
 ![](../images/k8s-network1.png)
 
 - 服务器说明：
-    - 其中First Node服务器作为Kubernetes集群的Controlplane节点，{{<oem_name>}}集群的Controller节点和Host节点；
-    - Not First Node服务器作为Kubernetes集群的Node节点，{{<oem_name>}}集群的Host节点。
+    - 控制节点（First Node）作为Kubernetes集群的Controlplane节点，{{<oem_name>}}集群的Controller节点和Host节点；
+    - 计算节点(Not First Node)作为Kubernetes集群的Node节点，{{<oem_name>}}集群的Host节点。
 - 3.0版本支持离线安装，安装过程可以不访问互联网。但是后面部署过程从镜像市场导入镜像需要访问互联网。
 
 ## 安装过程
@@ -124,7 +124,7 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
   - 上下方向键：用于切换上下菜单和配置项。
   - Tab键或左右方向键：用于切换底侧“Select”、“OK”和“Help”按钮，按enter键确认选择。
 
-#### First Node服务器
+#### 部署控制节点
 
 1. 在安装配置页面，如果服务器有多块网卡，需要选择作为管理网的网卡。
 
@@ -148,18 +148,15 @@ GRANT ALL PRIVILEGES ON * . * TO '<USERNAME>'@'localhost' WITH GRANT OPTION;
     ![](../images/k8s-connectmysql1.png)
     ![](../images/k8s-configmysql1.png)
 5. 本例选择将数据库安装在当前主机上，在安装配置页面将光标选中”OK“按钮，按enter键，在弹出的保存配置对话框中光标选中"Yes"，并按enter键确认选择，开始安装。
-
     ![](../images/k8s-confirm.png)
-
-2. 安装过程较长，请耐心等待，直到安装完成。
+6. 安装过程较长，请耐心等待，直到安装完成。
 {{% alert title="说明" %}}
 - 当服务器当前内核（`uname -r`用于查看内核版本）与产品要求“3.10.0-1062.4.3.el7.yn20191203.x86_64”不一致时，产品安装完成后将会自动重启。
 - 当服务器当前内核（`uname -r`用于查看内核版本）与产品要求“3.10.0-1062.4.3.el7.yn20191203.x86_64”一致时，则产品安装完成后不会自动重启。
 {{% /alert %}}
-
     ![](../images/k8s-completed.png)
 
-6. 在服务器中执行`source ~/.bashrc`命令加载kubernetes的环境变量，加载完成后，用户可通过kubectl相关命令管理{{<oem_name>}}的系统组件等。
+7. 在服务器中执行`source ~/.bashrc`命令加载kubernetes的环境变量，加载完成后，用户可通过kubectl相关命令管理{{<oem_name>}}的系统组件等。
 
     ```bash
     # 查看K8s节点
@@ -168,11 +165,11 @@ GRANT ALL PRIVILEGES ON * . * TO '<USERNAME>'@'localhost' WITH GRANT OPTION;
     $ kubectl get pod --namespace onecloud 
     ```
 
-7.  在浏览器中输入[https://服务器IP地址](https://服务器IP地址)，即可打开{{<oem_name>}}平台,进行[初始化引导操作](../deploy/)。
+8.  在浏览器中输入[https://服务器IP地址](https://服务器IP地址)，即可打开{{<oem_name>}}平台,进行[初始化引导操作](../deploy/)。
 
-#### Not First Node服务器
+#### 部署计算节点
 
-本次部署在Not First Node服务器上部署K8s node节点以及host节点。
+本次部署在非First Node服务器上部署K8s node服务以及host服务。
 
 1. 在安装配置页面，按空格键取消勾选“First Node”，Role of K8S默认为“K8s Node”；roles默认为“Enable Host Agent”。可根据需求更改角色，本例不修改，直接保持默认。
 
@@ -182,7 +179,7 @@ GRANT ALL PRIVILEGES ON * . * TO '<USERNAME>'@'localhost' WITH GRANT OPTION;
 
     ![](../images/k8s-firstnodeip1.png)
 
-3. 配置Join Token为在First Node服务器上获取的Token值。
+3. 配置Join Token为在控制节点上获取的Token值。
 
     ![](../images/k8s-jointoken1.png)
     
@@ -190,10 +187,10 @@ GRANT ALL PRIVILEGES ON * . * TO '<USERNAME>'@'localhost' WITH GRANT OPTION;
 
 **Join Token获取方式如下：**
 
-在First Node服务器上输入`ocadm token create`命令获取Token。
-**注意**在刚部署成功的First Node服务器无法直接使用ocadm命令，需要重新登录服务器或者不断开连接直接执行`source ~/.bashrc`命令加载kubernetes的环境变量。
+在控制节点上输入`ocadm token create`命令获取Token。
+**注意**在刚部署成功的控制节点无法直接使用ocadm命令，需要重新登录服务器或者不断开连接直接执行`source ~/.bashrc`命令加载kubernetes的环境变量。
 
-如下图所示，First Node服务器部署成功后，先断开并重连服务器。红圈中内容即为Token值
+如下图所示，控制节点部署成功后，先断开并重连服务器。红圈中内容即为Token值
 
 ![](../images/k8s-token1.png)
 {{% /alert %}}
@@ -237,7 +234,6 @@ yun::init::step yun::tui::reboot
 - 当服务器当前内核（`uname -r`用于查看内核版本）与产品要求“3.10.0-1062.4.3.el7.yn20191203.x86_64”不一致时，产品安装完成后将会自动重启。
 - 当服务器当前内核（`uname -r`用于查看内核版本）与产品要求“3.10.0-1062.4.3.el7.yn20191203.x86_64”一致时，则产品安装完成后不会自动重启。
 {{% /alert %}}
-   
     ![](../images/k8s-reboot.png)
 
 1. 以root用户ssh远程登录服务器,至此host节点部署完成。
