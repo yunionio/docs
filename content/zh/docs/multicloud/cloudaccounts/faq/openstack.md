@@ -48,3 +48,24 @@ volume_backend_name = ceph
 3、重新添加volume；指定类型为ceph即可。
 
 4、cloudpods可以重新同步，可以看到磁盘已经同步下来。
+
+
+## 纳管 Openstack 后没有资源同步下来
+
+1、检查纳管OpenStack的账号是否以admin的角色(非admin角色可能会有权限的问题)加入项目.
+
+2、排除账号权限后，检查cloudpods能否访问OpenStack控制节点，执行下面的命令，出现截图的内容，确实是域名解析的问题
+```bash
+[root@test-69-onecloud01 ~]# kubectl get pods -n onecloud |grep climc
+default-climc-6fccbbfd8d-l59gg                       1/1     Running            0          4d13h
+[root@test-69-onecloud01 ~]# kubectl exec -it  -n onecloud default-climc-6fccbbfd8d-l59gg bash
+Welcome to Cloud Shell :-) You may execute climc and other command tools in this shell.
+Please exec 'climc' to get started
+
+bash-5.1# source <(climc cloud-provider-list --provider OpenStack | awk 'NR==4 {print $2}' | xargs climc cloud-provider-clirc)
+bash-5.1# openstackcli host-list
+```
+![a19f70a99ed18986ac2edd60ea86be3](https://user-images.githubusercontent.com/32036395/157816747-cb7466dd-679e-4e89-bacc-c58446950bfa.png)
+
+解决方法参考 https://www.cloudpods.org/zh/docs/multicloud/cloudaccounts/tutorial/create/
+
