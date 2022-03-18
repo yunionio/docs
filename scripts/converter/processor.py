@@ -25,12 +25,14 @@ META_VAL_EDITION_EE = 'ee'
 
 def add_skip_dir(skip_dirs, dirpath, subdirs):
     print("skip dir %s: %s" % (dirpath, subdirs))
+    skip_dirs.append(dirpath)
     for subdir in subdirs:
         # do not skip image and images subdir
         if subdir in ["image", "images"]:
             continue
         fullpath = os.path.join(dirpath, subdir)
         skip_dirs.append(fullpath)
+    return skip_dirs
 
 
 class DirProcess(object):
@@ -69,12 +71,19 @@ class DirProcess(object):
         helper.makedirs(self._dest_dir)
         skip_dirs = []
         for (dirpath, dirnames, filenames) in os.walk(self._src_dir):
+            # check parent dir in skip_dirs
+            for p_dir in skip_dirs:
+                if p_dir in dirpath:
+                    skip_dirs.append(dirpath)
+                    break
+
             if dirpath in skip_dirs:
                 continue
 
             if self.should_skip_dir(dirpath, filenames):
-                add_skip_dir(skip_dirs, dirpath, dirnames)
+                skip_dirs = add_skip_dir(skip_dirs, dirpath, dirnames)
                 continue
+
             for filename in filenames:
                 fp = self._new_file_processor(dirpath, filename)
                 fp.start()
