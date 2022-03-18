@@ -1,6 +1,6 @@
 ---
 title: "添加共享存储"
-weight: 1
+weight: 10
 description: >
   介绍如何对接Ceph、NFS等共享存储。
 ---
