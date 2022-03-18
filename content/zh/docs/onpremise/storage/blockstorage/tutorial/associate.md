@@ -1,6 +1,6 @@
 ---
 title: "关联宿主机"
-weight: 3
+weight: 20
 description: >
   介绍如何将添加的共享存储关联到宿主机上使用。
 ---

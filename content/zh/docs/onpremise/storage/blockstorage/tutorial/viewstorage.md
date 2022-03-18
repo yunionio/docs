@@ -1,6 +1,6 @@
 ---
 title: "查看块存储信息"
-weight: 9
+weight: 90
 description: >
   查看块存储的相关信息。
 ---
