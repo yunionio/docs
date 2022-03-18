@@ -72,7 +72,7 @@ class SingleMDFile(object):
         if len(idxs) == 0:
             self.set_content(contents)
             return
-        if len(idxs) != 2:
+        if len(idxs) < 2:
             raise Exception("Not found paired %s in contents, index is %s" % (self.META_SEP, len(idxs)))
         meta_lines = contents[idxs[0]+1:idxs[1]]
         self.meta = yaml.load(''.join(meta_lines), Loader=yaml.FullLoader)
