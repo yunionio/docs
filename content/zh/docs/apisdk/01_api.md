@@ -3,10 +3,10 @@ title: "API调用方法"
 date: 2019-07-11T20:39:39+08:00
 weight: 1
 description: >
-  介绍Cloudpods API调用方法
+  介绍var_oem_name API调用方法
 ---
 
-本章节介绍Cloudpods API的调用方法。
+本章节介绍{{<oem_name>}} API的调用方法。
 
 [详细的API内容请参考API](../../swagger)。
 
