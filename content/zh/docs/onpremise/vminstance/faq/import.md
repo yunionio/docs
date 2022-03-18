@@ -43,7 +43,7 @@ hosts:
     - `monitor_path`是libvirt存储虚拟机monitor socket文件的路径，
     - `servers`是需要导入的虚拟机，里面描述了虚拟机的ip和mac对应关系
 
----
+----
 - 执行 climc servers-import-from-libvirt 开始导入
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 title: "Git 提交内容规范"
 weight: 3
-description: >
+description:
   说明提交代码时，书写 git commit message 的内容规范
 ---
 
@@ -44,7 +44,7 @@ description: >
 
 ## Commit 举例
 
----
+----
 
 ```bash
 fix(region): compute NextSyncTime for snapshotpolicydisk
@@ -54,7 +54,7 @@ fix(region): compute NextSyncTime for snapshotpolicydisk
 是每周一生效，并且打的快照自动保留 3 天，那么，就应该在每周一（打快照）
 和每周四（释放快照）进行快照的同步。
 ```
----
+----
 
 ```bash
 feat(scheduler): add cpu filter
@@ -64,12 +64,12 @@ Added new cpu filter to scheduler:
 - filter host by cpu model
 - set host capability by request cpu count
 ```
----
+----
 
 ```bash
 fix(apigateway,monitor,influxdb): disable influxdb service query proxy
 ```
----
+----
 
 ```bash
 feat(climc): support disable wrap line
@@ -80,7 +80,7 @@ climc server-list
 
 Closes #6710
 ```
----
+----
 
 ## 辅助工具
 
