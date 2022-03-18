@@ -62,7 +62,7 @@ def copy_file(src, to):
     target_dir = os.path.dirname(to)
     makedirs(target_dir)
     shutil.copy2(src, to)
-    #  print("copy %s to %s" % (src, to))
+    # print("copy %s to %s" % (src, to))
 
 
 def makedirs(path):
