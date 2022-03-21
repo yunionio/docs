@@ -9,24 +9,22 @@ description: >
 
 ## 配置
 
-开启改选项会产生额外的计算量。假设需要开启以下服务的配置表：
+开启改选项会产生额外的计算量。默认开启以下服务的配置表：
 
 - keystone 服务:
     - user 表: 保存用户信息的表
-    - service 表: 保存服务配置的表
 - region 服务:
     - guests_tbl 表: 保存虚拟机信息
-    - hosts_tbl 表: 保存宿主机信息
+- logger 服务:
+    - actionlog_tbl 表: 保存操作日志
 
-分别编辑这两个服务的配置 configmap default-keystone 和 default-region 里面的 db_checksum_tables 这个参数，该参数值为字符串数组，写需要一致性检查的数据库表名：
+分别编辑这两个服务的配置 configmap default-keystone 和 default-region 里面的 enable_db_checksum_tables 这个参数：
 
 ```bash
 # 配置 keystone 服务配置
 $ kubectl -n onecloud edit configmaps default-keystone
 ...
-    db_checksum_tables:
-    - user
-    - service
+    enable_db_checksum_tables: true
 ...
 
 # 重启 keystone 服务
@@ -35,9 +33,7 @@ $ kubectl -n onecloud rollout restart deployment default-keystone
 # 配置 region 服务配置
 $ kubectl -n onecloud edit configmaps default-region
 ...
-    db_checksum_tables:
-    - guests_tbl
-    - hosts_tbl
+    enable_db_checksum_tables: true
 ...
 
 # 重启 region 服务
@@ -46,7 +42,7 @@ $ kubectl -n onecloud rollout restart deployment default-region
 
 ## 测试
 
-当开启 db_checksum_tables 的配置后，每条记录就会有一个 record_checksum 的字段，这里以 keystone 数据库的 user 表来测试，看看如果手动修改了记录会发生什么情况：
+当开启 enable_db_checksum_tables 的配置后，每条记录就会有一个 record_checksum 的字段，这里以 keystone 数据库的 user 表来测试，看看如果手动修改了记录会发生什么情况：
 
 ```bash
 # 查看 cloudadmin 用户的 record_checksum, id 和 last_login_ip
