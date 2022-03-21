@@ -2,7 +2,7 @@
 title: "代码结构"
 weight: 7
 description:
-  介绍Cloudpods的代码结构
+  介绍 var_oem_name 的代码结构
 ---
 
 ## 后端代码结构

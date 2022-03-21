@@ -3,7 +3,7 @@ title: "联系我们"
 weight: 150
 oem_ignore: true
 description: >
-  联系Cloudpods的方式和渠道
+  联系 var_oem_name 的方式和渠道
 ---
 
 * 哔哩哔哩:  https://space.bilibili.com/623431553/

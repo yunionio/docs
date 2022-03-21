@@ -4,9 +4,9 @@ description: 介绍各个平台部署 kubernetes 集群对应的环境准备
 weight: 1
 ---
 
-## Cloudpods私有云
+## {{% oem_name %}}私有云
 
-如果是在Cloudpods私有云上部署 kubernetes 集群，需要先导入对应的镜像，操作如下：
+如果是在{{<oem_name>}}私有云上部署 kubernetes 集群，需要先导入对应的镜像，操作如下：
 
 1. 进入主机菜单，选择系统镜像的上传按钮
 2. 输入镜像名称 'CentOS-7.6.1810-20190430.qcow2'
