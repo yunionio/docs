@@ -10,9 +10,9 @@ weight: 2
 
 采用新机制避免了因为网卡的检测顺序、增删网卡等导致的网卡名称不持久，但却导致网卡的名称没有规律可循，而云平台初始化裸金属时需要能够明确地配置指定物理机网卡的IP配置。
 
-为此，Cloudpods按照YunionOS探测网卡的顺序给网卡依次命名为en0, en1, ...
+为此，{{<oem_name>}}按照YunionOS探测网卡的顺序给网卡依次命名为en0, en1, ...
 
-为了实现网卡的自定义命名，Cloudpods做了如下操作：
+为了实现网卡的自定义命名，{{<oem_name>}}做了如下操作：
 
 1) 关闭 Predictable-Network-Interface-Names 机制，需要修改 /etc/default/grub，在内核启动参数添加 "net.ifnames=0 biosdevnames=0"
 
@@ -25,7 +25,7 @@ KERNEL=="*", SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:
 
 ## 物理机更换网卡后的注意事项
 
-物理机如果更换网卡，首先需要同时更新Cloudpods对应物理机的网卡数据，具体操作请参见{{< ref "../tutorial/change_netif.md" >}}。
+物理机如果更换网卡，首先需要同时更新{{<oem_name>}}对应物理机的网卡数据，具体操作请参见{{< ref "../tutorial/change_netif.md" >}}。
 
 同时，由于采用了如上自定义命名网卡的机制，新加入的网卡的mac不在udev的规则中，会出现新网卡的命名不遵循enX的命名规律，导致网卡的IP配置不生效。因此需要采用如下措施修改udev的命名规则：
 

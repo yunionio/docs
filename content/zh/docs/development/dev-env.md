@@ -16,9 +16,9 @@ description: >
 
 接下来介绍如何搭建开发环境。
 
-## 部署 cloudpods 服务
+## 部署 {{% oem_name %}} 服务
 
-在开始开发之前，请先参考 [All in One 安装](../../quickstart/allinone) 或者 [MiniKube 安装](../../quickstart/minikube) 部署 cloudpods 服务。我们的服务全部使用容器的方式运行在 Kubernetes 集群里面，所以需要先搭建好我们的服务，把这个环境作为自己的开发环境。
+在开始开发之前，请先参考 [All in One 安装](../../quickstart/allinone) 或者 [MiniKube 安装](../../quickstart/minikube) 部署 {{<oem_name>}} 服务。我们的服务全部使用容器的方式运行在 Kubernetes 集群里面，所以需要先搭建好我们的服务，把这个环境作为自己的开发环境。
 
 这里建议使用一个单独的 CentOS 7 虚拟机，配置(至少 4C8G + 100G 系统盘)，安装部署我们的服务。
 
