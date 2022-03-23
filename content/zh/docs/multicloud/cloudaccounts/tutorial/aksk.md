@@ -371,6 +371,24 @@ $ curl 'https://api.ipify.org?format=json'
 
 {{% /tab %}}
 
+{{% tab name="品高云" %}}
+
+### 品高云获取AccessKey
+
+1. 登录品高云平台，单击顶部菜单 **_"平台管理"_** 菜单项，进入平台管理页面。
+2. 在左侧菜单中单击 **_"个人设置-账户密钥"_** 菜单项，进入密钥页面。
+
+    ![](../../images/bingoaksk.png)
+
+3. 在密钥页面中，如果已有密钥对，单击 **_"查看钥匙对"_** 按钮，获取Access Key和Security Key。
+
+    ![](../../images/bingoaksklist.png) 
+
+4. 如需要重新生成密钥对，单击 **_"重新生成钥匙对"_** 按钮，重新生成Access Key和Security Key。
+
+
+{{% /tab %}}
+
 
 {{< /tabs >}}
 
