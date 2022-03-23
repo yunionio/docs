@@ -54,8 +54,8 @@ $ kubectl rollout restart deployment -n kube-system coredns
 
 ## 界面操作
 
-
 {{< tabs >}}
+
 {{% tab name="阿里云" %}}
 
 1. 在左侧导航栏，选择 **_"多云管理/云账号/云账号"_** 菜单项，进入云账号页面。
@@ -184,6 +184,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 
 
 {{% tab name="Google云" %}}
+
 {{% alert title="注意" color="warning" %}}
 - 请确保{{<oem_name>}}平台与谷歌云网络互通。
 - 如{{<oem_name>}}平台与谷歌云网络不通，可通过配置代理访问谷歌云。
@@ -396,7 +397,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 
 {{% /tab %}}
 
-{% tab name="品高云" %}}
+{{% tab name="品高云" %}}
 
 该功能用于纳管品高云平台资源。
 
@@ -493,7 +494,6 @@ Ceph秘钥创建[参考链接](https://docs.ceph.com/en/pacific/radosgw/admin/#a
    - 共享范围：设置云账号的共享范围，默认为不共享，则仅云账号所在域可以使用该账号，若设置为全局共享，则平台上所有用户都可以使用该云账号创建资源。
 5. 单击 **_"连接测试"_** 按钮，测试输入的参数是否正确。
 6. 测试成功后，单击 **_"确定"_** 按钮，创建XSKY账号。
-
 
 {{% /tab %}}
 
