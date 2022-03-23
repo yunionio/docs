@@ -73,7 +73,7 @@ onecloud-operator-7fd65d6489-kwdkr   1/1     Running   0          5m2s
 $ wget https://raw.githubusercontent.com/yunionio/onecloud-operator/master/manifests/example-aliyun-onecloud-cluster.yaml -O onecloud-cluster.yaml
 ```
 
-修改下载的 onecloud-cluster.yaml 文件内容，主要是修改 spec.mysql 里面内容，比如下面是修改 mysql 对应的 host 为 test.mysql.rds.aliyuncs.com，用户为 db_admin，密码为 test@password：
+修改下载的 onecloud-cluster.yaml 文件内容，主要是修改 spec.mysql 里面内容，比如下面是修改 mysql 对应的 host 为 test.mysql.rds.aliyuncs.com，用户为 db_admin，密码为 test@password；然后修改 spec.loadBalancerEndpoint 为访问集群的外部 ip (根据自己的环境决定，可以写成当前节点的 ip)，这里假设当前节点的 ip 为 10.127.0.2：
 
 ```bash
 $ vim onecloud-cluster.yaml
@@ -91,6 +91,8 @@ $ vim onecloud-cluster.yaml
 +    username: "db_admin"
 +    password: "teste@password"
    region: "region0"
+-  loadBalancerEndpoint: 192.168.121.21
++  loadBalancerEndpoint: 10.127.0.2
    imageRepository: "registry.cn-beijing.aliyuncs.com/yunionio"
    version: v3.8.6
 ```
@@ -106,6 +108,38 @@ alicloud-disk-efficiency   diskplugin.csi.alibabacloud.com   Delete          Imm
 alicloud-disk-essd         diskplugin.csi.alibabacloud.com   Delete          Immediate              true                   8d
 alicloud-disk-ssd          diskplugin.csi.alibabacloud.com   Delete          Immediate              true                   8d
 alicloud-disk-topology     diskplugin.csi.alibabacloud.com   Delete          WaitForFirstConsumer   true                   8d
+```
+
+比如要使用 alicloud-disk-available 的 storageclass，修改 onecloud-cluster.yaml 的 diff 如下：
+
+```diff
+   baremetalagent:
+     disable: true
+     requests:
+       storage: 100G
+-    storageClassName: alicloud-disk-ssd
++    storageClassName: alicloud-disk-available
+   glance:
+     requests:
+       cpu: 10m
+       memory: 10Mi
+       storage: 100G
+-    storageClassName: alicloud-disk-ssd
++    storageClassName: alicloud-disk-available
+   influxdb:
+     requests:
+       cpu: 10m
+       memory: 10Mi
+       storage: 100G
+-    storageClassName: alicloud-disk-ssd
++    storageClassName: alicloud-disk-available
+   meter:
+     requests:
+       cpu: 10m
+       memory: 10Mi
+       storage: 25G
+-    storageClassName: alicloud-disk-ssd
++    storageClassName: alicloud-disk-available
 ```
 
 修改完 onecloud-cluster.yaml 的配置后，使用下面的命令部署：
