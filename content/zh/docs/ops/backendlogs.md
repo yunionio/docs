@@ -24,7 +24,7 @@ description: >
 
 loki 的日志服务查询是按标签进行过滤的，常用的标签 "app" 对应服务的名称，"hostname" 对应 pod 所在的机器，“container_name" 对应容器名称。
 
-```
+```bash
 # 比如要查看 "ovn-north" 容器的日志
 {container_name="ovn-north"}
  

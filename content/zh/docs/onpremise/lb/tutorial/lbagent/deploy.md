@@ -10,7 +10,7 @@ description: >
 
 {{% alert title="注意" color="warning" %}}
 当转发节点上有监听任意IP的某个端口的服务配置时，会造成在使用该转发节点的LB实例上配置对应协议端口的监听无法正常使用。
-```
+```bash
 # 在转发节点上查看监听任意IP的端口情况
 $ netstat -nlp |grep 0.0.0.0:
 tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      7120/sshd

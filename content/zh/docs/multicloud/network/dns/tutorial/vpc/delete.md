@@ -25,7 +25,7 @@ description: >
 4. 单击 **_"确定"_** 按钮，完成操作。
 
 
-```
+```bash
 # 解绑VPC
 $ climc dns-zone-remove-vpcs <DNS解析域名ID或名称> <VPC_IDS>
 ```

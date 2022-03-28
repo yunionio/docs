@@ -16,7 +16,7 @@ Onecloud-operator组件为集群控制器，实现集群服务的自动配置，
 - **Deployment**： onecloud-operator
 - **Pod**： onecloud-operator-xxx
 - **配置**：
-```
+```bash
 # 配置operator
 $ kubectl edit oc -n onecloud
 # 查看operator的配置

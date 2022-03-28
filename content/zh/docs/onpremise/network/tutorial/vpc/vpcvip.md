@@ -173,7 +173,7 @@ systemctl restart nginx keepalived
 
 此时，可以在nginx-master上通过ip addr查看到eth0增加了附属VIP 192.168.7.246/22。
 
-```
+```bash
 [root@nginx-master ~]# ip addr show dev eth0
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1440 qdisc pfifo_fast state UP group default qlen 1000
     link/ether 00:24:b1:6d:9b:7d brd ff:ff:ff:ff:ff:ff
