@@ -18,7 +18,7 @@ weight: 2
 
 2) 修改 /etc/udev/rules.d/70-persistent-net.rules ，一次写入网卡的mac和名称映射关系，udev将按照mac对网卡进行命名
 
-```
+```bash
 KERNEL=="*", SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:22:a6:48:39:10", ATTR{type}=="1", NAME="en0"
 KERNEL=="*", SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:22:a6:48:39:11", ATTR{type}=="1", NAME="en1"
 ```

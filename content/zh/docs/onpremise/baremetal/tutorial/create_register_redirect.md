@@ -340,7 +340,7 @@ $ climc host-create \
 
 **Climc启用自动注册**
 
-```
+```bash
 # 命令行开启自动注册
 $ climc service-edit-config baremetal
     ...

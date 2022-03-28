@@ -31,7 +31,7 @@ kubectl -n onecloud get pods -o wide | grep <ip_of_host>
 ```
 
 例如：
-```
+```bash
 # kubectl -n onecloud get pods -o wide | grep office-03-host01
 default-host-xc2t5                                  3/3     Running            0          4h7m    192.168.222.3     office-03-host01           <none>           <none>
 default-host-deployer-zv6tk                         1/1     Running            0          5d15h   10.40.33.249      office-03-host01           <none>           <none>

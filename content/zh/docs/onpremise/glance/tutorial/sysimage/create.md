@@ -241,7 +241,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
 
 1. 上传Virtio驱动ISO并挂载到虚拟机上。Virtio驱动可以从以下URL下载：
 
-    ```
+    ```bash
     https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md
     ```
 
@@ -335,7 +335,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
 
 1) 每次sysprep报错后，可以查看报错日志：C:\Windows\System32\Sysprep\Panther\setupact.log 。日志有类似如下的报错信息：
 
-```
+```bash
 2018-06-21 13:35:59, Error SYSPRP Package Microsoft.LanguageExperiencePackhu-hu_17134.2.4.0_neutral__8wekyb3d8bbwe was installed for a user, but not provisioned for all users. This package will not function properly in the sysprep image.
 ```
 
@@ -343,7 +343,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
 
 2) 手工卸载指定的package，其中<packagefullname>替换为第一步找到的package名称。
 
-```
+```bash
 remove-appxpackage -allusers -package '<packagefullname>'
 ```
 

@@ -76,7 +76,7 @@ $ ssh root@10.168.222.226
 
 通过 webconsole 登录
 
-```
+```bash
 $ climc webconsole-ssh 10.168.222.226
 https://console.yunion.cn/web-console?access_token=y7bjpBwtvJHLHpwOUMzNVvsYiAgY1vskIuVwB-aINfH4mm8MsZqwxKSfHqm2pCvY6O8bBA%3D%3D&api_server=https%3A%2F%2Foffice.yunion.io&protocol=tty
 ```
