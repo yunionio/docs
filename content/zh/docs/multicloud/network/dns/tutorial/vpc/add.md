@@ -17,7 +17,7 @@ description: >
    - VPC：选择要关联的VPC，关联后将会把DNS解析域名同步到VPC所在平台账号中。
 5. 单击 **_"确定"_** 按钮，完成操作。 
 
-```
+```bash
 # 关联VPC
 $ climc dns-zone-add-vpcs <DNS解析域名ID或名称> <VPC_IDS>
 ```

@@ -34,7 +34,7 @@ PublicZone域名即公共DNS解析服务，用户可以通过Internet之前访�
 4. 如需要将域名同步到公有云，需要选择平台以及云订阅，配置完成后，单击 **_"确定"_** 按钮。
 5. 如暂不需要将域名同步到公有云，则直接单击 **_"跳过"_** 按钮即可。
 
-```
+```bash
 # 新建域名命令
 climc dns-zone-create [--status STATUS] [--enabled] [--vpc-ids VPC_IDS] [--cloudaccount-id CLOUDACCOUNT_ID] [--options OPTIONS] [--de
 scription <DESCRIPTION>] <NAME> <zone_type>

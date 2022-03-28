@@ -15,7 +15,7 @@ description: >
 
 #### 获取InfluxDB地址
 
-```
+```bash
 # 获取InfluxDB的对外地址及端口号
 $ climc endpoint-list -service Influxdb
 ```
@@ -25,7 +25,7 @@ $ climc endpoint-list -service Influxdb
 
 1. 查询虚拟机所在VPC或IP子网下是否存在SSH代理节点。
 
-```
+```bash
 # 查询虚拟机所在VPC下是否存在SSH代理节点
 $ climc proxy-endpoint-list --vpc-id <vpc的ID>
 # 若VPC下IP子网之间网络隔离，则需要查询虚拟机所在IP子网下是否存在SSH代理节点
@@ -69,7 +69,7 @@ $ climc proxy-endpoint-list --network-id <IP子网的ID>
 
 后续在配置telegraf文件时，需要配置的InfluxDB的地址为“ssh代理节点的地址:<映射绑定的端口号>”
 
-```
+```bash
 # 在ssh代理节点上配置到InfluxDB的remote规则，使监控数据可以上报到平台的InfluxDB数据库。
 $ climc proxy-forward-create --proxy-endpoint-id <ssh代理节点的ID> --type remote --remote-addr <influxdb的IP地址> --remote-port <InfluxDB的端口号> --bind-port-req <映射绑定的端口号> <remote规则的名称>
 # 下面举例介绍如何创建对应的remote规则，即将10.127.100.2:30086地址映射为10.0.9.254:30086，后续telegraf配置中的InfluxDB地址“https://10.0.9.254:30086”
@@ -127,7 +127,7 @@ $ climc proxy-forward-create --proxy-endpoint-id dba57f12-4f9f-4d60-8789-7dc0fe4
 下面用 $Package 代表具体安装包名称，请在使用时进行替换。
 
 **Linux**
-```
+```bash
 # 将安装包下载到/tmp目录
 $ wget https://yunioniso.oss-cn-beijing.aliyuncs.com/rpms/telegraf/$Package -P /tmp
 ```
@@ -142,7 +142,7 @@ $ wget https://yunioniso.oss-cn-beijing.aliyuncs.com/rpms/telegraf/$Package -P /
 
 **Linux**
 
-```
+```bash
 # 在tmp目录下新建telegraf配置文件
 $ touch /tmp/telegraf.conf
 ```
@@ -157,7 +157,7 @@ telegraf配置文件主要包括以下内容：
 
 global_tags里包含虚拟机的ID、名称、宿主机、域、项目、区域、可用区、平台等信息，请根据虚拟机的具体信息，修改global_tags里的内容，后续返回的监控信息中也将会带上这些标签，因此在监控查询中可以通过一些条件查询虚拟机的监控信息。
 
-```
+```bash
 [global_tags]
     zone_ext_id = ""
     os_type = "Linux"
@@ -181,7 +181,7 @@ global_tags里包含虚拟机的ID、名称、宿主机、域、项目、区域�
 ##### agent配置信息
 
 包括采集监控、虚拟机名称等相关配置，除虚拟机名称外，其他参数建议保持默认。
-```
+```bash
 # Configuration for telegraf agent
 [agent]
     interval = "10s"
@@ -204,7 +204,7 @@ global_tags里包含虚拟机的ID、名称、宿主机、域、项目、区域�
 - 如果虚拟机可以直接连接到平台，urls地址可以直接设置为数据的访问地址；
 - 如果虚拟机不可以直接连接到平台，则需要通过代理的方式，该urls地址为代理地址，即为: "http://<ssh代理节点的地址>:<remote规则的映射端口号>"。
 
-```
+```bash
 #################################################################
 #                          OUTPUTS                           #
 ##################################################################
@@ -218,7 +218,7 @@ global_tags里包含虚拟机的ID、名称、宿主机、域、项目、区域�
 
 主要用于设置采集的监控指标，建议保持默认。
 
-```
+```bash
   ##################################################################
 #                                 INPUTS                      #
 ##################################################################
@@ -264,7 +264,7 @@ global_tags里包含虚拟机的ID、名称、宿主机、域、项目、区域�
 
 以下为完整的telegraf举例文件，用户可参考进行配置
 
-```
+```bash
 ### MANAGED BY ansible-telegraf ANSIBLE ROLE ###
 
 [global_tags]
@@ -363,14 +363,14 @@ global_tags里包含虚拟机的ID、名称、宿主机、域、项目、区域�
 
 **RedHat/CentOS**
 
-```
+```bash
 # 安装
 rpm -ivh /tmp/$Package
 # 更换配置文件
 mv /tmp/telegraf.conf /etc/telegraf/telegraf.conf
 ```
 **Debian/Ubuntu**
-```
+```bash
 # 安装
 dpkg -i /tmp/$Package
 # 更换配置文件
@@ -380,7 +380,7 @@ mv /tmp/telegraf.conf /etc/telegraf/telegraf.conf
 
 安装Windows版本监控Agent时需要指定上面步骤的telegraf配置文件，例如`C:\\telegraf\telegraf.conf`
 
-```
+```bash
 C:\\telegraf\telegraf.exe --config "C:\\telegraf\telegraf.conf" --service install
 ```
 
@@ -388,14 +388,14 @@ C:\\telegraf\telegraf.exe --config "C:\\telegraf\telegraf.conf" --service instal
 
 **Linux**
 
-```
+```bash
 # 启动服务
 systemctl start telegraf
 # 查看服务
 systemctl status telegraf
 ```
 **Windows**
-```
+```bash
 # 启动服务
 sc start telegraf
 # 查看服务

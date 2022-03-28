@@ -8,7 +8,7 @@ description: >
 
 ### 确认Pod状态
 
-```
+```bash
 # 设置默认命名空间，后续执行相关命令时可以不带“-n onecloud” 
 $ kubectl config set-context --current --namespace=onecloud
 # 查看 pod 状态
@@ -19,7 +19,7 @@ $ kubectl get pod
 
 当查看到 pod 状态不是 running 状态时，可以通过 describe 命令查看更多信
 息。
-```
+```bash
 # 举例为查看 host 服务的 pod 的事件信息
 $ kubectl describe pod default-host-z8j5r
 ```
@@ -27,7 +27,7 @@ $ kubectl describe pod default-host-z8j5r
 ### 查看日志
 
 可以通过检查日志来查看应用程序是否正常运行。
-```
+```bash
 # 查看 host 服务的日志信息
 $ kubectl logs default-host-z8j5r -c host -f 
 ```
@@ -41,7 +41,7 @@ CrashLoopBackOff 状态说明容器曾经启动了，但又异常退出。此时
 一下容器的日志。通过 kubectl logs 命令可以发现一些容器退出的原因:
 
 - 通过查看日志发现是脏数据导致的
-```
+```bash
 [root@test ~]#kubectl get pod | grep region
 default-region-75bc7d474f-rjpkm 0/1
 CrashLoopBackOff 12 2d20h
@@ -69,7 +69,7 @@ Unsupported hypervisor Aliyun
 
 出现这种情况，多见于系统内存或硬盘资源不足。通过“kubectl describe命令”查看异常pod。
 
-```
+```bash
 [root@test-interface ~]# kubectl describe -n onecloud pod default-ovn-north-7689f47894-tqp2g
 Name:           default-ovn-north-7689f47894-tqp2g
 Namespace:      onecloud
@@ -93,7 +93,7 @@ Message:        The node was low on resource: ephemeral-storage. Container ovn-n
 
 通常是镜像名称配置错误或者私有镜像的密钥配置错误导致。通过“kubectl describe命令”查看异常pod。
 
-```
+```bash
 Events:
   Type     Reason     Age                From                Message
   ----     ------     ----               ----                -------

@@ -8,7 +8,7 @@ description: >
 
 ### 清理无用docker镜像
 
-```
+```bash
 # 清理docker image
 $ docker system prune --all --force --volumes
 ```
