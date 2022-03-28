@@ -7,10 +7,15 @@ description: >
 ---
 
 ## 前提
+
 {{% alert title="注意" color="warning" %}}
 通过在已有的 Kubernetes 集群上部署 Cloudpods 云管服务，无法验证内置私有云相关功能(因为内置私有云需要节点上面安装配置 qemu, openvswitch 等各种虚拟化软件)。
 
+目前该部署方法可能会因为不同 Kubernetes 集群的 CSI，CNI 和 Ingress controller 不同，在部署中出现不同的错误，如果部署失败，又想快速体验产品功能，建议还是使用 [All in One 安装](../allinone) 的方式部署。
+
 仅适用于多云管理功能的体验，比如管理 VMware, 公有云(aws, 阿里云, 腾讯云等)或者其它私有云(zstack, openstack 等)。
+
+另外 Kubernetes 集群的版本，目前只支持 v1.15 - v1.20 的版本，高版本的 CRD 定义发生了变化，目前还没有适配。
 {{% /alert %}}
 
 ## 环境准备
