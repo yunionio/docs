@@ -8,14 +8,14 @@ description: >
 
 ### 清理服务日志
 
-```
+```bash
 # 查看具体服务的分表日志
 $ climc logs-splitable --service <service_type>
 ```
 
 ![](../images/logtable.png)
 
-```
+```bash
 # 删除超过6个月的分表
 $ climc logs-purge --service <service_type>
 ```
@@ -25,7 +25,7 @@ $ climc logs-purge --service <service_type>
 
 在部署日志的服务器上执行
 
-```
+```bash
 # 设置自动清除binlog的保留时间
 $ vi /etc/my.cnf
 expire_logs_days = 30
