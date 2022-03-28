@@ -12,7 +12,7 @@ description: >
 2. 单击域名右侧操作列 **_"更多"_** 按钮，选择下拉菜单 **_"同步状态"_** 菜单项，同步DNS解析域名的状态。
 
 
-```
+```bash
 # 同步域名状态
 $ climc dns-zone-syncstatus <DNS解析域名ID或名称>
 ```

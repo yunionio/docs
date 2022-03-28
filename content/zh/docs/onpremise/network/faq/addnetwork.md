@@ -22,7 +22,7 @@ description: >
 
 默认宿主机以网卡对应二层网络，所以需要在宿主机上配置网卡与二层网络的对应关系。
 
-```
+```bash
 # 在宿主机上操作
 $ vi /etc/yunion/host.conf
 # 在networks下添加
@@ -32,7 +32,7 @@ networks
 ```
 配置完成后，需要重启host服务。
 
-```
+```bash
 # 找到该宿主机对应的host服务
 $ kubectl get pods -n onecloud -o wide |grep host
 # 如pod名称为default-host-zgrkg

@@ -44,7 +44,7 @@ description: >
 
 云管平台默认不支持公网私用，会将这类网段判断为公网IP，并占用公网IP的配额。如用户有公网私用的需求，可以通过修改配置文件，兼容公网私用的网段。
 
-```
+```bash
 $ climc service-config-edit common
 
 default:

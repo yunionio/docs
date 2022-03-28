@@ -46,7 +46,7 @@ hosts:
 ----
 - 执行 climc servers-import-from-libvirt 开始导入
 
-```sh
+```bash
 # 导入前确认libvirt服务关闭
 $ climc servers-import-from-libvirt servers.yaml
 ```
