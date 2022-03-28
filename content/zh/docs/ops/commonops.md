@@ -98,7 +98,7 @@ $ kubectl get oc -n onecloud default -o yaml | grep -A 4 mysql
 # 查看OC的运行情况
 $ kubectl get onecloudcluster -n onecloud
 ```
-```
+```bash
 # 以yaml文件的形式查看OC的API对象信息，该信息中包含集群的所有配置信息。
 $ kubeclt get oc -n onecloud -o yaml
 
