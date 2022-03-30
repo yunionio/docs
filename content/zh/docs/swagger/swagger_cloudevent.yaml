@@ -69,9 +69,7 @@ definitions:
         type: boolean
         x-go-name: Success
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/cloudevent
   EnabledStatusStandaloneResourceBaseUpdateInput:
@@ -84,6 +82,10 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      progress:
+        format: float
+        type: number
+        x-go-name: Progress
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   EnabledStatusStandaloneResourceCreateInput:
@@ -105,6 +107,11 @@ definitions:
         description: 该资源是否被管理员*人为*禁用, 和enabled互斥
         type: boolean
         x-go-name: Disabled
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       enabled:
         description: 该资源是否被管理员*人为*启用或者禁用
         type: boolean
@@ -159,9 +166,7 @@ definitions:
         type: object
         x-go-name: Metadata
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   Error:
@@ -214,14 +219,16 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   STag:
     properties:
-      Key:
-        description: 标签key
+      key:
+        description: 标签Kye
         type: string
-      Value:
+        x-go-name: Key
+      value:
         description: 标签Value
         type: string
+        x-go-name: Value
     type: object
-    x-go-package: yunion.io/x/onecloud/pkg/apis
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
   StatusStatistic:
     properties:
       pending_deleted_count:
@@ -238,6 +245,16 @@ definitions:
         x-go-name: TotalCount
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
+  TTagSet:
+    items:
+      $ref: '#/definitions/STag'
+    type: array
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
+  TTagSetList:
+    items:
+      $ref: '#/definitions/TTagSet'
+    type: array
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
 host: '"127.0.0.1:8889"'
 info:
   contact:
@@ -380,6 +397,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: |-
           列出指定云平台的资源，支持的云平台如下
 
@@ -530,6 +564,11 @@ paths:
           properties:
             cloudevent:
               $ref: '#/definitions/ModelBaseCreateInput'
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
           type: object
         x-go-name: Body
       responses:
@@ -744,14 +783,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -830,6 +889,11 @@ paths:
           properties:
             cloudprovider:
               $ref: '#/definitions/EnabledStatusStandaloneResourceCreateInput'
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
           type: object
         x-go-name: Body
       responses:
@@ -1091,6 +1155,26 @@ paths:
       summary: 获取指定资源类的信息Statistics
       tags:
       - cloudprovider
+  /cloudproviders/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: cloudprovider_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/cloudprovider_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - cloudprovider
+  /cloudproviders/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: cloudprovider_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/cloudprovider_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
+      tags:
+      - cloudprovider
 produces:
 - application/json
 responses:
@@ -1180,6 +1264,8 @@ responses:
           type: object
           x-go-name: Output
       type: object
+  cloudprovider_GetPropertyTagValuePairsOutput: {}
+  cloudprovider_GetPropertyTagValueTreeOutput: {}
   cloudprovider_ListItemFilterOutput:
     schema:
       properties:
