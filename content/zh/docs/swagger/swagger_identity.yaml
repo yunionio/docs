@@ -82,9 +82,7 @@ definitions:
         type: string
         x-go-name: Type
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -138,6 +136,11 @@ definitions:
         description: 显示名
         type: string
         x-go-name: Displayname
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       enabled:
         description: 是否启用
         type: boolean
@@ -286,9 +289,7 @@ definitions:
         type: string
         x-go-name: Template
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -453,9 +454,7 @@ definitions:
         type: string
         x-go-name: SubjectAlternativeNames
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -532,6 +531,11 @@ definitions:
         description: display name
         type: string
         x-go-name: Displayname
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -653,9 +657,7 @@ definitions:
         type: string
         x-go-name: Template
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -722,6 +724,11 @@ definitions:
         description: 后端驱动名称
         type: string
         x-go-name: Driver
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       enabled:
         description: 该资源是否被管理员*人为*启用或者禁用
         type: boolean
@@ -887,6 +894,11 @@ definitions:
         format: int64
         type: integer
         x-go-name: PolicyCount
+      progress:
+        description: 操作进度0-100
+        format: float
+        type: number
+        x-go-name: Progress
       project_count:
         description: 该认证源关联的所有域的项目数量
         format: int64
@@ -924,9 +936,7 @@ definitions:
         type: string
         x-go-name: Template
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -966,6 +976,10 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      progress:
+        format: float
+        type: number
+        x-go-name: Progress
       sync_interval_seconds:
         format: int64
         type: integer
@@ -1336,9 +1350,7 @@ definitions:
       delete_fail_reason:
         $ref: '#/definitions/Error'
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   ModelBaseUpdateInput:
@@ -1457,6 +1469,13 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      domain_tags:
+        $ref: '#/definitions/TTagSet'
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       enabled:
         type: boolean
         x-go-name: Enabled
@@ -1493,10 +1512,14 @@ definitions:
         description: 指定项目归属域名称或ID
         type: string
         x-go-name: ProjectDomainId
+      project_tags:
+        $ref: '#/definitions/TTagSet'
       public_scope:
         description: 共享范围
         type: string
         x-go-name: PublicScope
+      resource_tags:
+        $ref: '#/definitions/TTagSet'
       scope:
         $ref: '#/definitions/TRbacScope'
     required:
@@ -1543,6 +1566,12 @@ definitions:
         description: 域Id
         type: string
         x-go-name: DomainId
+      domain_tags:
+        description: 匹配的域标签
+        items:
+          $ref: '#/definitions/STag'
+        type: array
+        x-go-name: DomainTags
       enabled:
         type: boolean
         x-go-name: Enabled
@@ -1577,10 +1606,22 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      object_tags:
+        description: 匹配的资源标签
+        items:
+          $ref: '#/definitions/STag'
+        type: array
+        x-go-name: ObjectTags
       project_domain:
         description: 资源归属项目的域名称
         type: string
         x-go-name: ProjectDomain
+      project_tags:
+        description: 匹配的项目标签
+        items:
+          $ref: '#/definitions/STag'
+        type: array
+        x-go-name: ProjectTags
       public_scope:
         description: 默认共享范围
         type: string
@@ -1607,9 +1648,7 @@ definitions:
         type: array
         x-go-name: SharedProjects
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -1632,6 +1671,8 @@ definitions:
         description: 资源描述
         type: string
         x-go-name: Description
+      domain_tags:
+        $ref: '#/definitions/TTagSet'
       enabled:
         description: 是否启用
         type: boolean
@@ -1644,8 +1685,16 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      object_tags:
+        $ref: '#/definitions/TTagSet'
+      project_tags:
+        $ref: '#/definitions/TTagSet'
       scope:
         $ref: '#/definitions/TRbacScope'
+      tag_update_policy:
+        description: Policy tag更新策略，可能的值为：add|remove|remove，默认为add
+        type: string
+        x-go-name: TagUpdatePolicy
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/identity
   ProjectCreateInput:
@@ -1667,6 +1716,11 @@ definitions:
         description: 显示名称
         type: string
         x-go-name: Displayname
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -1781,9 +1835,7 @@ definitions:
         type: string
         x-go-name: ProjectDomain
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -1879,9 +1931,7 @@ definitions:
         type: string
         x-go-name: ParentRegionId
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -1915,6 +1965,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -2061,9 +2116,7 @@ definitions:
         type: array
         x-go-name: SharedProjects
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -2188,9 +2241,7 @@ definitions:
       scope:
         $ref: '#/definitions/TRbacScope'
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -2660,14 +2711,16 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis/identity
   STag:
     properties:
-      Key:
-        description: 标签key
+      key:
+        description: 标签Kye
         type: string
-      Value:
+        x-go-name: Key
+      value:
         description: 标签Value
         type: string
+        x-go-name: Value
     type: object
-    x-go-package: yunion.io/x/onecloud/pkg/apis
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
   SUserRole:
     properties:
       Role:
@@ -2746,9 +2799,7 @@ definitions:
         type: string
         x-go-name: Type
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -2881,6 +2932,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -2927,9 +2983,7 @@ definitions:
         type: object
         x-go-name: Metadata
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   StatusStatistic:
@@ -2958,6 +3012,16 @@ definitions:
   TRbacScope:
     type: string
     x-go-package: yunion.io/x/onecloud/pkg/util/rbacutils
+  TTagSet:
+    items:
+      $ref: '#/definitions/STag'
+    type: array
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
+  TTagSetList:
+    items:
+      $ref: '#/definitions/TTagSet'
+    type: array
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
   TokenCredentialV2:
     description: Keystone token信息V2
     properties:
@@ -3006,6 +3070,11 @@ definitions:
       displayname:
         type: string
         x-go-name: Displayname
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       email:
         type: string
         x-go-name: Email
@@ -3197,6 +3266,9 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      need_reset_password:
+        type: boolean
+        x-go-name: NeedResetPassword
       password_expires_at:
         format: date-time
         type: string
@@ -3210,9 +3282,7 @@ definitions:
         type: string
         x-go-name: ProjectDomain
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -3399,14 +3469,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -3494,14 +3584,12 @@ paths:
       tags:
       - credential
     post:
-      description: |-
-        input error: unsupport body type: invalid type *yunion.io/x/jsonutils.JSONDict
-        新建
+      description: 新建
       operationId: credential_ValidateCreateData
       responses:
         "200":
           $ref: '#/responses/credential_ValidateCreateDataOutput'
-      summary: input or output error exists
+      summary: 新建
       tags:
       - credential
   /credentials/{id}:
@@ -3656,6 +3744,26 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - credential
+  /credentials/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: credential_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/credential_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - credential
+  /credentials/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: credential_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/credential_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
+      tags:
+      - credential
   /domains:
     get:
       description: 列表
@@ -3764,14 +3872,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -3836,6 +3964,11 @@ paths:
         name: idp_entity_id
         type: string
         x-go-name: IdpEntityId
+      - $ref: '#/definitions/TTagSetList'
+        description: domain tags filter imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       responses:
         "200":
           $ref: '#/responses/domain_ListItemFilterOutput'
@@ -3850,6 +3983,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             domain:
               $ref: '#/definitions/DomainCreateInput'
           type: object
@@ -4037,6 +4175,26 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - domain
+  /domains/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: domain_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/domain_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - domain
+  /domains/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: domain_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/domain_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
+      tags:
+      - domain
   /endpoints:
     get:
       description: 列表
@@ -4145,14 +4303,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -4241,14 +4419,12 @@ paths:
       tags:
       - endpoint
     post:
-      description: |-
-        input error: unsupport body type: invalid type *yunion.io/x/jsonutils.JSONDict
-        新建
+      description: 新建
       operationId: endpoint_ValidateCreateData
       responses:
         "200":
           $ref: '#/responses/endpoint_ValidateCreateDataOutput'
-      summary: input or output error exists
+      summary: 新建
       tags:
       - endpoint
   /endpoints/{id}:
@@ -4285,9 +4461,7 @@ paths:
       tags:
       - endpoint
     put:
-      description: |-
-        input error: unsupport body type: invalid type *yunion.io/x/jsonutils.JSONDict
-        更新
+      description: 更新
       operationId: endpoint_ValidateUpdateData
       parameters:
       - description: The Id or Name of endpoint
@@ -4299,7 +4473,7 @@ paths:
       responses:
         "200":
           $ref: '#/responses/endpoint_ValidateUpdateDataOutput'
-      summary: input or output error exists
+      summary: 更新
       tags:
       - endpoint
   /endpoints/{id}/metadata:
@@ -4395,6 +4569,26 @@ paths:
         "200":
           $ref: '#/responses/endpoint_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - endpoint
+  /endpoints/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: endpoint_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/endpoint_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - endpoint
+  /endpoints/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: endpoint_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/endpoint_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - endpoint
   /groups:
@@ -4505,14 +4699,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -4581,6 +4795,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 用户归属域
         in: query
         name: user_domain_id
@@ -4625,6 +4856,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             group:
               $ref: '#/definitions/GroupCreateInput'
           type: object
@@ -4867,6 +5103,26 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - group
+  /groups/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: group_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/group_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - group
+  /groups/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: group_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/group_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - group
   /groups/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
@@ -4885,6 +5141,26 @@ paths:
         "200":
           $ref: '#/responses/group_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - group
+  /groups/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: group_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/group_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - group
+  /groups/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: group_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/group_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - group
   /identity_providers:
@@ -4995,14 +5271,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -5088,6 +5384,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 以驱动类型过滤
         in: query
         items:
@@ -5137,6 +5450,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             identity_provider:
               $ref: '#/definitions/IdentityProviderCreateInput'
           type: object
@@ -5537,6 +5855,26 @@ paths:
       summary: 获取指定资源类的信息Statistics
       tags:
       - identity_provider
+  /identity_providers/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: identity_provider_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/identity_provider_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - identity_provider
+  /identity_providers/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: identity_provider_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/identity_provider_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
+      tags:
+      - identity_provider
   /identity_quotas/domains:
     get:
       description: 获取所有域的域配额
@@ -5725,14 +6063,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -5806,6 +6164,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: filter by enabled status
         in: query
         name: enabled
@@ -5833,6 +6208,18 @@ paths:
         name: is_system
         type: boolean
         x-go-name: IsSystem
+      - description: filter policies by role id
+        in: query
+        name: role_id
+        type: string
+        x-go-name: RoleId
+      - description: |-
+          swagger: ignore
+          Deprecated
+        in: query
+        name: role
+        type: string
+        x-go-name: Role
       responses:
         "200":
           $ref: '#/responses/policy_ListItemFilterOutput'
@@ -5847,6 +6234,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             policy:
               $ref: '#/definitions/PolicyCreateInput'
           type: object
@@ -6064,6 +6456,26 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - policy
+  /policies/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: policy_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/policy_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - policy
+  /policies/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: policy_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/policy_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - policy
   /policies/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
@@ -6082,6 +6494,26 @@ paths:
         "200":
           $ref: '#/responses/policy_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - policy
+  /policies/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: policy_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/policy_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - policy
+  /policies/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: policy_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/policy_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - policy
   /projects:
@@ -6192,14 +6624,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -6273,6 +6725,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 用户归属域
         in: query
         name: user_domain_id
@@ -6298,6 +6767,11 @@ paths:
         name: jointable
         type: boolean
         x-go-name: Jointable
+      - $ref: '#/definitions/TTagSetList'
+        description: project tags filter imposed by policy
+        in: query
+        name: policy_project_tags
+        x-go-name: PolicyProjectTags
       responses:
         "200":
           $ref: '#/responses/project_ListItemFilterOutput'
@@ -6312,6 +6786,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             project:
               $ref: '#/definitions/ProjectCreateInput'
           type: object
@@ -6504,6 +6983,26 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - project
+  /projects/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: project_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/project_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - project
+  /projects/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: project_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/project_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - project
   /projects/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
@@ -6522,6 +7021,26 @@ paths:
         "200":
           $ref: '#/responses/project_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - project
+  /projects/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: project_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/project_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - project
+  /projects/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: project_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/project_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - project
   /regions:
@@ -6632,14 +7151,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -6697,14 +7236,12 @@ paths:
       tags:
       - region
     post:
-      description: |-
-        input error: unsupport body type: invalid type *yunion.io/x/jsonutils.JSONDict
-        新建
+      description: 新建
       operationId: region_ValidateCreateData
       responses:
         "200":
           $ref: '#/responses/region_ValidateCreateDataOutput'
-      summary: input or output error exists
+      summary: 新建
       tags:
       - region
   /regions/{id}:
@@ -6859,6 +7396,26 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - region
+  /regions/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: region_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/region_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - region
+  /regions/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: region_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/region_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
+      tags:
+      - region
   /role_policies:
     get:
       description: 列表
@@ -6999,6 +7556,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             role_policy:
               $ref: '#/definitions/ResourceBaseCreateInput'
           type: object
@@ -7204,14 +7766,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -7280,6 +7862,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 以资源是否共享过滤列表
         in: query
         name: is_public
@@ -7334,6 +7933,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             role:
               $ref: '#/definitions/RoleCreateInput'
           type: object
@@ -7601,6 +8205,26 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - role
+  /roles/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: role_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/role_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - role
+  /roles/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: role_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/role_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - role
   /roles/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
@@ -7619,6 +8243,26 @@ paths:
         "200":
           $ref: '#/responses/role_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - role
+  /roles/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: role_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/role_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - role
+  /roles/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: role_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/role_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - role
   /scope_resources:
@@ -7743,6 +8387,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             scope_resource:
               $ref: '#/definitions/ModelBaseCreateInput'
           type: object
@@ -7948,14 +8597,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -8013,14 +8682,12 @@ paths:
       tags:
       - service_certificate
     post:
-      description: |-
-        input error: unsupport body type: invalid type *yunion.io/x/jsonutils.JSONDict
-        新建
+      description: 新建
       operationId: service_certificate_ValidateCreateData
       responses:
         "200":
           $ref: '#/responses/service_certificate_ValidateCreateDataOutput'
-      summary: input or output error exists
+      summary: 新建
       tags:
       - service_certificate
   /service_certificates/{id}:
@@ -8057,9 +8724,7 @@ paths:
       tags:
       - service_certificate
     put:
-      description: |-
-        input error: unsupport body type: invalid type *yunion.io/x/jsonutils.JSONDict
-        更新
+      description: 更新
       operationId: service_certificate_ValidateUpdateData
       parameters:
       - description: The Id or Name of service_certificate
@@ -8071,7 +8736,7 @@ paths:
       responses:
         "200":
           $ref: '#/responses/service_certificate_ValidateUpdateDataOutput'
-      summary: input or output error exists
+      summary: 更新
       tags:
       - service_certificate
   /service_certificates/{id}/metadata:
@@ -8167,6 +8832,26 @@ paths:
         "200":
           $ref: '#/responses/service_certificate_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - service_certificate
+  /service_certificates/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: service_certificate_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/service_certificate_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - service_certificate
+  /service_certificates/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: service_certificate_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/service_certificate_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - service_certificate
   /services:
@@ -8277,14 +8962,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -8361,6 +9066,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             service:
               $ref: '#/definitions/StandaloneResourceCreateInput'
           type: object
@@ -8564,6 +9274,26 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - service
+  /services/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: service_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/service_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - service
+  /services/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: service_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/service_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
+      tags:
+      - service
   /users:
     get:
       description: 列表
@@ -8672,14 +9402,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -8748,6 +9498,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: filter by enabled status
         in: query
         name: enabled
@@ -8832,6 +9599,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             user:
               $ref: '#/definitions/UserCreateInput'
           type: object
@@ -9074,6 +9846,26 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - user
+  /users/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: user_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/user_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - user
+  /users/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: user_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/user_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - user
   /users/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
@@ -9092,6 +9884,26 @@ paths:
         "200":
           $ref: '#/responses/user_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - user
+  /users/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: user_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/user_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - user
+  /users/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: user_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/user_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - user
   /v2.0/tokens:
@@ -9184,6 +9996,8 @@ responses:
       type: object
   credential_GetPropertyDistinctFieldOutput: {}
   credential_GetPropertySplitableOutput: {}
+  credential_GetPropertyTagValuePairsOutput: {}
+  credential_GetPropertyTagValueTreeOutput: {}
   credential_ListItemFilterOutput:
     schema:
       properties:
@@ -9242,6 +10056,8 @@ responses:
       type: object
   domain_GetPropertyDistinctFieldOutput: {}
   domain_GetPropertySplitableOutput: {}
+  domain_GetPropertyTagValuePairsOutput: {}
+  domain_GetPropertyTagValueTreeOutput: {}
   domain_ListItemFilterOutput:
     schema:
       properties:
@@ -9301,6 +10117,8 @@ responses:
       type: object
   endpoint_GetPropertyDistinctFieldOutput: {}
   endpoint_GetPropertySplitableOutput: {}
+  endpoint_GetPropertyTagValuePairsOutput: {}
+  endpoint_GetPropertyTagValueTreeOutput: {}
   endpoint_ListItemFilterOutput:
     schema:
       properties:
@@ -9358,7 +10176,11 @@ responses:
           x-go-name: Output
       type: object
   group_GetPropertyDistinctFieldOutput: {}
+  group_GetPropertyDomainTagValuePairsOutput: {}
+  group_GetPropertyDomainTagValueTreeOutput: {}
   group_GetPropertySplitableOutput: {}
+  group_GetPropertyTagValuePairsOutput: {}
+  group_GetPropertyTagValueTreeOutput: {}
   group_ListItemFilterOutput:
     schema:
       properties:
@@ -9449,6 +10271,8 @@ responses:
           type: object
           x-go-name: Output
       type: object
+  identity_provider_GetPropertyTagValuePairsOutput: {}
+  identity_provider_GetPropertyTagValueTreeOutput: {}
   identity_provider_ListItemFilterOutput:
     schema:
       properties:
@@ -9539,7 +10363,11 @@ responses:
           x-go-name: Output
       type: object
   policy_GetPropertyDistinctFieldOutput: {}
+  policy_GetPropertyDomainTagValuePairsOutput: {}
+  policy_GetPropertyDomainTagValueTreeOutput: {}
   policy_GetPropertySplitableOutput: {}
+  policy_GetPropertyTagValuePairsOutput: {}
+  policy_GetPropertyTagValueTreeOutput: {}
   policy_ListItemFilterOutput:
     schema:
       properties:
@@ -9600,7 +10428,11 @@ responses:
           x-go-name: Output
       type: object
   project_GetPropertyDistinctFieldOutput: {}
+  project_GetPropertyDomainTagValuePairsOutput: {}
+  project_GetPropertyDomainTagValueTreeOutput: {}
   project_GetPropertySplitableOutput: {}
+  project_GetPropertyTagValuePairsOutput: {}
+  project_GetPropertyTagValueTreeOutput: {}
   project_ListItemFilterOutput:
     schema:
       properties:
@@ -9661,6 +10493,8 @@ responses:
       type: object
   region_GetPropertyDistinctFieldOutput: {}
   region_GetPropertySplitableOutput: {}
+  region_GetPropertyTagValuePairsOutput: {}
+  region_GetPropertyTagValueTreeOutput: {}
   region_ListItemFilterOutput:
     schema:
       properties:
@@ -9718,7 +10552,11 @@ responses:
           x-go-name: Output
       type: object
   role_GetPropertyDistinctFieldOutput: {}
+  role_GetPropertyDomainTagValuePairsOutput: {}
+  role_GetPropertyDomainTagValueTreeOutput: {}
   role_GetPropertySplitableOutput: {}
+  role_GetPropertyTagValuePairsOutput: {}
+  role_GetPropertyTagValueTreeOutput: {}
   role_ListItemFilterOutput:
     schema:
       properties:
@@ -9879,6 +10717,8 @@ responses:
       type: object
   service_GetPropertyDistinctFieldOutput: {}
   service_GetPropertySplitableOutput: {}
+  service_GetPropertyTagValuePairsOutput: {}
+  service_GetPropertyTagValueTreeOutput: {}
   service_ListItemFilterOutput:
     schema:
       properties:
@@ -9938,6 +10778,8 @@ responses:
       type: object
   service_certificate_GetPropertyDistinctFieldOutput: {}
   service_certificate_GetPropertySplitableOutput: {}
+  service_certificate_GetPropertyTagValuePairsOutput: {}
+  service_certificate_GetPropertyTagValueTreeOutput: {}
   service_certificate_ListItemFilterOutput:
     schema:
       properties:
@@ -10007,7 +10849,11 @@ responses:
           x-go-name: Output
       type: object
   user_GetPropertyDistinctFieldOutput: {}
+  user_GetPropertyDomainTagValuePairsOutput: {}
+  user_GetPropertyDomainTagValueTreeOutput: {}
   user_GetPropertySplitableOutput: {}
+  user_GetPropertyTagValuePairsOutput: {}
+  user_GetPropertyTagValueTreeOutput: {}
   user_ListItemFilterOutput:
     schema:
       properties:
