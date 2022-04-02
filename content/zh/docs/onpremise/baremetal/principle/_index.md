@@ -1,6 +1,6 @@
 ---
 title: "原理介绍"
-weight: 1
+weight: 10
 date: 2019-07-19T20:28:13+08:00
 description: >
   介绍物理机服务的原理。
