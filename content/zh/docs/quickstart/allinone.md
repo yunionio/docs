@@ -203,7 +203,34 @@ Cloudpods自身是一个完整的私有云，同时也可以统一纳管其他�
 
 ## FAQ
 
-### 1. 在 All in One 中找不到虚拟机界面？
+### 1. 在 All in One 部署完成后宿主机列表没有宿主机？
+
+如下图所示，若发现环境部署完成后宿主机列表中没有宿主机，可按照以下方式进行排查
+
+  ![](../images/nohost.png)
+
+
+1. 请确认部署用的yaml文件中是否有`as_host: true`配置项，若没有，则表示该节点只作为控制节点使用，不作为计算节点使用，因此宿主机列表中没有宿主机是正常的；
+2. 在控制节点查看host pod日志信息。
+    ```bash
+    # 查看host pod状态
+    $ kubectl get pods -n onecloud |grep host
+    # 查看host的日志
+    $ kubectl logs -n onecloud default-host-xxxxxx -c host -f 
+    ```
+    (1). 若日志报错信息中包含“register failed: try create network: find_matched == false”，则表示未成功创建包含宿主机的IP子网，导致宿主机注册失败，请创建包含宿主机网段的IP子网。
+    ```
+    # 创建包含宿主机网段的IP子网
+    $ climc network-create bcast0  adm0 <start_ip> <end_ip> mask
+    ```
+   
+    ![](../images/iperror.png)
+
+    (2). 若日志报错信息中包含“name starts with letter, and contains letter, number and - only”，则表示宿主机的主机名不合规，应改成以字母开头的hostname
+
+    ![](../images/hostnameerror.png)
+
+### 2. 在 All in One 中找不到虚拟机界面？
 
 All in One 部署的节点会部署 Cloudpods host 计算服务，作为宿主机，具有创建和管理私有云虚拟机的能力。没有虚拟机界面应该是 Cloudpods 环境中没有启用宿主机。
 
@@ -223,11 +250,11 @@ $ reboot
 
 ![宿主机](../images/host.png)
 
-### 2. 修改节点的 hostname ，有些服务启动失败
+### 3. 修改节点的 hostname ，有些服务启动失败
 
 k8s 管理节点，依赖于 hostname，请改回去。
 
-### 3. 如何重装
+### 4. 如何重装
 
 1. 重新运行 ocboot 的脚本
 
@@ -237,6 +264,6 @@ k8s 管理节点，依赖于 hostname，请改回去。
 
 3. 第2步的修改，会影响 onecloud-operator 的性能，所以等所有服务启动，可以将第2步的参数恢复。
 
-### 4. 其它问题？
+### 5. 其它问题？
 
 其它问题欢迎在 Cloudpods github issues 界面提交: https://github.com/yunionio/cloudpods/issues , 我们会尽快回复。
