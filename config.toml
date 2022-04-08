@@ -67,6 +67,12 @@ time_format_blog = "02.01.2006"
     weight = -100
     url = "docs/quickstart/"
 
+# Additional menu items
+[[languages.zh.menu.main]]
+    name = "服务订阅"
+    weight = 21
+    url = "https://www.yunion.cn/subscription/index.html"
+
 [[languages.zh.menu.main]]
     name = "GitHub"
     url = "https://github.com/yunionio/cloudpods"
