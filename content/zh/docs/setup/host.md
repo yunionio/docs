@@ -54,7 +54,7 @@ $ ssh root@10.168.222.140 "hostname"
 
 ```bash
 # 下载 ocboot 代码
-$ git clone https://github.com/yunionio/ocboot
+$ git clone -b release/3.8 https://github.com/yunionio/ocboot
 $ cd ocboot
 
 # 使用 run-in-docker.sh 添加节点
