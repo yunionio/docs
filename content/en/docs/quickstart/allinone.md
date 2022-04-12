@@ -79,7 +79,7 @@ The installation tool is https://github.com/yunionio/ocboot, then according to t
 
 ```bash
 # Git clone the ocboot installation tool locally
-$ git clone -b release/3.7 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.8 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
 ### Quick installation

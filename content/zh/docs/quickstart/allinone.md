@@ -88,7 +88,7 @@ $ pip install ansible
 
 ```bash
 # 下载 ocboot 工具到本地
-$ git clone https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.8 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
 ### 快速部署
