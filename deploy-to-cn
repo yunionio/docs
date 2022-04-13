@@ -5,5 +5,5 @@ HOST=${HOST:-yunion-doc}
 DIR=/var/www/doc-os/
 
 rm -rf ./public
-
-HOST=https://www.cloudpods.org make container-build && rsync -avz --delete public/ $USER@$HOST:$DIR
+make ce-build
+rsync -avz --delete public/ $USER@$HOST:$DIR
