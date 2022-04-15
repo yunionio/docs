@@ -1,7 +1,7 @@
 ---
 title: "多云统一登录"
 date: 2022-04-15T15:29:39+08:00
-weight: 6
+weight: 7
 description: >
     允许以统一的身份访问各个云平台的原生控制台的SSO
 ---

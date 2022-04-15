@@ -1,7 +1,7 @@
 ---
 title: "认证体系"
 date: 2022-04-15T15:30:20+08:00
-weight: 5
+weight: 6
 description: >
     完整的多租户认证和访问控制体系
 ---
