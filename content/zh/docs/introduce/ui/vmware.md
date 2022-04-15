@@ -1,7 +1,7 @@
 ---
-title: "Vmware"
+title: "VMware纳管"
 date: 2022-04-15T15:29:34+08:00
-weight: 6
+weight: 5
 description: >
     实现VMware vShpere虚拟化集群的自助服务和自动化
 ---
