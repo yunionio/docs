@@ -6,6 +6,8 @@ description: >
   介绍Cloudpods平台多云管理的界面。
 ---
 
+{{<oem_name>}}支持管理多云资源的功能，可以管理大多数的主流云，包括私有云，例如OpenStack，以及公有云，例如AWS，Azure，GCP，阿里云，华为云和腾讯云等
+
 ## 云账号列表
 
 ![](../images/accountlist.png)
