@@ -32,7 +32,7 @@ climc storage-list --host <host_id>
 
 ```bash
 # 查看所有的磁盘，包括不再执行命令用户所在项目下的所有磁盘，以及被标记为系统资源的磁盘
-climc disk-list --storage --scope system --system
+climc disk-list --storage <storage_id> --scope system --system
 # 查看所有的未删除的磁盘
 climc disk-list --storage <storage_id> --scope system --system --pending-delete
 ```
