@@ -149,6 +149,7 @@ networks:
 ovn_encap_ip: 10.129.26.2
 networks:
 - eth0/br0/10.128.26.2
+- eth1/br1/bcast1
 ```
 
 配置后，虚拟机之前的VPC网络流量都会封装为源和目的IP地址为业务网段的geneve流量。网络上只需要确保业务口之前网络互通，宿主机的业务口的VLAN模式无论是TRUNK还是Access都不影响。
