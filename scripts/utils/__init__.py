@@ -3,7 +3,15 @@ import subprocess
 
 
 def run_process(cmd, env=None):
-    print("Execute cmd: %s with env %s" % (cmd, env))
+    cmd_str = cmd
+    if isinstance(cmd_str, list):
+        cmd_str = ' '.join(cmd_str)
+        env_str = ''
+        if env is not None: 
+            for k in env:
+                env_str = '%s %s=%s' % (env_str, k, env[k])
+        cmd_str = env_str + ' ' + cmd_str
+    print("Execute cmd: %s" % (cmd_str, ))
     if isinstance(cmd, str):
         cmd = cmd.split()
     cur_env = os.environ

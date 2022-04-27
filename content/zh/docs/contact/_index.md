@@ -2,6 +2,7 @@
 title: "联系我们"
 weight: 150
 oem_ignore: true
+edition: ce
 description: >
   联系 var_oem_name 的方式和渠道
 ---

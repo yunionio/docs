@@ -56,3 +56,6 @@ ee-local-serve:
 
 ee-build: setup
 	make -f ./Makefile.ee online-build
+
+ee-build-offline: setup
+	make -f ./Makefile.ee offline-build

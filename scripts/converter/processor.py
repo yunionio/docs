@@ -161,7 +161,7 @@ def _include_by_scope(filepath, meta, input_scope):
     # e.g. project < domain, domain < system
     file_scope = meta.get(META_KEY_DOCSCOPE, SCOPE_PROJECT)
     if file_scope not in ALL_SCOPES:
-        raise Exception('invalid scope %s' % file_scope)
+        raise Exception('%s: invalid scope %s' % (filepath, file_scope))
     if is_less_than(file_scope, input_scope):
         return True
     return False

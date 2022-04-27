@@ -2,7 +2,7 @@
 title: "操作指南"
 date: 2022-01-22T20:20:18+08:00
 weight: 20
-edition: ee
+docscope: system
 description: >
     介绍如何配置汇率，并将平台中的多币种账单统一成同币种账单进行展示
 ---
