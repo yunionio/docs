@@ -20,6 +20,7 @@ description: >
 平台 | 支持查看的指标项 
 ---------|----------
  阿里云 | CPU使用率、内存使用率、磁盘使用率、MySql网络入流量、MySql网络出流量、SQLServer网络入流量、SQLServer网络出流量、数据库总连接数
+ 阿里飞天 | CPU使用率、内存使用率、磁盘使用率、MySql网络入流量、MySql网络出流量、SQLServer网络入流量、SQLServer网络出流量、数据库总连接数
  华为云 | CPU使用率、内存使用率、磁盘使用率、MySql网络入流量、MySql网络出流量、SQLServer网络入流量、SQLServer网络出流量、数据库总连接数
  HCSO | CPU使用率、内存使用率、磁盘使用率、MySql网络入流量、MySql网络出流量、SQLServer网络入流量、SQLServer网络出流量、数据库总连接数
  腾讯云 | CPU使用率、内存使用率、磁盘使用率、MySql网络入流量、MySql网络出流量、SQLServer网络入流量、SQLServer网络出流量、数据库总连接数 
