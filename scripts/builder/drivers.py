@@ -78,6 +78,8 @@ class BaseDriver(object):
         hugo.set_base_url_prefix(base_url_prefix)
         if args.host:
             hugo.set_host(args.host)
+        if args.edition == processor.EDITION_EE:
+            hugo.set_base_config('config-ee.toml')
         return hugo
 
     def update_branch(self, branch):

@@ -8,6 +8,7 @@ class Hugo(object):
 
     def __init__(self, content_dir):
         self._host = ''
+        self._base_config = 'config.toml'
         self._title = 'Cloudpods'
         self._content_dir = content_dir
         self._base_url_prefix = ''
@@ -15,6 +16,9 @@ class Hugo(object):
         self._current_branch = ''
         self._current_version = ''
         self._versions = []
+
+    def set_base_config(self, filename):
+        self._base_config = filename
 
     def set_host(self, host):
         self._host = host
@@ -70,7 +74,8 @@ class Hugo(object):
 contentDir = "%s"
 
 [languages.en]
-contentDir = "%s"''' % (
+contentDir = "%s"
+''' % (
             self._content_dir,
             os.path.join(self._content_dir, 'zh'),
             os.path.join(self._content_dir, 'en'),
@@ -112,7 +117,7 @@ contentDir = "%s"''' % (
         temp_config_file = self.generate_config_toml()
         cmd = ['hugo',
                '--minify',
-               '--config=config.toml,%s' % temp_config_file,
+               '--config=%s,%s' % (self._base_config, temp_config_file),
                '--contentDir=%s' % self._content_dir,
                '--destination=%s' % dest,
                '--baseURL=%s' % base_url]
