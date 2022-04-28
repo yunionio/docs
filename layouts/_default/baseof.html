@@ -1,18 +1,26 @@
 <!doctype html>
 <html lang="{{ .Site.Language.Lang }}" class="no-js">
-  <head>
-    {{ partial "head.html" . }}
-  </head>
-  <body class="td-{{ .Kind }}">
-    <header>
-      {{ partial "navbar.html" . }}
-    </header>
-    <div class="container-fluid td-default td-outer">
-      <main role="main" class="td-main">
-        {{ block "main" . }}{{ end }}
-      </main>
-      {{ partial "footer.html" . }}
-    </div>
-    {{ partialCached "scripts.html" . }}
-  </body>
+{{ if .Site.Params.is_ee }}
+<head>
+  <meta http-equiv="refresh" content="0; url=./docs/" />
+</head>
+<body>
+</body>
+{{ else }}
+<head>
+{{ partial "head.html" . }}
+</head>
+<body>
+  <header>
+    {{ partial "navbar.html" . }}
+  </header>
+  <div class="container-fluid td-default td-outer">
+    <main role="main" class="td-main">
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+  </div>
+  {{ partialCached "scripts.html" . }}
+</body>
+{{ end }}
 </html>

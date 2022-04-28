@@ -1,0 +1,136 @@
+baseURL = "/"
+title = "YunionCloud"
+
+enableRobotsTXT = true
+
+# Hugo allows theme composition (and inheritance). The precedence is from left to right.
+theme = ["docsy"]
+
+enableGitInfo = false
+
+# Language settings
+defaultContentLanguage = "zh"
+defaultContentLanguageInSubdir = true
+# Useful when translating.
+enableMissingTranslationPlaceholders = true
+
+disableKinds = ["taxonomy", "taxonomyTerm"]
+
+# Highlighting config
+pygmentsCodeFences = true
+pygmentsUseClasses = false
+# Use the new Chroma Go highlighter in Hugo.
+pygmentsUseClassic = false
+#pygmentsOptions = "linenos=table"
+# See https://help.farbox.com/pygments.html
+pygmentsStyle = "tango"
+
+ # First one is picked as the Twitter card image if not set on page.
+ #images = ["images/project-illustration.png"]
+
+# Configure how URLs look like per section.
+[permalinks]
+blog = "/:section/:year/:month/:day/:slug/"
+
+## Configuration for BlackFriday markdown parser: https://github.com/russross/blackfriday
+[blackfriday]
+plainIDAnchors = true
+hrefTargetBlank = true
+angledQuotes = false
+latexDashes = true
+
+# Image processing configuration.
+[imaging]
+resampleFilter = "CatmullRom"
+quality = 75
+anchor = "smart"
+
+# Additional menu items
+
+[services]
+[services.googleAnalytics]
+# Comment out the next line to disable GA tracking. Also disables the feature described in [params.ui.feedback].
+id = "UA-00000000-0"
+
+# Language configuration
+
+[languages]
+[languages.zh]
+version_menu = "版本"
+description = "Documentation for YunionCloud"
+languageName ="中文"
+contentDir = "content/zh"
+time_format_default = "02.01.2006"
+time_format_blog = "02.01.2006"
+oem_name = "云联壹云"
+view_text = "点击查看"
+
+[languages.en]
+version_menu = "Version"
+description = "Documentation for onecloud"
+languageName = "English"
+contentDir = "content/en"
+time_format_default = "02.01.2006"
+time_format_blog = "02.01.2006"
+oem_name = "OneCloud"
+view_text = "Click to view"
+
+# Everything below this are Site Params
+
+[params]
+no_logo = false
+oem = "YunionCloud"
+oem_name = "云联壹云"
+oem_version = "3.9"
+copyright = "Copyright 2017 - 2022 | 北京云联万维技术有限公司 京ICP备17065753号"
+RSSLink = "/index.xml"
+is_ee = true
+author = "yunionio.org" # add your company name
+#github = "yunionio" # add your github profile name
+twitter = "yunionio" # add your twitter profile
+#github_repo = "https://github.com/yunionio/docs"
+#github_project_repo = "https://github.com/yunionio/onecloud"
+#email = "myemail@myaddress.xxx"
+
+# Menu title if your navbar has a versions selector to access old versions of your site.
+# This menu appears only if you have at least one [params.versions] set.
+version_menu = "Releases"
+multi_versions = true
+
+# Google Custom Search Engine ID. Remove or comment out to disable search.
+# gcs_engine_id = "011737558837375720776:fsdu1nryfng"
+
+# Enable Fuse.js offline search
+offlineSearch = true
+
+global_css = ["css/global.css"]
+notoc = true
+
+# User interface configuration
+[params.ui]
+# Enable to show the side bar menu in its compact state.
+sidebar_menu_compact = true
+#  Set to true to disable breadcrumb navigation.
+breadcrumb_disable = false
+#  Set to true to hide the sidebar search box (the top nav search box will still be displayed if search is enabled)
+sidebar_search_disable = true
+#  Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top nav bar
+navbar_logo = true
+
+# Adds a H2 section titled "Feedback" to the bottom of each doc. The responses are sent to Google Analytics as events.
+# This feature depends on [services.googleAnalytics] and will be disabled if "services.googleAnalytics.id" is not set.
+# If you want this feature, but occasionally need to remove the "Feedback" section from a single page,
+# add "hide_feedback: true" to the page's front matter.
+[params.ui.feedback]
+enable = false
+# The responses that the user sees after clicking "yes" (the page was helpful) or "no" (the page was not helpful).
+#yes = 'Glad to hear it! Please <a href="https://github.com/yunionio/docs/issues/new">tell us how we can improve</a>.'
+#no = 'Sorry to hear that. Please <a href="https://github.com/yunionio/docs/issues/new">tell us how we can improve</a>.'
+[markup]
+[markup.tableOfContents]
+endLevel = 3
+ordered = false
+startLevel = 2
+
+[markup.goldmark.renderer]
+unsafe= true
