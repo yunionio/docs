@@ -39,7 +39,7 @@ $ kubectl rollout restart deployment -n onecloud default-host
 $ kubectl get deployment -n onecloud |grep default | awk '{print $1}' | xargs kubectl rollout restart deployment -n onecloud
 
 # 重启onecloud命名空间下的所有pod
-$  kubectl get ds -n onecloud | awk '{print $1}' | xargs kubectl rollout ds -n onecloud
+$  kubectl get deployment -n onecloud | awk '{print $1}' | xargs kubectl rollout restart deployment -n onecloud
 
 ```
 
