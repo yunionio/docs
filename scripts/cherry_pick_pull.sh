@@ -159,7 +159,7 @@ hub pull-request -F "${prtext}" -h "${GITHUB_USER}:${NEWBRANCH}" -b "${MAIN_REPO
 function extract-subject {
   local patch="$1"
 
-  python -c '
+  script='
 import os
 import email.parser
 import email.header
@@ -180,6 +180,12 @@ s = s.strip() + u"\n"
 s = s.encode("utf-8") # write out utf-8 bytes whatsoever
 os.write(1, s)
 '
+  os=`uname -s`
+  if [ $os == "Darwin" ]; then
+    python3 -c "$script"
+  else
+    python -c "$script"
+  fi
 }
 
 git checkout -b "${NEWBRANCHUNIQ}" "${BRANCH}"
