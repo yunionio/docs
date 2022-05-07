@@ -126,7 +126,7 @@ $ climc policy-create --enabled --scope system --is-system sysadmin /root/sysadm
 # 将sysadmin权限绑定到admin角色上
 $ climc policy-bind-role --project-id system --role-id admin sysadmin
 
-# 将sysadmin以admin的角色加入system项目, 此后sysadmin用户才拥有整个平台的操作权限
+# 将sysadmin以admin的角色加入system项目, 此后sysadmin用户才拥有整个平台的操作权限, 若报ForbiddenError错误，可以重启keystone服务后,再次尝试此操作
 $ climc user-join-project --role admin --project system sysadmin
 
 # 创建 Yunion 区域
@@ -231,7 +231,7 @@ $ /root/cloudpods/_output/bin/apigateway --conf /etc/yunion/apigateway.conf
 # 安装yarn, 参考 https://yarn.bootcss.com/docs/install
 $ apt install yarn
 # 编译前端代码
-$cd /root/dashboard && yarn && yarn build
+$ cd /root/dashboard && yarn && yarn build
 ```
 
 
@@ -239,6 +239,7 @@ $cd /root/dashboard && yarn && yarn build
 
 ```sh
 # 修改nginx默认配置
+# 这里不一定是要改/etc/nginx/conf.d/default 文件，有可能是其他配置问题，主要是让以下内容生效
 $ cat<<EOF >/etc/nginx/conf.d/default
 server {
     listen 80;
@@ -253,7 +254,7 @@ server {
         index index.html;
         add_header Cache-Control no-cache;
         expires 1s;
-        if (!-e $request_filename) {
+        if (!-e \$request_filename) {
             rewrite ^/(.*) /index.html last;
             break;
         }
@@ -271,9 +272,9 @@ server {
         # 这里要匹配到api网关的地址和端口
         proxy_pass http://127.0.0.1:3000;
         proxy_redirect   off;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     }
 
     location /api/v1/imageutils/upload {
@@ -282,9 +283,9 @@ server {
         proxy_http_version 1.1;
         proxy_request_buffering off;
         proxy_buffering off;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$remote_addr;
     }
 }
 EOF
