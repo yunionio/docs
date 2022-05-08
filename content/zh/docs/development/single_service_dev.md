@@ -1,38 +1,39 @@
 ---
-title: "单服务二级制部署开发调试"
+title: "手动部署开发集群"
 weight: 4
 description: >
-  介绍如何单服务进行部署，并快速进行开发调试步骤
+  介绍如何手动部署用于开发测试用途的服务集群
 ---
 
+本文介绍手工部署用于开发测试用途的服务集群的步骤。
 
-# 适用人群
+## 适用人群
 
 - 想要断点调试
 - 虚拟机配置低
 - 不想使用docker打包镜像
-- 想要在MacOS上直接开发的
+- 想要在MacOS/Linux上直接开发
 
-# 缺陷
+## 已知问题
 
 - MacOS上调试不了host服务
-- 配置环境复杂
+- 配置复杂
 
-# 环境准备
+## 环境准备
 
-这里以Debain 11环境为例，仅配置nginx, apigateway, keystone, region服务，其他服务可以根据需要自行添加
+这里以Debain 11环境为例，仅配置nginx, apigateway, keystone, region等服务组成的最小集群，其他服务可以根据需要自行添加。
 
 - Linux 或 MacOS
 - 4核8G
 
-# 基础软件安装
+### 基础软件安装
 
 - nginx
 - MariaDB 5.5 或 MySQL 5.7
 - git, make, npm, yarn, curl
 - go 1.15
 
-# 源码克隆
+### 源码克隆
 
 这里假设克隆源码的目录分别为 **/root/cloudpods** **/root/dashboard**
 
@@ -49,26 +50,28 @@ $ cd dashboard && git checkout release/3.9 && cd /root
 $ mkdir -p /etc/yunion
 ```
 
-
-
-# 启动nginx及数据库服务
+### 启动nginx及数据库服务
 
 ```sh  
 $ systemctl enable --now nginx mariadb
 ```
 
+## 认证服务（keystone）初始化
 
-# keystone初始化(认证服务)
+第一个要起的服务是keystone，因为其他服务都依赖于认证服务
 
-第一个要起的服务是keystone， 因为其他服务都依赖于认证服务
-
+1) 首先配置keystone的数据库
 
 ```sh
 # 为keystone服务创建数据库及数据库账号
 $ mysql -uroot -e 'create database keystone;'
 # 这里设置一个密码为cloudpods-keystone的keystone用户，后面配置文件会用到
 $ mysql -uroot -e 'grant all privileges on keystone.* to "keystone"@"%" identified by "cloudpods-keystone"; flush privileges;'
+```
 
+2) 下面配置keystone服务
+
+```sh
 # 编译keysonte
 $ cd /root/cloudpods && make cmd/keystone
 
@@ -90,9 +93,10 @@ $ /root/cloudpods/_output/bin/keystone --conf /etc/yunion/keystone/keystone.conf
 # 启动keystone服务
 $ /root/cloudpods/_output/bin/keystone --conf /etc/yunion/keystone/keystone.conf
 ```
-    
 
-# climc 初始化
+3) 配置keystone服务
+
+## climc 初始化
 
 认证服务完成后，需要用climc进行部分操作
 
@@ -133,50 +137,56 @@ $ climc user-join-project --role admin --project system sysadmin
 $ climc region-create Yunion
 ```    
 
+## 初始化服务及端点
 
-# 初始化服务及端点
 ```sh
 # 创建 keystone 服务
 $ climc service-create --enabled identity keystone
-# 创建 region 服务
-$ climc service-create --enabled compute_v2 region2
 
 # 创建 keystone 端点
 $ climc endpoint-create --enabled keystone Yunion public http://127.0.0.1:35357/v3
 $ climc endpoint-create --enabled keystone Yunion admin http://127.0.0.1:35357/v3
 $ climc endpoint-create --enabled keystone Yunion internal http://127.0.0.1:5000/v3
 
+```
+
+## 计算服务（region）初始化
+
+region服务是基础服务，也是控制节点。
+
+1) 首先在keystone配置region服务的服务账号，并且注册region服务的服务端点（service endpoint）。
+
+```sh
+# 创建 region 服务
+$ climc service-create --enabled compute_v2 region2
+
 # 确定 region 服务监听端口，这里假定是8090，后面region服务配置时指定端口得是8090
 # 创建 region 端点
 $ climc endpoint-create --enabled region2 Yunion internal http://127.0.0.1:8090
 $ climc endpoint-create --enabled region2 Yunion public http://127.0.0.1:8090
 
-# 创建 region 服务认证用户
+# 创建 region 服务的服务账号
 $ climc user-create --enabled --system-account --no-web-console --password region@admin regionadmin
 # 赋予 regionadmin 用户 admin 角色
 $ climc user-join-project --role admin --project system regionadmin
-
-# 创建 api网关 服务认证用户
-$ climc user-create --enabled --system-account --no-web-console --password apigateway@admin apigateway
-# 赋予 apigateway 用户 admin 角色
-$ climc user-join-project --role admin --project system apigateway
 ```
 
-
-# region初始化(计算服务)
-
-这个服务是基础服务，也是控制节点
+2) 其次配置region的数据库
 
 ```sh
 # 为region服务创建数据库及数据库账号
 $ mysql -uroot -e 'create database yunioncloud;'
 # 这里设置一个密码为cloudpods-yunioncloud的yunioncloud用户
 $ mysql -uroot -e 'grant all privileges on yunioncloud.* to "yunioncloud"@"%" identified by "cloudpods-yunioncloud"; flush privileges;'
+```
 
+3) 下面配置并启动region服务
+
+```
 # 编译 region
 $ cd /root/cloudpods/ && make cmd/region
 
-# 编写keystone服务的配置文件
+# 编写region服务的配置文件
 # 这里要注意使用刚创建的数据库及数据库账号密码, 及region服务认证的用户名密码
 $ cat<<EOF >/etc/yunion/region.conf
 region = 'Yunion'
@@ -193,16 +203,32 @@ EOF
 
 # 启动 region 服务
 $ /root/cloudpods/_output/bin/region --conf /etc/yunion/region.conf
+```
 
+4) 测试region服务是否正常
+
+```
 # 测试 region 服务接口
 $ climc server-list
 ***  Total: 0  ***
 ```
-    
 
-# apigateway初始化(api网关服务)
+其他使用数据库的服务的配置步骤和region类似。
+
+
+## API网关服务（apigateway）初始化
 
 api网关是web到各个服务的中间层，web请求到达nginx再由nginx分发到api网关服务，最终由api网关去判断请求需要转发到哪个服务
+
+首先为api网关创建服务账号
+
+```sh
+# 创建 api网关 服务认证用户
+$ climc user-create --enabled --system-account --no-web-console --password apigateway@admin apigateway
+# 赋予 apigateway 用户 admin 角色
+$ climc user-join-project --role admin --project system apigateway
+```
+下面配置api网关服务
 
 ```sh
 # 编译 apigateway
@@ -223,9 +249,10 @@ EOF
 # 启动apigateway服务
 $ /root/cloudpods/_output/bin/apigateway --conf /etc/yunion/apigateway.conf
 ```
-    
 
-# 前端编译
+## 前端服务配置
+
+### 前端编译
 
 ```sh
 # 安装yarn, 参考 https://yarn.bootcss.com/docs/install
@@ -234,8 +261,7 @@ $ apt install yarn
 $ cd /root/dashboard && yarn && yarn build
 ```
 
-
-# nginx配置
+### nginx配置
 
 ```sh
 # 修改nginx默认配置
@@ -303,7 +329,7 @@ $ curl http://127.0.0.1 | grep OneCloud
 $ curl http://127.0.0.1/api/v2/servers | python3 -m json.tool
 ```
 
-# 前端登录
+### 前端登录
 
 ```sh
 # 创建 web 登录用户 admin
@@ -312,8 +338,6 @@ $ climc user-create --enabled --password admin@123 admin
 $ climc user-join-project --role admin --project system admin
 # 此时可以打开虚拟机的地址(http://ip)进行前端登录, 用户名密码分别为admin/admin@123
 ```
-
-
 
 # 后续改进
 
