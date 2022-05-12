@@ -503,43 +503,117 @@ footer.d-print-none {
     }
   }
 
-  &__section-title > a:before {
-    display: inline-block;
-    vertical-align: middle;
-    // margin-left: -1.7em;
-    margin-right: 15px;
-    content: '';
-    width: 0px;
-    height: 0px;
+  // &__section-title > a:before {
+  //   display: inline-block;
+  //   vertical-align: middle;
+  //   // margin-left: -1.7em;
+  //   margin-right: 15px;
+  //   content: '';
+  //   width: 0px;
+  //   height: 0px;
 
-    border-style: solid;
-    border-width: 5px 0 5px 5px;
-    border-color: transparent transparent transparent grey;
+  //   border-style: solid;
+  //   border-width: 5px 0 5px 5px;
+  //   border-color: transparent transparent transparent grey;
 
-    /*
-     * font-family: 'FontAwesome';
-     * content: '\f105';
-     * margin-left: -1.7em;
-     * margin-right: 10px;
-     * width: 15px !important;
-     * display: inline-block;
-     * &.active {
-     *   content: '\f107'
-     * }
-     */
+  //   /*
+  //    * font-family: 'FontAwesome';
+  //    * content: '\f105';
+  //    * margin-left: -1.7em;
+  //    * margin-right: 10px;
+  //    * width: 15px !important;
+  //    * display: inline-block;
+  //    * &.active {
+  //    *   content: '\f107'
+  //    * }
+  //    */
+  // }
+
+  // &__section-title > a.active:before {
+  //   display: inline-block;
+  //   vertical-align: middle;
+  //   // margin-left: -1.7em;
+  //   margin-right: 15px;
+  //   content: '';
+  //   width: 0px;
+  //   height: 0px;
+
+  //   border-style: solid;
+  //   border-width: 5px 5px 0 5px;
+  //   border-color: grey transparent transparent transparent;
+  // }
+}
+
+.td-sidebar-nav {
+  padding-left: 20px;
+  padding-top: 20px;
+
+  // 大标题
+  a.tree-root {
+    font-size: 20px;
+    font-weight: 700 !important;
   }
 
-  &__section-title > a.active:before {
-    display: inline-block;
-    vertical-align: middle;
-    // margin-left: -1.7em;
-    margin-right: 15px;
-    content: '';
-    width: 0px;
-    height: 0px;
+  .td-sidebar-nav__section-title {
+    // font-weight: 200;
+    color: #4F4B53;
+    // 有子页面的标题
+    // a.active.td-sidebar-link__section{
+    //   font-weight: 200;
+    // }
 
-    border-style: solid;
-    border-width: 5px 5px 0 5px;
-    border-color: grey transparent transparent transparent;
+    .td-sidebar-link {
+      padding-bottom: 0 !important;
+      min-height: 42px;
+      line-height: 42px;
+    }
+
+    // 页面标题
+    a.td-sidebar-link__page {
+      font-weight: 200;
+      border-left: 1px solid #E1E1E1;
+    }
+
+    a.active.td-sidebar-link__page {
+      font-weight: 200;
+    }
   }
+
+  .td-sidebar-nav .td-sidebar-link {
+    padding-bottom: 0 !important;
+  }
+
+  .ul-2,
+  .ul-3,
+  .ul-4 {
+    padding-left: 1em !important;
+
+    a.td-sidebar-link__section {
+      padding-left: 1em !important;
+    }
+
+    a.td-sidebar-link__page {
+      padding-left: calc(1em - 1px) !important;
+    }
+
+    a.active.td-sidebar-link__page {
+      padding-left: calc(1em - 3px) !important;
+    }
+  }
+
+  .ul-3 {
+    padding-left: 2em !important;
+  }
+
+}
+
+.td-sidebar-section_flex {
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.td-sidebar-section_icon-wrapper {
+  display: inline-block;
+  height: 42px;
+  line-height: 40px;
 }
