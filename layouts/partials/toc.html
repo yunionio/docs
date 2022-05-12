@@ -1,5 +1,5 @@
+{{ partial "page-meta-links.html" . }}
 <div id="toc-hidden">
-    {{ partial "page-meta-links.html" . }}
     {{ if not .Params.notoc }}
     {{ with .TableOfContents }}
     {{ if ge (len .) 200 }}
