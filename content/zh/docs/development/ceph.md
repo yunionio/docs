@@ -7,6 +7,7 @@ description: >
 
 # 说明
 - release/3.8 及之后版本将使用ceph及rbd命令直接操作ceph集群
+- 计算节点使用rbd及ceph命令要和使用的ceph集群版本保持一致，否则会出现不兼容情况，导致资源创建删除失败
 - 若使用了非开源版ceph，请在计算节点装好存储厂商提供的ceph及rbd命令，请确保ceph及rbd命令软连接或直接置于以下**任意**路径里面
     - /usr/local/sbin
     - /usr/local/bin
