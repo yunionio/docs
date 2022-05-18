@@ -7,7 +7,7 @@ description: >
 ---
 ###  前提条件
 
-在绑定密钥之前请[创建密钥]({{< relref "../../../keypair/tutorial/create" >}})
+在绑定密钥之前请[创建密钥](../../../../keypair/tutorial/create)
 
 ### 绑定密钥
 

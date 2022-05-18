@@ -8,8 +8,8 @@ description: >
 
 ### 前提条件
 
-- 已[新建负载均衡集群]({{< relref "../lbcluster/create" >}})
-- 已在负载均衡均衡集群中[添加负载均衡节点]({{< relref "../lbagent/create" >}})并[部署节点]({{< relref "../lbagent/deploy" >}})
+- 已[新建负载均衡集群](../../lbcluster/create)
+- 已在负载均衡均衡集群中[添加负载均衡节点](../../lbagent/create)并[部署节点](../../lbagent/deploy)
 
 ### 操作步骤
 

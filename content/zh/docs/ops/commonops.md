@@ -29,7 +29,9 @@ $ kubectl get pods -n onecloud -o wide --field-selector=spec.nodeName=<host-name
 
 ```bash
 # 重启host服务，如删除所有host pod
-$ kubectl rollout restart deployment -n onecloud default-host
+$ kubectl -n onecloud delete pods default-host-xxxxx
+
+$ kubectl rollout restart daemonset -n onecloud default-host
 
 # 重启web服务
 $ kubectl rollout restart deployment -n onecloud default-web
@@ -60,7 +62,7 @@ $ kubectl -n onecloud rollout restart deployment default-region
 ```
 ### 查看服务日志
 
-查看持久化服务日志，请参考[持久化后端日志]({{< relref "backendlogs" >}})
+查看持久化服务日志，请参考[持久化后端日志](../backendlogs)
 
 以region组件为例介绍如何查看region组件的日志信息。
 ```bash
