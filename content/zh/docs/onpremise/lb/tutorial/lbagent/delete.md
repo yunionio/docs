@@ -8,7 +8,7 @@ description: >
 
 ### 前提条件
 
-确保已[下线节点]({{< relref "offline" >}})
+确保已[下线节点](../offline)
 
 ### 操作步骤
 

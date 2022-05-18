@@ -10,8 +10,8 @@ description: >
 
 若需配置告警接收人或机器人请先确保以下条件：
 
-- 已[添加接收人]({{< relref "../../../auth_security/notify/tutorial/recipient/create" >}})；
-- 已[配置机器人]({{< relref "../../../auth_security/notify/tutorial/bot/create" >}})；
+- 已[添加接收人](../../../../auth_security/notify/tutorial/recipient/create)；
+- 已[添加机器人](../../../../auth_security/notify/tutorial/bot/create)；
 
 ### 操作步骤
 

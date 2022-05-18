@@ -8,8 +8,8 @@ description: >
 
 ### 前提条件
 
-- 已[新建接收人]({{< relref "../../recipient/create" >}})
-- 已[新建机器人]({{< relref "../../bot/create" >}})
+- 已[新建接收人](../../../recipient/create)
+- 已[新建机器人](../../../bot/create)
 
 ### 操作步骤
 

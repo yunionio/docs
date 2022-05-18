@@ -6,4 +6,4 @@ description: >
     部署容器实例
 ---
 
-同直接在应用市场[部署虚拟机实例]({{< relref "../chart/deploy_docker" >}})
+同直接在应用市场[部署容器应用](../../chart/deploy_docker)

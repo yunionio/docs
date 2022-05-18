@@ -6,4 +6,4 @@ description: >
     管理安全组下的规则
 ---
 
-请确保已[新建安全组]({{< relref "../group/create" >}})
+请确保已[新建安全组](../group/create)

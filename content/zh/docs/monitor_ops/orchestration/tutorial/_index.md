@@ -8,6 +8,6 @@ description: >
 
 虚拟机编排使用流程：
 
-- 在Helm仓库页面[新建Helm仓库]({{< relref "./helm/create" >}})
-- 在应用市场页面[部署虚拟机实例]()
-- 在虚拟机实例页面查看
+- 在Helm仓库页面[新建Helm仓库](./helm/create)；
+- 在应用市场页面[部署虚拟机实例](./chart/deploy_vm)；
+- 在虚拟机实例页面查看部署成功的虚拟机实例；
