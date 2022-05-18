@@ -8,7 +8,7 @@ description: >
 
 ### 前提条件
 
-[获取机器人的webhook地址]({{< relref "webhook" >}})
+[获取机器人的webhook地址](../webhook)
 
 ### 操作步骤
 

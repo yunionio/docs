@@ -60,7 +60,7 @@ $ kubectl -n onecloud rollout restart deployment default-region
 ```
 ### 查看服务日志
 
-查看持久化服务日志，请参考[持久化后端日志]({{< relref "backendlogs" >}})
+查看持久化服务日志，请参考[持久化后端日志](../backendlogs)
 
 以region组件为例介绍如何查看region组件的日志信息。
 ```bash

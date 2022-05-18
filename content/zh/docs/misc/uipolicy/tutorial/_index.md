@@ -9,5 +9,5 @@ description: >
 
 UI策略使用方法：
 
-- [新建UI策略]({{< relref "definition/create" >}})
-- [分配UI策略]({{< relref "allocation/create" >}})
+- [新建UI策略](./definition/create)
+- [分配UI策略](./allocation/create)

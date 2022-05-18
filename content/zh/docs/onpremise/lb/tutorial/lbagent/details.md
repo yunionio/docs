@@ -11,7 +11,7 @@ description: >
 
 ### 前提条件
 
-已[部署节点]({{< relref "deploy" >}})
+已[部署节点](../deploy)
 
 ### 操作步骤
 
