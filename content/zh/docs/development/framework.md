@@ -54,26 +54,21 @@ keystone, region, glance 等后端服务，都是用的同一套后端服务框�
 
 | REST 请求                                 | Model 方法                   | 说明                           |
 |-------------------------------------------|------------------------------|--------------------------------|
-| GET /\<resources\>                        | AllowListItems               | List的权限判断                 |
-| -                                         | ListItemFilter               | 过滤                           |
+| GET /\<resources\>                        | ListItemFilter               | 过滤                           |
 | -                                         | GetCustomizeColumns          | 获得扩展字段的信息             |
-| GET /\<resources\>/\<res_id\>             | AllowGetDetails              | Get 的权限判断                 |
-| -                                         | GetExtraDetails              | 获取扩展字段的信息             |
-| GET /\<resources\>/\<res_id\>/\<spec\>    | AllowGetDetails\<Spec\>      | 获取资源特定属性的权限判断     |
-| -                                         | GetDetails\<Spec\>           | 获取资源特定属性               |
-| POST /\<resources\>                       | AllowCreateItem              | 创建操作的鉴权                 |
-| -                                         | ValidateCreateData           | 校验和处理创建的数据           |
+| GET /\<resources\>/\<property\>           | GetProperty\<Property\>      | 获得*该类资源*的特定属性       |
+| GET /\<resources\>/\<res_id\>             | GetExtraDetails              | 获取扩展字段的信息             |
+| GET /\<resources\>/\<res_id\>/\<spec\>    | GetDetails\<Spec\>           | 获取*某个资源*的特定属性       |
+| POST /\<resources\>                       | ValidateCreateData           | 校验和处理创建的数据           |
 | -                                         | CustomizeCreate              | 自定义的创建操作               |
 | -                                         | PostCreate                   | 创建后的hook                   |
 | -                                         | OnCreateComplete             | 创建完成的hook                 |
-| POST /\<resources\>/\<res_id\>/\<action\> | AllowPerformAction\<Action\> | 某个资源执行特定操作的鉴权判断 |
-| -                                         | Perform\<Action\>            | 某个资源执行特定操作           |
-| PUT /\<resources\>/\<res_id\>             | AllowUpdateItem              | 对指定资源更新操作的鉴权       |
-| -                                         | ValidateUpdateData           | 校验和处理更新操作的数据       |
+| POST /\<resources\>/\<action\>            | Perform\<Action\>            | 对*该类资源*执行特定操作       |
+| POST /\<resources\>/\<res_id\>/\<action\> | Perform\<Action\>            | 对*某个资源*执行特定操作       |
+| PUT /\<resources\>/\<res_id\>             | ValidateUpdateData           | 校验和处理更新操作的数据       |
 | -                                         | PreUpdate                    | 自定义的创建操作               |
 | -                                         | PostUpdate                   | 创建后的hook                   |
-| DELETE /\<resources\>/\<res_id\>          | AllowDeleteItem              | 删除指定资源的鉴权             |
-| -                                         | CustomizeDelete              | 自定义的删除操作               |
+| DELETE /\<resources\>/\<res_id\>          | CustomizeDelete              | 自定义的删除操作               |
 | -                                         | PreDelete                    | 删除前的hook                   |
 | -                                         | Delete                       | 执行删除操作                   |
 | -                                         | PostDelete                   | 删除后的hook                   |
