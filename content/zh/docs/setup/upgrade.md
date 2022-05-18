@@ -76,7 +76,7 @@ $ git pull
 # 该步骤会因为拉取 docker 镜像等待较长时间，请耐心等待
 # PRIMARY_MASTER_HOST 是指部署集群的第一个节点的 ip 地址
 # 需要本机能够使用 ssh 密钥登录上去
-$ ./ocboot.py upgrade <PRIMARY_MASTER_HOST> v3.8.8
+$ ./ocboot.py upgrade <PRIMARY_MASTER_HOST> v3.8.10
 
 # 另外可以使用 `./ocboot.py upgrade --help` 查看其它可选参数
 # 比如:
@@ -94,15 +94,15 @@ $ kubectl get pods -n onecloud --watch
 如果升级后遇到功能不符合预期或者 bug 之类的问题，可以通过下面的命令降级回滚。
 
 {{% alert title="注意" color="warning" %}}
-- 一般小版本降级没有问题，比如从 v3.8.8 降级到 v3.8.2
-- 跨版本降级可能会有问题，比如从 v3.8.8 降级到 v3.6.8
+- 一般小版本降级没有问题，比如从 v3.8.10 降级到 v3.8.2
+- 跨版本降级可能会有问题，比如从 v3.8.10 降级到 v3.6.8
 
 如果遇到问题请到 [GitHub 提 issue](https://github.com/yunionio/cloudpods/issues) 或者 [联系我们](/zh/docs/contact) 获取帮助。
 {{% /alert %}}
 
 ```bash
 # 降级的原理是修改各个服务的 image version
-# 比如现在的版本是 v3.8.6，然后想要降级到 v3.7.8
+# 比如现在的版本是 v3.8.10，然后想要降级到 v3.7.8
 # 在第一个控制节点执行如下命令降级会 v3.7.8
 $ /opt/yunion/bin/ocadm cluster update --version v3.7.8 --wait 
 
