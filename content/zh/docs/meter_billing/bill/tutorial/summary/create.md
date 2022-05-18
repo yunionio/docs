@@ -10,7 +10,7 @@ description: >
 
 ### 前提条件
 
-- 已[添加接收人]({{< relref "../../../../auth_security/notify/tutorial/recipient/create" >}})，并配置邮箱通知渠道；
+- 已[添加接收人](../../../../../auth_security/notify/tutorial/recipient/create)，并配置邮箱通知渠道；
 
 ### 操作步骤
 

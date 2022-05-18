@@ -6,4 +6,4 @@ description: >
     部署虚拟机实例
 ---
 
-同直接在应用市场[部署虚拟机实例]({{< relref "../chart/deploy_vm" >}})
+同直接在应用市场[部署虚拟机实例](../../chart/deploy_vm)

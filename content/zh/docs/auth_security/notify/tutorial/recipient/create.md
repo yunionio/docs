@@ -8,8 +8,7 @@ description: >
 
 ### 前提条件
 
-[已配置对应的通知渠道]({{< relref "../mailconfig/create" >}})
-
+[已配置对应的通知渠道](../../mailconfig/create)
 
 ### 操作步骤
 

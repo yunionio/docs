@@ -6,4 +6,4 @@ description: >
     管理监控面板上的图表
 ---
 
-请确保已[新建监控面板]({{< relref "../panel/create" >}})
+请确保已[新建监控面板](../panel/create)
