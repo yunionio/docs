@@ -28,12 +28,15 @@ $ kubectl get pods -n onecloud -o wide --field-selector=spec.nodeName=<host-name
 ### 重启组件服务
 
 ```bash
+
 # 重启web服务
 $ kubectl rollout restart deployment -n onecloud default-web
 ```
 ```bash
 # 重启host服务，如删除所有host pod
-$ kubectl rollout restart deployment -n onecloud default-host
+$ kubectl -n onecloud delete pods default-host-xxxxx
+
+$ kubectl rollout restart daemonset -n onecloud default-host
 
 # 重启所有服务，平台服务都以default开头
 $ kubectl get deployment -n onecloud |grep default | awk '{print $1}' | xargs kubectl rollout restart deployment -n onecloud
