@@ -1,0 +1,227 @@
+{{ partial "page-meta-links.html" . }}
+<div id="toc-hidden">
+    {{ if not .Params.notoc }}
+    {{ with .TableOfContents }}
+    {{ if ge (len .) 200 }}
+    {{ . }}
+    {{ end }}
+    {{ end }}
+    {{ end }}
+</div>
+
+<script>
+    let tocNode = document.getElementById('toc-hidden')
+    let list = clectionLis1()
+
+    let ul = createList(list)
+
+    tocNode.innerHTML = ''
+    tocNode.appendChild(ul)
+
+    setTimeout(()=>{
+        initActiveToc()
+        addEventListener()
+    }, 0)
+
+    function addEventListener(){
+        // 右侧导航点击
+        document.getElementById('toc-hidden').onclick = function(e) {
+            let ev = e || window.event
+            let target = ev.target || ev.srcElement
+            if (target.nodeName.toLowerCase() == 'a') {
+                setTimeout(()=>{
+                    changeTocActive(target.parentNode)
+                }, 0)
+                
+            }
+        }
+        // 页面滚动
+        window.onscroll = function(e) {
+            initActiveToc()
+        }
+        
+    }
+
+    function initActiveToc() {
+        let h2 = getBoundingClientNode('h2')
+        let h3 = getBoundingClientNode('h3')
+
+        let activeNode = h2.currentNode || h3.currentNode
+        if (h2.currentNode && h3.currentNode) {
+            activeNode = Math.abs(h2.y) < Math.abs(h3.y) ? h2.currentNode : h3.currentNode
+        }
+        if (!activeNode) return
+        changeTocActive(activeNode)
+    }
+    // 修改导航栏选中状态
+    function changeTocActive(node) {
+        let nodeId = node.getAttribute('id') || node.getAttribute('text')?.replace('#', '')
+        let li1s = document.getElementsByClassName('li1-item')
+        let li2s = document.getElementsByClassName('li2-item')
+
+        for(let i=0;i<li1s.length;i++) {
+            let text = li1s[i].getAttribute('text') || ''
+            if (text.replace('#', '') == nodeId) {
+                li1s[i].classList.add('active')
+            }else{
+                li1s[i].classList.remove('active')
+            }
+        }
+
+        for(let j=0;j<li2s.length;j++) {
+            let text = li2s[j].getAttribute('text') || ''
+            if (text.replace('#', '') == nodeId) {
+                li2s[j].classList.add('active')
+            } else {
+                li2s[j].classList.remove('active')
+            }
+        }
+    }
+
+    // 获取当前在可视窗口的dom节点
+    function getBoundingClientNode (tagName) {
+        let result = {
+            nodes: [],
+            currentNode: null,
+            index: -1,
+            y: 0
+        }
+        let nodes = Array.from(document.getElementsByTagName(tagName))
+        result.nodes = nodes
+        for(let i=0;i<nodes.length;i++){
+            let rect = nodes[i].getBoundingClientRect()
+            
+            if (rect.y <= 0) {
+                result.y = rect.y
+                result.currentNode = nodes[i]
+                result.index = i
+            }
+            if (rect.y > 0 && rect.y<window.innerHeight) {
+                result.y = rect.y
+                result.currentNode = nodes[i]
+                result.index = i
+                break
+            }
+        }
+        return result
+    }
+
+    // virtrulDOM生成dom
+    function createList (list) {
+        // <li class="li1-item no-border active">
+        //     <div class="li1-item-style">
+        //         <div class="li1-item-topborder show"></div>
+        //         <div class="li1-item-bottomborder show"></div>
+        //         <div class="mask-line"></div>
+        //         <div class="li1-item-style-dotted"></div>
+        //     </div>
+        //     <a href=""></a>
+        //     <ul>
+        //         <li class="li2-item">
+        //             <a href=""></a>
+        //             <div class="li2-item-style"></div>
+        //         </li>
+        //     </ul>
+        // </li>
+        let ul = createNode('ul')
+        list.map((item, index) => {
+            let listStyleClass = ['li1-item']
+            let topMaskClass = ['li1-item-topborder']
+            if (index !== 0) {
+                topMaskClass.push('show')
+            }
+            let botMaskClass = ['li1-item-bottomborder']
+            if (index !== list.length - 1) {
+                botMaskClass.push('show')
+            } else {
+                listStyleClass.push('no-border')
+            }
+            // 第一层li
+            let li1 = createNode('li', {classList: listStyleClass, text: item.href})
+            // 第一层目录
+            let a1 = createNode('a', {href:item.href, innerHTML: item.text})
+            // 第一层列表项样式
+            
+            let li1Dotted = createNode('div', {classList:['li1-item-style']})
+            let topMask = createNode('div', {classList: topMaskClass})
+            let botMask = createNode('div', {classList: botMaskClass})
+            let maskLine = createNode('div', { classList: ['mask-line'] })
+            let dotted = createNode('div', {classList:['li1-item-style-dotted']})
+            li1Dotted.appendChild(topMask)
+            li1Dotted.appendChild(botMask)
+            li1Dotted.appendChild(maskLine)
+            li1Dotted.appendChild(dotted)
+
+            // li添加子节点
+            li1.appendChild(a1)
+            li1.appendChild(li1Dotted)
+
+            // 第二层li
+            if (item.ul.length) {
+                let ul2 = createNode('ul')
+                item.ul.map((item2, index2) => {
+                    let li2 = createNode('li', {classList:['li2-item'], text: item2.href})
+                    let a2 = createNode('a', {href:item2.href, innerHTML:item2.text})
+                    let dotted2 = createNode('div', {classList:['li2-item-style']})
+
+                    li2.appendChild(a2)
+                    li2.appendChild(dotted2)
+
+                    ul2.appendChild(li2)
+                })
+                li1.appendChild(ul2)
+            }
+            
+            // ul添加子节点
+            ul.appendChild(li1)
+        })
+        return ul
+    }
+
+    function createNode(tagName, opts = {}){
+        let node = document.createElement(tagName)
+        const { classList, innerHTML, href, text } = opts
+        if (classList) {
+            classList.map(item=>{
+                node.classList.add(item)
+            })
+        }
+        if (innerHTML) {
+            node.innerHTML = innerHTML
+        }
+        if (href) {
+            node.href = href
+        }
+        if (text) {
+            node.setAttribute('text', text)
+        }
+        return node
+    }
+
+    // 从自动生成的TableOfContents，生成vitrulDOM
+    function clectionLis1 () {
+        let ul = []
+        let lis = document.getElementById('TableOfContents')?.firstElementChild || {children:[]}
+        for (let i = 0; i < lis.children.length; i++) {
+            let a1 = lis.children[i].firstElementChild
+            let a2 = lis.children[i].lastChild
+            let ul2 = lis.children[i].children[1] || ''
+            let li1 = {
+                text: a1.innerHTML,
+                href: a1.getAttribute('href'),
+                ul: []
+            }
+            if(ul2) {
+                for(let j=0;j<ul2.children.length;j++){
+                    let a1 = ul2.children[j].firstElementChild
+                    li1.ul.push({
+                        text: a1.innerHTML,
+                        href: a1.getAttribute('href')
+                    })
+                }
+            }
+            ul.push(li1)
+        }
+        return ul
+    }
+</script>

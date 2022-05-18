@@ -17,41 +17,79 @@
   </div>
   <div id="content-desktop"></div>
   {{ end }}
-  <nav class="collapse td-sidebar-nav" id="td-section-nav">
-    {{ if  (gt (len .Site.Home.Translations) 0) }}
+  <nav class="collapse td-sidebar-nav{{ if .Site.Params.ui.sidebar_menu_foldable }} foldable-nav{{ end }}"
+    id="td-section-nav">
+    {{ if (gt (len .Site.Home.Translations) 0) -}}
     <div class="nav-item dropdown d-block d-lg-none">
       {{ partial "navbar-lang-selector.html" . }}
     </div>
-    {{ end }}
-    {{ template "section-tree-nav-section" (dict "page" . "section" .FirstSection "delayActive" $shouldDelayActive)  }}
+    {{ end -}}
+    {{ $navRoot := cond (and (ne .Params.toc_root true) (eq .Site.Home.Type "docs")) .Site.Home .FirstSection -}}
+    {{ $ulNr := 0 -}}
+    {{ $ulShow := cond (isset .Site.Params.ui "ul_show") .Site.Params.ui.ul_show 1 -}}
+    {{ $sidebarMenuTruncate := cond (isset .Site.Params.ui "sidebar_menu_truncate") .Site.Params.ui.sidebar_menu_truncate 50 -}}
+    <ul class="td-sidebar-nav__section pr-md-3 ul-{{ $ulNr }}">
+      {{ template "section-tree-nav-section" (dict "page" . "section" $navRoot "shouldDelayActive" $shouldDelayActive "sidebarMenuTruncate" $sidebarMenuTruncate "ulNr" $ulNr "ulShow" (add $ulShow 1)) }}
+    </ul>
   </nav>
 </div>
-{{ define "section-tree-nav-section" }}
-{{ $s := .section }}
-{{ $p := .page }}
-{{ $shouldDelayActive := .delayActive }}
-{{ $active := eq $p.CurrentSection $s }}
-{{ $show := or (and (not $p.Site.Params.ui.sidebar_menu_compact) ($p.IsAncestor $s)) ($p.IsDescendant $s) }}
-{{ $sid := $s.RelPermalink | anchorize }}
+{{ define "section-tree-nav-section" -}}
+{{ $s := .section -}}
+{{ $p := .page -}}
+{{ $shouldDelayActive := .shouldDelayActive -}}
+{{ $sidebarMenuTruncate := .sidebarMenuTruncate -}}
+{{ $treeRoot := cond (eq .ulNr 0) true false -}}
+{{ $ulNr := .ulNr -}}
+{{ $ulShow := .ulShow -}}
+{{ $active := and (not $shouldDelayActive) (eq $s $p) -}}
+{{ $activePath := and (not $shouldDelayActive) ($p.IsDescendant $s) -}}
+{{ $show := cond (or (lt $ulNr $ulShow) $activePath (and (not $shouldDelayActive) (eq $s.Parent $p.Parent)) (and (not $shouldDelayActive) (eq $s.Parent $p)) (not $p.Site.Params.ui.sidebar_menu_compact) (and (not $shouldDelayActive) ($p.IsDescendant $s.Parent))) true false -}}
+{{ $mid := printf "m-%s" ($s.RelPermalink | anchorize) -}}
+{{ $pages_tmp := where (union $s.Pages $s.Sections).ByWeight ".Params.toc_hide" "!=" true -}}
+{{ $pages := $pages_tmp | first $sidebarMenuTruncate -}}
+{{ $withChild := gt (len $pages) 0 -}}
+{{ $manualLink := cond (isset $s.Params "manuallink") $s.Params.manualLink ( cond (isset $s.Params "manuallinkrelref") (relref $s $s.Params.manualLinkRelref) $s.RelPermalink) -}}
+{{ $manualLinkTitle := cond (isset $s.Params "manuallinktitle") $s.Params.manualLinkTitle $s.Title -}}
 {{ $oemName := $p.Site.Params.oem_name }}
-<ul class="td-sidebar-nav__section pr-md-3">
-  <li class="td-sidebar-nav__section-title">
-    <a  href="{{ $s.RelPermalink }}" class="align-left pl-0 pr-2{{ if not $show }} collapsed{{ end }}{{ if $active}} active{{ end }} td-sidebar-link td-sidebar-link__section">{{ replace $s.LinkTitle "var_oem_name" $oemName }}</a>
-  </li>
-  <ul>
-    <li class="collapse {{ if $show }}show{{ end }}" id="{{ $sid }}">
-      {{ $pages := where (union $s.Pages $s.Sections).ByWeight ".Params.toc_hide" "!=" true }}
-      {{ $pages := $pages | first 50 }}
-      {{ range $pages }}
-      {{ if .IsPage }}
-      {{ $mid := printf "m-%s" (.RelPermalink | anchorize) }}
-      {{ $active := eq . $p }}
-      <a class="td-sidebar-link td-sidebar-link__page {{ if and (not $shouldDelayActive) $active }} active{{ end }}" id="{{ $mid }}" href="{{ .RelPermalink }}">{{ replace .LinkTitle "var_oem_name" $oemName }}</a>
-      {{ else }}
-      {{ template "section-tree-nav-section" (dict "page" $p "section" .) }}
-      {{ end }}
-      {{ end }}
-    </li>
+<li
+  class="td-sidebar-nav__section-title td-sidebar-nav__section{{ if $withChild }} with-child{{ else }} without-child{{ end }}{{ if $activePath }} active-path{{ end }}{{ if (not (or $show $p.Site.Params.ui.sidebar_menu_foldable )) }} collapse{{ end }}"
+  id="{{ $mid }}-li">
+  {{ if (and $p.Site.Params.ui.sidebar_menu_foldable (ge $ulNr 1)) -}}
+  <input type="checkbox" id="{{ $mid }}-check" {{ if $activePath}} checked{{ end }} />
+  <label for="{{ $mid }}-check"><a href="{{ $manualLink }}" {{ if ne $s.LinkTitle $manualLinkTitle }} title="{{ $manualLinkTitle }}" {{ end }}{{ with $s.Params.manualLinkTarget }} target="{{ . }}" {{ if eq . "_blank" }} rel="noopener" {{ end }}{{ end }}
+      class="align-left pl-0 {{ if $active}} active{{ end }} td-sidebar-link{{ if $s.IsPage }} td-sidebar-link__page{{ else }} td-sidebar-link__section{{ end }}{{ if $treeRoot }} tree-root{{ end }}"
+      id="{{ $mid }}">{{ with $s.Params.Icon}}<i class="{{ . }}"></i>{{ end }}<span
+        class="{{ if $active }}td-sidebar-nav-active-item{{ end }}">{{ replace $s.LinkTitle "var_oem_name" $oemName }}</span></a></label>
+  {{ else -}}
+  <a href="{{ $manualLink }}" {{ if ne $s.LinkTitle $manualLinkTitle }} title="{{ $manualLinkTitle }}" {{ end }}{{ with $s.Params.manualLinkTarget }} target="{{ . }}" {{ if eq . "_blank" }} rel="noopener" {{ end }}{{ end }}
+    class="td-sidebar-section_flex pl-0{{ if $active}} active{{ end }} td-sidebar-link{{ if $s.IsPage }} td-sidebar-link__page{{ else }} td-sidebar-link__section{{ end }}{{ if $treeRoot }} tree-root{{ end }}"
+    id="{{ $mid }}"><span class="{{ if $active }}td-sidebar-nav-active-item{{ end }}">{{ replace $s.LinkTitle "var_oem_name" $oemName }}</span>
+      {{ if $s.IsPage }}{{else}} <span class="td-sidebar-section_icon-wrapper{{ if $active }} active {{end}}">{{if $activePath }}{{ if $treeRoot }}{{- else}}
+        <!-- 下箭头 -->
+        <svg t="1629775274945" class="td-sidebar-section_icon{{ if $show }} collapsed{{ end }}" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          p-id="12991" width="14" height="14">
+          <path
+            d="M888.32 276.064a40 40 0 1 1 56.544 56.544L539.136 738.336a40 40 0 1 1-56.544-56.544L888.32 276.064zM538.624 681.792a40 40 0 1 1-56.544 56.544L76.352 332.608a40 40 0 1 1 56.544-56.544l405.728 405.728z"
+            p-id="12992"></path>
+        </svg>
+        {{end -}}{{else}} {{ if $treeRoot }}{{- else}}
+        <!-- 右箭头 -->
+        <svg t="1629775193602" class="td-sidebar-section_icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          p-id="12199" width="14" height="14">
+          <path d="M283.648 174.08l57.216-59.008L740.352 512 340.864 908.928 283.648 849.92 619.52 512z" p-id="12200"></path>
+        </svg>
+        {{end -}} {{end}} </span> {{end}}
+    </a>
+  {{- end }}
+  {{- if $withChild }}
+  {{- $ulNr := add $ulNr 1 }}
+  <ul class="ul-{{ $ulNr }}{{ if (gt $ulNr 1)}} foldable{{end}}">
+    {{ range $pages -}}
+    {{ if (not (and (eq $s $p.Site.Home) (eq .Params.toc_root true))) -}}
+    {{ template "section-tree-nav-section" (dict "page" $p "section" . "shouldDelayActive" $shouldDelayActive "sidebarMenuTruncate" $sidebarMenuTruncate "ulNr" $ulNr "ulShow" $ulShow) }}
+    {{- end }}
+    {{- end }}
   </ul>
-</ul>
+  {{- end }}
+</li>
 {{ end }}

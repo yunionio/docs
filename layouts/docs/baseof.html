@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="{{ .Site.Language.Lang }}" class="no-js">
   <head>
+    <link rel="stylesheet" href="/css/global.css">
     {{ partial "head.html" . }}
   </head>
   <body class="td-{{ .Kind }}">
@@ -13,18 +14,30 @@
           <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
             {{ partial "sidebar.html" . }}
           </div>
-          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
-            {{ partial "toc.html" . }}
-          </div>
           <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
             {{ partial "version-banner.html" . }}
             {{ if not .Site.Params.ui.breadcrumb_disable }}{{ partial "breadcrumb.html" . }}{{ end }}
             {{ block "main" . }}{{ end }}
           </main>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none" style="border-left: none;">
+            {{ partial "toc.html" . }}
+          </aside>
         </div>
       </div>
       {{ partial "footer.html" . }}
     </div>
     {{ partial "scripts.html" . }}
   </body>
+  <script>
+        function loadcssCode(code) {
+            let style = document.createElement('style')
+            style.type = 'text/css'
+            style.rel = 'stylesheet'
+            style.appendChild(document.createTextNode(code))
+            let head = document.getElementsByTagName('head')[0]
+            head.appendChild(style)
+        }
+        let code = ':root{--main-color: #076f38;--hover-color: #042513;}'
+        loadcssCode(code)
+    </script>
 </html>
