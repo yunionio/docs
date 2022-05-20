@@ -10,7 +10,7 @@ weight: 2
 
 采用新机制避免了因为网卡的检测顺序、增删网卡等导致的网卡名称不持久，但却导致网卡的名称没有规律可循，而云平台初始化裸金属时需要能够明确地配置指定物理机网卡的IP配置。
 
-为此，{{<oem_name>}}按照YunionOS探测网卡的顺序给网卡依次命名为en0, en1, ...
+为此，{{<oem_name>}}按照PXE引导系统探测网卡的顺序给网卡依次命名为en0, en1, ...
 
 为了实现网卡的自定义命名，{{<oem_name>}}做了如下操作：
 
@@ -31,7 +31,7 @@ KERNEL=="*", SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:
 
 1) 手动修改 /etc/udev/rules.d/70-persistent-net.rules
 
-2) 如果允许物理机重启，可以执行如下命令，让物理机重启boot进入YunionOS，初始化一系列配置文件，包括udev的配置文件：
+2) 如果允许物理机重启，可以执行如下命令，让物理机重启boot进入PXE引导系统，初始化一系列配置文件，包括udev的配置文件：
 
 ```bash
 climc server-deploy <baremetal_server_id>

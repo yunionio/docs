@@ -38,7 +38,7 @@ description: >
 - DHCP Relay <-> Baremetal Agent:
     - 转发 PXE Boot 请求，获取网络启动相关的信息
     - 通过 DHCP 和 TFTP 服务下发 PXE 配置
-        - 云平台定制的[网络启动小系统(yunionos)](https://github.com/yunionio/yunionos) kernel 和 initramfs: 运行 SSH 服务，制作 RAID，收集硬件信息等
+        - 云平台定制的[PXE引导系统](https://github.com/yunionio/yunionos) kernel 和 initramfs: 运行 SSH 服务，制作 RAID，收集硬件信息等
 - Baremetal Agent <-> Region Server: 
     - 通过 Region Server 注册物理机记录
     - 获取网络 IP 地址
@@ -68,9 +68,9 @@ description: >
 6. Baremetal Agent 收到通知后，记录 ssh 登录的信息，开始进行准备工作;
 7. 准备工作包括配置 IPMI，收集硬件信息等，当这些操作完成后，将所有信息上报给 Region Server 完成注册
 
-### yunionos 网络启动小系统
+### PXE引导系统
 
-yunionos(https://github.com/yunionio/yunionos) 是我们使用 [Buildroot](https://buildroot.org/) 工具定制的用于 PXE 启动和管理物理机的小型 Linux 系统，作用如下:
+PXE引导系统(https://github.com/yunionio/yunionos) 是我们使用 [Buildroot](https://buildroot.org/) 工具定制的用于 PXE 启动和管理物理机的小型 Linux 系统，作用如下:
 
 1. 运行 sshd 服务，提供 Baremetal Agent 远程执行命令
 2. 包含 LSI MegaRaid, HP Smart Array, LSI MPT2SAS, LSI MPT3SAS, Mrarvell RAID等驱动和工具，用于制作 RAID
@@ -79,15 +79,15 @@ yunionos(https://github.com/yunionio/yunionos) 是我们使用 [Buildroot](https
 
 ### SSH 管理
 
-当物理机通过 PXE 进入 yunionos 小系统后会启动 sshd 服务，并将 ssh login 信息通知给 Baremetal Agent，Baremetal Agent 会更新 ssh 相关的登录信息
+当物理机通过 PXE 进入 PXE引导系统后会启动 sshd 服务，并将 ssh login 信息通知给 Baremetal Agent，Baremetal Agent 会更新 ssh 相关的登录信息
 
 ### RAID 配置
 
-RAID 配置由 Baremetal Agent 根据用户的配置，生成 raid 配置命令，通过 ssh 远程控制 yunionos 在物理机上制作 RAID
+RAID 配置由 Baremetal Agent 根据用户的配置，生成 raid 配置命令，通过 ssh 远程控制 PXE引导系统 在物理机上制作 RAID
 
 ### 安装操作系统
 
-RAID 做完后，Baremetal Agent 会通过 ssh 远程控制 yunionos 安装操作系统和分区，流程如下:
+RAID 做完后，Baremetal Agent 会通过 ssh 远程控制 PXE引导系统 安装操作系统和分区，流程如下:
 
 1. 调用 [/lib/mos/rootcreate.sh](https://github.com/yunionio/yunionos/blob/master/src/lib/mos/rootcreate.sh) 将系统创建到磁盘:
   - 通过 wget 从 Glance Server 下载用户指定的 image 镜像
@@ -103,7 +103,7 @@ RAID 做完后，Baremetal Agent 会通过 ssh 远程控制 yunionos 安装操�
 
 ### 重装操作系统
 
-类似于安装操作系统，流程上会让安装了操作系统的物理机重新进入 yunionos 小系统，然后重新安装操作系统
+类似于安装操作系统，流程上会让安装了操作系统的物理机重新进入 PXE引导系统，然后重新安装操作系统
 
 ### 远程访问
 
@@ -111,4 +111,4 @@ Baremetal Agent 通过 ipmitool sol 接口提供串口控制界面
 
 ### 删除操作系统
 
-对正在运行操作系统的物理机重启进入 PXE 网络启动，进入 yunionos 小系统，调用 [/lib/mos/partdestory.sh](https://github.com/yunionio/yunionos/blob/master/src/lib/mos/partdestroy.sh) 销毁磁盘分区和相应的 raid 命令销毁 raid 配置
+对正在运行操作系统的物理机重启进入 PXE 网络启动，进入 PXE引导系统，调用 [/lib/mos/partdestory.sh](https://github.com/yunionio/yunionos/blob/master/src/lib/mos/partdestroy.sh) 销毁磁盘分区和相应的 raid 命令销毁 raid 配置
