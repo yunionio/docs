@@ -19,8 +19,12 @@ description: >
 2. 单击 **_"账单数据存储"_** 按钮，进入账单数据存储页面。
    ![](../../images/aliyunusercenterhome.png)
 
-3. 查看并记录计费项消费影响和实例消费明细的bucket名称，如未设置，需要在该页面添加存储文件的订阅bucket，设置完成后，每天的增量账单数据将同步存储到对应的OSS上。建议该bucket中仅存放账单文件。
-   ![](../../images/aliyunossbucket.png)
+3.查看并记录计费项消费明细和分账账单按天汇总的bucket名称，如未设置，需要在该页面添加存储文件的订阅上述两个账单到同一bucket，设置完成后，每天的增量账单数据将同步存储到对应的OSS上。建议该bucket中仅存放账单文件。
+   ![](../../images/aliyunossbucket1.png)
+
+{{% alert title="说明" %}}
+由于阿里云OSS等类型资源的标签在计费项消费明细中账单中没有，仅在分账账单里显示，因此如需用费用上的标签分析费用，请配置分账账单按天汇总到存储桶。
+{{% /alert %}}
 
 4. 在阿里云控制台的对象存储页面中，查看对应bucket的概览信息，bucket域名即为存储桶URL。
    ![](../../images/aliyunbucketurl.png) 
