@@ -99,7 +99,7 @@ $ vim onecloud-cluster.yaml
 -  loadBalancerEndpoint: 192.168.121.21
 +  loadBalancerEndpoint: 10.127.0.2
    imageRepository: "registry.cn-beijing.aliyuncs.com/yunionio"
-   version: v3.8.10
+   version: v3.8.11
 ```
 
 还有一些服务的 storageClassName ，可以根据自己环境的 csi storageclass 设置，阿里云默认用的 alicloud-disk-ssd，还有以下的 storageclass 可以选择：
