@@ -266,7 +266,7 @@ $ cd /root/dashboard && yarn && yarn build
 ```sh
 # 修改nginx默认配置
 # 这里不一定是要改/etc/nginx/conf.d/default 文件，有可能是其他配置问题，主要是让以下内容生效
-$ cat<<EOF >/etc/nginx/conf.d/default
+# 编辑 /etc/nginx/conf.d/default 文件，输入以下代码
 server {
     listen 80;
 
@@ -280,7 +280,7 @@ server {
         index index.html;
         add_header Cache-Control no-cache;
         expires 1s;
-        if (!-e \$request_filename) {
+        if (!-e $request_filename) {
             rewrite ^/(.*) /index.html last;
             break;
         }
@@ -298,9 +298,9 @@ server {
         # 这里要匹配到api网关的地址和端口
         proxy_pass http://127.0.0.1:3000;
         proxy_redirect   off;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 
     location /api/v1/imageutils/upload {
@@ -309,12 +309,11 @@ server {
         proxy_http_version 1.1;
         proxy_request_buffering off;
         proxy_buffering off;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
     }
 }
-EOF
     
 # 为了防止/root/dashboard/dist目录权限问题，建议将启动用户改为root，或者设置正确的目录权限，可以忽略此步
 $ sed -i '/^user.*/c\user root;' /etc/nginx/nginx.conf
