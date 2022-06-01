@@ -321,6 +321,17 @@ $ curl 'https://api.ipify.org?format=json'
 
 {{% /tab %}}
 
+{{% tab name="京东云" %}}
+
+1. 登录京东云控制台，鼠标悬停在右上角用户名处，选择下拉菜单 **_"Access Key管理"_** 菜单项，进入Access Key管理页面。
+
+    ![](../../images/jdak.png)
+
+2. 查看已有Access Key信息，或单击 **_"新建"_** 按钮，新建Access Key，单击 **_"查看"_** 按钮，获取Access Key Secret信息。
+
+    ![](../../images/jdaksk.png)
+
+{{% /tab %}}
 
 {{% tab name="ZStack" %}}
 用户可在ZStack管理平台的[平台管理-Access Key]页面中生成新的Access Key信息或使用已有的Access Key。
