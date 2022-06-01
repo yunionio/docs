@@ -50,28 +50,28 @@ keystone, region, glance 等后端服务，都是用的同一套后端服务框�
 
 ## Model Dispatcher
 
-把 REST API 和 Model 的方法进行一一映射
+把 REST API 和 Manager/Model 的方法进行一一映射
 
-| REST 请求                                 | Model 方法                   | 说明                           |
-|-------------------------------------------|------------------------------|--------------------------------|
-| GET /\<resources\>                        | ListItemFilter               | 过滤                           |
-| -                                         | GetCustomizeColumns          | 获得扩展字段的信息             |
-| GET /\<resources\>/\<property\>           | GetProperty\<Property\>      | 获得*该类资源*的特定属性       |
-| GET /\<resources\>/\<res_id\>             | GetExtraDetails              | 获取扩展字段的信息             |
-| GET /\<resources\>/\<res_id\>/\<spec\>    | GetDetails\<Spec\>           | 获取*某个资源*的特定属性       |
-| POST /\<resources\>                       | ValidateCreateData           | 校验和处理创建的数据           |
-| -                                         | CustomizeCreate              | 自定义的创建操作               |
-| -                                         | PostCreate                   | 创建后的hook                   |
-| -                                         | OnCreateComplete             | 创建完成的hook                 |
-| POST /\<resources\>/\<action\>            | Perform\<Action\>            | 对*该类资源*执行特定操作       |
-| POST /\<resources\>/\<res_id\>/\<action\> | Perform\<Action\>            | 对*某个资源*执行特定操作       |
-| PUT /\<resources\>/\<res_id\>             | ValidateUpdateData           | 校验和处理更新操作的数据       |
-| -                                         | PreUpdate                    | 自定义的创建操作               |
-| -                                         | PostUpdate                   | 创建后的hook                   |
-| DELETE /\<resources\>/\<res_id\>          | CustomizeDelete              | 自定义的删除操作               |
-| -                                         | PreDelete                    | 删除前的hook                   |
-| -                                         | Delete                       | 执行删除操作                   |
-| -                                         | PostDelete                   | 删除后的hook                   |
+| REST API 请求                             | API 功能               | 返回数据格式            | 对应对象| 框架方法                | 说明                     |
+|-------------------------------------------|------------------------|-------------------------|---------|-------------------------|--------------------------|
+| GET /\<resources\>                        | 列表                   | {"resources":[{res...}, | Manager | ListItemFilter          | 过滤                     |
+| -                                         |                        |    ...,{res...}]        | Manager | GetCustomizeColumns     | 获得扩展字段的信息       |
+| GET /\<resources\>/\<property\>           | 获得*该类资源*特定属性 | {"resources":{info...}} | Manager | GetProperty\<Property\> | 获得*该类资源*的特定属性 |
+| GET /\<resources\>/\<res_id\>             | 获得*某个资源*详情     | {"resource":{res...}}   | Model   | GetExtraDetails         | 获取扩展字段的信息       |
+| GET /\<resources\>/\<res_id\>/\<spec\>    | 获得*某个资源*特定属性 | {"resource":{info...}}  | Model   | GetDetails\<Spec\>      | 获取*某个资源*的特定属性 |
+| POST /\<resources\>                       | 新建资源               | {"resource":{res...}}   | Manager | ValidateCreateData      | 校验和处理创建的数据     |
+| -                                         |                        |                         | Model   | CustomizeCreate         | 自定义的创建操作         |
+| -                                         |                        |                         | Model   | PostCreate              | 创建后的hook             |
+| -                                         |                        |                         | Manager | OnCreateComplete        | 创建完成的hook           |
+| POST /\<resources\>/\<action\>            | 对*该类资源*执行操作   | {"resource":{res...}}   | Manager | Perform\<Action\>       | 对*该类资源*执行特定操作 |
+| POST /\<resources\>/\<res_id\>/\<action\> | 对*某个资源*执行操作   | {"resource":{res...}}   | Model   | Perform\<Action\>       | 对*某个资源*执行特定操作 |
+| PUT /\<resources\>/\<res_id\>             | 更新*某个资源*的属性   | {"resource":{res...}}   | Model   | ValidateUpdateData      | 校验和处理更新操作的数据 |
+| -                                         |                        |                         | Model   | PreUpdate               | 自定义的创建操作         |
+| -                                         |                        |                         | Model   | PostUpdate              | 创建后的hook             |
+| DELETE /\<resources\>/\<res_id\>          | 删除*某个资源*         | {"resource":{res...}}   | Model   | CustomizeDelete         | 自定义的删除操作         |
+| -                                         |                        |                         | Model   | PreDelete               | 删除前的hook             |
+| -                                         |                        |                         | Model   | Delete                  | 执行删除操作             |
+| -                                         |                        |                         | Model   | PostDelete              | 删除后的hook             |
 
 具体 restful 请求的绑定函数在: [pkg/appsrv/dispatcher/dispatcher.go](https://github.com/yunionio/cloudpods/blob/master/pkg/appsrv/dispatcher/dispatcher.go#L33) 文件中的 **AddModelDispatcher** 函数。
 
