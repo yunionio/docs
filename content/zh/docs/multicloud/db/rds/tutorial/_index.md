@@ -17,6 +17,6 @@ description: >
 | 京东云   | N       | N    | Y        | N    | N        | N          | Y        | N        | N    | N            |  Y       |
 | 微软云   | N       | N    | Y        | N    | N        | N          | Y        | N        | -    | -            |  Y       |
 | Google云 | Y       | Y    | Y        | Y    | Y        | Y          | Y        | Y        | -    | -            |  Y       |
-| AWS      | N       | N    | Y        | N    | N        | N          | Y        | N        | -    | -            |  Y       |
+| AWS      | Y       | Y    | Y        | N    | N        | N          | Y        | Y       | -    | -            |  Y       |
 | Apsara   | N       | N    | Y        | Y    | N        | N          | Y        | N        | -    | -            |  Y       |
 
