@@ -545,7 +545,7 @@ footer.d-print-none {
 }
 
 .td-sidebar-nav {
-  padding-left: 20px;
+  padding-left: 25px;
   padding-top: 20px;
 
   // 大标题
@@ -582,28 +582,42 @@ footer.d-print-none {
   .td-sidebar-nav .td-sidebar-link {
     padding-bottom: 0 !important;
   }
-
-  .ul-2,
-  .ul-3,
-  .ul-4 {
-    padding-left: 1em !important;
-
-    a.td-sidebar-link__section {
-      padding-left: 1em !important;
-    }
-
-    a.td-sidebar-link__page {
-      padding-left: calc(1em - 1px) !important;
-    }
-
-    a.active.td-sidebar-link__page {
-      padding-left: calc(1em - 3px) !important;
-    }
+  .ul-1 {
+    padding-left: 0!important;
   }
-
+  .ul-2 {
+    padding-left: 1em!important;
+  }
   .ul-3 {
-    padding-left: 2em !important;
+    padding-left: 1em!important;
   }
+  .ul-4 {
+    padding-left: 1em!important;
+  }
+  .td-sidebar-link__page {
+    padding-left: 0.5em !important;
+  }
+  // .ul-2,
+  // .ul-3,
+  // .ul-4 {
+  //   padding-left: 1em !important;
+
+  //   a.td-sidebar-link__section {
+  //     padding-left: 0.5em !important;
+  //   }
+
+  //   a.td-sidebar-link__page {
+  //     padding-left: calc(0.5em - 1px) !important;
+  //   }
+
+  //   a.active.td-sidebar-link__page {
+  //     padding-left: calc(0.5em - 3px) !important;
+  //   }
+  // }
+
+  // .ul-3 {
+  //   padding-left: 1.5em !important;
+  // }
 
 }
 

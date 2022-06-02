@@ -29,15 +29,53 @@
     {{ partial "scripts.html" . }}
   </body>
   <script>
-        function loadcssCode(code) {
-            let style = document.createElement('style')
-            style.type = 'text/css'
-            style.rel = 'stylesheet'
-            style.appendChild(document.createTextNode(code))
-            let head = document.getElementsByTagName('head')[0]
-            head.appendChild(style)
-        }
-        let code = ':root{--main-color: #076f38;--hover-color: #042513;}'
-        loadcssCode(code)
+    let code
+    function loadcssCode(code) {
+        let style = document.createElement('style')
+        style.type = 'text/css'
+        style.rel = 'stylesheet'
+        style.appendChild(document.createTextNode(code))
+        let head = document.getElementsByTagName('head')[0]
+        head.appendChild(style)
+    }
+  </script>
+  {{ if .Site.Params.is_ee }}
+    <script>
+      let theme = localStorage.getItem('__oc_theme_color__')
+      switch (theme) {
+          case '"#F5222D"':
+              code = ':root{--main-color: #F5222D;--hover-color: rgb(181 8 17);}'
+              break
+          case '"#FA541C"':
+              code = ':root{--main-color: #FA541C;--hover-color: rgb(195 55 8);}'
+              break
+          case '"#FAAD14"':
+              code = ':root{--main-color: #FAAD14;--hover-color: rgb(175 118 5)}'
+              break
+          case '"#13C2C2"':
+              code = ':root{--main-color: #13C2C2;--hover-color: rgb(6 146 146)}'
+              break
+          case '"#52C41A"':
+              code = ':root{--main-color: #52C41A;--hover-color: rgb(48 128 9)}'
+              break
+          case '"#1890FF"':
+              code = ':root{--main-color: #1890FF;--hover-color: rgb(6 95 177)}'
+              break
+          case '"#2F54EB"':
+              code = ':root{--main-color: #2F54EB;--hover-color: rgb(23 55 187)}'
+              break
+          case '"#A100FF"':
+              code = ':root{--main-color: #A100FF;--hover-color: #460B73;}'
+              break
+          default:
+              code = ':root{--main-color: rgb(24, 144, 255);--hover-color: rgb(18 113 202);}'
+      }
+      loadcssCode(code)
     </script>
+  {{ else }}
+    <script>
+      code = ':root{--main-color: #076f38;--hover-color: #042513;}'
+      loadcssCode(code)
+    </script>
+  {{ end }}
 </html>
