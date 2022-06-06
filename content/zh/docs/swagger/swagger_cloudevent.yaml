@@ -217,6 +217,15 @@ definitions:
     - status
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
+  PurgeSplitTableInput:
+    properties:
+      tables:
+        items:
+          type: string
+        type: array
+        x-go-name: Tables
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
   STag:
     properties:
       key:
@@ -659,6 +668,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: cloudevent_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudevent:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/cloudevent_PerformPurgeSplitableOutput'
@@ -673,6 +691,21 @@ paths:
         "200":
           $ref: '#/responses/cloudevent_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - cloudevent
+  /cloudevents/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: cloudevent_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/cloudevent_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - cloudevent
   /cloudproviders:
@@ -959,6 +992,50 @@ paths:
       summary: 更新
       tags:
       - cloudprovider
+  /cloudproviders/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: cloudprovider_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of cloudprovider
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/cloudprovider_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - cloudprovider
+    post:
+      description: 执行操作ClassMetadata
+      operationId: cloudprovider_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of cloudprovider
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudprovider:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudprovider_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - cloudprovider
   /cloudproviders/{id}/disable:
     post:
       description: 执行操作Disable
@@ -1046,6 +1123,34 @@ paths:
       summary: 获取资源标签（元数据）
       tags:
       - cloudprovider
+  /cloudproviders/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: cloudprovider_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of cloudprovider
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudprovider:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudprovider_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - cloudprovider
   /cloudproviders/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -1129,6 +1234,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: cloudprovider_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudprovider:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/cloudprovider_PerformPurgeSplitableOutput'
@@ -1143,6 +1257,21 @@ paths:
         "200":
           $ref: '#/responses/cloudprovider_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - cloudprovider
+  /cloudproviders/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: cloudprovider_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/cloudprovider_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - cloudprovider
   /cloudproviders/statistics:
@@ -1191,6 +1320,7 @@ responses:
           $ref: '#/definitions/CloudeventDetails'
       type: object
   cloudevent_GetPropertyDistinctFieldOutput: {}
+  cloudevent_GetPropertySplitableExportOutput: {}
   cloudevent_GetPropertySplitableOutput: {}
   cloudevent_ListItemFilterOutput:
     schema:
@@ -1238,6 +1368,15 @@ responses:
         cloudprovider:
           $ref: '#/definitions/EnabledStatusStandaloneResourceDetails'
       type: object
+  cloudprovider_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        cloudprovider:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   cloudprovider_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -1254,6 +1393,7 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   cloudprovider_GetPropertyDistinctFieldOutput: {}
+  cloudprovider_GetPropertySplitableExportOutput: {}
   cloudprovider_GetPropertySplitableOutput: {}
   cloudprovider_GetPropertyStatisticsOutput:
     schema:
@@ -1287,9 +1427,11 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  cloudprovider_PerformClassMetadataOutput: {}
   cloudprovider_PerformDisableOutput: {}
   cloudprovider_PerformEnableOutput: {}
   cloudprovider_PerformPurgeSplitableOutput: {}
+  cloudprovider_PerformSetClassMetadataOutput: {}
   cloudprovider_PerformSetUserMetadataOutput: {}
   cloudprovider_PerformStatusOutput: {}
   cloudprovider_ValidateCreateDataOutput:
