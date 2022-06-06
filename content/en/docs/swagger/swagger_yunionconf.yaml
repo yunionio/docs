@@ -51,6 +51,15 @@ definitions:
         x-go-name: SharedDomainIds
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
+  PurgeSplitTableInput:
+    properties:
+      tables:
+        items:
+          type: string
+        type: array
+        x-go-name: Tables
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
   ResourceBaseCreateInput:
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
@@ -69,9 +78,7 @@ definitions:
       delete_fail_reason:
         $ref: '#/definitions/Error'
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   ResourceBaseUpdateInput:
@@ -79,14 +86,16 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   STag:
     properties:
-      Key:
-        description: 标签key
+      key:
+        description: 标签Kye
         type: string
-      Value:
+        x-go-name: Key
+      value:
         description: 标签Value
         type: string
+        x-go-name: Value
     type: object
-    x-go-package: yunion.io/x/onecloud/pkg/apis
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
   ScopedPolicyBindInput:
     properties:
       scope:
@@ -159,9 +168,7 @@ definitions:
         type: string
         x-go-name: ProjectId
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -193,6 +200,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -337,9 +349,7 @@ definitions:
         type: array
         x-go-name: SharedProjects
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -397,6 +407,16 @@ definitions:
   TRbacScope:
     type: string
     x-go-package: yunion.io/x/onecloud/pkg/util/rbacutils
+  TTagSet:
+    items:
+      $ref: '#/definitions/STag'
+    type: array
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
+  TTagSetList:
+    items:
+      $ref: '#/definitions/TTagSet'
+    type: array
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
 host: '"127.0.0.1:8889"'
 info:
   contact:
@@ -544,14 +564,12 @@ paths:
       tags:
       - parameter
     post:
-      description: |-
-        input error: unsupport body type: invalid type *yunion.io/x/jsonutils.JSONDict
-        新建
+      description: 新建
       operationId: parameter_ValidateCreateData
       responses:
         "200":
           $ref: '#/responses/parameter_ValidateCreateDataOutput'
-      summary: input or output error exists
+      summary: 新建
       tags:
       - parameter
   /parameters/{id}:
@@ -588,9 +606,7 @@ paths:
       tags:
       - parameter
     put:
-      description: |-
-        input error: unsupport body type: invalid type *yunion.io/x/jsonutils.JSONDict
-        更新
+      description: 更新
       operationId: parameter_ValidateUpdateData
       parameters:
       - description: The Id or Name of parameter
@@ -602,7 +618,7 @@ paths:
       responses:
         "200":
           $ref: '#/responses/parameter_ValidateUpdateDataOutput'
-      summary: input or output error exists
+      summary: 更新
       tags:
       - parameter
   /parameters/distinct-field:
@@ -619,6 +635,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: parameter_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            parameter:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/parameter_PerformPurgeSplitableOutput'
@@ -633,6 +658,21 @@ paths:
         "200":
           $ref: '#/responses/parameter_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - parameter
+  /parameters/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: parameter_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/parameter_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - parameter
   /scopedpolicies:
@@ -743,14 +783,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -824,6 +884,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 以资源是否共享过滤列表
         in: query
         name: is_public
@@ -855,6 +932,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             scopedpolicy:
               $ref: '#/definitions/ScopedPolicyCreateInput'
           type: object
@@ -989,6 +1071,50 @@ paths:
       summary: 获取指定信息ChangeOwnerCandidateDomains
       tags:
       - scopedpolicy
+  /scopedpolicies/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: scopedpolicy_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of scopedpolicy
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/scopedpolicy_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - scopedpolicy
+    post:
+      description: 执行操作ClassMetadata
+      operationId: scopedpolicy_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of scopedpolicy
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            scopedpolicy:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/scopedpolicy_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - scopedpolicy
   /scopedpolicies/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -1076,6 +1202,34 @@ paths:
       summary: 执行操作Public
       tags:
       - scopedpolicy
+  /scopedpolicies/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: scopedpolicy_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of scopedpolicy
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            scopedpolicy:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/scopedpolicy_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - scopedpolicy
   /scopedpolicies/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -1114,10 +1268,39 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - scopedpolicy
+  /scopedpolicies/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: scopedpolicy_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/scopedpolicy_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - scopedpolicy
+  /scopedpolicies/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: scopedpolicy_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/scopedpolicy_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - scopedpolicy
   /scopedpolicies/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
       operationId: scopedpolicy_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            scopedpolicy:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/scopedpolicy_PerformPurgeSplitableOutput'
@@ -1132,6 +1315,41 @@ paths:
         "200":
           $ref: '#/responses/scopedpolicy_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - scopedpolicy
+  /scopedpolicies/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: scopedpolicy_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/scopedpolicy_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - scopedpolicy
+  /scopedpolicies/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: scopedpolicy_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/scopedpolicy_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - scopedpolicy
+  /scopedpolicies/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: scopedpolicy_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/scopedpolicy_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - scopedpolicy
   /scopedpolicybindings:
@@ -1292,6 +1510,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             scopedpolicybinding:
               $ref: '#/definitions/ResourceBaseCreateInput'
           type: object
@@ -1373,6 +1596,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: scopedpolicybinding_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            scopedpolicybinding:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/scopedpolicybinding_PerformPurgeSplitableOutput'
@@ -1387,6 +1619,21 @@ paths:
         "200":
           $ref: '#/responses/scopedpolicybinding_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - scopedpolicybinding
+  /scopedpolicybindings/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: scopedpolicybinding_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/scopedpolicybinding_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - scopedpolicybinding
 produces:
@@ -1405,6 +1652,7 @@ responses:
           $ref: '#/definitions/ResourceBaseDetails'
       type: object
   parameter_GetPropertyDistinctFieldOutput: {}
+  parameter_GetPropertySplitableExportOutput: {}
   parameter_GetPropertySplitableOutput: {}
   parameter_ListItemFilterOutput:
     schema:
@@ -1458,6 +1706,15 @@ responses:
         scopedpolicy:
           $ref: '#/definitions/ChangeOwnerCandidateDomainsOutput'
       type: object
+  scopedpolicy_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        scopedpolicy:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   scopedpolicy_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -1468,7 +1725,12 @@ responses:
           x-go-name: Output
       type: object
   scopedpolicy_GetPropertyDistinctFieldOutput: {}
+  scopedpolicy_GetPropertyDomainTagValuePairsOutput: {}
+  scopedpolicy_GetPropertyDomainTagValueTreeOutput: {}
+  scopedpolicy_GetPropertySplitableExportOutput: {}
   scopedpolicy_GetPropertySplitableOutput: {}
+  scopedpolicy_GetPropertyTagValuePairsOutput: {}
+  scopedpolicy_GetPropertyTagValueTreeOutput: {}
   scopedpolicy_ListItemFilterOutput:
     schema:
       properties:
@@ -1492,9 +1754,11 @@ responses:
       type: object
   scopedpolicy_PerformBindOutput: {}
   scopedpolicy_PerformChangeOwnerOutput: {}
+  scopedpolicy_PerformClassMetadataOutput: {}
   scopedpolicy_PerformPrivateOutput: {}
   scopedpolicy_PerformPublicOutput: {}
   scopedpolicy_PerformPurgeSplitableOutput: {}
+  scopedpolicy_PerformSetClassMetadataOutput: {}
   scopedpolicy_PerformSetUserMetadataOutput: {}
   scopedpolicy_ValidateCreateDataOutput:
     schema:
@@ -1521,6 +1785,7 @@ responses:
           $ref: '#/definitions/ScopedPolicyBindingDetails'
       type: object
   scopedpolicybinding_GetPropertyDistinctFieldOutput: {}
+  scopedpolicybinding_GetPropertySplitableExportOutput: {}
   scopedpolicybinding_GetPropertySplitableOutput: {}
   scopedpolicybinding_ListItemFilterOutput:
     schema:

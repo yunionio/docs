@@ -48,6 +48,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -191,6 +196,11 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      progress:
+        description: 操作进度0-100
+        format: float
+        type: number
+        x-go-name: Progress
       project_domain:
         description: 资源归属项目的域名称
         type: string
@@ -224,9 +234,7 @@ definitions:
         type: string
         x-go-name: Status
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -322,7 +330,7 @@ definitions:
         type: string
         x-go-name: Description
       external_id:
-        description: 外部Id, 对用公有云私有资源自身的Id
+        description: 云上Id, 对应云上资源自身Id
         type: string
         x-go-name: ExternalId
       iam_login_url:
@@ -354,11 +362,17 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      progress:
+        description: 操作进度0-100
+        format: float
+        type: number
+        x-go-name: Progress
       provider:
         description: 平台信息
         type: string
         x-go-name: Provider
       source:
+        description: '资源来源, cloud: 从云上同步下来的资源, local: 从本地创建的资源或资源在本地更改过项目'
         type: string
         x-go-name: Source
       status:
@@ -366,9 +380,7 @@ definitions:
         type: string
         x-go-name: Status
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -408,6 +420,11 @@ definitions:
         description: 策略详情
         type: object
         x-go-name: Document
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -502,7 +519,7 @@ definitions:
         type: string
         x-go-name: DomainSrc
       external_id:
-        description: 外部Id, 对用公有云私有资源自身的Id
+        description: 云上Id, 对应云上资源自身Id
         type: string
         x-go-name: ExternalId
       id:
@@ -547,6 +564,11 @@ definitions:
            custom        | 用户自定义权限       |
         type: string
         x-go-name: PolicyType
+      progress:
+        description: 操作进度0-100
+        format: float
+        type: number
+        x-go-name: Progress
       project_domain:
         description: 资源归属项目的域名称
         type: string
@@ -580,6 +602,7 @@ definitions:
         type: array
         x-go-name: SharedProjects
       source:
+        description: '资源来源, cloud: 从云上同步下来的资源, local: 从本地创建的资源或资源在本地更改过项目'
         type: string
         x-go-name: Source
       status:
@@ -587,9 +610,7 @@ definitions:
         type: string
         x-go-name: Status
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -666,9 +687,7 @@ definitions:
         type: string
         x-go-name: Provider
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/cloudid
   CloudroleDetails:
@@ -735,7 +754,7 @@ definitions:
         type: boolean
         x-go-name: Enabled
       external_id:
-        description: 外部Id, 对用公有云私有资源自身的Id
+        description: 云上Id, 对应云上资源自身Id
         type: string
         x-go-name: ExternalId
       iam_login_url:
@@ -774,6 +793,11 @@ definitions:
       owner_id:
         type: string
         x-go-name: OwnerId
+      progress:
+        description: 操作进度0-100
+        format: float
+        type: number
+        x-go-name: Progress
       project_domain:
         description: 资源归属项目的域名称
         type: string
@@ -807,6 +831,7 @@ definitions:
         type: array
         x-go-name: SharedProjects
       source:
+        description: '资源来源, cloud: 从云上同步下来的资源, local: 从本地创建的资源或资源在本地更改过项目'
         type: string
         x-go-name: Source
       status:
@@ -814,9 +839,7 @@ definitions:
         type: string
         x-go-name: Status
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -835,10 +858,18 @@ definitions:
   ClouduserAttachPolicyInput:
     properties:
       cloudpolicy_id:
-        description: "权限Id\n\n 云平台   | 说明                                        |\n----------|---------------------------------------------|\n
-          Google   | 支持                                        |\n Aliyun   | 支持\t\t\t\t\t\t\t\t\t\t|\n
-          Huawei   | 不支持                                      |\n Azure    | 支持                                        |\n
-          腾讯云   | 支持                                        |"
+        description: |-
+          权限Id
+
+
+
+           云平台   | 说明                                        |
+          ----------|---------------------------------------------|
+           Google   | 支持                                        |
+           Aliyun   | 支持                                        |
+           Huawei   | 不支持                                      |
+           Azure    | 支持                                        |
+           腾讯云   | 支持                                        |
         type: string
         x-go-name: CloudpolicyId
       cloudprovider_id:
@@ -878,10 +909,18 @@ definitions:
         type: array
         x-go-name: CloudgroupIds
       cloudpolicy_ids:
-        description: "初始的权限Id列表, 权限必须属于指定的云账号\n\n 云平台   | 说明                                        |\n----------|---------------------------------------------|\n
-          Google   | 至少需要一个初始权限                        |\n Aliyun   | 支持\t\t\t\t\t\t\t\t\t\t|\n
-          Huawei   | 不支持                                      |\n Azure    | 支持                                        |\n
-          腾讯云   | 支持                                        |"
+        description: |-
+          初始的权限Id列表, 权限必须属于指定的云账号
+
+
+
+           云平台   | 说明                                        |
+          ----------|---------------------------------------------|
+           Google   | 至少需要一个初始权限                        |
+           Aliyun   | 支持                                        |
+           Huawei   | 不支持                                      |
+           Azure    | 支持                                        |
+           腾讯云   | 支持                                        |
         items:
           type: string
         type: array
@@ -897,6 +936,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       email:
         description: 邮箱地址
         example: test@example.com
@@ -943,11 +987,18 @@ definitions:
         type: string
         x-go-name: OwnerId
       password:
-        description: "用户密码, 若is_console_login = true时, 此参数不传时会生成12位随机密码\n\n 云平台   |
-          说明                                        |\n----------|---------------------------------------------|\n
-          Google   | 不支持此参数                                |\n Aliyun   | 支持\t\t\t\t\t\t\t\t\t\t|\n
-          Huawei   | 支持                                        |\n Azure    | 支持                                        |\n
-          腾讯云   | 支持                                        |"
+        description: |-
+          用户密码, 若is_console_login = true时, 此参数不传时会生成12位随机密码
+
+
+
+           云平台   | 说明                                        |
+          ----------|---------------------------------------------|
+           Google   | 不支持此参数                                |
+           Aliyun   | 支持                                        |
+           Huawei   | 支持                                        |
+           Azure    | 支持                                        |
+           腾讯云   | 支持                                        |
         type: string
         x-go-name: Password
       project_domain_id:
@@ -965,10 +1016,18 @@ definitions:
   ClouduserDetachPolicyInput:
     properties:
       cloudpolicy_id:
-        description: "权限Id\n\n 云平台   | 说明                                        |\n----------|---------------------------------------------|\n
-          Google   | 支持，但最少需要保留一个权限                |\n Aliyun   | 支持\t\t\t\t\t\t\t\t\t\t|\n
-          Huawei   | 不支持                                      |\n Azure    | 不支持                                      |\n
-          腾讯云   | 支持                                        |"
+        description: |-
+          权限Id
+
+
+
+           云平台   | 说明                                        |
+          ----------|---------------------------------------------|
+           Google   | 支持，但最少需要保留一个权限                |
+           Aliyun   | 支持                                        |
+           Huawei   | 不支持                                      |
+           Azure    | 不支持                                      |
+           腾讯云   | 支持                                        |
         type: string
         x-go-name: CloudpolicyId
       cloudprovider_id:
@@ -1059,7 +1118,7 @@ definitions:
         type: string
         x-go-name: Email
       external_id:
-        description: 外部Id, 对用公有云私有资源自身的Id
+        description: 云上Id, 对应云上资源自身Id
         type: string
         x-go-name: ExternalId
       iam_login_url:
@@ -1107,6 +1166,11 @@ definitions:
         description: 用户名称
         type: string
         x-go-name: OwnerName
+      progress:
+        description: 操作进度0-100
+        format: float
+        type: number
+        x-go-name: Progress
       project_domain:
         description: 资源归属项目的域名称
         type: string
@@ -1119,6 +1183,7 @@ definitions:
         type: string
         x-go-name: Secret
       source:
+        description: '资源来源, cloud: 从云上同步下来的资源, local: 从本地创建的资源或资源在本地更改过项目'
         type: string
         x-go-name: Source
       status:
@@ -1126,9 +1191,7 @@ definitions:
         type: string
         x-go-name: Status
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -1160,10 +1223,18 @@ definitions:
   ClouduserResetPasswordInput:
     properties:
       password:
-        description: "若此参数为空, 默认会生成随机12位密码\n\n 云平台   | 说明                                        |\n----------|---------------------------------------------|\n
-          Google   | 不支持                                      |\n Aliyun   | 支持\t\t\t\t\t\t\t\t\t\t|\n
-          Huawei   | 支持                                        |\n Azure    | 支持                                        |\n
-          腾讯云   | 支持                                        |"
+        description: |-
+          若此参数为空, 默认会生成随机12位密码
+
+
+
+           云平台   | 说明                                        |
+          ----------|---------------------------------------------|
+           Google   | 不支持                                      |
+           Aliyun   | 支持                                        |
+           Huawei   | 支持                                        |
+           Azure    | 支持                                        |
+           腾讯云   | 支持                                        |
         type: string
         x-go-name: Password
     type: object
@@ -1298,6 +1369,15 @@ definitions:
     - status
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
+  PurgeSplitTableInput:
+    properties:
+      tables:
+        items:
+          type: string
+        type: array
+        x-go-name: Tables
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
   SAMLProviderCreateInput:
     properties:
       __meta__:
@@ -1316,6 +1396,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -1417,7 +1502,7 @@ definitions:
         type: string
         x-go-name: EntityId
       external_id:
-        description: 外部Id, 对用公有云私有资源自身的Id
+        description: 云上Id, 对应云上资源自身Id
         type: string
         x-go-name: ExternalId
       iam_login_url:
@@ -1456,6 +1541,11 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      progress:
+        description: 操作进度0-100
+        format: float
+        type: number
+        x-go-name: Progress
       project_domain:
         description: 资源归属项目的域名称
         type: string
@@ -1486,6 +1576,7 @@ definitions:
         type: array
         x-go-name: SharedProjects
       source:
+        description: '资源来源, cloud: 从云上同步下来的资源, local: 从本地创建的资源或资源在本地更改过项目'
         type: string
         x-go-name: Source
       status:
@@ -1493,9 +1584,7 @@ definitions:
         type: string
         x-go-name: Status
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -1520,14 +1609,16 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis/cloudid
   STag:
     properties:
-      Key:
-        description: 标签key
+      key:
+        description: 标签Kye
         type: string
-      Value:
+        x-go-name: Key
+      value:
         description: 标签Value
         type: string
+        x-go-name: Value
     type: object
-    x-go-package: yunion.io/x/onecloud/pkg/apis
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
   SamluserCreateInput:
     properties:
       __meta__:
@@ -1551,6 +1642,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       email:
         type: string
         x-go-name: Email
@@ -1656,7 +1752,7 @@ definitions:
         type: string
         x-go-name: Email
       external_id:
-        description: 外部Id, 对用公有云私有资源自身的Id
+        description: 云上Id, 对应云上资源自身Id
         type: string
         x-go-name: ExternalId
       iam_login_url:
@@ -1696,6 +1792,11 @@ definitions:
         description: 用户名称
         type: string
         x-go-name: OwnerName
+      progress:
+        description: 操作进度0-100
+        format: float
+        type: number
+        x-go-name: Progress
       project_domain:
         description: 资源归属项目的域名称
         type: string
@@ -1705,6 +1806,7 @@ definitions:
         type: string
         x-go-name: Provider
       source:
+        description: '资源来源, cloud: 从云上同步下来的资源, local: 从本地创建的资源或资源在本地更改过项目'
         type: string
         x-go-name: Source
       status:
@@ -1712,9 +1814,7 @@ definitions:
         type: string
         x-go-name: Status
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -1780,6 +1880,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -1843,6 +1948,10 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      progress:
+        format: float
+        type: number
+        x-go-name: Progress
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   StatusStandaloneResourceCreateInput:
@@ -1860,6 +1969,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -1905,6 +2019,16 @@ definitions:
         x-go-name: TotalCount
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
+  TTagSet:
+    items:
+      $ref: '#/definitions/STag'
+    type: array
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
+  TTagSetList:
+    items:
+      $ref: '#/definitions/TTagSet'
+    type: array
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
 host: '"127.0.0.1:8889"'
 info:
   contact:
@@ -2024,14 +2148,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -2145,6 +2289,50 @@ paths:
       summary: 获取权限组缓存详情
       tags:
       - cloudgroupcache
+  /cloudgroupcaches/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: cloudgroupcache_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of cloudgroupcache
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroupcache_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - cloudgroupcache
+    post:
+      description: 执行操作ClassMetadata
+      operationId: cloudgroupcache_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of cloudgroupcache
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudgroupcache:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroupcache_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - cloudgroupcache
   /cloudgroupcaches/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -2180,6 +2368,34 @@ paths:
         "200":
           $ref: '#/responses/cloudgroupcache_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - cloudgroupcache
+  /cloudgroupcaches/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: cloudgroupcache_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of cloudgroupcache
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudgroupcache:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroupcache_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - cloudgroupcache
   /cloudgroupcaches/{id}/set-user-metadata:
@@ -2290,6 +2506,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: cloudgroupcache_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudgroupcache:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/cloudgroupcache_PerformPurgeSplitableOutput'
@@ -2306,6 +2531,21 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - cloudgroupcache
+  /cloudgroupcaches/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: cloudgroupcache_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroupcache_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - cloudgroupcache
   /cloudgroupcaches/statistics:
     get:
       description: 获取指定资源类的信息Statistics
@@ -2314,6 +2554,26 @@ paths:
         "200":
           $ref: '#/responses/cloudgroupcache_GetPropertyStatisticsOutput'
       summary: 获取指定资源类的信息Statistics
+      tags:
+      - cloudgroupcache
+  /cloudgroupcaches/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: cloudgroupcache_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroupcache_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - cloudgroupcache
+  /cloudgroupcaches/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: cloudgroupcache_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroupcache_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - cloudgroupcache
   /cloudgroups:
@@ -2424,14 +2684,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -2505,6 +2785,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 以资源是否共享过滤列表
         in: query
         name: is_public
@@ -2560,6 +2857,11 @@ paths:
           properties:
             cloudgroup:
               $ref: '#/definitions/CloudgroupCreateInput'
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
           type: object
         x-go-name: Body
       responses:
@@ -2717,6 +3019,50 @@ paths:
       summary: 获取指定信息ChangeOwnerCandidateDomains
       tags:
       - cloudgroup
+  /cloudgroups/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: cloudgroup_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of cloudgroup
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroup_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - cloudgroup
+    post:
+      description: 执行操作ClassMetadata
+      operationId: cloudgroup_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of cloudgroup
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudgroup:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroup_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - cloudgroup
   /cloudgroups/{id}/detach-policy:
     post:
       description: '权限组状态必须为: available'
@@ -2852,6 +3198,34 @@ paths:
         "200":
           $ref: '#/responses/cloudgroup_PerformRemoveUserOutput'
       summary: 从权限组移除用户
+      tags:
+      - cloudgroup
+  /cloudgroups/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: cloudgroup_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of cloudgroup
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudgroup:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroup_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - cloudgroup
   /cloudgroups/{id}/set-policies:
@@ -3008,10 +3382,39 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - cloudgroup
+  /cloudgroups/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: cloudgroup_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroup_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - cloudgroup
+  /cloudgroups/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: cloudgroup_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroup_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - cloudgroup
   /cloudgroups/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
       operationId: cloudgroup_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudgroup:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/cloudgroup_PerformPurgeSplitableOutput'
@@ -3026,6 +3429,51 @@ paths:
         "200":
           $ref: '#/responses/cloudgroup_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - cloudgroup
+  /cloudgroups/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: cloudgroup_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroup_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - cloudgroup
+  /cloudgroups/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: cloudgroup_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroup_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - cloudgroup
+  /cloudgroups/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: cloudgroup_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroup_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - cloudgroup
+  /cloudgroups/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: cloudgroup_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/cloudgroup_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - cloudgroup
   /cloudpolicies:
@@ -3136,14 +3584,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -3217,6 +3685,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 以资源是否共享过滤列表
         in: query
         name: is_public
@@ -3256,8 +3741,14 @@ paths:
         name: cloudprovider_id
         type: string
         x-go-name: CloudproviderId
-      - description: "权限类型\n\n\n 类型    |  说明\t\t\t\t|\n---------| ------------\t\t\t|\n
-          system  |  过滤系统权限\t\t|\n custom  |  过滤自定义权限      |"
+      - description: |-
+          权限类型
+
+
+           类型    |  说明                |
+          ---------| ------------            |
+           system  |  过滤系统权限        |
+           custom  |  过滤自定义权限      |
         in: query
         name: policy_type
         type: string
@@ -3283,6 +3774,11 @@ paths:
           properties:
             cloudpolicy:
               $ref: '#/definitions/CloudpolicyCreateInput'
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
           type: object
         x-go-name: Body
       responses:
@@ -3413,6 +3909,50 @@ paths:
         "200":
           $ref: '#/responses/cloudpolicy_GetDetailsChangeOwnerCandidateDomainsOutput'
       summary: 获取指定信息ChangeOwnerCandidateDomains
+      tags:
+      - cloudpolicy
+  /cloudpolicies/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: cloudpolicy_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of cloudpolicy
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicy_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - cloudpolicy
+    post:
+      description: 执行操作ClassMetadata
+      operationId: cloudpolicy_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of cloudpolicy
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudpolicy:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicy_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
       tags:
       - cloudpolicy
   /cloudpolicies/{id}/lock:
@@ -3552,6 +4092,34 @@ paths:
       summary: 将权限从权限组中移除
       tags:
       - cloudpolicy
+  /cloudpolicies/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: cloudpolicy_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of cloudpolicy
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudpolicy:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicy_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - cloudpolicy
   /cloudpolicies/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -3681,10 +4249,39 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - cloudpolicy
+  /cloudpolicies/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: cloudpolicy_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicy_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - cloudpolicy
+  /cloudpolicies/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: cloudpolicy_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicy_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - cloudpolicy
   /cloudpolicies/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
       operationId: cloudpolicy_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudpolicy:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/cloudpolicy_PerformPurgeSplitableOutput'
@@ -3699,6 +4296,51 @@ paths:
         "200":
           $ref: '#/responses/cloudpolicy_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - cloudpolicy
+  /cloudpolicies/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: cloudpolicy_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicy_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - cloudpolicy
+  /cloudpolicies/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: cloudpolicy_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicy_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - cloudpolicy
+  /cloudpolicies/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: cloudpolicy_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicy_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - cloudpolicy
+  /cloudpolicies/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: cloudpolicy_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicy_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - cloudpolicy
   /cloudpolicycaches:
@@ -3809,14 +4451,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -3900,6 +4562,11 @@ paths:
           properties:
             cloudpolicycache:
               $ref: '#/definitions/StatusStandaloneResourceCreateInput'
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
           type: object
         x-go-name: Body
       responses:
@@ -3965,6 +4632,50 @@ paths:
       summary: 更新
       tags:
       - cloudpolicycache
+  /cloudpolicycaches/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: cloudpolicycache_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of cloudpolicycache
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicycache_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - cloudpolicycache
+    post:
+      description: 执行操作ClassMetadata
+      operationId: cloudpolicycache_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of cloudpolicycache
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudpolicycache:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicycache_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - cloudpolicycache
   /cloudpolicycaches/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -4000,6 +4711,34 @@ paths:
         "200":
           $ref: '#/responses/cloudpolicycache_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - cloudpolicycache
+  /cloudpolicycaches/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: cloudpolicycache_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of cloudpolicycache
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudpolicycache:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicycache_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - cloudpolicycache
   /cloudpolicycaches/{id}/set-user-metadata:
@@ -4085,6 +4824,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: cloudpolicycache_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudpolicycache:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/cloudpolicycache_PerformPurgeSplitableOutput'
@@ -4101,6 +4849,21 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - cloudpolicycache
+  /cloudpolicycaches/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: cloudpolicycache_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicycache_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - cloudpolicycache
   /cloudpolicycaches/statistics:
     get:
       description: 获取指定资源类的信息Statistics
@@ -4109,6 +4872,26 @@ paths:
         "200":
           $ref: '#/responses/cloudpolicycache_GetPropertyStatisticsOutput'
       summary: 获取指定资源类的信息Statistics
+      tags:
+      - cloudpolicycache
+  /cloudpolicycaches/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: cloudpolicycache_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicycache_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - cloudpolicycache
+  /cloudpolicycaches/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: cloudpolicycache_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/cloudpolicycache_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - cloudpolicycache
   /cloudroles:
@@ -4219,14 +5002,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -4300,6 +5103,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 以资源是否共享过滤列表
         in: query
         name: is_public
@@ -4350,6 +5170,11 @@ paths:
           properties:
             cloudrole:
               $ref: '#/definitions/StatusInfrasResourceBaseCreateInput'
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
           type: object
         x-go-name: Body
       responses:
@@ -4455,6 +5280,50 @@ paths:
         "200":
           $ref: '#/responses/cloudrole_GetDetailsChangeOwnerCandidateDomainsOutput'
       summary: 获取指定信息ChangeOwnerCandidateDomains
+      tags:
+      - cloudrole
+  /cloudroles/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: cloudrole_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of cloudrole
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/cloudrole_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - cloudrole
+    post:
+      description: 执行操作ClassMetadata
+      operationId: cloudrole_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of cloudrole
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudrole:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudrole_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
       tags:
       - cloudrole
   /cloudroles/{id}/disable:
@@ -4619,6 +5488,34 @@ paths:
       summary: 清除角色(不删除云上资源)
       tags:
       - cloudrole
+  /cloudroles/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: cloudrole_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of cloudrole
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudrole:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/cloudrole_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - cloudrole
   /cloudroles/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -4698,10 +5595,39 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - cloudrole
+  /cloudroles/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: cloudrole_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/cloudrole_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - cloudrole
+  /cloudroles/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: cloudrole_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/cloudrole_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - cloudrole
   /cloudroles/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
       operationId: cloudrole_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            cloudrole:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/cloudrole_PerformPurgeSplitableOutput'
@@ -4716,6 +5642,51 @@ paths:
         "200":
           $ref: '#/responses/cloudrole_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - cloudrole
+  /cloudroles/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: cloudrole_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/cloudrole_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - cloudrole
+  /cloudroles/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: cloudrole_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/cloudrole_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - cloudrole
+  /cloudroles/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: cloudrole_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/cloudrole_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - cloudrole
+  /cloudroles/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: cloudrole_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/cloudrole_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - cloudrole
   /cloudusers:
@@ -4826,14 +5797,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -4907,6 +5898,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 以资源的状态过滤列表
         in: query
         items:
@@ -4957,6 +5965,11 @@ paths:
           properties:
             clouduser:
               $ref: '#/definitions/ClouduserCreateInput'
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
           type: object
         x-go-name: Body
       responses:
@@ -5063,6 +6076,50 @@ paths:
         "200":
           $ref: '#/responses/clouduser_GetDetailsChangeOwnerCandidateDomainsOutput'
       summary: 获取指定信息ChangeOwnerCandidateDomains
+      tags:
+      - clouduser
+  /cloudusers/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: clouduser_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of clouduser
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - clouduser
+    post:
+      description: 执行操作ClassMetadata
+      operationId: clouduser_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of clouduser
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            clouduser:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
       tags:
       - clouduser
   /cloudusers/{id}/detach-policy:
@@ -5200,6 +6257,34 @@ paths:
         "200":
           $ref: '#/responses/clouduser_PerformResetPasswordOutput'
       summary: 重置用户密码
+      tags:
+      - clouduser
+  /cloudusers/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: clouduser_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of clouduser
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            clouduser:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - clouduser
   /cloudusers/{id}/set-groups:
@@ -5381,10 +6466,39 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - clouduser
+  /cloudusers/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: clouduser_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - clouduser
+  /cloudusers/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: clouduser_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - clouduser
   /cloudusers/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
       operationId: clouduser_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            clouduser:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/clouduser_PerformPurgeSplitableOutput'
@@ -5399,6 +6513,41 @@ paths:
         "200":
           $ref: '#/responses/clouduser_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - clouduser
+  /cloudusers/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: clouduser_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - clouduser
+  /cloudusers/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: clouduser_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - clouduser
+  /cloudusers/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: clouduser_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - clouduser
   /saml_providers:
@@ -5509,14 +6658,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -5590,6 +6759,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 以资源是否共享过滤列表
         in: query
         name: is_public
@@ -5633,6 +6819,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             saml_provider:
               $ref: '#/definitions/SAMLProviderCreateInput'
           type: object
@@ -5742,6 +6933,50 @@ paths:
       summary: 获取指定信息ChangeOwnerCandidateDomains
       tags:
       - saml_provider
+  /saml_providers/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: saml_provider_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of saml_provider
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/saml_provider_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - saml_provider
+    post:
+      description: 执行操作ClassMetadata
+      operationId: saml_provider_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of saml_provider
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            saml_provider:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/saml_provider_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - saml_provider
   /saml_providers/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -5829,6 +7064,34 @@ paths:
       summary: 执行操作Public
       tags:
       - saml_provider
+  /saml_providers/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: saml_provider_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of saml_provider
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            saml_provider:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/saml_provider_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - saml_provider
   /saml_providers/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -5908,10 +7171,39 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - saml_provider
+  /saml_providers/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: saml_provider_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/saml_provider_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - saml_provider
+  /saml_providers/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: saml_provider_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/saml_provider_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - saml_provider
   /saml_providers/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
       operationId: saml_provider_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            saml_provider:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/saml_provider_PerformPurgeSplitableOutput'
@@ -5926,6 +7218,51 @@ paths:
         "200":
           $ref: '#/responses/saml_provider_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - saml_provider
+  /saml_providers/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: saml_provider_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/saml_provider_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - saml_provider
+  /saml_providers/statistics:
+    get:
+      description: 获取指定资源类的信息Statistics
+      operationId: saml_provider_GetPropertyStatistics
+      responses:
+        "200":
+          $ref: '#/responses/saml_provider_GetPropertyStatisticsOutput'
+      summary: 获取指定资源类的信息Statistics
+      tags:
+      - saml_provider
+  /saml_providers/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: saml_provider_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/saml_provider_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - saml_provider
+  /saml_providers/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: saml_provider_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/saml_provider_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - saml_provider
   /samlusers:
@@ -6036,14 +7373,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -6117,6 +7474,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 以资源的状态过滤列表
         in: query
         items:
@@ -6160,6 +7534,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             samluser:
               $ref: '#/definitions/SamluserCreateInput'
           type: object
@@ -6269,6 +7648,50 @@ paths:
       summary: 获取指定信息ChangeOwnerCandidateDomains
       tags:
       - samluser
+  /samlusers/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: samluser_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of samluser
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/samluser_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - samluser
+    post:
+      description: 执行操作ClassMetadata
+      operationId: samluser_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of samluser
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            samluser:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/samluser_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - samluser
   /samlusers/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -6304,6 +7727,34 @@ paths:
         "200":
           $ref: '#/responses/samluser_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - samluser
+  /samlusers/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: samluser_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of samluser
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            samluser:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/samluser_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - samluser
   /samlusers/{id}/set-user-metadata:
@@ -6385,10 +7836,39 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - samluser
+  /samlusers/domain-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息DomainTagValuePairs
+      operationId: samluser_GetPropertyDomainTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/samluser_GetPropertyDomainTagValuePairsOutput'
+      summary: 获取指定资源类的信息DomainTagValuePairs
+      tags:
+      - samluser
+  /samlusers/domain-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息DomainTagValueTree
+      operationId: samluser_GetPropertyDomainTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/samluser_GetPropertyDomainTagValueTreeOutput'
+      summary: 获取指定资源类的信息DomainTagValueTree
+      tags:
+      - samluser
   /samlusers/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
       operationId: samluser_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            samluser:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/samluser_PerformPurgeSplitableOutput'
@@ -6403,6 +7883,41 @@ paths:
         "200":
           $ref: '#/responses/samluser_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - samluser
+  /samlusers/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: samluser_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/samluser_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - samluser
+  /samlusers/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: samluser_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/samluser_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - samluser
+  /samlusers/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: samluser_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/samluser_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - samluser
 produces:
@@ -6426,6 +7941,15 @@ responses:
         cloudgroup:
           $ref: '#/definitions/ChangeOwnerCandidateDomainsOutput'
       type: object
+  cloudgroup_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        cloudgroup:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   cloudgroup_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6442,7 +7966,21 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   cloudgroup_GetPropertyDistinctFieldOutput: {}
+  cloudgroup_GetPropertyDomainTagValuePairsOutput: {}
+  cloudgroup_GetPropertyDomainTagValueTreeOutput: {}
+  cloudgroup_GetPropertySplitableExportOutput: {}
   cloudgroup_GetPropertySplitableOutput: {}
+  cloudgroup_GetPropertyStatisticsOutput:
+    schema:
+      properties:
+        cloudgroup:
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
+      type: object
+  cloudgroup_GetPropertyTagValuePairsOutput: {}
+  cloudgroup_GetPropertyTagValueTreeOutput: {}
   cloudgroup_ListItemFilterOutput:
     schema:
       properties:
@@ -6467,11 +8005,13 @@ responses:
   cloudgroup_PerformAddUserOutput: {}
   cloudgroup_PerformAttachPolicyOutput: {}
   cloudgroup_PerformChangeOwnerOutput: {}
+  cloudgroup_PerformClassMetadataOutput: {}
   cloudgroup_PerformDetachPolicyOutput: {}
   cloudgroup_PerformPrivateOutput: {}
   cloudgroup_PerformPublicOutput: {}
   cloudgroup_PerformPurgeSplitableOutput: {}
   cloudgroup_PerformRemoveUserOutput: {}
+  cloudgroup_PerformSetClassMetadataOutput: {}
   cloudgroup_PerformSetPoliciesOutput: {}
   cloudgroup_PerformSetUserMetadataOutput: {}
   cloudgroup_PerformSetUsersOutput: {}
@@ -6501,6 +8041,15 @@ responses:
         cloudgroupcache:
           $ref: '#/definitions/CloudgroupcacheDetails'
       type: object
+  cloudgroupcache_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        cloudgroupcache:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   cloudgroupcache_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6517,6 +8066,7 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   cloudgroupcache_GetPropertyDistinctFieldOutput: {}
+  cloudgroupcache_GetPropertySplitableExportOutput: {}
   cloudgroupcache_GetPropertySplitableOutput: {}
   cloudgroupcache_GetPropertyStatisticsOutput:
     schema:
@@ -6527,6 +8077,8 @@ responses:
           type: object
           x-go-name: Output
       type: object
+  cloudgroupcache_GetPropertyTagValuePairsOutput: {}
+  cloudgroupcache_GetPropertyTagValueTreeOutput: {}
   cloudgroupcache_ListItemFilterOutput:
     schema:
       properties:
@@ -6548,7 +8100,9 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  cloudgroupcache_PerformClassMetadataOutput: {}
   cloudgroupcache_PerformPurgeSplitableOutput: {}
+  cloudgroupcache_PerformSetClassMetadataOutput: {}
   cloudgroupcache_PerformSetUserMetadataOutput: {}
   cloudgroupcache_PerformStatusOutput: {}
   cloudgroupcache_PerformSyncstatusOutput: {}
@@ -6570,6 +8124,15 @@ responses:
         cloudpolicy:
           $ref: '#/definitions/ChangeOwnerCandidateDomainsOutput'
       type: object
+  cloudpolicy_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        cloudpolicy:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   cloudpolicy_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6586,7 +8149,21 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   cloudpolicy_GetPropertyDistinctFieldOutput: {}
+  cloudpolicy_GetPropertyDomainTagValuePairsOutput: {}
+  cloudpolicy_GetPropertyDomainTagValueTreeOutput: {}
+  cloudpolicy_GetPropertySplitableExportOutput: {}
   cloudpolicy_GetPropertySplitableOutput: {}
+  cloudpolicy_GetPropertyStatisticsOutput:
+    schema:
+      properties:
+        cloudpolicy:
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
+      type: object
+  cloudpolicy_GetPropertyTagValuePairsOutput: {}
+  cloudpolicy_GetPropertyTagValueTreeOutput: {}
   cloudpolicy_ListItemFilterOutput:
     schema:
       properties:
@@ -6610,11 +8187,13 @@ responses:
       type: object
   cloudpolicy_PerformAssignGroupOutput: {}
   cloudpolicy_PerformChangeOwnerOutput: {}
+  cloudpolicy_PerformClassMetadataOutput: {}
   cloudpolicy_PerformLockOutput: {}
   cloudpolicy_PerformPrivateOutput: {}
   cloudpolicy_PerformPublicOutput: {}
   cloudpolicy_PerformPurgeSplitableOutput: {}
   cloudpolicy_PerformRevokeGroupOutput: {}
+  cloudpolicy_PerformSetClassMetadataOutput: {}
   cloudpolicy_PerformSetUserMetadataOutput: {}
   cloudpolicy_PerformStatusOutput: {}
   cloudpolicy_PerformSyncstatusOutput: {}
@@ -6643,6 +8222,15 @@ responses:
         cloudpolicycache:
           $ref: '#/definitions/CloudpolicycacheDetails'
       type: object
+  cloudpolicycache_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        cloudpolicycache:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   cloudpolicycache_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6659,6 +8247,7 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   cloudpolicycache_GetPropertyDistinctFieldOutput: {}
+  cloudpolicycache_GetPropertySplitableExportOutput: {}
   cloudpolicycache_GetPropertySplitableOutput: {}
   cloudpolicycache_GetPropertyStatisticsOutput:
     schema:
@@ -6669,6 +8258,8 @@ responses:
           type: object
           x-go-name: Output
       type: object
+  cloudpolicycache_GetPropertyTagValuePairsOutput: {}
+  cloudpolicycache_GetPropertyTagValueTreeOutput: {}
   cloudpolicycache_ListItemFilterOutput:
     schema:
       properties:
@@ -6690,7 +8281,9 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  cloudpolicycache_PerformClassMetadataOutput: {}
   cloudpolicycache_PerformPurgeSplitableOutput: {}
+  cloudpolicycache_PerformSetClassMetadataOutput: {}
   cloudpolicycache_PerformSetUserMetadataOutput: {}
   cloudpolicycache_PerformStatusOutput: {}
   cloudpolicycache_ValidateCreateDataOutput:
@@ -6723,6 +8316,15 @@ responses:
         cloudrole:
           $ref: '#/definitions/ChangeOwnerCandidateDomainsOutput'
       type: object
+  cloudrole_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        cloudrole:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   cloudrole_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6739,7 +8341,21 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   cloudrole_GetPropertyDistinctFieldOutput: {}
+  cloudrole_GetPropertyDomainTagValuePairsOutput: {}
+  cloudrole_GetPropertyDomainTagValueTreeOutput: {}
+  cloudrole_GetPropertySplitableExportOutput: {}
   cloudrole_GetPropertySplitableOutput: {}
+  cloudrole_GetPropertyStatisticsOutput:
+    schema:
+      properties:
+        cloudrole:
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
+      type: object
+  cloudrole_GetPropertyTagValuePairsOutput: {}
+  cloudrole_GetPropertyTagValueTreeOutput: {}
   cloudrole_ListItemFilterOutput:
     schema:
       properties:
@@ -6762,12 +8378,14 @@ responses:
           x-go-name: Total
       type: object
   cloudrole_PerformChangeOwnerOutput: {}
+  cloudrole_PerformClassMetadataOutput: {}
   cloudrole_PerformDisableOutput: {}
   cloudrole_PerformEnableOutput: {}
   cloudrole_PerformPrivateOutput: {}
   cloudrole_PerformPublicOutput: {}
   cloudrole_PerformPurgeOutput: {}
   cloudrole_PerformPurgeSplitableOutput: {}
+  cloudrole_PerformSetClassMetadataOutput: {}
   cloudrole_PerformSetUserMetadataOutput: {}
   cloudrole_PerformStatusOutput: {}
   cloudrole_ValidateCreateDataOutput:
@@ -6800,6 +8418,15 @@ responses:
         clouduser:
           $ref: '#/definitions/ChangeOwnerCandidateDomainsOutput'
       type: object
+  clouduser_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        clouduser:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   clouduser_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6816,7 +8443,12 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   clouduser_GetPropertyDistinctFieldOutput: {}
+  clouduser_GetPropertyDomainTagValuePairsOutput: {}
+  clouduser_GetPropertyDomainTagValueTreeOutput: {}
+  clouduser_GetPropertySplitableExportOutput: {}
   clouduser_GetPropertySplitableOutput: {}
+  clouduser_GetPropertyTagValuePairsOutput: {}
+  clouduser_GetPropertyTagValueTreeOutput: {}
   clouduser_ListItemFilterOutput:
     schema:
       properties:
@@ -6840,11 +8472,13 @@ responses:
       type: object
   clouduser_PerformAttachPolicyOutput: {}
   clouduser_PerformChangeOwnerOutput: {}
+  clouduser_PerformClassMetadataOutput: {}
   clouduser_PerformDetachPolicyOutput: {}
   clouduser_PerformJoinGroupOutput: {}
   clouduser_PerformLeaveGroupOutput: {}
   clouduser_PerformPurgeSplitableOutput: {}
   clouduser_PerformResetPasswordOutput: {}
+  clouduser_PerformSetClassMetadataOutput: {}
   clouduser_PerformSetGroupsOutput: {}
   clouduser_PerformSetPoliciesOutput: {}
   clouduser_PerformSetUserMetadataOutput: {}
@@ -6875,6 +8509,15 @@ responses:
         saml_provider:
           $ref: '#/definitions/ChangeOwnerCandidateDomainsOutput'
       type: object
+  saml_provider_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        saml_provider:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   saml_provider_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6891,7 +8534,21 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   saml_provider_GetPropertyDistinctFieldOutput: {}
+  saml_provider_GetPropertyDomainTagValuePairsOutput: {}
+  saml_provider_GetPropertyDomainTagValueTreeOutput: {}
+  saml_provider_GetPropertySplitableExportOutput: {}
   saml_provider_GetPropertySplitableOutput: {}
+  saml_provider_GetPropertyStatisticsOutput:
+    schema:
+      properties:
+        saml_provider:
+          additionalProperties:
+            $ref: '#/definitions/StatusStatistic'
+          type: object
+          x-go-name: Output
+      type: object
+  saml_provider_GetPropertyTagValuePairsOutput: {}
+  saml_provider_GetPropertyTagValueTreeOutput: {}
   saml_provider_ListItemFilterOutput:
     schema:
       properties:
@@ -6914,9 +8571,11 @@ responses:
           x-go-name: Total
       type: object
   saml_provider_PerformChangeOwnerOutput: {}
+  saml_provider_PerformClassMetadataOutput: {}
   saml_provider_PerformPrivateOutput: {}
   saml_provider_PerformPublicOutput: {}
   saml_provider_PerformPurgeSplitableOutput: {}
+  saml_provider_PerformSetClassMetadataOutput: {}
   saml_provider_PerformSetUserMetadataOutput: {}
   saml_provider_PerformStatusOutput: {}
   saml_provider_ValidateCreateDataOutput:
@@ -6949,6 +8608,15 @@ responses:
         samluser:
           $ref: '#/definitions/ChangeOwnerCandidateDomainsOutput'
       type: object
+  samluser_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        samluser:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   samluser_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6965,7 +8633,12 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   samluser_GetPropertyDistinctFieldOutput: {}
+  samluser_GetPropertyDomainTagValuePairsOutput: {}
+  samluser_GetPropertyDomainTagValueTreeOutput: {}
+  samluser_GetPropertySplitableExportOutput: {}
   samluser_GetPropertySplitableOutput: {}
+  samluser_GetPropertyTagValuePairsOutput: {}
+  samluser_GetPropertyTagValueTreeOutput: {}
   samluser_ListItemFilterOutput:
     schema:
       properties:
@@ -6988,7 +8661,9 @@ responses:
           x-go-name: Total
       type: object
   samluser_PerformChangeOwnerOutput: {}
+  samluser_PerformClassMetadataOutput: {}
   samluser_PerformPurgeSplitableOutput: {}
+  samluser_PerformSetClassMetadataOutput: {}
   samluser_PerformSetUserMetadataOutput: {}
   samluser_PerformStatusOutput: {}
   samluser_ValidateCreateDataOutput:
