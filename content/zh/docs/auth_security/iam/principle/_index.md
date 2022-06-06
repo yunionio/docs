@@ -8,7 +8,7 @@ description: >
 
 ## 认证服务原理
 
-{{<oem_name>}}认证服务最早采用OpenStack的keystone组件，2019年采用golang重构实现了keystone组件，保持和OpenStack Keystone v3.0 API的兼容，并且扩展了认证源（identity_provider）和权限（policy）的实现，使得更容易实现复杂的认证源（如SAML 2.0）和权限体系。
+{{<oem_name>}}认证服务组件(keystone)最早即采用OpenStack的keystone组件，2019年采用golang重构实现了keystone组件，保持和OpenStack Keystone v3.0 API的兼容，并且扩展了认证源（identity_provider）和权限（policy）的实现，使得更容易实现复杂的认证源（如SAML 2.0）和权限体系。
 
 目前认证服务组件（keystone）的功能主要有三个：
 
@@ -16,7 +16,10 @@ description: >
 - 提供资源归属体系，向其他系统提供一套域和项目的资源归属体系。设计的概念有域(domains)，项目(projects)。
 - 提供权限体系，定义用户／组对资源的权限定义。涉及的概念有项目(projects)、角色(roles)和权限策略(policies)。
 
-此外，还提供了服务目录，提供服务以及服务endpoint的URL信息，包括region，service，endpoint等信息。
+此外，认证服务还提供了以下功能：
+
+* 服务目录，提供服务以及服务endpoint的URL信息，包括region，service，endpoint等信息。
+* 配置管理，为各个服务提供一个服务配置管理的基础设置，包括对配置信息的增删改查功能。
 
 为了实现多租户的效果，认证服务提供了域的概念，一个域下有一个完整的用户认证体系和资源和权限体系，从而允许一个域管理员能够完全自治地管理本域的用户、组、项目、角色和权限策略。
 
