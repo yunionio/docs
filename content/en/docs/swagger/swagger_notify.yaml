@@ -41,6 +41,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -148,9 +153,7 @@ definitions:
         type: string
         x-go-name: Type
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -165,11 +168,27 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis/notify
   ConfigManagerGetTypesInput:
     properties:
-      domain:
-        description: 'description: domain where in config'
-        example: default
+      domain_ids:
+        description: 'description: View the available notification channels for the
+          domains with these DomainIds'
+        items:
+          type: string
+        type: array
+        x-go-name: DomainIds
+      operation:
+        description: 'description: Operation of reduce'
+        enum:
+        - union
+        - merge
         type: string
-        x-go-name: Domain
+        x-go-name: Operation
+      receivers:
+        description: 'description: View the available notification channels for the
+          receivers'
+        items:
+          type: string
+        type: array
+        x-go-name: Receivers
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/notify
   ConfigManagerGetTypesOutput:
@@ -283,9 +302,7 @@ definitions:
       delete_fail_reason:
         $ref: '#/definitions/Error'
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   JointResourceBaseUpdateInput:
@@ -319,6 +336,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -460,6 +482,11 @@ definitions:
       priority:
         type: string
         x-go-name: Priority
+      progress:
+        description: 操作进度0-100
+        format: float
+        type: number
+        x-go-name: Progress
       receive_details:
         items:
           $ref: '#/definitions/ReceiveDetail'
@@ -483,10 +510,11 @@ definitions:
       title:
         type: string
         x-go-name: Title
-      update_fail_reason:
-        description: 资源不能更新的原因
+      topic_type:
         type: string
-        x-go-name: UpdateFailReason
+        x-go-name: TopicType
+      update_fail_reason:
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -583,7 +611,7 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis/notify
   PerformEnableInput:
     type: object
-    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+    x-go-package: yunion.io/x/onecloud/pkg/apis
   PerformFreezeInput:
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
@@ -626,6 +654,26 @@ definitions:
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   PerformUnfreezeInput:
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  ProjectStatistic:
+    properties:
+      Count:
+        format: int64
+        type: integer
+      Id:
+        type: string
+      Name:
+        type: string
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  PurgeSplitTableInput:
+    properties:
+      tables:
+        items:
+          type: string
+        type: array
+        x-go-name: Tables
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   ReceiveDetail:
@@ -673,6 +721,11 @@ definitions:
         description: 该资源是否被管理员*人为*禁用, 和enabled互斥
         type: boolean
         x-go-name: Disabled
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       email:
         description: 'description: user email'
         example: example@gmail.com
@@ -809,6 +862,11 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      progress:
+        description: 操作进度0-100
+        format: float
+        type: number
+        x-go-name: Progress
       project_domain:
         description: 资源归属项目的域名称
         type: string
@@ -818,9 +876,7 @@ definitions:
         type: string
         x-go-name: Status
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -905,6 +961,10 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      progress:
+        format: float
+        type: number
+        x-go-name: Progress
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/notify
   ReceiverVerifyInput:
@@ -947,6 +1007,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -1067,9 +1132,7 @@ definitions:
         type: string
         x-go-name: Project
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/notify
   RobotUpdateInput:
@@ -1092,6 +1155,10 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      progress:
+        format: float
+        type: number
+        x-go-name: Progress
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/notify
   SContact:
@@ -1120,14 +1187,16 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis/notify
   STag:
     properties:
-      Key:
-        description: 标签key
+      key:
+        description: 标签Kye
         type: string
-      Value:
+        x-go-name: Key
+      value:
         description: 标签Value
         type: string
+        x-go-name: Value
     type: object
-    x-go-package: yunion.io/x/onecloud/pkg/apis
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
   SharedDomain:
     properties:
       id:
@@ -1177,6 +1246,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       is_emulated:
         description: |-
           资源是否为模拟资源
@@ -1206,35 +1280,7 @@ definitions:
         type: object
         x-go-name: Metadata
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
-    type: object
-    x-go-package: yunion.io/x/onecloud/pkg/apis
-  StandaloneResourceDetails:
-    properties:
-      can_delete:
-        description: 资源是否可以删除, 若为flase, delete_fail_reason会返回不能删除的原因
-        example: true
-        type: boolean
-        x-go-name: CanDelete
-      can_update:
-        description: 资源是否可以更新, 若为false,update_fail_reason会返回资源不能删除的原因
-        example: true
-        type: boolean
-        x-go-name: CanUpdate
-      delete_fail_reason:
         $ref: '#/definitions/Error'
-      metadata:
-        additionalProperties:
-          type: string
-        description: 标签
-        type: object
-        x-go-name: Metadata
-      update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   StatusStandaloneResourceBaseUpdateInput:
@@ -1247,6 +1293,10 @@ definitions:
         description: 资源名称
         type: string
         x-go-name: Name
+      progress:
+        format: float
+        type: number
+        x-go-name: Progress
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis
   StatusStatistic:
@@ -1314,6 +1364,8 @@ definitions:
         description: 'description: project id or domain id of resource'
         example: 1e3824756bac4ac084e784ed297ec652
         type: string
+      ResourceAttributionName:
+        type: string
       ResourceScope:
         description: 'description: scope of resource'
         enum:
@@ -1359,6 +1411,11 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       is_emulated:
         description: |-
           资源是否为模拟资源
@@ -1437,6 +1494,9 @@ definitions:
       resource_attribution_id:
         type: string
         x-go-name: ResourceAttributionId
+      resource_attribution_name:
+        type: string
+        x-go-name: ResourceAttributionName
       resource_scope:
         type: string
         x-go-name: ResourceScope
@@ -1453,9 +1513,7 @@ definitions:
         type: string
         x-go-name: Type
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -1476,6 +1534,16 @@ definitions:
         type: array
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  TTagSet:
+    items:
+      $ref: '#/definitions/STag'
+    type: array
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
+  TTagSetList:
+    items:
+      $ref: '#/definitions/TTagSet'
+    type: array
+    x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
   TemplateCreateInput:
     properties:
       __meta__:
@@ -1503,32 +1571,29 @@ definitions:
         example: test create network
         type: string
         x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
       example:
         description: 'description: Example for using this template'
         example: '{"name": "centos7.6"}'
         type: string
         x-go-name: Example
-      generate_name:
-        description: |-
-          生成资源名称的模板，如果name为空，则为必填项
-          description: generated resource name, given a pattern to generate name, required if name is not given
-        example: test###
-        type: string
-        x-go-name: GenerateName
       is_emulated:
         description: |-
           资源是否为模拟资源
           description: the resource is an emulated resource
         type: boolean
         x-go-name: IsEmulated
-      name:
-        description: |-
-          资源名称，如果generate_name为空，则为必填项
-          description: resource name, required if generated_name is not given
-        example: test-network
+      lang:
+        description: 'description: Language'
+        enum:
+        - cn
+        - en
         type: string
-        uniqueItems: true
-        x-go-name: Name
+        x-go-name: Lang
       template_type:
         description: 'description: Template type'
         enum:
@@ -1544,22 +1609,25 @@ definitions:
         type: string
         x-go-name: Topic
     required:
-    - name
     - topic
     - content
     - example
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/notify
+  TemplateManagerSaveInput:
+    properties:
+      ContactType:
+        type: string
+      Force:
+        type: boolean
+      Templates:
+        items:
+          $ref: '#/definitions/TemplateCreateInput'
+        type: array
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/notify
   TemplateUpdateInput:
     properties:
-      __meta__:
-        additionalProperties:
-          type: string
-        description: 标签列表,最多支持20个
-        example:
-          user:rd: op
-        type: object
-        x-go-name: Metadata
       content:
         description: 'description: template content'
         example: 镜像 {{.name}} 上传完成
@@ -1567,7 +1635,6 @@ definitions:
         x-go-name: Content
       description:
         description: 资源描述
-        example: test create network
         type: string
         x-go-name: Description
       example:
@@ -1575,29 +1642,7 @@ definitions:
         example: '{"name": "centos7.6"}'
         type: string
         x-go-name: Example
-      generate_name:
-        description: |-
-          生成资源名称的模板，如果name为空，则为必填项
-          description: generated resource name, given a pattern to generate name, required if name is not given
-        example: test###
-        type: string
-        x-go-name: GenerateName
-      is_emulated:
-        description: |-
-          资源是否为模拟资源
-          description: the resource is an emulated resource
-        type: boolean
-        x-go-name: IsEmulated
-      name:
-        description: |-
-          资源名称，如果generate_name为空，则为必填项
-          description: resource name, required if generated_name is not given
-        example: test-network
-        type: string
-        uniqueItems: true
-        x-go-name: Name
     required:
-    - name
     - content
     - example
     type: object
@@ -1688,9 +1733,7 @@ definitions:
         type: string
         x-go-name: Type
       update_fail_reason:
-        description: 资源不能更新的原因
-        type: string
-        x-go-name: UpdateFailReason
+        $ref: '#/definitions/Error'
       update_version:
         description: 资源被更新次数
         format: int64
@@ -1701,6 +1744,9 @@ definitions:
         format: date-time
         type: string
         x-go-name: UpdatedAt
+      webconsole_disable:
+        type: boolean
+        x-go-name: WebconsoleDisable
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/notify
   VerifiedInfo:
@@ -1832,14 +1878,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -1913,6 +1979,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - in: query
         name: type
         type: string
@@ -1937,6 +2020,11 @@ paths:
           properties:
             config:
               $ref: '#/definitions/ConfigCreateInput'
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
           type: object
         x-go-name: Body
       responses:
@@ -2002,6 +2090,50 @@ paths:
       summary: 更新
       tags:
       - config
+  /configs/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: config_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of config
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/config_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - config
+    post:
+      description: 执行操作ClassMetadata
+      operationId: config_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of config
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            config:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/config_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - config
   /configs/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -2037,6 +2169,34 @@ paths:
         "200":
           $ref: '#/responses/config_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - config
+  /configs/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: config_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of config
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            config:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/config_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - config
   /configs/{id}/set-user-metadata:
@@ -2081,6 +2241,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: config_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            config:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/config_PerformPurgeSplitableOutput'
@@ -2095,6 +2264,41 @@ paths:
         "200":
           $ref: '#/responses/config_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - config
+  /configs/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: config_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/config_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - config
+  /configs/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: config_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/config_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - config
+  /configs/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: config_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/config_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - config
   /configs/validate:
@@ -2224,14 +2428,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -2289,6 +2513,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             event:
               $ref: '#/definitions/StandaloneAnonResourceCreateInput'
           type: object
@@ -2356,6 +2585,50 @@ paths:
       summary: 更新
       tags:
       - event
+  /events/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: event_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of event
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/event_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - event
+    post:
+      description: 执行操作ClassMetadata
+      operationId: event_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of event
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            event:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/event_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - event
   /events/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -2391,6 +2664,34 @@ paths:
         "200":
           $ref: '#/responses/event_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - event
+  /events/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: event_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of event
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            event:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/event_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - event
   /events/{id}/set-user-metadata:
@@ -2435,6 +2736,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: event_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            event:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/event_PerformPurgeSplitableOutput'
@@ -2449,6 +2759,41 @@ paths:
         "200":
           $ref: '#/responses/event_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - event
+  /events/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: event_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/event_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - event
+  /events/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: event_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/event_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - event
+  /events/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: event_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/event_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - event
   /notifications:
@@ -2559,14 +2904,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -2633,6 +2998,9 @@ paths:
       - in: query
         name: Tag
         type: string
+      - in: query
+        name: TopicType
+        type: string
       responses:
         "200":
           $ref: '#/responses/notification_ListItemFilterOutput'
@@ -2647,6 +3015,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             notification:
               $ref: '#/definitions/NotificationCreateInput'
           type: object
@@ -2714,6 +3087,50 @@ paths:
       summary: 更新
       tags:
       - notification
+  /notifications/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: notification_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of notification
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/notification_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - notification
+    post:
+      description: 执行操作ClassMetadata
+      operationId: notification_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of notification
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            notification:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/notification_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - notification
   /notifications/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -2749,6 +3166,34 @@ paths:
         "200":
           $ref: '#/responses/notification_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - notification
+  /notifications/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: notification_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of notification
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            notification:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/notification_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - notification
   /notifications/{id}/set-user-metadata:
@@ -2853,6 +3298,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: notification_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            notification:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/notification_PerformPurgeSplitableOutput'
@@ -2869,6 +3323,21 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - notification
+  /notifications/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: notification_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/notification_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - notification
   /notifications/statistics:
     get:
       description: 获取指定资源类的信息Statistics
@@ -2877,6 +3346,26 @@ paths:
         "200":
           $ref: '#/responses/notification_GetPropertyStatisticsOutput'
       summary: 获取指定资源类的信息Statistics
+      tags:
+      - notification
+  /notifications/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: notification_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/notification_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - notification
+  /notifications/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: notification_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/notification_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - notification
   /receivers:
@@ -2987,14 +3476,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -3075,6 +3584,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 以资源是否启用/禁用过滤列表
         in: query
         name: enabled
@@ -3114,6 +3640,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             receiver:
               $ref: '#/definitions/ReceiverCreateInput'
           type: object
@@ -3179,6 +3710,50 @@ paths:
         "200":
           $ref: '#/responses/receiver_ValidateUpdateDataOutput'
       summary: 更新
+      tags:
+      - receiver
+  /receivers/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: receiver_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/receiver_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - receiver
+    post:
+      description: 执行操作ClassMetadata
+      operationId: receiver_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
       tags:
       - receiver
   /receivers/{id}/disable:
@@ -3291,6 +3866,34 @@ paths:
         "200":
           $ref: '#/responses/receiver_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - receiver
+  /receivers/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: receiver_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of receiver
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/receiver_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - receiver
   /receivers/{id}/set-user-metadata:
@@ -3464,6 +4067,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: receiver_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            receiver:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/receiver_PerformPurgeSplitableOutput'
@@ -3480,6 +4092,21 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - receiver
+  /receivers/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: receiver_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/receiver_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - receiver
   /receivers/statistics:
     get:
       description: 获取指定资源类的信息Statistics
@@ -3488,6 +4115,26 @@ paths:
         "200":
           $ref: '#/responses/receiver_GetPropertyStatisticsOutput'
       summary: 获取指定资源类的信息Statistics
+      tags:
+      - receiver
+  /receivers/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: receiver_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/receiver_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - receiver
+  /receivers/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: receiver_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/receiver_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - receiver
   /robots:
@@ -3598,14 +4245,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -3686,6 +4353,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByDomain
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: domain_tags
+        x-go-name: DomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by domain tags
+        in: query
+        name: no_domain_tags
+        x-go-name: NoDomainTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          domain tags filters imposed by policy
+        in: query
+        name: policy_domain_tags
+        x-go-name: PolicyDomainTags
       - description: 指定项目的名称或ID
         in: query
         name: project_id
@@ -3704,6 +4388,23 @@ paths:
         pattern: asc|desc
         type: string
         x-go-name: OrderByProject
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by project tags
+        in: query
+        name: project_tags
+        x-go-name: ProjectTags
+      - $ref: '#/definitions/TTagSetList'
+        description: filter by no project tags
+        in: query
+        name: no_project_tags
+        x-go-name: NoProjectTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          project tag fitlers imposed by policy
+        in: query
+        name: policy_project_tags
+        x-go-name: PolicyProjectTags
       - description: 列表中包含标记为"系统资源"的资源
         in: query
         name: system
@@ -3760,6 +4461,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             robot:
               $ref: '#/definitions/RobotCreateInput'
           type: object
@@ -3884,6 +4590,50 @@ paths:
         "200":
           $ref: '#/responses/robot_GetDetailsChangeOwnerCandidateDomainsOutput'
       summary: 获取指定信息ChangeOwnerCandidateDomains
+      tags:
+      - robot
+  /robots/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: robot_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of robot
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/robot_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - robot
+    post:
+      description: 执行操作ClassMetadata
+      operationId: robot_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of robot
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            robot:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/robot_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
       tags:
       - robot
   /robots/{id}/disable:
@@ -4048,6 +4798,34 @@ paths:
       summary: 执行操作Public
       tags:
       - robot
+  /robots/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: robot_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of robot
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            robot:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/robot_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - robot
   /robots/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -4152,10 +4930,59 @@ paths:
       summary: 获取指定资源类的信息DistinctField
       tags:
       - robot
+  /robots/domain-statistics:
+    get:
+      description: 获取指定资源类的信息DomainStatistics
+      operationId: robot_GetPropertyDomainStatistics
+      responses:
+        "200":
+          $ref: '#/responses/robot_GetPropertyDomainStatisticsOutput'
+      summary: 获取指定资源类的信息DomainStatistics
+      tags:
+      - robot
+  /robots/project-statistics:
+    get:
+      description: 获取指定资源类的信息ProjectStatistics
+      operationId: robot_GetPropertyProjectStatistics
+      responses:
+        "200":
+          $ref: '#/responses/robot_GetPropertyProjectStatisticsOutput'
+      summary: 获取指定资源类的信息ProjectStatistics
+      tags:
+      - robot
+  /robots/project-tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息ProjectTagValuePairs
+      operationId: robot_GetPropertyProjectTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/robot_GetPropertyProjectTagValuePairsOutput'
+      summary: 获取指定资源类的信息ProjectTagValuePairs
+      tags:
+      - robot
+  /robots/project-tag-value-tree:
+    get:
+      description: 获取指定资源类的信息ProjectTagValueTree
+      operationId: robot_GetPropertyProjectTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/robot_GetPropertyProjectTagValueTreeOutput'
+      summary: 获取指定资源类的信息ProjectTagValueTree
+      tags:
+      - robot
   /robots/purge-splitable:
     post:
       description: 执行操作PurgeSplitable
       operationId: robot_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            robot:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/robot_PerformPurgeSplitableOutput'
@@ -4172,6 +4999,21 @@ paths:
       summary: 获取指定资源类的信息Splitable
       tags:
       - robot
+  /robots/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: robot_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/robot_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - robot
   /robots/statistics:
     get:
       description: 获取指定资源类的信息Statistics
@@ -4180,6 +5022,26 @@ paths:
         "200":
           $ref: '#/responses/robot_GetPropertyStatisticsOutput'
       summary: 获取指定资源类的信息Statistics
+      tags:
+      - robot
+  /robots/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: robot_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/robot_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - robot
+  /robots/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: robot_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/robot_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - robot
   /subscriber_receivers:
@@ -4304,6 +5166,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             subscriber_receiver:
               $ref: '#/definitions/JoinResourceBaseCreateInput'
           type: object
@@ -4385,6 +5252,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: subscriber_receiver_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscriber_receiver:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/subscriber_receiver_PerformPurgeSplitableOutput'
@@ -4399,6 +5275,21 @@ paths:
         "200":
           $ref: '#/responses/subscriber_receiver_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - subscriber_receiver
+  /subscriber_receivers/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: subscriber_receiver_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/subscriber_receiver_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - subscriber_receiver
   /subscribers:
@@ -4509,14 +5400,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -4606,6 +5517,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             subscriber:
               $ref: '#/definitions/SubscriberCreateInput'
           type: object
@@ -4698,6 +5614,50 @@ paths:
       summary: 执行操作Change
       tags:
       - subscriber
+  /subscribers/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: subscriber_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of subscriber
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/subscriber_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - subscriber
+    post:
+      description: 执行操作ClassMetadata
+      operationId: subscriber_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of subscriber
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscriber:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/subscriber_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - subscriber
   /subscribers/{id}/disable:
     post:
       description: 执行操作Disable
@@ -4769,6 +5729,34 @@ paths:
       summary: 获取资源标签（元数据）
       tags:
       - subscriber
+  /subscribers/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: subscriber_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of subscriber
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscriber:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/subscriber_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - subscriber
   /subscribers/{id}/set-receiver:
     post:
       description: 执行操作SetReceiver
@@ -4836,6 +5824,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: subscriber_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            subscriber:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/subscriber_PerformPurgeSplitableOutput'
@@ -4850,6 +5847,41 @@ paths:
         "200":
           $ref: '#/responses/subscriber_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - subscriber
+  /subscribers/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: subscriber_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/subscriber_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - subscriber
+  /subscribers/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: subscriber_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/subscriber_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - subscriber
+  /subscribers/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: subscriber_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/subscriber_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - subscriber
   /templates:
@@ -4960,14 +5992,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -5011,13 +6063,6 @@ paths:
         name: id
         type: array
         x-go-name: Ids
-      - description: 以资源名称过滤列表
-        in: query
-        items:
-          type: string
-        name: name
-        type: array
-        x-go-name: Names
       - description: |-
           description: Contact type, specifically, setting it to all means all contact type
           require: true
@@ -5043,6 +6088,14 @@ paths:
         required: true
         type: string
         x-go-name: Topic
+      - description: 'description: Language'
+        enum:
+        - cn
+        - en
+        in: query
+        name: lang
+        type: string
+        x-go-name: Lang
       responses:
         "200":
           $ref: '#/responses/template_ListItemFilterOutput'
@@ -5057,6 +6110,11 @@ paths:
         name: body
         schema:
           properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
             template:
               $ref: '#/definitions/TemplateCreateInput'
           type: object
@@ -5124,6 +6182,50 @@ paths:
       summary: 更新
       tags:
       - template
+  /templates/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: template_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of template
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/template_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - template
+    post:
+      description: 执行操作ClassMetadata
+      operationId: template_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of template
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            template:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/template_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - template
   /templates/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -5159,6 +6261,34 @@ paths:
         "200":
           $ref: '#/responses/template_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - template
+  /templates/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: template_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of template
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            template:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/template_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - template
   /templates/{id}/set-user-metadata:
@@ -5203,10 +6333,38 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: template_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            template:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/template_PerformPurgeSplitableOutput'
       summary: 执行操作PurgeSplitable
+      tags:
+      - template
+  /templates/save:
+    post:
+      description: 执行操作Save
+      operationId: template_PerformSave
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            template:
+              $ref: '#/definitions/TemplateManagerSaveInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/template_PerformSaveOutput'
+      summary: 执行操作Save
       tags:
       - template
   /templates/splitable:
@@ -5217,6 +6375,41 @@ paths:
         "200":
           $ref: '#/responses/template_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - template
+  /templates/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: template_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/template_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - template
+  /templates/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: template_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/template_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - template
+  /templates/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: template_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/template_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - template
   /topics:
@@ -5327,14 +6520,34 @@ paths:
         name: show_fail_reason
         type: boolean
         x-go-name: ShowFailReason
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（包含这些标签）
         in: query
-        items:
-          $ref: '#/definitions/STag'
         name: tags
-        type: array
         x-go-name: Tags
-      - description: 通过标签过滤
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还包含这些标签，OR的关系）
+        in: query
+        name: obj_tags
+        x-go-name: ObjTags
+      - $ref: '#/definitions/TTagSet'
+        description: 通过标签过滤（不包含这些标签）
+        in: query
+        name: no_tags
+        x-go-name: NoTags
+      - $ref: '#/definitions/TTagSetList'
+        description: 通过一组标签过滤（还不包含这些标签，AND的关系）
+        in: query
+        name: no_obj_tags
+        x-go-name: NoObjTags
+      - $ref: '#/definitions/TTagSetList'
+        description: |-
+          ignore
+          策略规定的标签过滤器
+        in: query
+        name: policy_object_tags
+        x-go-name: PolicyObjectTags
+      - description: 通过标签排序
         in: query
         name: order_by_tag
         type: string
@@ -5385,6 +6598,11 @@ paths:
         name: name
         type: array
         x-go-name: Names
+      - description: 以资源是否启用/禁用过滤列表
+        in: query
+        name: enabled
+        type: boolean
+        x-go-name: Enabled
       responses:
         "200":
           $ref: '#/responses/topic_ListItemFilterOutput'
@@ -5449,6 +6667,50 @@ paths:
       summary: 更新
       tags:
       - topic
+  /topics/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: topic_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of topic
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/topic_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - topic
+    post:
+      description: 执行操作ClassMetadata
+      operationId: topic_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of topic
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            topic:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/topic_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - topic
   /topics/{id}/disable:
     post:
       description: 执行操作Disable
@@ -5472,31 +6734,6 @@ paths:
         "200":
           $ref: '#/responses/topic_PerformDisableOutput'
       summary: 执行操作Disable
-      tags:
-      - topic
-  /topics/{id}/enable:
-    post:
-      description: 执行操作Enable
-      operationId: topic_PerformEnable
-      parameters:
-      - description: The Id or Name of topic
-        in: path
-        name: id
-        required: true
-        type: string
-        x-go-name: Id
-      - in: body
-        name: body
-        schema:
-          properties:
-            topic:
-              $ref: '#/definitions/PerformEnableInput'
-          type: object
-        x-go-name: Body
-      responses:
-        "200":
-          $ref: '#/responses/topic_PerformEnableOutput'
-      summary: 执行操作Enable
       tags:
       - topic
   /topics/{id}/metadata:
@@ -5534,6 +6771,34 @@ paths:
         "200":
           $ref: '#/responses/topic_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - topic
+  /topics/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: topic_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of topic
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            topic:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/topic_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - topic
   /topics/{id}/set-user-metadata:
@@ -5578,6 +6843,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: topic_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            topic:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/topic_PerformPurgeSplitableOutput'
@@ -5592,6 +6866,41 @@ paths:
         "200":
           $ref: '#/responses/topic_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - topic
+  /topics/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: topic_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/topic_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
+      tags:
+      - topic
+  /topics/tag-value-pairs:
+    get:
+      description: 获取指定资源类的信息TagValuePairs
+      operationId: topic_GetPropertyTagValuePairs
+      responses:
+        "200":
+          $ref: '#/responses/topic_GetPropertyTagValuePairsOutput'
+      summary: 获取指定资源类的信息TagValuePairs
+      tags:
+      - topic
+  /topics/tag-value-tree:
+    get:
+      description: 获取指定资源类的信息TagValueTree
+      operationId: topic_GetPropertyTagValueTree
+      responses:
+        "200":
+          $ref: '#/responses/topic_GetPropertyTagValueTreeOutput'
+      summary: 获取指定资源类的信息TagValueTree
       tags:
       - topic
 produces:
@@ -5609,6 +6918,15 @@ responses:
         config:
           $ref: '#/definitions/ConfigDetails'
       type: object
+  config_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        config:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   config_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -5619,7 +6937,10 @@ responses:
           x-go-name: Output
       type: object
   config_GetPropertyDistinctFieldOutput: {}
+  config_GetPropertySplitableExportOutput: {}
   config_GetPropertySplitableOutput: {}
+  config_GetPropertyTagValuePairsOutput: {}
+  config_GetPropertyTagValueTreeOutput: {}
   config_ListItemFilterOutput:
     schema:
       properties:
@@ -5641,7 +6962,9 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  config_PerformClassMetadataOutput: {}
   config_PerformPurgeSplitableOutput: {}
+  config_PerformSetClassMetadataOutput: {}
   config_PerformSetUserMetadataOutput: {}
   config_PerformValidateOutput:
     schema:
@@ -5673,6 +6996,15 @@ responses:
         event:
           $ref: '#/definitions/StandaloneAnonResourceDetails'
       type: object
+  event_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        event:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   event_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -5683,7 +7015,10 @@ responses:
           x-go-name: Output
       type: object
   event_GetPropertyDistinctFieldOutput: {}
+  event_GetPropertySplitableExportOutput: {}
   event_GetPropertySplitableOutput: {}
+  event_GetPropertyTagValuePairsOutput: {}
+  event_GetPropertyTagValueTreeOutput: {}
   event_ListItemFilterOutput:
     schema:
       properties:
@@ -5705,7 +7040,9 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  event_PerformClassMetadataOutput: {}
   event_PerformPurgeSplitableOutput: {}
+  event_PerformSetClassMetadataOutput: {}
   event_PerformSetUserMetadataOutput: {}
   event_ValidateCreateDataOutput:
     schema:
@@ -5731,6 +7068,15 @@ responses:
         notification:
           $ref: '#/definitions/NotificationDetails'
       type: object
+  notification_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        notification:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   notification_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -5747,6 +7093,7 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   notification_GetPropertyDistinctFieldOutput: {}
+  notification_GetPropertySplitableExportOutput: {}
   notification_GetPropertySplitableOutput: {}
   notification_GetPropertyStatisticsOutput:
     schema:
@@ -5757,6 +7104,8 @@ responses:
           type: object
           x-go-name: Output
       type: object
+  notification_GetPropertyTagValuePairsOutput: {}
+  notification_GetPropertyTagValueTreeOutput: {}
   notification_ListItemFilterOutput:
     schema:
       properties:
@@ -5778,6 +7127,7 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  notification_PerformClassMetadataOutput: {}
   notification_PerformEventNotifyOutput:
     schema:
       properties:
@@ -5785,6 +7135,7 @@ responses:
           $ref: '#/definitions/NotificationManagerEventNotifyOutput'
       type: object
   notification_PerformPurgeSplitableOutput: {}
+  notification_PerformSetClassMetadataOutput: {}
   notification_PerformSetUserMetadataOutput: {}
   notification_PerformStatusOutput: {}
   notification_ValidateCreateDataOutput:
@@ -5811,6 +7162,15 @@ responses:
         receiver:
           $ref: '#/definitions/ReceiverDetails'
       type: object
+  receiver_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        receiver:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   receiver_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -5827,6 +7187,7 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   receiver_GetPropertyDistinctFieldOutput: {}
+  receiver_GetPropertySplitableExportOutput: {}
   receiver_GetPropertySplitableOutput: {}
   receiver_GetPropertyStatisticsOutput:
     schema:
@@ -5837,6 +7198,8 @@ responses:
           type: object
           x-go-name: Output
       type: object
+  receiver_GetPropertyTagValuePairsOutput: {}
+  receiver_GetPropertyTagValueTreeOutput: {}
   receiver_ListItemFilterOutput:
     schema:
       properties:
@@ -5858,6 +7221,7 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  receiver_PerformClassMetadataOutput: {}
   receiver_PerformDisableOutput: {}
   receiver_PerformEnableContactTypeOutput: {}
   receiver_PerformEnableOutput: {}
@@ -5869,6 +7233,7 @@ responses:
       type: object
   receiver_PerformIntellijGetOutput: {}
   receiver_PerformPurgeSplitableOutput: {}
+  receiver_PerformSetClassMetadataOutput: {}
   receiver_PerformSetUserMetadataOutput: {}
   receiver_PerformStatusOutput: {}
   receiver_PerformTriggerVerifyOutput: {}
@@ -5903,6 +7268,15 @@ responses:
         robot:
           $ref: '#/definitions/ChangeOwnerCandidateDomainsOutput'
       type: object
+  robot_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        robot:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   robot_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -5919,6 +7293,27 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   robot_GetPropertyDistinctFieldOutput: {}
+  robot_GetPropertyDomainStatisticsOutput:
+    schema:
+      properties:
+        robot:
+          items:
+            $ref: '#/definitions/ProjectStatistic'
+          type: array
+          x-go-name: Output
+      type: object
+  robot_GetPropertyProjectStatisticsOutput:
+    schema:
+      properties:
+        robot:
+          items:
+            $ref: '#/definitions/ProjectStatistic'
+          type: array
+          x-go-name: Output
+      type: object
+  robot_GetPropertyProjectTagValuePairsOutput: {}
+  robot_GetPropertyProjectTagValueTreeOutput: {}
+  robot_GetPropertySplitableExportOutput: {}
   robot_GetPropertySplitableOutput: {}
   robot_GetPropertyStatisticsOutput:
     schema:
@@ -5929,6 +7324,8 @@ responses:
           type: object
           x-go-name: Output
       type: object
+  robot_GetPropertyTagValuePairsOutput: {}
+  robot_GetPropertyTagValueTreeOutput: {}
   robot_ListItemFilterOutput:
     schema:
       properties:
@@ -5952,12 +7349,14 @@ responses:
       type: object
   robot_PerformCancelDeleteOutput: {}
   robot_PerformChangeOwnerOutput: {}
+  robot_PerformClassMetadataOutput: {}
   robot_PerformDisableOutput: {}
   robot_PerformEnableOutput: {}
   robot_PerformFreezeOutput: {}
   robot_PerformPrivateOutput: {}
   robot_PerformPublicOutput: {}
   robot_PerformPurgeSplitableOutput: {}
+  robot_PerformSetClassMetadataOutput: {}
   robot_PerformSetUserMetadataOutput: {}
   robot_PerformStatusOutput: {}
   robot_PerformUnfreezeOutput: {}
@@ -5985,6 +7384,15 @@ responses:
         subscriber:
           $ref: '#/definitions/SubscriberDetails'
       type: object
+  subscriber_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        subscriber:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   subscriber_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -5995,7 +7403,10 @@ responses:
           x-go-name: Output
       type: object
   subscriber_GetPropertyDistinctFieldOutput: {}
+  subscriber_GetPropertySplitableExportOutput: {}
   subscriber_GetPropertySplitableOutput: {}
+  subscriber_GetPropertyTagValuePairsOutput: {}
+  subscriber_GetPropertyTagValueTreeOutput: {}
   subscriber_ListItemFilterOutput:
     schema:
       properties:
@@ -6018,9 +7429,11 @@ responses:
           x-go-name: Total
       type: object
   subscriber_PerformChangeOutput: {}
+  subscriber_PerformClassMetadataOutput: {}
   subscriber_PerformDisableOutput: {}
   subscriber_PerformEnableOutput: {}
   subscriber_PerformPurgeSplitableOutput: {}
+  subscriber_PerformSetClassMetadataOutput: {}
   subscriber_PerformSetReceiverOutput: {}
   subscriber_PerformSetUserMetadataOutput: {}
   subscriber_ValidateCreateDataOutput:
@@ -6048,6 +7461,7 @@ responses:
           $ref: '#/definitions/JointResourceBaseDetails'
       type: object
   subscriber_receiver_GetPropertyDistinctFieldOutput: {}
+  subscriber_receiver_GetPropertySplitableExportOutput: {}
   subscriber_receiver_GetPropertySplitableOutput: {}
   subscriber_receiver_ListItemFilterOutput:
     schema:
@@ -6087,13 +7501,22 @@ responses:
     schema:
       properties:
         template:
-          $ref: '#/definitions/StandaloneResourceDetails'
+          $ref: '#/definitions/StandaloneAnonResourceDetails'
       type: object
   template_FetchCustomizeColumnsOutput:
     schema:
       properties:
         template:
-          $ref: '#/definitions/StandaloneResourceDetails'
+          $ref: '#/definitions/StandaloneAnonResourceDetails'
+      type: object
+  template_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        template:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
       type: object
   template_GetDetailsMetadataOutput:
     schema:
@@ -6105,7 +7528,10 @@ responses:
           x-go-name: Output
       type: object
   template_GetPropertyDistinctFieldOutput: {}
+  template_GetPropertySplitableExportOutput: {}
   template_GetPropertySplitableOutput: {}
+  template_GetPropertyTagValuePairsOutput: {}
+  template_GetPropertyTagValueTreeOutput: {}
   template_ListItemFilterOutput:
     schema:
       properties:
@@ -6119,7 +7545,7 @@ responses:
           x-go-name: Offset
         templates:
           items:
-            $ref: '#/definitions/StandaloneResourceDetails'
+            $ref: '#/definitions/StandaloneAnonResourceDetails'
           type: array
           x-go-name: Output
         total:
@@ -6127,19 +7553,22 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  template_PerformClassMetadataOutput: {}
   template_PerformPurgeSplitableOutput: {}
+  template_PerformSaveOutput: {}
+  template_PerformSetClassMetadataOutput: {}
   template_PerformSetUserMetadataOutput: {}
   template_ValidateCreateDataOutput:
     schema:
       properties:
         template:
-          $ref: '#/definitions/StandaloneResourceDetails'
+          $ref: '#/definitions/StandaloneAnonResourceDetails'
       type: object
   template_ValidateUpdateDataOutput:
     schema:
       properties:
         template:
-          $ref: '#/definitions/StandaloneResourceDetails'
+          $ref: '#/definitions/StandaloneAnonResourceDetails'
       type: object
   topic_CustomizeDeleteOutput:
     schema:
@@ -6153,6 +7582,15 @@ responses:
         topic:
           $ref: '#/definitions/TopicDetails'
       type: object
+  topic_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        topic:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   topic_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -6163,7 +7601,10 @@ responses:
           x-go-name: Output
       type: object
   topic_GetPropertyDistinctFieldOutput: {}
+  topic_GetPropertySplitableExportOutput: {}
   topic_GetPropertySplitableOutput: {}
+  topic_GetPropertyTagValuePairsOutput: {}
+  topic_GetPropertyTagValueTreeOutput: {}
   topic_ListItemFilterOutput:
     schema:
       properties:
@@ -6185,9 +7626,10 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  topic_PerformClassMetadataOutput: {}
   topic_PerformDisableOutput: {}
-  topic_PerformEnableOutput: {}
   topic_PerformPurgeSplitableOutput: {}
+  topic_PerformSetClassMetadataOutput: {}
   topic_PerformSetUserMetadataOutput: {}
   topic_ValidateCreateDataOutput:
     schema:
