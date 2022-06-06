@@ -2,6 +2,71 @@ basePath: /
 consumes:
 - application/json
 definitions:
+  CredentialCreateInput:
+    properties:
+      __meta__:
+        additionalProperties:
+          type: string
+        description: 标签列表,最多支持20个
+        example:
+          user:rd: op
+        type: object
+        x-go-name: Metadata
+      blob:
+        type: string
+        x-go-name: Blob
+      description:
+        description: 资源描述
+        example: test create network
+        type: string
+        x-go-name: Description
+      dry_run:
+        default: false
+        description: 预检验参数,若为true则仅检查参数,并不真正创建变更
+        type: boolean
+        x-go-name: DryRun
+      encrypted_blob:
+        description: Ignore
+        type: string
+        x-go-name: EncryptedBlob
+      generate_name:
+        description: |-
+          生成资源名称的模板，如果name为空，则为必填项
+          description: generated resource name, given a pattern to generate name, required if name is not given
+        example: test###
+        type: string
+        x-go-name: GenerateName
+      is_emulated:
+        description: |-
+          资源是否为模拟资源
+          description: the resource is an emulated resource
+        type: boolean
+        x-go-name: IsEmulated
+      key_hash:
+        description: Ignore
+        type: string
+        x-go-name: KeyHash
+      name:
+        description: |-
+          资源名称，如果generate_name为空，则为必填项
+          description: resource name, required if generated_name is not given
+        example: test-network
+        type: string
+        uniqueItems: true
+        x-go-name: Name
+      project_id:
+        type: string
+        x-go-name: ProjectId
+      type:
+        type: string
+        x-go-name: Type
+      user_id:
+        type: string
+        x-go-name: UserId
+    required:
+    - name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/identity
   CredentialDetails:
     properties:
       blob:
@@ -206,23 +271,29 @@ definitions:
         type: string
         x-go-name: DomainId
       enabled:
+        description: 改域是否启用
         type: boolean
         x-go-name: Enabled
       ext_resource:
+        description: 外部资源统计信息（资源类别：数量）
         type: object
         x-go-name: ExtResource
       ext_resources_last_update:
+        description: 外部资源统计信息上次更新时间
         format: date-time
         type: string
         x-go-name: ExtResourcesLastUpdate
       ext_resources_next_update:
+        description: 外部资源统计信息下次更新时间
         format: date-time
         type: string
         x-go-name: ExtResourcesNextUpdate
       extra:
+        description: 额外信息
         type: object
         x-go-name: Extra
       group_count:
+        description: 归属域的用户组数量
         format: int64
         type: integer
         x-go-name: GroupCount
@@ -235,6 +306,7 @@ definitions:
         type: string
         x-go-name: Idp
       idp_count:
+        description: 归属域的认证源数量
         format: int64
         type: integer
         x-go-name: IdpCount
@@ -251,6 +323,7 @@ definitions:
         type: string
         x-go-name: IdpId
       is_domain:
+        description: 是否为域
         type: boolean
         x-go-name: IsDomain
       is_emulated:
@@ -273,14 +346,17 @@ definitions:
         type: string
         x-go-name: ParentId
       policy_count:
+        description: 归属域的权限策略数量
         format: int64
         type: integer
         x-go-name: PolicyCount
       project_count:
+        description: 归属域的项目数量
         format: int64
         type: integer
-        x-go-name: ProjectCout
+        x-go-name: ProjectCount
       role_count:
+        description: 归属域的角色数量
         format: int64
         type: integer
         x-go-name: RoleCount
@@ -301,9 +377,10 @@ definitions:
         type: string
         x-go-name: UpdatedAt
       user_count:
+        description: 归属域的用户数量
         format: int64
         type: integer
-        x-go-name: UserCout
+        x-go-name: UserCount
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/identity
   DomainUpdateInput:
@@ -500,6 +577,18 @@ definitions:
         x-go-name: Metadata
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/identity
+  GetIdpSsoCallbackUriOutput:
+    properties:
+      driver:
+        description: Driver
+        type: string
+        x-go-name: Driver
+      redirect_uri:
+        description: SSO回调地址
+        type: string
+        x-go-name: RedirectUri
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/identity
   GetIdpSsoRedirectUriOutput:
     properties:
       driver:
@@ -598,6 +687,7 @@ definitions:
         type: string
         x-go-name: Description
       displayname:
+        description: 用户组的显示名称
         type: string
         x-go-name: Displayname
       domain_id:
@@ -605,6 +695,7 @@ definitions:
         type: string
         x-go-name: DomainId
       extra:
+        description: 额外信息
         type: object
         x-go-name: Extra
       id:
@@ -1448,6 +1539,16 @@ definitions:
         description: 角色ID
         type: string
         x-go-name: RoleId
+      valid_since:
+        description: 权限有效开始时间
+        format: date-time
+        type: string
+        x-go-name: ValidSince
+      valid_until:
+        description: 权限有效结束时间
+        format: date-time
+        type: string
+        x-go-name: ValidUntil
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/identity
   PolicyCreateInput:
@@ -1576,6 +1677,7 @@ definitions:
         type: boolean
         x-go-name: Enabled
       extra:
+        description: 额外信息
         type: object
         x-go-name: Extra
       id:
@@ -1787,20 +1889,25 @@ definitions:
         type: string
         x-go-name: DomainId
       ext_resource:
+        description: 外部资源统计信息（资源类别：数量）
         type: object
         x-go-name: ExtResource
       ext_resources_last_update:
+        description: 外部资源统计信息上次更新时间
         format: date-time
         type: string
         x-go-name: ExtResourcesLastUpdate
       ext_resources_next_update:
+        description: 外部资源统计信息下次更新时间
         format: date-time
         type: string
         x-go-name: ExtResourcesNextUpdate
       extra:
+        description: 额外信息
         type: object
         x-go-name: Extra
       group_count:
+        description: 加入项目的用户组数量
         format: int64
         type: integer
         x-go-name: GroupCount
@@ -1809,6 +1916,7 @@ definitions:
         type: string
         x-go-name: Id
       is_domain:
+        description: 该项目是否为域（domain）
         type: boolean
         x-go-name: IsDomain
       is_emulated:
@@ -1828,6 +1936,7 @@ definitions:
         type: string
         x-go-name: Name
       parent_id:
+        description: 上级项目或域的ID
         type: string
         x-go-name: ParentId
       project_domain:
@@ -1847,6 +1956,7 @@ definitions:
         type: string
         x-go-name: UpdatedAt
       user_count:
+        description: 加入项目的用户数量
         format: int64
         type: integer
         x-go-name: UserCount
@@ -1868,6 +1978,15 @@ definitions:
         x-go-name: Name
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/identity
+  PurgeSplitTableInput:
+    properties:
+      tables:
+        items:
+          type: string
+        type: array
+        x-go-name: Tables
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
   RegionDetails:
     properties:
       can_delete:
@@ -1942,6 +2061,14 @@ definitions:
         format: date-time
         type: string
         x-go-name: UpdatedAt
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/identity
+  ResetCredentialInput:
+    properties:
+      type:
+        description: 密钥的类型
+        type: string
+        x-go-name: Type
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/identity
   ResourceBaseCreateInput:
@@ -2044,9 +2171,11 @@ definitions:
         type: string
         x-go-name: DomainId
       extra:
+        description: 额外信息
         type: object
         x-go-name: Extra
       group_count:
+        description: 具有该角色的用户组数量
         format: int64
         type: integer
         x-go-name: GroupCount
@@ -2065,6 +2194,7 @@ definitions:
         type: boolean
         x-go-name: IsPublic
       match_policies:
+        description: 该角色匹配的权限的名称列表
         items:
           type: string
         type: array
@@ -2084,9 +2214,11 @@ definitions:
           items:
             type: string
           type: array
+        description: 不同级别的权限的名称列表
         type: object
         x-go-name: Policies
       project_count:
+        description: 有该角色的用户或组的项目的数量
         format: int64
         type: integer
         x-go-name: ProjectCount
@@ -2128,6 +2260,7 @@ definitions:
         type: string
         x-go-name: UpdatedAt
       user_count:
+        description: 具有该角色的用户数量
         format: int64
         type: integer
         x-go-name: UserCount
@@ -2146,6 +2279,14 @@ definitions:
       project_id:
         type: string
         x-go-name: ProjectId
+      valid_since:
+        format: date-time
+        type: string
+        x-go-name: ValidSince
+      valid_until:
+        format: date-time
+        type: string
+        x-go-name: ValidUntil
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/identity
   RolePerformRemovePolicyInput:
@@ -2252,6 +2393,16 @@ definitions:
         format: date-time
         type: string
         x-go-name: UpdatedAt
+      valid_since:
+        description: 匹配开始时间
+        format: date-time
+        type: string
+        x-go-name: ValidSince
+      valid_until:
+        description: 匹配结束时间
+        format: date-time
+        type: string
+        x-go-name: ValidUntil
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/identity
   RoleUpdateInput:
@@ -2529,9 +2680,57 @@ definitions:
       domain:
         $ref: '#/definitions/SIdentityObject'
       id:
+        description: UUID
         type: string
         x-go-name: Id
       name:
+        description: 名称
+        type: string
+        x-go-name: Name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/identity
+  SDomainObjectWithMetadata:
+    properties:
+      domain:
+        $ref: '#/definitions/SIdentityObject'
+      id:
+        description: UUID
+        type: string
+        x-go-name: Id
+      metadata:
+        additionalProperties:
+          type: string
+        description: 标签信息
+        type: object
+        x-go-name: Metadata
+      name:
+        description: 名称
+        type: string
+        x-go-name: Name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/identity
+  SFetchDomainObjectWithMetadata:
+    properties:
+      domain:
+        description: 归属域名称
+        type: string
+        x-go-name: Domain
+      domain_id:
+        description: 归属域ID
+        type: string
+        x-go-name: DomainId
+      id:
+        description: UUID
+        type: string
+        x-go-name: Id
+      metadata:
+        additionalProperties:
+          type: string
+        description: 项目标签
+        type: object
+        x-go-name: Metadata
+      name:
+        description: 名称
         type: string
         x-go-name: Name
     type: object
@@ -2547,9 +2746,11 @@ definitions:
   SIdentityObject:
     properties:
       id:
+        description: UUID
         type: string
         x-go-name: Id
       name:
+        description: 名称
         type: string
         x-go-name: Name
     type: object
@@ -2677,18 +2878,22 @@ definitions:
       group:
         $ref: '#/definitions/SDomainObject'
       policies:
+        description: 用户角色关联的权限信息
         properties:
           domain:
+            description: 关联的域权限名称列表
             items:
               type: string
             type: array
             x-go-name: Domain
           project:
+            description: 关联的项目权限名称列表
             items:
               type: string
             type: array
             x-go-name: Project
           system:
+            description: 关联的系统权限名称列表
             items:
               type: string
             type: array
@@ -2698,11 +2903,12 @@ definitions:
       role:
         $ref: '#/definitions/SDomainObject'
       scope:
+        description: 归属范围
         properties:
           domain:
             $ref: '#/definitions/SIdentityObject'
           project:
-            $ref: '#/definitions/SDomainObject'
+            $ref: '#/definitions/SDomainObjectWithMetadata'
         type: object
         x-go-name: Scope
       user:
@@ -3137,6 +3343,7 @@ definitions:
   UserDetails:
     properties:
       allow_web_console:
+        description: 是否允许登录Web控制台，如果是用于API访问的用户，可禁用web控制台登录
         type: boolean
         x-go-name: AllowWebConsole
       can_delete:
@@ -3155,6 +3362,7 @@ definitions:
         type: string
         x-go-name: CreatedAt
       credential_count:
+        description: 归属该用户的密钥凭证（含AKSK，TOTP，Secret等）的数量
         format: int64
         type: integer
         x-go-name: CredentialCount
@@ -3178,6 +3386,7 @@ definitions:
         type: string
         x-go-name: Description
       displayname:
+        description: 显示名称，用户登录后显示在右上角菜单入口
         type: string
         x-go-name: Displayname
       domain_id:
@@ -3185,37 +3394,46 @@ definitions:
         type: string
         x-go-name: DomainId
       email:
+        description: 用户邮箱
         type: string
         x-go-name: Email
       enable_mfa:
+        description: 是否开启MFA
         type: boolean
         x-go-name: EnableMfa
       enabled:
         type: boolean
         x-go-name: Enabled
       ext_resource:
+        description: 外部资源统计信息（资源类别：数量）
         type: object
         x-go-name: ExtResource
       ext_resources_last_update:
+        description: 外部资源统计信息上次更新时间
         format: date-time
         type: string
         x-go-name: ExtResourcesLastUpdate
       ext_resources_next_update:
+        description: 外部资源统计信息下次更新时间
         format: date-time
         type: string
         x-go-name: ExtResourcesNextUpdate
       extra:
+        description: 额外信息
         type: object
         x-go-name: Extra
       failed_auth_at:
+        description: 上传登录失败的时间
         format: date-time
         type: string
         x-go-name: FailedAuthAt
       failed_auth_count:
+        description: 连续登录失败的次数
         format: int64
         type: integer
         x-go-name: FailedAuthCount
       group_count:
+        description: 用户归属用户组的数量
         format: int64
         type: integer
         x-go-name: GroupCount
@@ -3224,6 +3442,7 @@ definitions:
         type: string
         x-go-name: Id
       idps:
+        description: 该用户关联的外部认证源的认证信息
         items:
           $ref: '#/definitions/IdpResourceInfo'
         type: array
@@ -3235,22 +3454,28 @@ definitions:
         type: boolean
         x-go-name: IsEmulated
       is_local:
+        description: 该用户是否为本地用户（SQL维护的用户）
         type: boolean
         x-go-name: IsLocal
       is_system_account:
+        description: 是否为系统账号，系统账号不会检查密码复杂度，默认不在列表显示
         type: boolean
         x-go-name: IsSystemAccount
       lang:
+        description: 用户的默认语言设置，默认是zh_CN
         type: string
         x-go-name: Lang
       last_active_at:
+        description: 上次登录时间
         format: date-time
         type: string
         x-go-name: LastActiveAt
       last_login_ip:
+        description: 上次用户登录IP
         type: string
         x-go-name: LastLoginIp
       last_login_source:
+        description: 上次用户登录方式，可能值有：web（web控制台），cli（命令行climc），API（api）
         type: string
         x-go-name: LastLoginSource
       metadata:
@@ -3260,6 +3485,7 @@ definitions:
         type: object
         x-go-name: Metadata
       mobile:
+        description: 用户手机号
         type: string
         x-go-name: Mobile
       name:
@@ -3267,13 +3493,16 @@ definitions:
         type: string
         x-go-name: Name
       need_reset_password:
+        description: 登录后是否需要重置密码
         type: boolean
         x-go-name: NeedResetPassword
       password_expires_at:
+        description: 密码过期时间（如果开启了密码过期）
         format: date-time
         type: string
         x-go-name: PasswordExpiresAt
       project_count:
+        description: 用户归属项目的数量
         format: int64
         type: integer
         x-go-name: ProjectCount
@@ -3281,6 +3510,15 @@ definitions:
         description: 资源归属项目的域名称
         type: string
         x-go-name: ProjectDomain
+      projects:
+        description: 用户归属的的项目信息
+        items:
+          $ref: '#/definitions/SFetchDomainObjectWithMetadata'
+        type: array
+        x-go-name: Projects
+      record_checksum:
+        type: string
+        x-go-name: RecordChecksum
       update_fail_reason:
         $ref: '#/definitions/Error'
       update_version:
@@ -3586,6 +3824,20 @@ paths:
     post:
       description: 新建
       operationId: credential_ValidateCreateData
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            count:
+              default: 1
+              format: int64
+              type: integer
+              x-go-name: Count
+            credential:
+              $ref: '#/definitions/CredentialCreateInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/credential_ValidateCreateDataOutput'
@@ -3649,6 +3901,50 @@ paths:
       summary: 更新
       tags:
       - credential
+  /credentials/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: credential_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of credential
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/credential_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - credential
+    post:
+      description: 执行操作ClassMetadata
+      operationId: credential_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of credential
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            credential:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/credential_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - credential
   /credentials/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -3684,6 +3980,34 @@ paths:
         "200":
           $ref: '#/responses/credential_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - credential
+  /credentials/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: credential_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of credential
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            credential:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/credential_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - credential
   /credentials/{id}/set-user-metadata:
@@ -3728,6 +4052,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: credential_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            credential:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/credential_PerformPurgeSplitableOutput'
@@ -3742,6 +4075,21 @@ paths:
         "200":
           $ref: '#/responses/credential_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - credential
+  /credentials/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: credential_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/credential_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - credential
   /credentials/tag-value-pairs:
@@ -4055,6 +4403,50 @@ paths:
       summary: 更新
       tags:
       - domain
+  /domains/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: domain_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of domain
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/domain_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - domain
+    post:
+      description: 执行操作ClassMetadata
+      operationId: domain_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of domain
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            domain:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/domain_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - domain
   /domains/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -4090,6 +4482,34 @@ paths:
         "200":
           $ref: '#/responses/domain_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - domain
+  /domains/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: domain_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of domain
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            domain:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/domain_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - domain
   /domains/{id}/set-user-metadata:
@@ -4159,6 +4579,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: domain_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            domain:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/domain_PerformPurgeSplitableOutput'
@@ -4173,6 +4602,21 @@ paths:
         "200":
           $ref: '#/responses/domain_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - domain
+  /domains/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: domain_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/domain_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - domain
   /domains/tag-value-pairs:
@@ -4476,6 +4920,50 @@ paths:
       summary: 更新
       tags:
       - endpoint
+  /endpoints/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: endpoint_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of endpoint
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/endpoint_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - endpoint
+    post:
+      description: 执行操作ClassMetadata
+      operationId: endpoint_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of endpoint
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            endpoint:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/endpoint_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - endpoint
   /endpoints/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -4511,6 +4999,34 @@ paths:
         "200":
           $ref: '#/responses/endpoint_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - endpoint
+  /endpoints/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: endpoint_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of endpoint
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            endpoint:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/endpoint_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - endpoint
   /endpoints/{id}/set-user-metadata:
@@ -4555,6 +5071,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: endpoint_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            endpoint:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/endpoint_PerformPurgeSplitableOutput'
@@ -4569,6 +5094,21 @@ paths:
         "200":
           $ref: '#/responses/endpoint_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - endpoint
+  /endpoints/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: endpoint_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/endpoint_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - endpoint
   /endpoints/tag-value-pairs:
@@ -4953,6 +5493,50 @@ paths:
       summary: 组添加用户
       tags:
       - group
+  /groups/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: group_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of group
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/group_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - group
+    post:
+      description: 执行操作ClassMetadata
+      operationId: group_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of group
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            group:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/group_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - group
   /groups/{id}/join:
     post:
       description: 执行操作Join
@@ -5065,6 +5649,34 @@ paths:
       summary: 组删除用户
       tags:
       - group
+  /groups/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: group_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of group
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            group:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/group_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - group
   /groups/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -5127,6 +5739,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: group_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            group:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/group_PerformPurgeSplitableOutput'
@@ -5141,6 +5762,21 @@ paths:
         "200":
           $ref: '#/responses/group_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - group
+  /groups/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: group_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/group_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - group
   /groups/tag-value-pairs:
@@ -5522,6 +6158,50 @@ paths:
       summary: 更新
       tags:
       - identity_provider
+  /identity_providers/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: identity_provider_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of identity_provider
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/identity_provider_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - identity_provider
+    post:
+      description: 执行操作ClassMetadata
+      operationId: identity_provider_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of identity_provider
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            identity_provider:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/identity_provider_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - identity_provider
   /identity_providers/{id}/config:
     get:
       description: 获取指定信息Config
@@ -5702,6 +6382,34 @@ paths:
       summary: 获取指定信息SamlMetadata
       tags:
       - identity_provider
+  /identity_providers/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: identity_provider_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of identity_provider
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            identity_provider:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/identity_provider_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - identity_provider
   /identity_providers/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -5728,6 +6436,28 @@ paths:
         "200":
           $ref: '#/responses/identity_provider_PerformSetUserMetadataOutput'
       summary: 全量替换资源的所有用户标签
+      tags:
+      - identity_provider
+  /identity_providers/{id}/sso-callback-uri:
+    get:
+      description: 获取指定信息SsoCallbackUri
+      operationId: identity_provider_GetDetailsSsoCallbackUri
+      parameters:
+      - description: SSO回调地址
+        in: query
+        name: redirect_uri
+        type: string
+        x-go-name: RedirectUri
+      - description: The Id or Name of identity_provider
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/identity_provider_GetDetailsSsoCallbackUriOutput'
+      summary: 获取指定信息SsoCallbackUri
       tags:
       - identity_provider
   /identity_providers/{id}/sso-redirect-uri:
@@ -5829,6 +6559,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: identity_provider_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            identity_provider:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/identity_provider_PerformPurgeSplitableOutput'
@@ -5843,6 +6582,21 @@ paths:
         "200":
           $ref: '#/responses/identity_provider_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - identity_provider
+  /identity_providers/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: identity_provider_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/identity_provider_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - identity_provider
   /identity_providers/statistics:
@@ -6331,6 +7085,50 @@ paths:
       summary: 绑定角色
       tags:
       - policy
+  /policies/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: policy_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of policy
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/policy_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - policy
+    post:
+      description: 执行操作ClassMetadata
+      operationId: policy_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of policy
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            policy:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/policy_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - policy
   /policies/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -6418,6 +7216,34 @@ paths:
       summary: 共享Policy
       tags:
       - policy
+  /policies/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: policy_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of policy
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            policy:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/policy_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - policy
   /policies/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -6480,6 +7306,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: policy_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            policy:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/policy_PerformPurgeSplitableOutput'
@@ -6494,6 +7329,21 @@ paths:
         "200":
           $ref: '#/responses/policy_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - policy
+  /policies/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: policy_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/policy_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - policy
   /policies/tag-value-pairs:
@@ -6858,6 +7708,50 @@ paths:
       summary: 更新
       tags:
       - project
+  /projects/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: project_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of project
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/project_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - project
+    post:
+      description: 执行操作ClassMetadata
+      operationId: project_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of project
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            project:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/project_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - project
   /projects/{id}/join:
     post:
       description: 执行操作Join
@@ -6945,6 +7839,34 @@ paths:
       summary: 获取资源标签（元数据）
       tags:
       - project
+  /projects/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: project_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of project
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            project:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/project_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - project
   /projects/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -7007,6 +7929,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: project_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            project:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/project_PerformPurgeSplitableOutput'
@@ -7021,6 +7952,21 @@ paths:
         "200":
           $ref: '#/responses/project_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - project
+  /projects/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: project_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/project_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - project
   /projects/tag-value-pairs:
@@ -7301,6 +8247,50 @@ paths:
       summary: 更新
       tags:
       - region
+  /regions/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: region_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of region
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/region_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - region
+    post:
+      description: 执行操作ClassMetadata
+      operationId: region_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of region
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            region:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/region_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - region
   /regions/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -7336,6 +8326,34 @@ paths:
         "200":
           $ref: '#/responses/region_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - region
+  /regions/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: region_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of region
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            region:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/region_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - region
   /regions/{id}/set-user-metadata:
@@ -7380,6 +8398,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: region_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            region:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/region_PerformPurgeSplitableOutput'
@@ -7394,6 +8421,21 @@ paths:
         "200":
           $ref: '#/responses/region_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - region
+  /regions/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: region_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/region_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - region
   /regions/tag-value-pairs:
@@ -7642,6 +8684,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: role_policy_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            role_policy:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/role_policy_PerformPurgeSplitableOutput'
@@ -7656,6 +8707,21 @@ paths:
         "200":
           $ref: '#/responses/role_policy_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - role_policy
+  /role_policies/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: role_policy_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/role_policy_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - role_policy
   /roles:
@@ -8030,6 +9096,50 @@ paths:
       summary: 执行操作AddPolicy
       tags:
       - role
+  /roles/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: role_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of role
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/role_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - role
+    post:
+      description: 执行操作ClassMetadata
+      operationId: role_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of role
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            role:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/role_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - role
   /roles/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -8142,6 +9252,34 @@ paths:
       summary: 执行操作RemovePolicy
       tags:
       - role
+  /roles/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: role_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of role
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            role:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/role_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - role
   /roles/{id}/set-policies:
     post:
       description: 执行操作SetPolicies
@@ -8229,6 +9367,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: role_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            role:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/role_PerformPurgeSplitableOutput'
@@ -8243,6 +9390,21 @@ paths:
         "200":
           $ref: '#/responses/role_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - role
+  /roles/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: role_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/role_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - role
   /roles/tag-value-pairs:
@@ -8473,6 +9635,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: scope_resource_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            scope_resource:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/scope_resource_PerformPurgeSplitableOutput'
@@ -8487,6 +9658,21 @@ paths:
         "200":
           $ref: '#/responses/scope_resource_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - scope_resource
+  /scope_resources/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: scope_resource_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/scope_resource_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - scope_resource
   /service_certificates:
@@ -8739,6 +9925,50 @@ paths:
       summary: 更新
       tags:
       - service_certificate
+  /service_certificates/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: service_certificate_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of service_certificate
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/service_certificate_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - service_certificate
+    post:
+      description: 执行操作ClassMetadata
+      operationId: service_certificate_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of service_certificate
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            service_certificate:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/service_certificate_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - service_certificate
   /service_certificates/{id}/metadata:
     get:
       description: 获取指定信息Metadata
@@ -8774,6 +10004,34 @@ paths:
         "200":
           $ref: '#/responses/service_certificate_GetDetailsMetadataOutput'
       summary: 获取资源标签（元数据）
+      tags:
+      - service_certificate
+  /service_certificates/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: service_certificate_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of service_certificate
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            service_certificate:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/service_certificate_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
       tags:
       - service_certificate
   /service_certificates/{id}/set-user-metadata:
@@ -8818,6 +10076,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: service_certificate_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            service_certificate:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/service_certificate_PerformPurgeSplitableOutput'
@@ -8832,6 +10099,21 @@ paths:
         "200":
           $ref: '#/responses/service_certificate_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - service_certificate
+  /service_certificates/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: service_certificate_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/service_certificate_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - service_certificate
   /service_certificates/tag-value-pairs:
@@ -9138,6 +10420,50 @@ paths:
       summary: 更新
       tags:
       - service
+  /services/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: service_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of service
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/service_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - service
+    post:
+      description: 执行操作ClassMetadata
+      operationId: service_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of service
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            service:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/service_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - service
   /services/{id}/config:
     get:
       description: 获取指定信息Config
@@ -9216,6 +10542,34 @@ paths:
       summary: 获取资源标签（元数据）
       tags:
       - service
+  /services/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: service_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of service
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            service:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/service_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - service
   /services/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -9258,6 +10612,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: service_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            service:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/service_PerformPurgeSplitableOutput'
@@ -9272,6 +10635,21 @@ paths:
         "200":
           $ref: '#/responses/service_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - service
+  /services/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: service_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/service_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - service
   /services/tag-value-pairs:
@@ -9671,6 +11049,50 @@ paths:
       summary: 更新
       tags:
       - user
+  /users/{id}/class-metadata:
+    get:
+      description: 获取指定信息ClassMetadata
+      operationId: user_GetDetailsClassMetadata
+      parameters:
+      - description: The Id or Name of user
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/user_GetDetailsClassMetadataOutput'
+      summary: 获取指定信息ClassMetadata
+      tags:
+      - user
+    post:
+      description: 执行操作ClassMetadata
+      operationId: user_PerformClassMetadata
+      parameters:
+      - description: The Id or Name of user
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            user:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/user_PerformClassMetadataOutput'
+      summary: 更新资源的 class 标签
+      tags:
+      - user
   /users/{id}/join:
     post:
       description: 执行操作Join
@@ -9783,6 +11205,59 @@ paths:
       summary: 获取资源标签（元数据）
       tags:
       - user
+  /users/{id}/reset-credentials:
+    post:
+      description: 执行操作ResetCredentials
+      operationId: user_PerformResetCredentials
+      parameters:
+      - description: The Id or Name of user
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            user:
+              $ref: '#/definitions/ResetCredentialInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/user_PerformResetCredentialsOutput'
+      summary: 用户加入项目
+      tags:
+      - user
+  /users/{id}/set-class-metadata:
+    post:
+      description: 执行操作SetClassMetadata
+      operationId: user_PerformSetClassMetadata
+      parameters:
+      - description: The Id or Name of user
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            user:
+              additionalProperties:
+                type: string
+              type: object
+              x-go-name: Input
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/user_PerformSetClassMetadataOutput'
+      summary: 全量替换资源的所有 class 标签
+      tags:
+      - user
   /users/{id}/set-user-metadata:
     post:
       description: 执行操作SetUserMetadata
@@ -9870,6 +11345,15 @@ paths:
     post:
       description: 执行操作PurgeSplitable
       operationId: user_PerformPurgeSplitable
+      parameters:
+      - in: body
+        name: body
+        schema:
+          properties:
+            user:
+              $ref: '#/definitions/PurgeSplitTableInput'
+          type: object
+        x-go-name: Body
       responses:
         "200":
           $ref: '#/responses/user_PerformPurgeSplitableOutput'
@@ -9884,6 +11368,21 @@ paths:
         "200":
           $ref: '#/responses/user_GetPropertySplitableOutput'
       summary: 获取指定资源类的信息Splitable
+      tags:
+      - user
+  /users/splitable-export:
+    get:
+      description: 获取指定资源类的信息SplitableExport
+      operationId: user_GetPropertySplitableExport
+      parameters:
+      - in: query
+        name: table
+        type: string
+        x-go-name: Table
+      responses:
+        "200":
+          $ref: '#/responses/user_GetPropertySplitableExportOutput'
+      summary: 获取指定资源类的信息SplitableExport
       tags:
       - user
   /users/tag-value-pairs:
@@ -9985,6 +11484,15 @@ responses:
         credential:
           $ref: '#/definitions/CredentialDetails'
       type: object
+  credential_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        credential:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   credential_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -9995,6 +11503,7 @@ responses:
           x-go-name: Output
       type: object
   credential_GetPropertyDistinctFieldOutput: {}
+  credential_GetPropertySplitableExportOutput: {}
   credential_GetPropertySplitableOutput: {}
   credential_GetPropertyTagValuePairsOutput: {}
   credential_GetPropertyTagValueTreeOutput: {}
@@ -10019,7 +11528,9 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  credential_PerformClassMetadataOutput: {}
   credential_PerformPurgeSplitableOutput: {}
+  credential_PerformSetClassMetadataOutput: {}
   credential_PerformSetUserMetadataOutput: {}
   credential_ValidateCreateDataOutput:
     schema:
@@ -10045,6 +11556,15 @@ responses:
         domain:
           $ref: '#/definitions/DomainDetails'
       type: object
+  domain_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        domain:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   domain_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -10055,6 +11575,7 @@ responses:
           x-go-name: Output
       type: object
   domain_GetPropertyDistinctFieldOutput: {}
+  domain_GetPropertySplitableExportOutput: {}
   domain_GetPropertySplitableOutput: {}
   domain_GetPropertyTagValuePairsOutput: {}
   domain_GetPropertyTagValueTreeOutput: {}
@@ -10079,7 +11600,9 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  domain_PerformClassMetadataOutput: {}
   domain_PerformPurgeSplitableOutput: {}
+  domain_PerformSetClassMetadataOutput: {}
   domain_PerformSetUserMetadataOutput: {}
   domain_PerformUnlinkIdpOutput: {}
   domain_ValidateCreateDataOutput:
@@ -10106,6 +11629,15 @@ responses:
         endpoint:
           $ref: '#/definitions/EndpointDetails'
       type: object
+  endpoint_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        endpoint:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   endpoint_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -10116,6 +11648,7 @@ responses:
           x-go-name: Output
       type: object
   endpoint_GetPropertyDistinctFieldOutput: {}
+  endpoint_GetPropertySplitableExportOutput: {}
   endpoint_GetPropertySplitableOutput: {}
   endpoint_GetPropertyTagValuePairsOutput: {}
   endpoint_GetPropertyTagValueTreeOutput: {}
@@ -10140,7 +11673,9 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  endpoint_PerformClassMetadataOutput: {}
   endpoint_PerformPurgeSplitableOutput: {}
+  endpoint_PerformSetClassMetadataOutput: {}
   endpoint_PerformSetUserMetadataOutput: {}
   endpoint_ValidateCreateDataOutput:
     schema:
@@ -10166,6 +11701,15 @@ responses:
         group:
           $ref: '#/definitions/GroupDetails'
       type: object
+  group_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        group:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   group_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -10178,6 +11722,7 @@ responses:
   group_GetPropertyDistinctFieldOutput: {}
   group_GetPropertyDomainTagValuePairsOutput: {}
   group_GetPropertyDomainTagValueTreeOutput: {}
+  group_GetPropertySplitableExportOutput: {}
   group_GetPropertySplitableOutput: {}
   group_GetPropertyTagValuePairsOutput: {}
   group_GetPropertyTagValueTreeOutput: {}
@@ -10203,10 +11748,12 @@ responses:
           x-go-name: Total
       type: object
   group_PerformAddUsersOutput: {}
+  group_PerformClassMetadataOutput: {}
   group_PerformJoinOutput: {}
   group_PerformLeaveOutput: {}
   group_PerformPurgeSplitableOutput: {}
   group_PerformRemoveUsersOutput: {}
+  group_PerformSetClassMetadataOutput: {}
   group_PerformSetUserMetadataOutput: {}
   group_ValidateCreateDataOutput:
     schema:
@@ -10232,6 +11779,15 @@ responses:
         identity_provider:
           $ref: '#/definitions/IdentityProviderDetails'
       type: object
+  identity_provider_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        identity_provider:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   identity_provider_GetDetailsConfigOutput: {}
   identity_provider_GetDetailsMetadataOutput:
     schema:
@@ -10248,6 +11804,12 @@ responses:
         identity_provider:
           $ref: '#/definitions/GetIdpSamlMetadataOutput'
       type: object
+  identity_provider_GetDetailsSsoCallbackUriOutput:
+    schema:
+      properties:
+        identity_provider:
+          $ref: '#/definitions/GetIdpSsoCallbackUriOutput'
+      type: object
   identity_provider_GetDetailsSsoRedirectUriOutput:
     schema:
       properties:
@@ -10261,6 +11823,7 @@ responses:
           $ref: '#/definitions/GetDetailsStatusOutput'
       type: object
   identity_provider_GetPropertyDistinctFieldOutput: {}
+  identity_provider_GetPropertySplitableExportOutput: {}
   identity_provider_GetPropertySplitableOutput: {}
   identity_provider_GetPropertyStatisticsOutput:
     schema:
@@ -10294,11 +11857,13 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  identity_provider_PerformClassMetadataOutput: {}
   identity_provider_PerformConfigOutput: {}
   identity_provider_PerformDefaultSsoOutput: {}
   identity_provider_PerformDisableOutput: {}
   identity_provider_PerformEnableOutput: {}
   identity_provider_PerformPurgeSplitableOutput: {}
+  identity_provider_PerformSetClassMetadataOutput: {}
   identity_provider_PerformSetUserMetadataOutput: {}
   identity_provider_PerformStatusOutput: {}
   identity_provider_PerformSyncOutput: {}
@@ -10353,6 +11918,15 @@ responses:
         policy:
           $ref: '#/definitions/PolicyDetails'
       type: object
+  policy_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        policy:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   policy_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -10365,6 +11939,7 @@ responses:
   policy_GetPropertyDistinctFieldOutput: {}
   policy_GetPropertyDomainTagValuePairsOutput: {}
   policy_GetPropertyDomainTagValueTreeOutput: {}
+  policy_GetPropertySplitableExportOutput: {}
   policy_GetPropertySplitableOutput: {}
   policy_GetPropertyTagValuePairsOutput: {}
   policy_GetPropertyTagValueTreeOutput: {}
@@ -10390,9 +11965,11 @@ responses:
           x-go-name: Total
       type: object
   policy_PerformBindRoleOutput: {}
+  policy_PerformClassMetadataOutput: {}
   policy_PerformPrivateOutput: {}
   policy_PerformPublicOutput: {}
   policy_PerformPurgeSplitableOutput: {}
+  policy_PerformSetClassMetadataOutput: {}
   policy_PerformSetUserMetadataOutput: {}
   policy_ValidateCreateDataOutput:
     schema:
@@ -10418,6 +11995,15 @@ responses:
         project:
           $ref: '#/definitions/ProjectDetails'
       type: object
+  project_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        project:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   project_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -10430,6 +12016,7 @@ responses:
   project_GetPropertyDistinctFieldOutput: {}
   project_GetPropertyDomainTagValuePairsOutput: {}
   project_GetPropertyDomainTagValueTreeOutput: {}
+  project_GetPropertySplitableExportOutput: {}
   project_GetPropertySplitableOutput: {}
   project_GetPropertyTagValuePairsOutput: {}
   project_GetPropertyTagValueTreeOutput: {}
@@ -10454,9 +12041,11 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  project_PerformClassMetadataOutput: {}
   project_PerformJoinOutput: {}
   project_PerformLeaveOutput: {}
   project_PerformPurgeSplitableOutput: {}
+  project_PerformSetClassMetadataOutput: {}
   project_PerformSetUserMetadataOutput: {}
   project_ValidateCreateDataOutput:
     schema:
@@ -10482,6 +12071,15 @@ responses:
         region:
           $ref: '#/definitions/RegionDetails'
       type: object
+  region_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        region:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   region_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -10492,6 +12090,7 @@ responses:
           x-go-name: Output
       type: object
   region_GetPropertyDistinctFieldOutput: {}
+  region_GetPropertySplitableExportOutput: {}
   region_GetPropertySplitableOutput: {}
   region_GetPropertyTagValuePairsOutput: {}
   region_GetPropertyTagValueTreeOutput: {}
@@ -10516,7 +12115,9 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  region_PerformClassMetadataOutput: {}
   region_PerformPurgeSplitableOutput: {}
+  region_PerformSetClassMetadataOutput: {}
   region_PerformSetUserMetadataOutput: {}
   region_ValidateCreateDataOutput:
     schema:
@@ -10542,6 +12143,15 @@ responses:
         role:
           $ref: '#/definitions/RoleDetails'
       type: object
+  role_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        role:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   role_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -10554,6 +12164,7 @@ responses:
   role_GetPropertyDistinctFieldOutput: {}
   role_GetPropertyDomainTagValuePairsOutput: {}
   role_GetPropertyDomainTagValueTreeOutput: {}
+  role_GetPropertySplitableExportOutput: {}
   role_GetPropertySplitableOutput: {}
   role_GetPropertyTagValuePairsOutput: {}
   role_GetPropertyTagValueTreeOutput: {}
@@ -10579,10 +12190,12 @@ responses:
           x-go-name: Total
       type: object
   role_PerformAddPolicyOutput: {}
+  role_PerformClassMetadataOutput: {}
   role_PerformPrivateOutput: {}
   role_PerformPublicOutput: {}
   role_PerformPurgeSplitableOutput: {}
   role_PerformRemovePolicyOutput: {}
+  role_PerformSetClassMetadataOutput: {}
   role_PerformSetPoliciesOutput: {}
   role_PerformSetUserMetadataOutput: {}
   role_ValidateCreateDataOutput:
@@ -10610,6 +12223,7 @@ responses:
           $ref: '#/definitions/RolePolicyDetails'
       type: object
   role_policy_GetPropertyDistinctFieldOutput: {}
+  role_policy_GetPropertySplitableExportOutput: {}
   role_policy_GetPropertySplitableOutput: {}
   role_policy_ListItemFilterOutput:
     schema:
@@ -10658,6 +12272,7 @@ responses:
           $ref: '#/definitions/ModelBaseDetails'
       type: object
   scope_resource_GetPropertyDistinctFieldOutput: {}
+  scope_resource_GetPropertySplitableExportOutput: {}
   scope_resource_GetPropertySplitableOutput: {}
   scope_resource_ListItemFilterOutput:
     schema:
@@ -10705,6 +12320,15 @@ responses:
         service:
           $ref: '#/definitions/ServiceDetails'
       type: object
+  service_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        service:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   service_GetDetailsConfigOutput: {}
   service_GetDetailsMetadataOutput:
     schema:
@@ -10716,6 +12340,7 @@ responses:
           x-go-name: Output
       type: object
   service_GetPropertyDistinctFieldOutput: {}
+  service_GetPropertySplitableExportOutput: {}
   service_GetPropertySplitableOutput: {}
   service_GetPropertyTagValuePairsOutput: {}
   service_GetPropertyTagValueTreeOutput: {}
@@ -10740,8 +12365,10 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  service_PerformClassMetadataOutput: {}
   service_PerformConfigOutput: {}
   service_PerformPurgeSplitableOutput: {}
+  service_PerformSetClassMetadataOutput: {}
   service_PerformSetUserMetadataOutput: {}
   service_ValidateCreateDataOutput:
     schema:
@@ -10767,6 +12394,15 @@ responses:
         service_certificate:
           $ref: '#/definitions/StandaloneResourceDetails'
       type: object
+  service_certificate_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        service_certificate:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   service_certificate_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -10777,6 +12413,7 @@ responses:
           x-go-name: Output
       type: object
   service_certificate_GetPropertyDistinctFieldOutput: {}
+  service_certificate_GetPropertySplitableExportOutput: {}
   service_certificate_GetPropertySplitableOutput: {}
   service_certificate_GetPropertyTagValuePairsOutput: {}
   service_certificate_GetPropertyTagValueTreeOutput: {}
@@ -10801,7 +12438,9 @@ responses:
           type: integer
           x-go-name: Total
       type: object
+  service_certificate_PerformClassMetadataOutput: {}
   service_certificate_PerformPurgeSplitableOutput: {}
+  service_certificate_PerformSetClassMetadataOutput: {}
   service_certificate_PerformSetUserMetadataOutput: {}
   service_certificate_ValidateCreateDataOutput:
     schema:
@@ -10839,6 +12478,15 @@ responses:
         user:
           $ref: '#/definitions/UserDetails'
       type: object
+  user_GetDetailsClassMetadataOutput:
+    schema:
+      properties:
+        user:
+          additionalProperties:
+            type: string
+          type: object
+          x-go-name: Output
+      type: object
   user_GetDetailsMetadataOutput:
     schema:
       properties:
@@ -10851,6 +12499,7 @@ responses:
   user_GetPropertyDistinctFieldOutput: {}
   user_GetPropertyDomainTagValuePairsOutput: {}
   user_GetPropertyDomainTagValueTreeOutput: {}
+  user_GetPropertySplitableExportOutput: {}
   user_GetPropertySplitableOutput: {}
   user_GetPropertyTagValuePairsOutput: {}
   user_GetPropertyTagValueTreeOutput: {}
@@ -10875,10 +12524,13 @@ responses:
           type: array
           x-go-name: Output
       type: object
+  user_PerformClassMetadataOutput: {}
   user_PerformJoinOutput: {}
   user_PerformLeaveOutput: {}
   user_PerformLinkIdpOutput: {}
   user_PerformPurgeSplitableOutput: {}
+  user_PerformResetCredentialsOutput: {}
+  user_PerformSetClassMetadataOutput: {}
   user_PerformSetUserMetadataOutput: {}
   user_PerformUnlinkIdpOutput: {}
   user_ValidateCreateDataOutput:
