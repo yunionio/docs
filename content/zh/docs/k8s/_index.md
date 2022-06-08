@@ -11,3 +11,9 @@ description: >
 - 内置私有云
 - 阿里云
 - AWS
+
+此外，当在{{<oem_name>}}上添加了公有云账号后，若云账号下有kubernetes集群，则集群也将同步到平台上，暂只支持只读同步，不支持管理，目前支持同步的kubernetes集群如下：
+
+- 阿里云 EKS
+- 腾讯云 TKE
+- Azure AKS
