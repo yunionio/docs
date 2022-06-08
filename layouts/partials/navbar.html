@@ -1,5 +1,6 @@
 {{ $cover := .HasShortcode "blocks/cover" }}
-<nav class="js-navbar-scroll navbar navbar-expand {{ if $cover }} td-navbar-cover {{ else }} navbar-dark {{ end }} flex-column flex-md-row td-navbar">
+{{ $is_ee := .Site.Params.is_ee }}
+<nav class="js-navbar-scroll navbar navbar-expand {{ if $cover }} td-navbar-cover {{ else }} navbar-dark {{ end }} {{ if $is_ee }} navbar-ee {{ else }} navbar-ce {{ end }} flex-column flex-md-row td-navbar">
 
   <!--
      - <a class="navbar-brand" href="{{ .Site.Home.RelPermalink }}">
