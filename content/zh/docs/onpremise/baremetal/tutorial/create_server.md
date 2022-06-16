@@ -142,6 +142,8 @@ description: >
 climc server-create \
     --hypervisor baremetal \ # 指定 server 的类型为 baremetal
     --ncpu 24 \ # 创建到 24 核 cpu 的物理机
+    --mem-spec 64g \ # 创建到 64g 内存大小的物理机
+    --net 'bms-net' \ # 创建到 bms-net 的网络下
     --raid-config 'raid1:2:MegaRaid' \ # 第1块盘，使用 MegaRaid 控制器上的(0-1)号两块物理盘做 raid1
     --raid-config 'none:1' \ # 第2块盘，使用 MegaRaid 控制器上的(2)号物理盘，不做 raid
     --raid-config 'raid10:4:MegaRaid' \ # 第3快盘, 使用 MegaRaid 控制器上的(3-6)号四块物理盘做raid10
@@ -149,8 +151,9 @@ climc server-create \
     --disk 'autoextend:ext4:/opt' \ # 分区挂载到 /opt, 使用第1块 raid1 的盘，文件系统为 ext4, 大小为(第一块盘总大小 - 该盘其他分区的大小(100g))
     --disk 'autoextend:xfs:/data-nonraid' \ # 分区挂载到 /data-nonraid, 使用第2块没做 raid 的盘, 文件系统为 xfs，使用所有空间
     --disk 'autoextend:ext4:/data-raid10' \ # 分区挂载到 /data-raid10, 使用第3块 raid10 的盘，文件系统为 ext4, 使用所有空间
-    <server_name> \ # 裸金属服务器名称
-    64g # 创建到 64g 内存大小的物理机
+    <server_name> # 裸金属服务器名称
+
+# 另外可以通过参数 `--prefer-host $baremetal-hostname` 创建到指定的物理机
 ```
 
 #### raid 配置和分区
