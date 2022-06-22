@@ -20,6 +20,7 @@ description: >
 - 操作系统: 根据 CPU 架构不同，支持的发行版也不一样
     - X86_64: [CentOS 7](http://isoredirect.centos.org/centos/7/isos/x86_64/)
     - ARM64: [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 或者 [统信 UOS](https://www.chinauos.com/) 
+    - 操作系统需要是干净的版本，因为部署工具会重头搭建指定版本的 kubernetes 集群，所以确保系统没有安装 kubernetes, docker 等容器管理工具，否则会出现冲突导致安装异常
 - 最低配置要求: CPU 4核, 内存 8GiB, 存储 100GiB
 - 虚拟机和服务使用的存储路径都在 **/opt** 目录下，所以理想环境下建议单独给 **/opt** 目录设置挂载点
     - 比如把 /dev/sdb1 单独分区做 ext4 然后通过 /etc/fstab 挂载到 /opt 目录
