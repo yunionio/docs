@@ -200,3 +200,15 @@ no = 'Sorry to hear that. Please <a href="https://github.com/yunionio/docs/issue
 [params.ui.readingtime]
 enable = false
 
+[security]
+  enableInlineShortcodes = false
+  [security.exec]
+    allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$']
+    osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$']
+
+  [security.funcs]
+    getenv = ['^HUGO_', 'CURRENT_VERSION', 'CONTENT_DIR', 'VERSIONS']
+
+  [security.http]
+    methods = ['(?i)GET|POST']
+    urls = ['.*']
