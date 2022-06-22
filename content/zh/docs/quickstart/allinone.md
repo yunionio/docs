@@ -257,13 +257,15 @@ k8s 管理节点，依赖于 hostname，请改回去。
 
 ### 4. 如何重装
 
-1. 重新运行 ocboot 的脚本
+1. 执行 `kubeadm reset -f` 删除 kubernetes 集群
 
-2. 等待运行完毕，使用`kubectl edit deployment onecloud-operator -n onecloud`加入下列参数，然后保存关闭。
+2. 重新运行 ocboot 的脚本
+
+3. 等待运行完毕，使用`kubectl edit deployment onecloud-operator -n onecloud`加入下列参数，然后保存关闭。
 
 ![](../images/oo_syncuser.png)
 
-3. 第2步的修改，会影响 onecloud-operator 的性能，所以等所有服务启动，可以将第2步的参数恢复。
+4. 第2步的修改，会影响 onecloud-operator 的性能，所以等所有服务启动，可以将第2步的参数恢复。
 
 ### 5. 其它问题？
 
