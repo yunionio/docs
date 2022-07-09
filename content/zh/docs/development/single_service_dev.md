@@ -12,18 +12,18 @@ description: >
 - 想要断点调试
 - 虚拟机配置低
 - 不想使用docker打包镜像
-- 想要在MacOS/Linux上直接开发
+- 想要在macOS/Linux上直接开发
 
 ## 已知问题
 
-- MacOS上调试不了host服务
+- macOS上调试不了host服务
 - 配置复杂
 
 ## 环境准备
 
 这里以Debain 11环境为例，仅配置nginx, apigateway, keystone, region等服务组成的最小集群，其他服务可以根据需要自行添加。
 
-- Linux 或 MacOS
+- Linux 或 macOS
 - 4核8G
 
 ### 基础软件安装
@@ -341,7 +341,7 @@ $ climc user-join-project --role admin --project system admin
 # 后续改进
 
 - 此步骤是直接指定的参数执行各个服务
-    - MacOS推荐使用launchctl+LaunchControl进行各个服务的启动管理
+    - macOS推荐使用launchctl+LaunchControl进行各个服务的启动管理
     - Linux可以编写systemd script管理各个服务
 - 此步骤并没有使用ssl，若使用ssl需要变更以下内容
     - 修个各个服务的配置文件，添加ssl的配置
