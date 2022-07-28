@@ -3,6 +3,7 @@ MODE_OFFLINE = 'offline'
 MODE_OEM = 'oem'
 
 VERSION_ARRAY = [
+    '3.9',
     '3.8',
     '3.7',
     '3.6',
