@@ -109,6 +109,53 @@ $ git cz
 
 当然也有 nodejs 版本的工具，可能更符合前端的使用: https://github.com/commitizen/cz-cli ，前端的同学也可以使用这个工具。
 
+
+## cherry pick
+
+用于帮助用户合并代码至指定release版本。
+
+1、下载安装hub
+
+  hub地址：https://github.com/github/hub
+```bash
+# Mac环境下安装
+$ brew install hub
+```
+2、配置hub环境变量
+
+1.编辑hub文件
+```bash
+$ vim /User/username/.config
+user: <github_username>
+oauth_token: <github_token>
+protocol: https
+```
+2.生成github_token
+
+github->个人中心->settings->developer settings ->personal access tokens->generate new token
+
+<img src="../images/github_token_location.png" width="800">
+
+
+note:该token用于何处
+
+expiration:token有效期，建议设置no expiration永久保留
+
+repo:all
+
+将生成的token放入/User/username/.config中的oauth_token中
+
+3、执行
+
+```bash
+$ ./scripts/cherry_pick_pull.sh upstream/<分支>  <PR number>
+```
+
+4、tips: 
+
+scripts/cherry_pick_pull可重复执行，覆盖上一次结果，出现already时结果已覆盖。
+
+
 ## 参考
 
 - https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.fpepsvr2gqby
