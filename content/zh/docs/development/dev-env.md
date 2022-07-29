@@ -49,6 +49,16 @@ sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/cen
 sudo yum -y install docker-ce
 ```
 
+{{% tab name="MAC" %}}
+```bash
+# 1. 安装brew  参考[brew官网](https://brew.sh/index_zh-cn)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# 2. 安装 Docker CE
+brew install docker
+# 3. 查看版本
+docker --version
+```
+
 {{% /tab %}}
 
 {{< /tabs >}}
