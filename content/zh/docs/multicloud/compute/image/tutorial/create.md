@@ -29,7 +29,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     - CentOS镜像：请参考[CentOS镜像优化](#centos镜像优化)章节。
     - Ubuntu/Debian镜像：请参考[Ubuntu/Debian镜像优化](#ubuntu-debian镜像优化)章节。
     - Windows镜像：请参考[Windows镜像优化](#windows镜像优化)章节。
-4. (可选)多平台通用镜像配置，如制作的镜像需要在公有云平台上使用，除上述优化配置外，还需要在[Linux系统安装配置cloud-init](#linux系统安装配置cloud-init)，[Windows系统安装配置Cloudbase-init](#windows系统安装配置cloudbase-init)。
+4. (可选)多平台通用镜像配置，如制作的镜像需要在公有云平台上使用，除上述优化配置外，还需要在[Linux系统安装配置cloud-init](#linux系统安装配置cloud-init可选)，[Windows系统安装配置Cloudbase-init](#windows系统安装配置cloudbase-init可选)。
 4. 镜像优化完成后，需要将虚拟机关机。
 5. 单击关机状态的虚拟机右侧操作列 **_"更多"_** 按钮，选择下拉菜单 **_"保存镜像"_** 菜单项，将虚拟机保存为系统镜像。
 6. 镜像保存完成后，用户可在虚拟机列表中新建虚拟机，选择“自定义镜像”并选择上一步骤保存的镜像，使用制作好的镜像创建虚拟机，验证镜像是否制作成功。
