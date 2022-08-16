@@ -25,9 +25,9 @@ description: >
 
 ```
 # 此参数含义是若有公有云虚拟机带有特定系统标签, 则跳过此虚拟机同步，目前默认跳过腾讯云弹性伸缩组相关实例
-$ climc service-config-show region2 | grep skip_server_sync_by_sys_tag_keys
-          "skip_server_sync_by_sys_tag_keys": "acs:autoscaling:scalingGroupId",
+$ climc service-config-show region2 | grep skip_server_by_sys_tag_keys
+          "skip_server_by_sys_tag_keys": "acs:autoscaling:scalingGroupId",
 
 # 若需要同步弹性伸缩组实例，可将此参数改为其他标签 
-$ climc service-config --config skip_server_sync_by_sys_tag_keys=other-tag region2
+$ climc service-config --config skip_server_by_sys_tag_keys=other-tag region2
 ```
