@@ -17,3 +17,17 @@ description: >
 - 阿里云 EKS
 - 腾讯云 TKE
 - Azure AKS
+
+## Web 界面菜单开关
+
+{{% alert title="注意" color="warning" %}}
+从 3.9 版本开始，Web 界面默认只显示常用稳定功能的界面。容器管理使用频率较低，所以该功能默认是隐藏状态，Web 界面不会显示，如果需要显示该功能菜单，使用如下命令行打开或者关闭：
+{{% /alert %}}
+
+```bash
+# 开启 k8s 容器集群管理菜单
+$ climc feature-config-k8s --switch on
+
+# 关闭 k8s 容器集群管理菜单
+$ climc feature-config-k8s --switch off
+```

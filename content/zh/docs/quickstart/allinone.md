@@ -89,7 +89,7 @@ $ pip install ansible
 
 ```bash
 # 下载 ocboot 工具到本地
-$ git clone -b release/3.8 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b release/3.9 https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
 ### 快速部署
@@ -134,7 +134,7 @@ primary_master_node:
   # k8s 控制节点的端口
   controlplane_port: "6443"
   # Cloudpods 版本
-  onecloud_version: v3.8.12
+  onecloud_version: v3.9.1
   # Cloudpods 登录用户
   onecloud_user: admin
   # Cloudpods 登录用户密码
