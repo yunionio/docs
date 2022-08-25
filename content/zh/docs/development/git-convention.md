@@ -155,7 +155,6 @@ $ ./scripts/cherry_pick_pull.sh upstream/<分支>  <PR number>
 
 scripts/cherry_pick_pull可重复执行，覆盖上一次结果，出现already时结果已覆盖。
 
-
 ## 参考
 
 - https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.fpepsvr2gqby
