@@ -53,7 +53,7 @@ ee-image: setup
 	make -f ./Makefile.ee image
 
 ee-local-serve: 
-	hugo serve --config ./config-ee.toml
+	hugo serve --bind 0.0.0.0 --config ./config-ee.toml
 
 ee-build: setup
 	make -f ./Makefile.ee online-build
