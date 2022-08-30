@@ -1,6 +1,7 @@
 ---
 title: "下线计算节点"
 weight: 11
+edition: ce
 description: >
   本节介绍如何下线私有云计算节点
 ---
