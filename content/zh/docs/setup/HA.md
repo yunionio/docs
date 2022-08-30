@@ -23,7 +23,7 @@ description: >
 #### 部署步骤
 
 - 准备2个VIP，其中1个用于数据库，另1个用于平台。
-- 分别在节点1、节点2上部署数据库高可用，步骤可参考[部署DB HA环境](./db-ha)。
+- 分别在节点1、节点2上部署数据库高可用，步骤可参考[部署DB HA环境](../db-ha)。
 - 在节点1、节点2上安装k8s Controlplane+Controller，并设置HA高可用，其中HA VIP设置为平台VIP；数据库IP为数据库VIP。
 - 在节点3上安装k8s Controlplane+Controller，但不启用HA高可用。
 

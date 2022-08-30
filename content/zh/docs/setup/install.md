@@ -240,16 +240,46 @@ yun::init::step yun::tui::reboot
 
 2. 用户部署完成后，可在{{<oem_name>}}平台宿主机页面中查看到host节点。宿主机注册到云管平台上后默认为禁用状态，需要在界面上启用宿主机，启用状态的宿主机可以用于创建虚拟机。
 
+## 启用Baremetal服务
 
-## 工单组件管理
+{{<oem_name>}}平台安装完成后默认禁用Baremetal服务。Baremetal服务提供PXE Server、DHCP、TFTP、http等功能，用于完成纳管物理机操作并管理物理机。
 
-{{<oem_name>}}系统默认启用流程工单(itsm)组件，管理员可以在First Node节点上对工单组件进行管理。
+用户可以按照下面命令在{{<oem_name>}}环境中的任意节点上启用Baremetal服务。
 
-工单组件管理命令如下：
+1. 通过SSH等以root用户登录到First Node节点。
+2. 执行以下命令。其中$node_name是节点的名称；$listen-interface是baremetal-agent监听的网卡名称。
+{{% alert title="注意" color="warning" %}}
+如果需要启用Baremetal服务的节点安装了host服务，监听网卡请设置为br0，其余情况监听网卡为节点的实际网卡名称。
+{{% /alert %}}
+    
+    ```bash
+    # 在指定节点上启用Baremetal服务并监听网卡
+    $ ocadm baremetal enable --node $node_name --listen-interface $listen_interface
+    # 禁用Baremetal服务
+    $ ocadm baremetal disable --node $node_name
+    # 如在node1主机上启用baremetal服务，并监听br0网卡。
+    $ ocadm baremetal enable --node node1 --listen-interface br0
+    ```
 
-```bash
-# 启用工单组件
-$ ocadm component enable itsm
-# 禁用工单组件。
-$ ocadm component disable itsm
-```
+3. Baremetal服务启用后，可通过以下命令查看baremetal-agent是否注册到控制节点上。
+
+    ```bash
+    $ kubectl get pods --namespace onecloud | grep baremetal
+    default-baremetal-agent-fb5d4b5f7-2ld8v          1/1     Running     0          15m
+    ```
+
+4. 纳管物理机的预注册以及pxe引导注册方式需要配合DHCP Relay使用，即Baremetal-agent只会处理DHCP Relay服务器的请求，所以还需要用户事先在交换机配置DHCP Relay或者使用Host服务的DHCP Relay功能。
+    
+    ```bash
+    # 登录到所有已经部署好计算节点的服务器上修改 /etc/yunion/host.conf，添加 dhcp_relay 配置项：
+    dhcp_relay:
+    - 10.168.222.198 # baremetal agent dhcp服务监听地址
+    - 67             # baremetal agent dhcp服务监听端口
+
+    # 查看host服务对应pod
+    $ kubectl get pods -n onecloud -o wide | grep host
+    default-host-p6d8h                       2/2     Running   0          78m    10.168.222.189   k8s-dev1   <none>           <none>
+    default-host-xdc7x                       2/2     Running   0          78m    10.168.222.150   k8s-dev2   <none>           <none>
+    # 删除host服务pod，重启host服务
+    $ kubectl delete pods -n onecloud default-host-p6d8h default-host-xdc7x
+    ```
