@@ -1,5 +1,5 @@
 ---
-title: "常见问题"
+title: "其他问题"
 weight: 190
 edition: ce
 oem_ignore: true
