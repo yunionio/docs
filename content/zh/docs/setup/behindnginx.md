@@ -2,7 +2,7 @@
 title: "nginx配置"
 weight: 110
 description: >
-  介绍通过nginx暴露{{<oem_name>}}的前端的配置方法
+  介绍通过 nginx 暴露var_oem_name的前端的配置方法
 ---
 
 部署完成后，如果要通过nginx将{{<oem_name>}}的前端暴露到外网访问，nginx的推荐配置如下。注意需要专门为websocket的流量增加转发规则。
