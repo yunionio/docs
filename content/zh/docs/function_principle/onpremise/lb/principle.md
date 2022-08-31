@@ -1,7 +1,7 @@
 ---
 title: "原理介绍"
 date: 2021-12-22T15:47:12+08:00
-weight: 10
+weight: 1
 description: >
     介绍负载均衡相关概念
 ---
