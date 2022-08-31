@@ -41,6 +41,9 @@ local-serve: setup
 	./scripts/build.py --host=http://localhost:1313 --edition=ce
 	cd public && python3 -m http.server 1313
 
+ce-local-serve: 
+	hugo serve --bind 0.0.0.0 --config ./config.toml
+
 ce-build:
 	./scripts/build.py \
 		--host=https://www.cloudpods.org \
