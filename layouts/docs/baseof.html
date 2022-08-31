@@ -1,7 +1,8 @@
 <!doctype html>
+{{ $is_ee := .Site.Params.is_ee }}
 <html lang="{{ .Site.Language.Lang }}" class="no-js">
   <head>
-    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/global.css">
     {{ partial "head.html" . }}
   </head>
   <body class="td-{{ .Kind }}">
@@ -24,7 +25,9 @@
           </aside>
         </div>
       </div>
+      {{ if (not $is_ee) }}
       {{ partial "footer.html" . }}
+      {{ end }}
     </div>
     {{ partial "scripts.html" . }}
   </body>

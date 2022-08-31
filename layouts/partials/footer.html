@@ -8,6 +8,7 @@ var _hmt = _hmt || [];
 })();
 </script>
 {{ $links := .Site.Params.links }}
+{{ $is_ee := .Site.Params.is_ee }}
 <footer class="bg-dark pt-4 row d-print-none">
   <div class="container-fluid mx-sm-5">
     <div class="row">
@@ -25,6 +26,7 @@ var _hmt = _hmt || [];
         {{ end }}
         {{ end }}
       </div>
+      {{ if (not $is_ee) }}
       <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
         {{ with .Site.Params.copyright }}<small class="text-white">Copyright &copy; 2017-{{ now.Year }} {{ .}}</small>{{ end }}
         {{ with .Site.Params.icp_code }}<a href="https://beian.miit.gov.cn/" style="text-decoration:none; color:inherit;" class="text-white">{{ .}}</a>{{ end }}
@@ -33,6 +35,7 @@ var _hmt = _hmt || [];
           {{ with .Site.GetPage "about" }}<p class="mt-2"><a href="{{ .RelPermalink }}">{{ partial "title.html" . }}</a></p>{{ end }}
         {{ end }}
       </div>
+      {{ end }}
     </div>
   </div>
 </footer>

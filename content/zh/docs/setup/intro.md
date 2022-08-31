@@ -1,6 +1,7 @@
 ---
 title: "组件概览"
 linkTitle: "组件概览"
+edition: ce
 weight: 1
 description: >
   了解各个组件的用途和部署运行方式

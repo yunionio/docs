@@ -1,6 +1,7 @@
 ---
 title: "搭建开发环境"
 weight: 1
+edition: ce
 description: >
   介绍如何搭建开发环境，编译和部署相关组件
 ---

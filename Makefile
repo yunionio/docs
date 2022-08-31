@@ -47,6 +47,10 @@ ce-build:
 		--edition=ce \
 		--multi-versions
 
+ce-build-offline:
+	./scripts/build.py \
+		--mode=offline \
+		--edition=ce \
 
 ######### For EE ####################
 ee-image: setup

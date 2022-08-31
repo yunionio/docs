@@ -1,6 +1,7 @@
 ---
 title: "数据库记录一致性校验"
 weight: 142
+oem_ignore: true
 description: >
     介绍如何配置数据库记录一致性校验，当平台数据库记录被窜改后能够及时报错
 ---

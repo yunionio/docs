@@ -1,5 +1,6 @@
 ---
 title: "添加选项支持外表查询"
+edition: ce
 weight: 4
 description: 对于表内的排序功能，可以通过order_by&&order来实现，而对于表外的关联查询功能，order_by&&order已不足以实现,因此需要添加额外的字段来实现关联查询的功能，本次以disk关联guest根据guest总数排序为例
 ---

@@ -1,6 +1,7 @@
 ---
 title: "Upgrade"
 linkTitle: "Upgrade"
+edition: ce
 weight: 100
 description: >
   Introduction of how to upgrade the version

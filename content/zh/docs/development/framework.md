@@ -1,6 +1,7 @@
 ---
 title: "后端服务框架"
 weight: 5
+edition: ce
 description: >
   介绍云平台后端服务所用的框架和相关库的使用方法
 ---

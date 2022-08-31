@@ -1,6 +1,7 @@
 ---
 title: "隐藏功能配置"
 weight: 143
+edition: ce
 description: >
     介绍如何打开或者隐藏部分功能
 ---
