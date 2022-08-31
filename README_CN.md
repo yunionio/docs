@@ -8,6 +8,11 @@
 
 文档的编译开发使用 [docker](https://docs.docker.com/get-started/overview/) 运行 [hugo](https://gohugo.io/) 容器来进行，这样的好处是不需要在本地安装配置 hugo ，保证开发环境的统一。
 
+- hugo v0.83.0:
+    - Linux: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_Linux-64bit.tar.gz
+    - MacOS:
+        - x86_64: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_macOS-64bit.tar.gz
+        - arm64: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_macOS-ARM64.tar.gz
 - docker: 安装 docker 请参考文档 [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
 
 ## 查看文档网站
@@ -16,8 +21,15 @@
 $ git clone https://github.com/yunionio/docs --recursive
 $ cd docs
 
-# 使用 docker 运行 hugo serve 容器
-$ make container-serve
+# 安装 npm 依赖
+$ npm install -i
+
+# 使用 hugo serve 查看 CE(community edition) 文档
+$ make ce-local-serve
+
+# 使用 hugo serve 查看 EE(enterprise edition) 文档
+$ make ee-local-serve
+
 # 然后访问 http://localhost:1313 查看文档
 ```
 
@@ -40,12 +52,23 @@ oem_ignore: true
 
 ## 编译文档
 
+### CE 多版本文档
+
 开发阶段的文档是没有多版本的，如果要查看多版本文档的效果，可以运行以下命令。
 
 ```bash
 # 使用 docker 编译多版本的文档
 # 生成的文档网站会在 ./public 目录下
-$ make container-build
+$ make ce-build
+$ cd public && python3 -m http.server 1313
+```
+
+### EE 离线文档
+
+```bash
+# 使用 docker 编译多版本的文档
+# 生成的文档网站会在 ./public 目录下
+$ make ee-build-offline
 $ cd public && python3 -m http.server 1313
 ```
 
@@ -56,10 +79,8 @@ $ git submodule update --recursive
 $ git pull --recurse-submodules
 ```
 
-## 查看最新版本的效果
+## 制作 EE image
 
-```bash
-# 编译最新版本的文档，放到public目录中
-make test
-# 打开浏览器访问 http://localhost:1313
+```
+$ REGISTRY=registry.cn-beijing.aliyuncs.com/yunionio TAG=your-tag ARCH=all make ee-image
 ```
