@@ -125,6 +125,8 @@ contentDir = "%s"\n''' % (os.path.join(self._content_dir, 'en'))
         dest = self.get_dest_dir()
         base_url = self.get_host()
         base_url = os.path.join(base_url, self.get_base_url_prefix())
+        if not base_url.endswith("/"):
+            base_url += "/"
         if ver_dir:
             dest = os.path.join(dest, ver_dir)
             base_url = base_url + '/' + ver_dir
