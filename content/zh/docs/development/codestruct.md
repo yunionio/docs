@@ -1,6 +1,7 @@
 ---
 title: "代码结构"
 weight: 7
+edition: ce
 description:
   介绍 var_oem_name 的代码结构
 ---

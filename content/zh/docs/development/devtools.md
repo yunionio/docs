@@ -1,6 +1,7 @@
 ---
 title: "问题排查工具"
 weight: 8
+edition: ce
 description:
   介绍Cloudpods的问题排查工具
 ---

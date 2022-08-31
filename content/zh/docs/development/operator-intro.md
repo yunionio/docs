@@ -1,5 +1,6 @@
 ---
 title: "Operator 相关"
+edition: ce
 weight: 10
 description: >
   服务都运行在 K8S 集群中，其中有一个叫做 cloudpods-operator 的 deployment，用于部署和控制其它服务的所需要的 K8S 资源，这里介绍下这个叫做 operator 组件的操作

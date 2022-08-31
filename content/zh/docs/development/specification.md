@@ -1,6 +1,7 @@
 ---
 title: "Cloudpods Go 语言规范"
 weight: 4
+edition: ce
 description: >
   介绍Cloudpods Go 语言规范
 ---

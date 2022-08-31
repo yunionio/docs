@@ -1,6 +1,7 @@
 ---
 title: "提交贡献代码"
 weight: 2
+edition: ce
 description: >
   介绍 github 发起 pull requests 和提交代码的流程
 ---
