@@ -2,6 +2,7 @@ import os
 import tempfile
 
 from utils import run_process
+from . import oem
 
 
 class Hugo(object):
@@ -67,19 +68,33 @@ class Hugo(object):
         return self._dest_dir
 
     def generate_config_toml(self):
-        config_content = '''contentDir = "%s"
+        o = oem.fetch_from_env()
 
+        config_content = '''contentDir = "%s"\n''' % (self._content_dir)
+        config_content += '''
 [languages]
 [languages.zh]
-contentDir = "%s"
-
+contentDir = "%s"\n''' % (os.path.join(self._content_dir, 'zh'))
+        if o.name:
+            config_content += '''oem_name = "%s"\n''' % (o.name)
+        
+        config_content += '''\n
 [languages.en]
-contentDir = "%s"
-''' % (
-            self._content_dir,
-            os.path.join(self._content_dir, 'zh'),
-            os.path.join(self._content_dir, 'en'),
-        )
+contentDir = "%s"\n''' % (os.path.join(self._content_dir, 'en'))
+        if o.name:
+            config_content += '''oem_name = "%s"\n''' % (o.name)
+
+        if o.is_defined():
+            config_content += '''\n[params]\n'''
+        if o.oem:
+            if o.oem in ['aisenzhe']:
+                config_content += '''no_logo = true\n'''
+            config_content += '''oem = "%s"\n''' % (o.oem)
+        if o.name:
+            config_content += '''oem_name = "%s"\n''' % (o.name)
+        if o.version:
+            config_content += '''oem_version = "%s"\n''' % (o.version)
+
         fp = tempfile.NamedTemporaryFile(delete=False, prefix='cloudpods-docs', suffix='.toml')
         fp.write(config_content.encode(encoding='utf-8'))
         return fp.name
