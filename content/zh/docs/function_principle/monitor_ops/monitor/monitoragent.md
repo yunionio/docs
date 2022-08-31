@@ -16,14 +16,14 @@ description: >
 {{<oem_name>}}能够连接到虚拟机并且能够登录到虚拟机；这里我们先假设{{<oem_name>}}能够过连接到
 虚拟机，故而来优先讨论解决登录问题。
 
-![host_install](../../images/20210805163249.png)
+![host_install](../images/20210805163249.png)
 
 ### 如何登录虚拟机
 
 假设{{<oem_name>}}已经能够连接到 VPC 内部的虚拟机，比如说通过 NAT网关或者虚拟机已经绑
 定了 EIP 等。
 
-![connect_direct](../../images/20210805163416.png)
+![connect_direct](../images/20210805163416.png)
 
 #### 直接免密登录
 
@@ -38,12 +38,12 @@ description: >
 用户需要在前端相关界面输入虚拟机的用户名和密钥/密码，以使{{<oem_name>}}能够暂时登录到
 目标虚拟机，然后借助 Ansible 在目标虚拟机上创建 cloudroot 用户并配置公钥登录。
 
-![set_root](../../images/20210805164138.png)
+![set_root](../images/20210805164138.png)
 
 同理，其实也可以直接让用户在虚拟机上执行脚本，以达到创建 cloudroot 用户以及配置
 公钥登录的目的。
 
-![exec_script](../../images/20210805164239.png)
+![exec_script](../images/20210805164239.png)
 
 ### 如何连接虚拟机
 
@@ -53,7 +53,7 @@ Forwarding。
 
 #### SSH Local Port Forwarding 
 
-![question1](../../images/20210805165213.png)
+![question1](../images/20210805165213.png)
 
 假设网络 A 和网络 B 是两个隔离的网络，如果想让 VMA 能够访问 VMB 上监听在 80 端口
 的 web 服务应该怎么办呢？
@@ -69,7 +69,7 @@ ssh –NfL 10.127.30.251:12345:172.31.25.194:80  cloudroot@140.179.54.109
 它将监听`10.127.30.251:12345`，一旦有请求发来，就会通过 SSH 隧道转发到 proxyB，
 proxyB 会把请求转发到`172.31.25.194:80`
 
-![answer1](../../images/20210805165029.png)
+![answer1](../images/20210805165029.png)
 
 然后 VMA 只要访问`10.127.30.251:12345`就能够访问 VMB 上的 web 服务。
 
@@ -90,7 +90,7 @@ proxyB 会把请求转发到`172.31.25.194:80`
 
 ### SSH Remote Port Forwarding
 
-![question2](../../images/20210805165957.png)
+![question2](../images/20210805165957.png)
 
 网络 A 和网络 B 是两个隔离的网络，proxyB 具有公网 IP，所以 proxyA 可以访问到 proxyB，
 如何让 VMB 访问 DB？
@@ -104,7 +104,7 @@ ssh –NfR 172.31.25.194:12345:10.127.40.251:30086  cloudroot@140.179.54.109
 forwarding，它将监听`172.31.25.194:12345`，一旦有请求发来，就会通过 SSH 隧道转
 发到 proxyA，proxyA 会把请求转发到`10.172.40.251:80`
 
-![answer2](../../images/20210805170059.png)
+![answer2](../images/20210805170059.png)
 
 通过上面的方式，网络B 内部的 VMB 只要访问`172.31.25.194:12345`就可以访问到 DB。
 
@@ -120,7 +120,7 @@ VPC 内部的虚拟机就可以通过访问 proxyVM 的 port，访问{{<oem_name
 回来。
 
 
-![tarnsfer](../../images/20210805170450.png)
+![tarnsfer](../images/20210805170450.png)
 
 ## 总结
 
@@ -128,5 +128,5 @@ VPC 内部的虚拟机就可以通过访问 proxyVM 的 port，访问{{<oem_name
 监控 Agent 安装到目标虚拟机上，并做好 Agent 的配置，而监控数据数据也将通过 SSH 
 代理传回到{{<oem_name>}}中的 InfluxDB 中。
 
-![summarize](../../images/20210805170928.png)
+![summarize](../images/20210805170928.png)
 
