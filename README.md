@@ -8,6 +8,11 @@ This repository contains [Cloudpods](https://github.com/yunionio/cloudpods) rela
 
 The documentation is compiled and developed using [docker](https://docs.docker.com/get-started/overview/) running [hugo](https://gohugo.io/) container, which has the advantage of not requiring local installation and configuration of hugo to ensure a uniform development environment.
 
+- hugo v0.83.0:
+    - Linux: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_Linux-64bit.tar.gz
+    - MacOS:
+        - x86_64: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_macOS-64bit.tar.gz
+        - arm64: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_macOS-ARM64.tar.gz
 - docker: To install docker, please refer to the documentation at [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/).
 
 ## View Document Website
@@ -16,8 +21,15 @@ The documentation is compiled and developed using [docker](https://docs.docker.c
 $ git clone https://github.com/yunionio/docs --recursive
 $ cd docs
 
-# Running the hugo serve container with docker
-$ make container-serve
+# npm install dependencies
+$ npm install -i
+
+# view CE(community edition) docs
+$ make ce-local-serve
+
+# view EE(enterprise edition) docs
+$ make ee-local-serve
+
 # Then visit http://localhost:1313 to view the documentation site
 ```
 
@@ -27,12 +39,14 @@ The documents are in the content/{en,zh} directory, select the desired section t
 
 ## Compile Documentation
 
+### CE multiple versions
+
 There are no multiple versions of the documentation in the development phase. To see the effect of multiple versions of the documentation, you can run the following command.
 
 ```bash
 # Compiling multiple versions of documentation using docker.
 # Then the documentation site will be in the . /public directory.
-$ make container-build
+$ make ce-build
 $ cd public && python3 -m http.server 1313
 ```
 
@@ -43,10 +57,8 @@ $ git submodule update --recursive
 $ git pull --recurse-submodules
 ```
 
-## View lastest verion of documentation
+## Make EE image
 
 ```
-# compile the documentation of latest version
-make test
-# open browse to visit http://localhost:1313
+$ REGISTRY=registry.cn-beijing.aliyuncs.com/yunionio TAG=your-tag ARCH=all make ee-image
 ```
