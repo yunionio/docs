@@ -5,6 +5,8 @@ description: >
   介绍如何把宿主机的 USB 设备透传给虚拟机使用。
 ---
 
+支持版本：>=3.8
+
 目前只有内置私有云平台的虚拟机可以使用宿主机上的 USB 设备。前提条件是宿主机需要有 `lsusb` 这个工具，如果没有请安装 `usbutils` 这个包。
 
 ## 配置宿主机
@@ -177,3 +179,13 @@ $ climc isolated-device-list  --host oc-node-1-192-168-121-21
 +--------------------------------------+----------+----------------------------+---------+------------------+--------------------------------------+
 ***  Total: 1 Pages: 1 Limit: 20 Offset: 0 Page: 1  ***
 ```
+
+## 指定USB控制器
+
+默认采用qemu-xhci的USB控制器，该控制器支持版本为USB 3.0，向下兼容2.0。对于老版本的操作系统，例如 Windows Server 2008 R2，不识别USB 3.0的控制器，此时需要改为USB 2.0的控制器 usb-ehci。可以通过一下climc命令行更改虚拟机使用的USB控制器：
+
+```bash
+climc server-set-qemu-params <sid> --usb-controller-type <usb-ehci|qemu-xhci>
+```
+
+更改后，请请重启虚拟机。
