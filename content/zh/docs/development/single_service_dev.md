@@ -1,6 +1,7 @@
 ---
 title: "手动部署开发集群"
 weight: 4
+edition: ce
 description: >
   介绍如何手动部署用于开发测试用途的服务集群
 ---

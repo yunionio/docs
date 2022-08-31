@@ -1,6 +1,7 @@
 ---
 title: "服务组件介绍"
 weight: 4
+edition: ce
 description: >
   介绍云平台核心组件的架构和功能
 ---
