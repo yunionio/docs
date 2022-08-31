@@ -1,6 +1,7 @@
 ---
 title: "定位后端代码"
 weight: 11
+edition: ce
 description: >
   介绍如何从API请求定位后端代码
 ---

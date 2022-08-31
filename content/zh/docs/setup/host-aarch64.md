@@ -1,6 +1,7 @@
 ---
 title: "ARM(AArch64) 部署"
 weight: 101
+edition: ce
 description: >
   介绍如何在 ARM(AArch64) 架构的机器上部署“Cloudpods”服务
 ---

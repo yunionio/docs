@@ -1,6 +1,7 @@
 ---
 title: "Ceph对接"
 weight: 11
+edition: ce
 description: >
   介绍如何对接非标准ceph rbd存储(启明星辰, 杉岩等存储厂商)
 ---

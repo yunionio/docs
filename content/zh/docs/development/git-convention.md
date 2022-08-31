@@ -1,5 +1,6 @@
 ---
 title: "Git 提交内容规范"
+edition: ce
 weight: 3
 description:
   说明提交代码时，书写 git commit message 的内容规范

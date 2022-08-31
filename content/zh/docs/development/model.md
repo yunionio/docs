@@ -1,6 +1,7 @@
 ---
 title: "资源模型"
 weight: 6
+edition: ce
 description:
   介绍Cloudpods的资源模型
 ---

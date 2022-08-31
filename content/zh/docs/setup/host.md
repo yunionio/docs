@@ -1,6 +1,7 @@
 ---
 title: "添加计算节点"
 weight: 10
+edition: ce
 description: >
   如果要运行 var_oem_name 私有云虚拟机，需要添加对应的计算节点，本节介绍如何部署相应组件
 ---
