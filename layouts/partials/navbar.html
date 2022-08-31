@@ -15,13 +15,13 @@
       <b style="color: black">{{ .Site.Params.oem_name }}</b>
       {{ else }}
         {{ if eq .Site.Params.oem "YunionCloud" }}
-        <img src="{{ .Site.BaseURL }}/images/logo.svg" />
+        <img src="{{ .Site.BaseURL }}images/logo.svg" />
         {{ else }}
-        <img src="{{ .Site.BaseURL}}/images/logos/{{ .Site.Params.oem }}/logo.png" />
+        <img src="{{ .Site.BaseURL}}images/logos/{{ .Site.Params.oem }}/logo.png" />
         {{ end }}
       {{ end }}
     {{ else }}
-    <img src="{{ .Site.BaseURL }}/images/cloudpods_logo_white.png" height="46" />
+    <img src="{{ .Site.BaseURL }}images/cloudpods_logo_white.png" height="46" />
     {{ end }}
   </a>
 

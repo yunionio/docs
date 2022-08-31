@@ -2,6 +2,7 @@
 title: "启用多租户"
 date: 2022-02-10T10:59:57+08:00
 oem_ignore: true
+edition: ee
 weight: 30
 description: >
     介绍如何配置启用多租户
