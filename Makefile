@@ -53,6 +53,7 @@ ce-build-offline:
 		--edition=ce \
 
 ######### For EE ####################
+# OEM=OEMCLOUD OEM_NAME=OEM云平台 make ee-image
 ee-image: setup
 	make -f ./Makefile.ee image
 
@@ -62,5 +63,6 @@ ee-local-serve:
 ee-build: setup
 	make -f ./Makefile.ee online-build
 
+# OEM=OEMCLOUD OEM_NAME=OEM云平台 make ee-build-offline
 ee-build-offline: setup
 	make -f ./Makefile.ee offline-build
