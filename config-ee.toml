@@ -3,6 +3,9 @@ title = "YunionCloud"
 
 enableRobotsTXT = true
 
+# default timeout 30s is not enough.
+timeout = 300000
+
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
 theme = ["docsy"]
 
