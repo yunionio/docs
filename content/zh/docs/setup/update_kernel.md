@@ -1,12 +1,12 @@
 ---
 title: "升级内核"
 edition: ce
-weight: 100
+weight: 90
 description: >-
      升级内核.
 ---
 
-## cloudpods内核从yn20191203升级yn20201125
+## 宿主机内核从yn20191203升级yn20201125
 
 1、查看内核版本
 
