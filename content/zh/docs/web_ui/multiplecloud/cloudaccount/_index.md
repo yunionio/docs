@@ -302,8 +302,8 @@ table tr th, table tr td  { border:1px solid #808080; }
     </tr>
     <tr>
         <th>CDN</th>
-        <td></td>
-        <td></td>
+        <td>Y</td>
+        <td>Y</td>
         <td>Y</td>
         <td></td>
         <td></td>
