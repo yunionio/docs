@@ -8,7 +8,7 @@ description: 以时间的维度展示每个月的费用情况。
 
 **入口**：在云管平台单击左上角![](../../../images/intro/nav.png)导航菜单，在弹出的左侧菜单栏中单击 **_"费用/费用分析/时间"_** 菜单项，进入时间菜单项。
 
-![](../../../images/bill/billtime.png)
+![](../../../images/bill/billtime1.png)
 
 ## 查看每月的费用
 

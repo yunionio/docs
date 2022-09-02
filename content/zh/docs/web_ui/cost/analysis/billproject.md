@@ -8,7 +8,7 @@ description: 以项目的维度展示每个项目的费用分析情况。
 
 **入口**：在云管平台单击左上角![](../../../images/intro/nav.png)导航菜单，在弹出的左侧菜单栏中单击 **_"费用/费用分析/项目"_** 菜单项，进入项目菜单项。
 
-![](../../../images/bill/billproject.png)
+![](../../../images/bill/billproject1.png)
 
 ## 查看项目的费用
 

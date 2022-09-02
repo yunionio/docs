@@ -8,7 +8,7 @@ description: 以域的维度展示每个域的费用分析情况。
 
 **入口**：在云管平台单击左上角![](../../../images/intro/nav.png)导航菜单，在弹出的左侧菜单栏中单击 **_"费用/费用分析/域"_** 菜单项，进入域菜单项。
 
-![](../../../images/bill/billdomain.png)
+![](../../../images/bill/billdomain1.png)
 
 ## 查看域的费用
 
