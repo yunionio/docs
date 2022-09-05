@@ -11,8 +11,8 @@ description: >
 
 * CentOS 7 x86_64: https://iso.yunion.cn/centos/7/3.9/x86_64
 * CentOS 7 arm64: https://iso.yunion.cn/centos/7/3.9/aarch64
-* 银河麒麟 V10 SP2 x86_64: https://iso.yunion.cn/kylin/V10/3.9/x86_64
-* 银河麒麟 V10 SP2 arm64: https://iso.yunion.cn/kylin/V10/3.9/aarch64
+* 银河麒麟 V10 SP2 x86_64: https://iso.yunion.cn/kylin/v10/3.9/x86_64
+* 银河麒麟 V10 SP2 arm64: https://iso.yunion.cn/kylin/v10/3.9/aarch64
 
 ## 3.8
 
