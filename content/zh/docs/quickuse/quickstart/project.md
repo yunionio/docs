@@ -1,6 +1,6 @@
 ---
 title: "配置项目和用户"
-weight: 3
+weight: 4
 description: 该章节用于帮助用户创建项目以及将用户加入到项目。
 ---
 
