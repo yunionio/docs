@@ -1,6 +1,6 @@
 ---
 title: "配置认证源"
-weight: 2
+weight: 3
 description: 该章节用于帮助用户配置认证源并支持设置通过第三方应用免密登录到 var_oem_name 平台。
 ---
 
