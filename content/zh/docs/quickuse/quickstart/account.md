@@ -1,6 +1,6 @@
 ---
 title: "配置云账号"
-weight: 1
+weight: 2
 description: 该章节用于帮助用户配置云账号，纳管云平台。
 ---
 

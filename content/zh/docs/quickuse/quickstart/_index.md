@@ -6,6 +6,7 @@ description: 该章节用于帮助用户快速配置 var_oem_name 环境.
 
 初次使用时，请按照本章节的步骤进行配置{{<oem_name>}}平台来管理多云环境。
 
+- [License授权](licenses)
 - [配置云账号](account)
 - [配置认证源](ldp)
 - [配置项目和用户](project)
