@@ -37,7 +37,7 @@ oem_ignore: true
 
 ## 如何安装产品？
 
-支持使用{{<oem_name>}} DVD镜像直接安装部署{{<oem_name>}}。使用镜像安装{{<oem_name>}}的内容请参考《[安装部署](../../quick/)》
+支持使用{{<oem_name>}} DVD镜像直接安装部署{{<oem_name>}}。使用镜像安装{{<oem_name>}}的内容请参考《[安装部署](../../quickstart)》
 
 ## 一键安装产品后，启动时间过长怎么办？
 
