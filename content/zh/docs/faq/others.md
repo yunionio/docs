@@ -9,13 +9,13 @@ description: >
 
 ## 目前支持哪些平台及哪些资源？
 
-1. 具体查看我们[在线版文档](https://www.cloudpods.org/zh/docs/multicloud/)
+1. 具体查看我们[在线版文档](../../function_principle/multicloud/)
 
 ## 企业版和开源版有哪些区别？如何安装？
 
 1. 具体功能差异可查看[在线版文档](https://www.yunion.cn/comparison-info)
-2. 开源版转化为企业版可参考[在线版文档](https://www.cloudpods.org/zh/docs/setup/ce-ee-switch/)
-3. 安装教程具体可参考[在线版文档](https://www.cloudpods.org/zh/docs/setup/)
+2. 开源版转化为企业版可参考[在线版文档](../../setup/ce-ee-switch/)
+3. 安装教程具体可参考[在线版文档](../../setup/)
 
 ## 开源版是否有付费技术支持？
 
@@ -28,8 +28,8 @@ description: >
 ## cloudpods支持对物理机的接管吗？
 
 1. 支持的，可以通过ipmi，或者通过物理机的SSH管理IP
-2. 纳管物理机方法可参考[在线文档](https://www.cloudpods.org/zh/docs/onpremise/baremetal/tutorial/create_register_redirect/)
-3. 物理机测试方法可参考[在线文档](https://www.cloudpods.org/zh/docs/onpremise/baremetal/tutorial/testcase/)
+2. 纳管物理机方法可参考[在线文档](../../function_principle/onpremise/baremetal/create_register_redirect/)
+3. 物理机测试方法可参考[在线文档](../../function_principle/onpremise/baremetal/testcase/)
 
 ## 开源版如何开启多租户功能？
 
@@ -38,7 +38,7 @@ description: >
 
 ## API 有没有详细点的调用说明？
 
-1. 具体调用方法可参考[在线文档](https://www.cloudpods.org/zh/docs/apisdk/01_api/)
+1. 具体调用方法可参考[在线文档](../../development/apisdk/01_api/)
 
 ## Cloudpods创建vm提示磁盘不足，是必须要在宿主机根目录空间吗？
 

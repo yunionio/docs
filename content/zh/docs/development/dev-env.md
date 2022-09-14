@@ -19,7 +19,7 @@ description: >
 
 ## 部署 {{% oem_name %}} 服务
 
-在开始开发之前，请先参考 [All in One 安装](../../quickstart/allinone) 或者 [MiniKube 安装](../../quickstart/minikube) 部署 {{<oem_name>}} 服务。我们的服务全部使用容器的方式运行在 Kubernetes 集群里面，所以需要先搭建好我们的服务，把这个环境作为自己的开发环境。
+在开始开发之前，请先参考 [All in One 安装](../../quickstart/allinone) 部署 {{<oem_name>}} 服务。我们的服务全部使用容器的方式运行在 Kubernetes 集群里面，所以需要先搭建好我们的服务，把这个环境作为自己的开发环境。
 
 这里建议使用一个单独的 CentOS 7 虚拟机，配置(至少 4C8G + 100G 系统盘)，安装部署我们的服务。
 
@@ -260,11 +260,11 @@ $ kubectl logs -n onecloud default-region-6bd8c54d68-sq4gq -f --since 5m
 
 climc 是访问后端的命令行工具，可以通过该工具向后端各个服务发送API请求，日常开发中会使用改命令行工具进行功能验证和调试，安装和使用方法参考下面的连接。
 
-climc 的本地安装参考: [源码编译安装](../../climc/#源码编译安装)
+climc 的本地安装参考: [源码编译安装](../../ops/climc/usage/#源码编译安装)
 
-climc 的本地配置参考: [非控制节点认证配置](../../climc/#非控制节点认证配置)
+climc 的本地配置参考: [非控制节点认证配置](../../ops/climc/usage/#非控制节点认证配置)
 
-climc 的使用简介参考: [climc 使用](../../climc/#使用)
+climc 的使用简介参考: [climc 使用](../../ops/climc/usage/#使用)
 
 
 ## FAQ
