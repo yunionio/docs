@@ -194,7 +194,7 @@ $ kubectl get oc -n onecloud default-cloudpods -o yaml | grep -A 15 regionServer
     disable: false
     dnsDomain: cloud.onecloud.io
     dnsServer: 10.127.100.207
-    image: registry.cn-beijing.aliyuncs.com/yunion/region:v3.9.1
+    image: registry.cn-beijing.aliyuncs.com/yunion/region:v3.9.2
     imagePullPolicy: IfNotPresent
     limits:
       cpu: "1.333333"
