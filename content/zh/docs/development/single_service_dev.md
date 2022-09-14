@@ -151,6 +151,62 @@ $ climc endpoint-create --enabled keystone Yunion internal http://127.0.0.1:5000
 
 ```
 
+## 配置服务（yunionconf）初始化
+
+yuninconf服务保存了前端页面的配置选项
+
+1) 首先在keystone配置yunionconf服务的服务账号，并且注册yunionconf服务的服务端点（service endpoint）。
+
+```sh
+# 创建 yunionconf 服务
+$ climc service-create --enabled yunionconf yunionconf
+
+# 确定 yunionconf 服务监听端口，这里假定是8010，后面yunionconf服务配置时指定端口得是8010
+# 创建 yunionconf 端点
+$ climc endpoint-create --enabled yunionconf Yunion internal http://127.0.0.1:8010
+$ climc endpoint-create --enabled yunionconf Yunion public http://127.0.0.1:8010
+
+# 创建 yunionconf 服务的服务账号
+$ climc user-create --enabled --system-account --no-web-console --password yunionconf@admin yunionconfadmin
+# 赋予 yunionconfadmin 用户 admin 角色
+$ climc user-join-project --role admin --project system yunionconfadmin
+```
+
+2) 其次配置yunionconf的数据库
+
+```sh
+# 为yunionconf服务创建数据库及数据库账号
+$ mysql -uroot -e 'create database yunionconf;'
+# 这里设置一个密码为cloudpods-yunionconf的yunionconf用户
+$ mysql -uroot -e 'grant all privileges on yunionconf.* to "yunionconf"@"%" identified by "cloudpods-yunionconf"; flush privileges;'
+```
+
+3) 下面配置并启动yunionconf服务
+
+```
+# 编译 yunionconf
+$ cd /root/cloudpods/ && make cmd/yunionconf
+
+# 编写yunionconf服务的配置文件
+# 这里要注意使用刚创建的数据库及数据库账号密码, 及yunionconf服务认证的用户名密码
+$ cat<<EOF >/etc/yunion/yunionconf.conf
+region = 'Yunion'
+address = '127.0.0.1'
+port = 8010
+auth_uri = 'http://127.0.0.1:35357/v3'
+admin_user = 'yunionconfadmin'
+admin_password = 'yunionconf@admin'
+admin_tenant_name = 'system'
+sql_connection = 'mysql+pymysql://yunionconf:cloudpods-yunionconf@localhost:3306/yunionconf?charset=utf8'
+log_level = 'debug'
+auto_sync_table = true
+EOF
+
+# 启动 yunionconf 服务
+$ /root/cloudpods/_output/bin/yunionconf --conf /etc/yunion/yunionconf.conf
+```
+
+
 ## 计算服务（region）初始化
 
 region服务是基础服务，也是控制节点。
@@ -214,7 +270,7 @@ $ climc server-list
 ***  Total: 0  ***
 ```
 
-其他使用数据库的服务的配置步骤和region类似。
+其他使用数据库的服务的配置步骤和region类似, 这里注意调度器(scheduler)的配置文件同样是使用region服务的配置文件。
 
 
 ## API网关服务（apigateway）初始化
