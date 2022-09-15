@@ -1,22 +1,22 @@
 ---
 title: "多节点安装(已废弃)"
 linkTitle: "多节点安装(已废弃)"
-weight: 3
+weight: 4
 description: >
   使用 ocboot 部署工具在多个节点部署 Cloudpods 服务
 ---
 
 {{% alert title="注意" color="warning" %}}
-多节点安装的内容已经废弃，不提倡使用这种方式，推荐用户先参考 [All in One 安装](../allinone) 或者 [高可用安装](../ha) 把集群搭建好，然后再使用 [添加计算节点](../../setup/host) 的方式添加计算节点到集群。
+多节点安装的内容已经废弃，不提倡使用这种方式，推荐用户先参考 [All in One 安装](../../quickstart/allinone) 或者 [高可用安装](../ha) 把集群搭建好，然后再使用 [添加计算节点](../host) 的方式添加计算节点到集群。
 
 以下内容只是作为保留作为参考。
 {{% /alert %}}
 
-多节点安装和 [All in One 安装](../allinone) 一样，都使用 https://github.com/yunionio/ocboot 这个部署工具，根据配置执行 ansible playbook 部署节点。
+多节点安装和 [All in One 安装](../../quickstart/allinone) 一样，都使用 https://github.com/yunionio/ocboot 这个部署工具，根据配置执行 ansible playbook 部署节点。
 
 ## 环境准备
 
-关于环境的准备和不同架构 CPU 操作系统的要求，请参考 [All in One 安装/机器配置要求](../allinone#机器配置要求)。
+关于环境的准备和不同架构 CPU 操作系统的要求，请参考 [All in One 安装/机器配置要求](../../quickstart/allinone#机器配置要求)。
 
 以下为待部署机器的环境，假设已经准备好了 5 台机器，IP 分别是 10.127.10.156-160 ，各个节点做出以下角色规划：
 
@@ -39,7 +39,7 @@ description: >
 
 ### 下载 ocboot
 
-参考 [All in One 安装/下载 ocboot](../allinone/#下载-ocboot)。
+参考 [All in One 安装/下载 ocboot](../../quickstart/allinone/#下载-ocboot)。
 
 ### 编写部署配置
 
@@ -90,4 +90,4 @@ $ ./run.py ./config-nodes.yml
 
 等待部署完成后，就可以使用浏览器访问 https://10.168.26.216 (primary_master_node 的 IP), 输入用户名 `admin` 和密码 `admin@123`，进入前端。
 
-然后就可以[创建私有云虚拟机](../allinone/#创建第一台虚拟机)或者[纳管公有云资源](../allinone/#导入公有云或者其它私有云平台资源)。
+然后就可以[创建私有云虚拟机](../../quickstart/allinone/#创建第一台虚拟机)或者[纳管公有云资源](../../quickstart/allinone/#导入公有云或者其它私有云平台资源)。

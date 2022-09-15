@@ -43,12 +43,15 @@ $ ls -alh /opt/yunion/bin/climc
 
 ### 源码编译安装
 
-首先需要搭建 go 的开发环境，然后 clone 代码，参考: [开发贡献](../../../development/contrib)
-
+首先需要搭建 go 的开发环境，然后 clone 代码并编译:
 
 ```bash
+# 克隆代码
+$ cd $GOPATH/src/yunion.io/x/
+$ git clone https://github.com/yunionio/cloudpods.git
+
 # 编译 climc
-$ cd $GOPATH/src/yunion.io/x/onecloud
+$ cd $GOPATH/src/yunion.io/x/cloudpods
 $ make cmd/climc
 
 # 等待编译完成后，climc 在 _output/bin 目录下
@@ -56,7 +59,7 @@ $ ls -alh _output/bin/climc
 -rwxr-xr-x 1 lzx lzx 25M Jul 15 17:10 _output/bin/climc
 ```
 
-可以根据自己的需要，将编译好的 climc 放到对应的目录，或者直接写 alias 对应到 $GOPATH/src/yunion.io/x/onecloud/_output/bin/climc 。
+可以根据自己的需要，将编译好的 climc 放到对应的目录，或者直接写 alias 对应到 $GOPATH/src/yunion.io/x/cloudpods/_output/bin/climc 。
 
 ## 使用
 
