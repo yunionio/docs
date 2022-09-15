@@ -50,7 +50,7 @@ description: 该章节用于帮助用户配置认证源并支持设置通过第�
     - 认证协议：选择“SAML”。
     - 认证类型：选择Azure AD SAML2.0。
     - 当认证类型为通用SAML时：
-    - 当认证类型为Azure AD SAML2.0时仅需要配置TenantId。TenantId获取方式请参考[Azure平台配置SAML 2.0](#azure平台配置saml-2-0)。
+    - 当认证类型为Azure AD SAML2.0时仅需要配置TenantId。TenantId获取方式请参考[Azure平台配置SAML 2.0](#azure平台配置saml-20)。
     - 自动创建用户：选择自动创建用户，即通过该认证方式登录平台的用户将会自动在平台创建用户。
     - 用户归属目标域：勾选自动创建用户后才需要设置该参数。即通过该认证方式登录平台的用户的所属域。
 

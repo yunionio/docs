@@ -12,5 +12,5 @@ description: >
 出现此问题一般是由于磁盘漂移导致的，多出现在vmware和私有云账号
 
 解决方案:
-- 清理账号的云主机资源([参考文档](../../../../function_principle/onpremise/vminstance/purge))
+- 清理账号的云主机资源([参考文档](../../../../function_principle/onpremise/vminstance/purge/))
 - 再次删除云账号
