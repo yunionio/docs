@@ -4,13 +4,13 @@ linkTitle: "All in One 安装"
 edition: ce
 weight: 1
 description: >
-  使用 ocboot 部署工具快速在已有的节点上以 All in One 的方式部署 Cloudpods 服务
+  使用 ocboot 部署工具快速以 All in One 的方式部署 Cloudpods 服务
 ---
 
 ## 前提
 
 {{% alert title="注意" color="warning" %}}
-本章内容是通过部署工具快速搭建 Cloudpods 服务，如果想在生产环境部署高可用集群请参考: [高可用安装](../ha/) 。
+本章内容是通过部署工具快速搭建 Cloudpods 服务，如果想在生产环境部署高可用集群请参考: [高可用安装](../../setup/ha/) 。
 {{% /alert %}}
 
 ## 环境准备
