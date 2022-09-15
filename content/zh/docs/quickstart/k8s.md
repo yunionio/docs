@@ -13,7 +13,7 @@ description: >
 
 目前该部署方法可能会因为不同 Kubernetes 集群的 CSI，CNI 和 Ingress controller 不同，在部署中出现不同的错误，如果部署失败，又想快速体验产品功能，建议还是使用 [All in One 安装](../allinone) 的方式部署。
 
-该部署方法仅适用于多云管理功能的使用，比如管理 VMware, 公有云(aws, 阿里云, 腾讯云等)或者其它私有云(zstack, openstack 等)。
+该部署方法仅适用于多云管理功能的使用，比如管理公有云(aws, 阿里云, 腾讯云等)或者其它私有云(zstack, openstack 等)。
 {{% /alert %}}
 
 ## 环境准备
@@ -22,6 +22,7 @@ Cloudpods 相关的组件运行在 Kubernetes 之上，环境以及相关的软�
 
 - 安装 helm 工具请参考 https://helm.sh/docs/intro/install/ 
 - Kubernetes 集群配置最低要求:
+    - 版本 1.15 ~ 1.24
     - 至少 CPU 4核, 内存 8G, 节点有存储 100G
     - 节点需要能够访问公网
     - 提供 ingress controller
@@ -235,7 +236,7 @@ $ helm delete -n onecloud default
 
 ### 切换成开源/企业版本
 
-现在默认 k8s 部署的集群是企业版本，可以通过下面的操作切换成开源版本：
+现在默认 k8s 部署的集群是开源版本(ee)，可以通过下面的操作切换成企业版本(ce)：
 
 通过修改对应的 values yaml 文件，修改里面的 cluster.edition 为 ce(开源) 或者 ee(企业) ，然后使用 helm upgrade 升级：
 
