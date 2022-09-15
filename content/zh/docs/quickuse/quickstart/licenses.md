@@ -79,18 +79,18 @@ License授权具体流程如下：
 
 1. 获取服务器识别码：
    a. 以具有管理后台权限的用户登录云管平台。
-   b. 单击顶部区域右上角![](../../images/more.png)图标，选项下拉菜单 **_"关于"_** 菜单项，进入关于页面。
-   c. 单击服务器识别码右侧![](../../images/copy1.png)图标，复制服务器识权码。 
-   ![](../../images/license.png) 
+   b. 单击顶部区域右上角![](../../images/quickstart/more.png)图标，选项下拉菜单 **_"关于"_** 菜单项，进入关于页面。
+   c. 单击服务器识别码右侧![](../../images/quickstart/copy1.png)图标，复制服务器识权码。 
+   ![](../../images/quickstart/license.png) 
    
 2. 申请企业版License：请您联系产品销售代表，提供“服务器识别码”，我们将根据商务约定时间及时提供License文件，请管理员将License文件保存到可以通过Web方式访问云管平台的机器的指定目录中。
 
 3. 激活License：
    a. 以具有管理后台权限的用户登录云管平台.
-   b. 单击顶部区域右上角![](../../images/more.png)图标，选项下拉菜单 **_"关于"_** 菜单项，进入关于页面。
+   b. 单击顶部区域右上角![](../../images/quickstart/more.png)图标，选项下拉菜单 **_"关于"_** 菜单项，进入关于页面。
    c. 单击授权信息右侧<更换License>按钮，将上一步骤保存的License文件拖拽到更换License对话框或单击 **_点击上传_** 按钮，选择上一步骤保存的License文件。单击 **_"确定"_** 按钮，提示“License更换成功”，授权信息中签发时间和过期时间将变为具体时间等。
    
-   ![](../../images/licensechange.png)
-   ![](../../images/licensesuccess.png)
+   ![](../../images/quickstart/licensechange.png)
+   ![](../../images/quickstart/licensesuccess.png)
 
  
