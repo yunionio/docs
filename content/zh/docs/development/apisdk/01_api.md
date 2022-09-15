@@ -8,7 +8,7 @@ description: >
 
 本章节介绍{{<oem_name>}} API的调用方法。
 
-[详细的API内容请参考API](../../swagger)。
+[详细的API内容请参考API](../../../swagger/)。
 
 1. 使用climc先创建aksk
 ```

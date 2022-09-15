@@ -1,6 +1,7 @@
 ---
 title: "添加一个API的过程"
 weight: 50
+edition: ce
 description: >
   介绍如何添加一个新的API
 
@@ -12,13 +13,13 @@ description: >
 
 实现Zone格式文件导出DNS资源记录：将某个dns zone在数据库中的dns记录读出，按Zone文件的格式组织成字符串，并返回json格式的结果。
 
-根据[后端服务框架](https://www.cloudpods.org/zh/docs/development/framework/#)：
+根据[后端服务框架](../../development/framework/#)：
 
 * REST API 负责解析客户端发送的 CRUD http 请求，将不同的请求对应到 Model Dispatcher 模块；
 * Model Dispatcher 将客户端的请求分发到对应资源的业务操作；
 * Model 定义云平台各种资源，会进行数据库读写相关操作。
 
-因此根据[后端代码结构](https://www.cloudpods.org/zh/docs/development/codestruct/)：
+因此根据[后端代码结构](../../development/codestruct/)：
 
 * pkg/compute/models为服务资源模型代码，一般一个model对应数据库中的一张表。由于要处理某个zone下的所有dns记录，所以在dns_zones.go文件中给SDnsZone增加**GetDetailsExports**方法，必要时也可以在dns_recordsets.go文件中向SDnsRecordSet增加处理一条dns记录的方法。
 

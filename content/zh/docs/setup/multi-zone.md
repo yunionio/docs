@@ -48,7 +48,24 @@ default-baremetal-agent-my-zone-1   0/0     0            0           3m37s
 default-esxi-agent-my-zone-1        1/1     1            1           3m42s
 ```
 
-其中物理机服务(baremetal-agent)需要选择一个 k8s node 手动开启，请参考文档[物理机管理服务](../baremetal/)。
+其中物理机服务(baremetal-agent)需要选择一个 k8s node 手动开启。
+
+### 启用 baremetal-agent 
+
+```bash
+# $listen_interface 指的是 baremetal-agent 监听的网卡名称
+$ ocadm baremetal enable --node $node_name --listen-interface $listen_interface
+# 观察 baremetal agent pod 状态查看是否启动成功
+$ watch "kubectl get pods -n onecloud | grep baremetal"
+default-baremetal-agent-7c84996c9b-hhllw   1/1     Running   0          3m10s
+# 启动成功确认 baremetal-agent 注册到控制节点
+$ climc agent-list
++--------------------------------------+--------------------------+----------------+-----------------------------+---------+------------+------------------------------------------+--------------------------------------+
+|                  ID                  |           Name           |   Access_ip    |         Manager_URI         | Status  | agent_type |                 version                  |               zone_id                |
++--------------------------------------+--------------------------+----------------+-----------------------------+---------+------------+------------------------------------------+--------------------------------------+
+| f3c2c671-c41d-4f30-8d04-e022b49bb9b5 | baremetal-10.168.222.150 | 10.168.222.150 | https://10.168.222.150:8879 | enabled | baremetal  | remotes/origin/master(5e415506120011509) | 6230b485-2e54-480e-8284-33360b8202a8 |
++--------------------------------------+--------------------------+----------------+-----------------------------+---------+------------+------------------------------------------+--------------------------------------+
+```
 
 ## 宿主机服务
 
