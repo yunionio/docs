@@ -6,9 +6,9 @@ description: 该章节用于帮助用户配置云账号，纳管云平台。
 
 {{<oem_name>}}平台支持纳管以下云平台：
 
-- 公有云：AWS、Azure、Google、阿里云、腾讯云、华为云、天翼云、UCloud；
+- 公有云：AWS、Azure、Google、阿里云、腾讯云、华为云、天翼云、UCloud、移动云、京东云；
 
-下面介绍添加Azure和AWS的步骤，如需添加更多云平台，请参考[新建云账号](../../../user/multiplecloud/cloudaccount/cloudaccount/#新建云账号)。
+下面介绍添加Azure和AWS的步骤，如需添加更多云平台，请参考[新建云账号](../../../web_ui/multiplecloud/cloudaccount/cloudaccount/#新建云账号)。
 
 ## 配置Azure账号
 
