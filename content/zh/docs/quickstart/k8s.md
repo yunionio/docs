@@ -3,30 +3,33 @@ title: "Kubernetes Helm 安装"
 linkTitle: "Kubernetes Helm 安装"
 weight: 3
 description: >
-  使用 [Helm](https://helm.sh/) 在 Kubernetes 上安装 Cloudpods CMP 多云管理版本
+  使用 [Helm](https://helm.sh/) 在 Kubernetes 上部署 Cloudpods CMP 多云管理版本
 ---
 
 ## 前提
 
 {{% alert title="注意" color="warning" %}}
-通过在已有的 Kubernetes 集群上部署 Cloudpods 多云管理版本，无法使用内置私有云相关功能(因为内置私有云需要节点上面安装配置 qemu, openvswitch 等各种虚拟化软件)。
+该方案通过 Helm 在已有的 Kubernetes 集群上自动部署 Cloudpods 多云管理版本。
 
-目前该部署方法可能会因为不同 Kubernetes 集群的 CSI，CNI 和 Ingress controller 不同，在部署中出现不同的错误，如果部署失败，又想快速体验产品功能，建议还是使用 [All in One 安装](../allinone) 的方式部署。
+该部署方法可能会因为不同 Kubernetes 发行版的 CSI，CNI 和 Ingress controller 配置不同出现兼容性错误，如果部署失败，又想快速体验产品功能，建议还是使用 [All in One 安装](../allinone) 的方式部署。
 
-该部署方法仅适用于多云管理功能的使用，比如管理公有云(aws, 阿里云, 腾讯云等)或者其它私有云(zstack, openstack 等)。
+已经验证过的Kubernetes发行版本包括：
+- 阿里云 ACK
+
+该部署方法仅适用于多云管理功能的使用，比如管理公有云(aws, 阿里云, 腾讯云等)或者其它私有云(zstack, openstack 等)，无法使用内置私有云相关功能(因为内置私有云需要节点上面安装配置 qemu, openvswitch 等各种虚拟化软件)
 {{% /alert %}}
 
 ## 环境准备
 
 Cloudpods 相关的组件运行在 Kubernetes 之上，环境以及相关的软件依赖如下:
 
-- 安装 helm 工具请参考 https://helm.sh/docs/intro/install/ 
-- Kubernetes 集群配置最低要求:
-    - 版本 1.15 ~ 1.24
-    - 至少 CPU 4核, 内存 8G, 节点有存储 100G
+- Kubernetes 集群配置要求:
+    - Kubernetes 版本: 1.15 ~ 1.24
+    - 系统配置：至少 CPU 4核, 内存 8G, 节点有存储 100G
     - 节点需要能够访问公网
     - 提供 ingress controller
     - 内部 coredns 解析
+    - 支持 Helm，安装 helm 工具请参考 https://helm.sh/docs/intro/install/
 - 提供 Mysql 数据库(可选): 可以选择使用连接的数据库是在部署在 Kubernetes 集群内还是使用外部的，生产环境建议使用外部单独管理的 Mysql
 
 ## 部署

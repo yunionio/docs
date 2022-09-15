@@ -144,6 +144,8 @@ climc service-config-edit <service_name>
 ```
 
 
+
+
 ## Host Agent的服务配置
 
 和其他服务的服务配置相比，Host Agent的服务配置有一些特殊。首先，Host Agent的服务配置没有实现从keystone获取服务配置的功能，只支持从命令行参数和配置文件加载配置项。其次，Host Agent的文件配置分为两部分：一部分个是公共配置，位于/etc/yunion/common/common.conf，一部分是每台宿主机的个性化配置，位于/etc/yunion/host.conf。
@@ -161,3 +163,20 @@ climc service-config-edit <service_name>
 | DisableSecurityGroup   | bool   | 是否在本宿主机禁用安全组功能，默认是 false |
 | HostCpuPassthrough     | bool   | 是否给虚拟机透传宿主机的CPU型号，如果不透传，虚拟机的CPU型号qemu64。默认为 true，即透传宿主机CPU 到虚拟机 |
 | DefaultQemuVersion     | string | 缺省的qemu版本，在3.9之后，默认版本为 4.2.0，在3.9之前，默认版本是 2.12.1 |
+
+
+## 查看服务的当前配置参数
+
+从3.9开始，部分服务增加了一个app-options的API，可以获得该服务当前生效的配置参数。
+
+可以通过如下climc命令读取指定服务的配置参数，支持的服务有：identity, compute, image, baremetal, meter
+
+```bash
+climc app-options-show <service-type>
+```
+
+可以通过如下climc命令，获取指定宿主机的host服务的配置参数：
+
+```bash
+climc host-app-options <host-id>
+```
