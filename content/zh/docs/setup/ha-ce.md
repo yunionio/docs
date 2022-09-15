@@ -2,14 +2,14 @@
 title: "高可用安装"
 linkTitle: "高可用安装"
 edition: ce
-weight: 2
+weight: 3
 description: >
   使用 ocboot 部署工具高可用安装 Cloudpods 服务，更符合生产环境的部署需求
 ---
 
 ## 环境准备
 
-关于环境的准备和不同架构 CPU 操作系统的要求，请参考 [All in One 安装/机器配置要求](../allinone#机器配置要求)。
+关于环境的准备和不同架构 CPU 操作系统的要求，请参考 [All in One 安装/机器配置要求](../../quickstart/allinone#机器配置要求)。
 
 假设准备好了 3 台 CentOS7 机器，以及 1 台 Mariadb/MySQL 的机器，规划如下：
 
@@ -21,13 +21,13 @@ k8s master 2  | 10.127.90.103 | eth0         | -                             |
 k8s VIP       | 10.127.190.10 | -            | -                             |
 DB            | 10.127.190.11 | -            | pswd="0neC1oudDB#",  port=3306|
 
-其中 DB 的部署目前是不归 ocboot 部署工具管理的，需要提前手动部署，高可用的数据库部署可以参考文档 [部署 DB HA 环境](../../setup/db-ha) 。
+其中 DB 的部署目前是不归 ocboot 部署工具管理的，需要提前手动部署，高可用的数据库部署可以参考文档 [部署 DB HA 环境](../db-ha) 。
 
 ## 开始安装
 
 ### 下载 ocboot
 
-参考 [All in One 安装/下载 ocboot](../allinone/#下载-ocboot)。
+参考 [All in One 安装/下载 ocboot](../../quickstart/allinone/#下载-ocboot)。
 
 ### 编写部署配置
 
@@ -101,4 +101,4 @@ $ ./ocboot.py install ./config-k8s-ha.yml
 
 等待部署完成后，就可以使用浏览器访问 https://10.127.190.10 (VIP), 输入用户名 `admin` 和密码 `admin@123`，进入前端。
 
-另外部署完成后，可以给已有集群添加节点，参考文档：[添加计算节点](../../setup/host)。
+另外部署完成后，可以给已有集群添加节点，参考文档：[添加计算节点](../host)。
