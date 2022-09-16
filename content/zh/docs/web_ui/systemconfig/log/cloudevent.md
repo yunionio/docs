@@ -1,7 +1,7 @@
 ---
 title: "云上日志"
 linktitle: "云上日志"
-weight: 2
+weight: 3
 description: 将公有云操作日志同步到var_oem_name平台上统一查看。
 ---
 
