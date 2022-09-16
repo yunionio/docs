@@ -10,7 +10,7 @@ description: >
 ## 前提
 
 {{% alert title="注意" color="warning" %}}
-本章内容是通过部署工具快速搭建 Cloudpods 服务，如果想在生产环境部署高可用集群请参考: [高可用安装](../../setup/ha/) 。
+本章内容是通过部署工具快速搭建 Cloudpods 服务，如果想在生产环境部署高可用集群请参考: [高可用安装](../../setup/ha-ce/) 。
 {{% /alert %}}
 
 ## 环境准备
@@ -89,7 +89,7 @@ $ pip install ansible
 
 ```bash
 # 下载 ocboot 工具到本地
-$ git clone -b release/3.9 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
 ### 快速部署
@@ -134,7 +134,7 @@ primary_master_node:
   # k8s 控制节点的端口
   controlplane_port: "6443"
   # Cloudpods 版本
-  onecloud_version: v3.9.2
+  onecloud_version: {{<release_version>}}
   # Cloudpods 登录用户
   onecloud_user: admin
   # Cloudpods 登录用户密码
