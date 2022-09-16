@@ -5,6 +5,7 @@ oem_ignore: true
 edition: ce
 description: >
   联系 var_oem_name 的方式和渠道
+img: /images/icons/icon-contact.svg
 ---
 
 * 哔哩哔哩:  https://space.bilibili.com/623431553/
