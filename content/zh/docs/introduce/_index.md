@@ -5,5 +5,6 @@ edition: ce
 weight: 38
 description: >
     介绍 var_oem_name 产品架构、使用简介等相关内容
+img: /images/icons/icon-introduce.svg
 ---
 
