@@ -52,7 +52,7 @@ primary_master_node:
   hostname: $PRIMARY_IP
   use_local: false
   user: root
-  onecloud_version: "v3.9.2"
+  onecloud_version: "{{<release_version>}}"
   db_host: $DB_IP
   db_user: "$DB_USER"
   db_password: "$DB_PSWD"

@@ -52,7 +52,7 @@ mariadb_node:
   db_user: root
   db_password: your-sql-password
 primary_master_node:
-  onecloud_version: v3.9.2
+  onecloud_version: {{<release_version>}}
   hostname: 10.127.10.156
   user: root
   db_host: 10.127.10.156
