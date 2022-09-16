@@ -55,6 +55,7 @@ id = "UA-00000000-0"
 [languages.zh]
 title = "Cloudpods"
 version_menu = "版本"
+view_text = "点击查看"
 description = "Cloudpods文档"
 languageName ="中文"
 contentDir = "content/zh"
@@ -149,6 +150,7 @@ release_branch = "release/3.9"
 copyright = "The Cloudpods Authors."
 icp_code = "京ICP备2021005745号-3"
 is_ee = false
+view_text = "Click to view"
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]

@@ -1,0 +1,49 @@
+<div class="section-index">
+    {{ $pages := (where .Site.Pages "Section" .Section).ByWeight }}
+    {{ $parent := .Page }}
+    {{ if $parent.Params.no_list }}
+    {{/* If no_list is true we don't show a list of subpages */}}
+    {{ else if $parent.Params.simple_list }}
+    {{/* If simple_list is true we show a bulleted list of subpages */}}
+    <ul>
+        {{ range $pages }}
+        {{ if eq .Parent $parent }}
+        <li><a href="{{ .RelPermalink }}">{{- replace .Title "var_oem_name" .Site.Params.oem_name -}}</a></li>
+        {{ end }}
+        {{ end }}
+    </ul>
+    {{ else }}
+    {{/* Otherwise we show a nice formatted list of subpages with page descriptions */}}
+    <!-- <hr class="panel-line"> -->
+    <div class="section-index-wrapper" style="padding: 30px 0 30px 30px;">
+        <h1>{{ partial "title.html" . }}</h1>
+    </div>
+    <div class="section-index-wrapper">
+        {{ range $pages }}
+        {{ if eq .Parent $parent }}
+        <div class="section-index-item">
+            <div class="item-icon">
+                <img src="{{ .Site.BaseURL }}/{{.Params.img}}" style="position: absolute;left:-67px;filter:drop-shadow(var(--main-color) 67px 0)" />
+            </div>
+            <div class="item-wrapper">
+                <h3 class="item-h3">
+                    <div class="item-icon2">
+                        <img src="{{ .Site.BaseURL }}/{{.Params.img}}"
+                            style="position: absolute;left:-67px;filter:drop-shadow(var(--main-color) 67px 0)" />
+                    </div>
+                    {{.Title}}
+                </h3>
+                <div class="item-text">{{ replace .Description "var_oem_name" .Site.Params.oem_name }}</div>
+                <a href="{{ .RelPermalink }}" class="item-link">
+                    {{ .Site.Params.view_text }}
+                    <div style="height:12px;width:12px;overflow: hidden;display:inline-block;position: relative;transform: translateY(1px);">
+                      <img src="{{ .Site.BaseURL }}/images/icons/icon-arrow.svg" style="position: absolute;left:-12px;filter:drop-shadow(var(--main-color) 12px 0)" />
+                    </div>
+                </a>
+            </div>
+        </div>
+        {{ end }}
+        {{ end }}
+    </div>
+    {{ end }}
+</div>

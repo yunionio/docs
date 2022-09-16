@@ -4,6 +4,7 @@ linktitle: "Documentation"
 menu:
   main:
     weight: 20
+isHome: true
 ---
 
 Welcome the documentation of Cloudpods.

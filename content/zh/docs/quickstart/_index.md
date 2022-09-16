@@ -6,6 +6,7 @@ edition: ce
 oem_ignore: true
 description: >
   介绍如何快速部署体验 var_oem_name 服务
+img: /images/icons/icon-quickstart.svg
 ---
 
 有两种方式快速搭建一个Cloudpods服务实例：
