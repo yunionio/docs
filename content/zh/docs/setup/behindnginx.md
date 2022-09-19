@@ -1,6 +1,7 @@
 ---
 title: "nginx配置"
 weight: 110
+edition: ce
 description: >
   介绍通过 nginx 暴露var_oem_name的前端的配置方法
 ---
