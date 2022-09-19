@@ -1,6 +1,7 @@
 ---
 title: "前端双向认证配置"
 weight: 142
+edition: ce
 oem_ignore: true
 description: >
     介绍如何配置前端的双向认证

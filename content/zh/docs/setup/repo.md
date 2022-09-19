@@ -1,6 +1,7 @@
 ---
 title: "RPM Repo"
 weight: 99
+edition: ce
 description: >
   介绍各个版本的RPM REPO地址
 ---
