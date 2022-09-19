@@ -18,17 +18,19 @@
     <div class="section-index-wrapper" style="padding: 30px 0 30px 30px;">
         <h1>{{ partial "title.html" . }}</h1>
     </div>
+    {{ $arrow := (printf "%s%s" .Site.BaseURL "//images/icons/icon-arrow.svg") }}
     <div class="section-index-wrapper">
         {{ range $pages }}
         {{ if eq .Parent $parent }}
+        {{ $src := (printf "%s%s%s" .Site.BaseURL "/" .Params.img) }}
         <div class="section-index-item">
             <div class="item-icon">
-                <img src="{{ .Site.BaseURL }}/{{.Params.img}}" style="position: absolute;left:-67px;filter:drop-shadow(var(--main-color) 67px 0)" />
+                <img src="{{- replace $src "///" "/" -}}" style="position: absolute;left:-67px;filter:drop-shadow(var(--main-color) 67px 0)" />
             </div>
             <div class="item-wrapper">
                 <h3 class="item-h3">
                     <div class="item-icon2">
-                        <img src="{{ .Site.BaseURL }}/{{.Params.img}}"
+                        <img src="{{- replace $src "///" "/" -}}"
                             style="position: absolute;left:-67px;filter:drop-shadow(var(--main-color) 67px 0)" />
                     </div>
                     {{.Title}}
@@ -37,7 +39,7 @@
                 <a href="{{ .RelPermalink }}" class="item-link">
                     {{ .Site.Params.view_text }}
                     <div style="height:12px;width:12px;overflow: hidden;display:inline-block;position: relative;transform: translateY(1px);">
-                      <img src="{{ .Site.BaseURL }}/images/icons/icon-arrow.svg" style="position: absolute;left:-12px;filter:drop-shadow(var(--main-color) 12px 0)" />
+                      <img src="{{- replace $arrow "///" "/" -}}" style="position: absolute;left:-12px;filter:drop-shadow(var(--main-color) 12px 0)" />
                     </div>
                 </a>
             </div>
