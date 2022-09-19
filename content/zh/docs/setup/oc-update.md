@@ -2,6 +2,7 @@
 title: "修改OC更新集群状态"
 weight: 95
 oem_ignore: true
+edition: ce
 description: >
     介绍通过修改OC（cloudpods-operator的CRD资源）来更新集群的状态
 ---
