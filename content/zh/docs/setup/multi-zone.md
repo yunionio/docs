@@ -1,6 +1,7 @@
 ---
 title: "多可用区服务配置"
 weight: 141
+edition: ce
 oem_ignore: true
 description: >
     介绍在多个可用区(zone)下部署物理机管理服务(baremetal-agent), VMware管理服务(esxi-agent)以及宿主机管理服务(host)
