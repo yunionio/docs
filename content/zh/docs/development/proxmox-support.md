@@ -20,11 +20,12 @@ description:
 # 功能说明
 
 1. Proxmox的API很多情况都是需要node的名字，因此需要调用API的时候需要先分析该资源的ID，从ID知道所在的node。
-2. image 功能目前未实现。
+2. image 功能目前未实现。 image 显示Proxmox 当中 qemu 模板
+3. 目前仅支持单机模式的Proxmox。不支持管理多节点的Proxmox集群，在多节点情况，storage资源模型复杂
 
 cluster : 提供整个Proxmox集群 vm、node、storage资源查找，因为network 和disk 在Proxmox集群中是没有全局ID ， cluter提供帮助查找到 network 或 disk 是在node下哪个vm 或storage。
 disk : disk-list 与 disk-show 只会找到与vm相关的disk。
-instance : 创建vm 不会创建磁盘，需要另外在Proxmox 节点上使用命令导入系统盘。
+instance : 创建vm 只会创建空的系统磁盘。
 
 # 相关网址
 1. Proxmox VE API Documentation https://pve.proxmox.com/pve-docs/api-viewer/index.html
