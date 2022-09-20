@@ -18,28 +18,29 @@
     <div class="section-index-wrapper" style="padding: 30px 0 30px 30px;">
         <h1>{{ partial "title.html" . }}</h1>
     </div>
-    {{ $arrow := (printf "%s%s" .Site.BaseURL "//images/icons/icon-arrow.svg") }}
+    {{ $is_ee := .Site.Params.is_ee }}
     <div class="section-index-wrapper">
         {{ range $pages }}
         {{ if eq .Parent $parent }}
-        {{ $src := (printf "%s%s%s" .Site.BaseURL "/" .Params.img) }}
         <div class="section-index-item">
             <div class="item-icon">
-                <img src="{{- replace $src "///" "/" -}}" style="position: absolute;left:-67px;filter:drop-shadow(var(--main-color) 67px 0)" />
+                {{ if $is_ee }}
+                    <img src="{{.Params.img | relURL}}" style="position: absolute;left:-67px;filter:drop-shadow(var(--main-color) 67px 0)" />
+                {{else}}
+                    <img src="{{.Params.img | absURL}}" style="position: absolute;left:-67px;filter:drop-shadow(var(--main-color) 67px 0)" />
+                {{end}}
             </div>
             <div class="item-wrapper">
-                <h3 class="item-h3">
-                    <div class="item-icon2">
-                        <img src="{{- replace $src "///" "/" -}}"
-                            style="position: absolute;left:-67px;filter:drop-shadow(var(--main-color) 67px 0)" />
-                    </div>
-                    {{.Title}}
-                </h3>
+                <h3 class="item-h3">{{.Title}}</h3>
                 <div class="item-text">{{ replace .Description "var_oem_name" .Site.Params.oem_name }}</div>
                 <a href="{{ .RelPermalink }}" class="item-link">
                     {{ .Site.Params.view_text }}
                     <div style="height:12px;width:12px;overflow: hidden;display:inline-block;position: relative;transform: translateY(1px);">
-                      <img src="{{- replace $arrow "///" "/" -}}" style="position: absolute;left:-12px;filter:drop-shadow(var(--main-color) 12px 0)" />
+                        {{ if $is_ee }}
+                            <img src="{{"/images/icons/icon-arrow.svg" | relURL}}" style="position: absolute;left:-12px;filter:drop-shadow(var(--main-color) 12px 0)" />
+                        {{else}}
+                            <img src="{{"/images/icons/icon-arrow.svg" | absURL}}" style="position: absolute;left:-12px;filter:drop-shadow(var(--main-color) 12px 0)" />
+                        {{end}}
                     </div>
                 </a>
             </div>
