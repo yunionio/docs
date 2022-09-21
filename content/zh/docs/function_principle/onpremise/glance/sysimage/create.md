@@ -47,7 +47,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     # 修改配置文件内容
     ONBOOT=yes
     ```
-
+centos8和centos9重启网卡=systemctl start NetworkManager.service
 2. 禁用selinux，修改/etc/selinux/config文件，将"SELINUX=enforcing"改为"SELINUX=disabled"。修改完成后，重启系统生效。
 
     ```bash
@@ -56,8 +56,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     SELINUX=disabled
     # 重启使配置生效
     $ reboot
-    ```
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config   
+    ```  
 3. 将必要的kernel module加入启动initram.img。（centos8的内核已经安装了virtio所以需要在列表删除）
     ```bash
     $ vi /etc/dracut.conf
@@ -119,7 +118,7 @@ sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
     PermitRootLogin yes
     UseDNS no
     ```
-
+    systemctl restart  sshd
 
 ### Ubuntu/Debian镜像优化
 
