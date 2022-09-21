@@ -47,7 +47,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     # 修改配置文件内容
     ONBOOT=yes
     ```
-
+centos8和centos9重启网卡=systemctl start NetworkManager.service
 2. 禁用selinux，修改/etc/selinux/config文件，将"SELINUX=enforcing"改为"SELINUX=disabled"。修改完成后，重启系统生效。
 
     ```bash
@@ -56,10 +56,8 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     SELINUX=disabled
     # 重启使配置生效
     $ reboot
-    ```
-
-3. 将必要的kernel module加入启动initram.img。
-
+    ```  
+3. 将必要的kernel module加入启动initram.img。（centos8的内核已经安装了virtio所以需要在列表删除）
     ```bash
     $ vi /etc/dracut.conf
     # 修改配置文件，去掉add_drivers+前面#注释，并在引号中添加如下内容，修改完成后保存。
@@ -71,7 +69,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     # dracut -f
     ```
 
-4. 关闭网卡持久化功能，保证CentOS 7中网卡名称为“eth0，eth1”形式。修改/etc/default/grub文件，在GRUB_CMDLINE_LINUX中添加"net.ifnames=0 biosdevname=0"参数。
+4. 关闭网卡持久化功能，保证CentOS 7中网卡名称为“eth0，eth1”形式。修改/etc/default/grub文件，在GRUB_CMDLINE_LINUX中添加"net.ifnames=0 biosdevname=0"参数。（centos8，centos9略过）
 
     ```bash
     $ vi /etc/default/grub
@@ -120,7 +118,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     PermitRootLogin yes
     UseDNS no
     ```
-
+    systemctl restart  sshd
 
 ### Ubuntu/Debian镜像优化
 
