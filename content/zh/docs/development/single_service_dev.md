@@ -411,7 +411,95 @@ $ climc user-join-project --role admin --project system admin
 # 此时可以打开虚拟机的地址(http://ip)进行前端登录, 用户名密码分别为admin/admin@123
 ```
 
-# 后续改进
+## 其它服务配置
+
+### 监控服务（monitor）初始化
+
+monitor 为监控服务，依赖外部的 influxdb v1.7.7 服务。
+
+1) 首先在keystone配置monitor服务的服务账号，并且注册monitor服务的服务端点（service endpoint）。
+
+```sh
+# 创建 region 服务
+$ climc service-create --enabled monitor monitor
+
+# 确定 monitor 服务监听端口，这里假定是8093，后面 monitor 服务配置时指定端口得是 8093
+# 创建 monitor 端点
+$ climc endpoint-create --enabled monitor Yunion internal http://127.0.0.1:8093
+$ climc endpoint-create --enabled monitor Yunion public http://127.0.0.1:8093
+
+# 创建 monitor 服务的服务账号
+$ climc user-create --enabled --system-account --no-web-console --password monitor@admin monitoradmin
+# 赋予 monitoradmin 用户 admin 角色
+$ climc user-join-project --role admin --project system monitoradmin
+```
+
+2) 配置 influxdb 服务
+
+monitor 依赖 influxdb 服务，需要在本地部署一个 influxdb 服务，然后把 influxdb 的 service endpoint 添加到集群中，步骤如下：
+
+```bash
+# 使用 docker 启动 influxdb 1.7.7 是最简单的方式，其它安装方式请自行搜索
+# 监听到本地 8086 端口，持久化目录在 /tmp/influxdb ，可根据自己环境修改
+$ docker run -p 8086:8086 -v /tmp/influxdb:/var/lib/influxdb registry.cn-beijing.aliyuncs.com/yunion/influxdb:1.7.7
+
+# 测试 influxdb 的网络连通性，如果返回报错说明连通性没问题
+$ curl http://127.0.0.1:8086/query
+{"error":"missing required parameter \"q\""}
+
+# 添加 influxdb service endpoint
+$ climc service-create --enabled influxdb influxdb
+
+# 确定 influxdb 服务监听端口，这里假定是 8086，后面 monitor 服务配置时指定端口得是 8086
+# 创建 influxdb 端点
+$ climc endpoint-create --enabled influxdb Yunion internal http://127.0.0.1:8086
+$ climc endpoint-create --enabled influxdb Yunion public http://127.0.0.1:8086
+```
+
+3) 其次配置monitor的数据库
+
+```sh
+# 为monitor服务创建数据库及数据库账号
+$ mysql -uroot -e 'create database yunionmonitor;'
+# 这里设置一个密码为cloudpods-monitor的yunionmonitor用户
+$ mysql -uroot -e 'grant all privileges on yunionmonitor.* to "yunionmonitor"@"%" identified by "cloudpods-monitor"; flush privileges;'
+```
+
+4) 下面配置并启动monitor服务
+
+```
+# 编译 monitor
+$ cd /root/cloudpods/ && make cmd/monitor
+
+# 编写monitor服务的配置文件
+# 这里要注意使用刚创建的数据库及数据库账号密码, 及monitor服务认证的用户名密码
+$ cat<<EOF >/etc/yunion/monitor.conf
+region = 'Yunion'
+address = '127.0.0.1'
+port = 8093
+auth_uri = 'http://127.0.0.1:35357/v3'
+admin_user = 'monitoradmin'
+admin_password = 'monitor@admin'
+admin_tenant_name = 'system'
+sql_connection = 'mysql+pymysql://yunionmonitor:cloudpods-monitor@localhost:3306/yunionmonitor?charset=utf8'
+log_level = 'debug'
+auto_sync_table = true
+EOF
+
+# 启动 region 服务
+$ /root/cloudpods/_output/bin/monitor --conf /etc/yunion/monitor.conf
+```
+
+5) 测试monitor服务是否正常
+
+```
+# 测试 monitor 服务接口
+$ climc monitor-alert-list
+***  Total: 0  ***
+```
+
+
+## 后续改进
 
 - 此步骤是直接指定的参数执行各个服务
     - macOS推荐使用launchctl+LaunchControl进行各个服务的启动管理
