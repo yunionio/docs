@@ -23,7 +23,7 @@ description: >
 
 ### 宿主机配置
 
-宿主机的网口在交换机上需要配置为trunk模式，宿主机管理口采用VLAN 1（缺省VLAN）。
+宿主机的网口在交换机上需要配置为trunk模式，宿主机管理口*必须*采用默认VLAN ID。一般来说，默认VLAN ID 为 1。但目前交换机也支持为TRUNK口设置非1的VLAN ID，具体请参考交换机的配置手册。
 
 宿主机host.conf的networks配置：
 
@@ -38,6 +38,33 @@ networks:
 networks:
 - eth0/br0/10.168.20.2
 ```
+
+#### 宿主机管理口使用非1的VLAN ID，并且交换机不支持设置TRUNK口的默认VLAN ID，这种情况如何配置？
+
+这种情况需要为宿主机设置一个VLAN子接口，宿主机使用这个VLAN子接口作为管理口，并且虚拟机交换机需要桥接到主接口上。下面以宿主机主接口为bond0，宿主机管理口的VLAN ID为3001为示例说明：
+
+1、在宿主机配置VLAN子接口 bond0.3001，配置如下：
+
+```
+# /etc/sysconfig/network-scripts/ifcfg-bond0.3001
+VLAN=yes
+NAME=bond0.3001
+DEVICE=bond0.3001
+IPADDR=<management_ip>
+PREFIX=<prefix>
+DEFROUTE=yes
+ONBOOT=yes
+```
+
+2. 修改/etc/yunion/host.conf，设置如下:
+
+```yaml
+listen_interface: bond0.3001
+networks:
+- bond0/br0/bcast0
+```
+
+需要注意的是，这种配置下，虚拟机将不能使用和宿主机相同的VLAN ID（这里是3001)。
 
 ### EIP配置
 
