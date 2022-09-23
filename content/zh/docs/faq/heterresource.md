@@ -111,9 +111,9 @@ BIOS中默认开启硬件虚拟化支持。如果有修改，需要在BIOS中打
 6. 修改该宿主机的/etc/yunion/host.conf，找到 **local_image_path** 配置项，将新磁盘的挂载目录路径加入数组中。保存后，重启host服务。
 
     ```bash
-    # 查看host服务所在pod，并删除
-    $ kubectl get pods -n onecloud | grep host
-    $ kubectl delete pod <host-pod-name> -n onecloud
+    # 查看host和host-image服务所在pod，并删除
+    $ kubectl get pods -n onecloud | grep -E 'host|host-image'
+    $ kubectl delete pod -n onecloud <host-pod-name> <host-image-pod-name> 
     ```
 
 {{% alert title="注意" color="warning" %}}
