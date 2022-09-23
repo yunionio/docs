@@ -10,16 +10,16 @@ description: >
 
 ```bash
 # 查看具体服务的分表日志
-$ climc logs-splitable --service <service_type>
+$ climc logs-show --service <service_type> splitable
 ```
 
-![](../images/logtable.png)
+![](../images/logtable2.png)
 
 ```bash
 # 删除超过6个月的分表
-$ climc logs-purge --service <service_type>
+$ climc logs-purge-splitable --service <service_type>
 ```
-![](../images/deletelogtable.png)
+![](../images/deletelogtable2.png)
 
 ### 清理数据库日志
 
