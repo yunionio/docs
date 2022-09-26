@@ -30,7 +30,27 @@ description: >
 提取码：xcrk    
 
 链接：https://pan.baidu.com/s/1V65oWvP61Hw58ul0XMN1LA 
-提取码：qqpg     
+提取码：qqpg   
+
+链接：https://pan.baidu.com/s/1ZRQ6ZAozF6NWWYf5z2gaZQ?pwd=5ghr 
+提取码：5ghr
+
+
+### x86 centos9
+
+链接：https://pan.baidu.com/s/1E1ZYgHhmkb0zjb9TVhWm1Q?pwd=75mv
+提取码：75mv
+
+### centos8 iso
+
+链接：https://pan.baidu.com/s/1KmqPd03CTQcYtU6_mfnY3g?pwd=k0ak 
+提取码：k0ak
+
+### centos9 iso
+
+链接：https://pan.baidu.com/s/1dYhXTGqGdPTb1lXOOoP4XQ?pwd=yxl4 
+提取码：yxl4
+
 
 ### ubuntu 20.04：
 
@@ -52,7 +72,7 @@ description: >
 链接：https://pan.baidu.com/s/1gQE4TfsdAWf-90zg6Hdosw?pwd=d8pt 
 提取码：d8pt     
 
-centos9 arm“
+### centos9 arm
 
 链接：https://pan.baidu.com/s/1AOxbJHNojsh4BSgFklfcLA?pwd=hkf7 
 提取码：hkf7     
