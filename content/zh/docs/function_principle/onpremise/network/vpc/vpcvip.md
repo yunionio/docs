@@ -2,16 +2,16 @@
 title: "虚拟IP（VIP）"
 weight: 75
 description: >
-  介绍VPC内使用虚拟IP（VIP）
+  介绍如何使用虚拟IP（VIP）
 ---
 
-现已支持在VPC内的IP子网分配虚拟IP给一组虚拟机共享，通过keepalived等高可用软件实现在VIP这组虚拟机之间的漂移，keepalived检测服务在主机上的状态，自动地将虚拟IP设置在服务可用的优先级最高的虚拟机的网卡上。
+{{<oem_name>}}现已支持在VPC内或经典网络的IP子网分配虚拟IP给一组虚拟机共享，通过keepalived等高可用软件实现在VIP这组虚拟机之间的漂移，keepalived检测服务在主机上的状态，自动地将虚拟IP设置在服务可用的优先级最高的虚拟机的网卡上。
 
 ## 模型概念
 
 在资源模型上，VIP绑定到一个反亲和组（instancegroup）。可以通过前端，或者climc的命令，为一个反亲和组绑定一个VIP。绑定后，该VIP可以用于在该反亲和组包含的虚拟机之间使用。
 
-同时，VIP通常是为了对外提供服务，为了允许VPC外能够访问VIP提供的服务，平台允许给VIP绑定EIP。绑定后，VPC外可以通过该EIP访问VIP绑定的服务。
+同时，VIP通常是为了对外提供服务。对于VPC内的虚拟机，为了允许VPC外能够访问VIP提供的服务，平台允许给VIP绑定EIP。绑定后，VPC外可以通过该EIP访问VIP绑定的服务。
 
 ## climc命令
 
@@ -26,7 +26,7 @@ description: >
 climc instancegroup-attachnetwork [--ip-addr IP_ADDR] [--alloc-dir ALLOC_DIR] [--reserved] [--require-designated-ip] [--network-id NETWORK_ID] <instancegroup>
 ```
 
-### 为反亲和组绑定EIP
+### 为VPC内反亲和组绑定EIP
 
 限制：
 1. 一个反亲和组只能绑定一个EIP，并且该反亲和组需要已经绑定了VIP之后，才能绑定EIP。绑定后EIP自动映射到对应的VIP。
@@ -41,7 +41,7 @@ climc instancegroup-create-eip [--bandwidth BANDWIDTH] [--bgp-type BGP_TYPE] [--
 climc instancegroup-associate-eip [--ip-addr IP_ADDR] [--eip-id EIP_ID] <instancegroup>
 ```
 
-### 为反亲和组解绑EIP
+### 为VPC内反亲和组解绑EIP
 
 ```bash
 climc instancegroup-dissociate-eip <instancegroup>
