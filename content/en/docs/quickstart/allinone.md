@@ -12,7 +12,7 @@ description: >
 
 - OS: Depending on the CPU architecture, the supported distributions are different
     - X86_64: [CentOS 7](http://isoredirect.centos.org/centos/7/isos/x86_64/)
-    - ARM64: [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) or [China UOS](https://www.chinauos.com/) 
+    - ARM64: [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) or [China UOS](https://www.chinauos.com/)
 - Minimum Configuration Requirements: CPU 4 cores, Memory 8GiB, Storage 100GiB
 
 As an example, the following is the environment of the Linux box to be deployed:
@@ -53,21 +53,36 @@ We first install ansible and git. The commends depends on the OS of the box.
 {{% tab name="CentOS 7" %}}
 ```bash
 # Install ansible locally
-$ yum install -y epel-release ansible
+$ yum install -y epel-release git python3-pip
+$ python3 -m pip install --upgrade pip setuptools wheel
+$ python3 -m pip install --upgrade ansible
 ```
 {{% /tab %}}
+
+{{% tab name="Kylin v10" %}}
+```bash
+# Install ansible locally
+$ yum install -y git python3-pip
+$ python3 -m pip install --upgrade pip setuptools wheel
+$ python3 -m pip install --upgrade ansible
+```
+{{% /tab %}}
+
 
 {{% tab name="Debian 10" %}}
 ```bash
 # Install ansible locally
-$ apt install -y ansible
+$ apt install -y git python3-pip
+$ python3 -m pip install --upgrade pip setuptools wheel
+$ python3 -m pip install --upgrade ansible
 ```
 {{% /tab %}}
 
 {{% tab name="Others" %}}
 ```bash
 # Install ansible locally
-$ pip install ansible
+$ python3 -m pip install --upgrade pip setuptools wheel
+$ python3 -m pip install --upgrade ansible
 ```
 {{% /tab %}}
 
