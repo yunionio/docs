@@ -71,7 +71,7 @@ $ ./ocboot.py backup --backup-path /opt/backup config.yml
 
 #### 恢复命令
 
-```bash 
+```bash
 usage: ocboot.py restore [-h] [--backup-path BACKUP_PATH]
                          [--install-db-to-localhost]
                          [--master-node-ips MASTER_NODE_IPS]
@@ -156,9 +156,10 @@ $ ssh-copy-id 10.127.190.228
 
 ```bash
 # 在`master`节点上安装ansible，以centos为例
-$ yum install -y ansible
 # 安装pip
-$ yum -y install python-pip
+$ yum -y install python3-pip
+$ python3 -m pip install --upgrade pip setuptools wheel
+$ python3 -m pip install --upgrade ansible
 # 拉取ocboot代码
 $ git clone https://github.com/yunionio/ocboot.git
 $ cd ./ocboot & pip install -r ./requirements.txt
@@ -168,7 +169,7 @@ $ cd ./ocboot & pip install -r ./requirements.txt
 
 ```bash
 # 在ocboot目录下执行`restore`命令
-$ ./ocboot.py restore --backup-path /opt/backup --install-db-to-localhost --master-node-ips 10.127.190.228 --master-node-as-host --worker-node-ips 10.127.190.219 --worker-node-as-host 10.127.190.228 
+$ ./ocboot.py restore --backup-path /opt/backup --install-db-to-localhost --master-node-ips 10.127.190.228 --master-node-as-host --worker-node-ips 10.127.190.219 --worker-node-as-host 10.127.190.228
 
 ```
 7. 数据库恢复完成后，根据配置文件恢复平台。

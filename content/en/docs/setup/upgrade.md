@@ -47,7 +47,9 @@ If you already have the ocboot tool locally, you can skip this step and just upd
 
 ```bash
 # Install ansible and python-paramiko locally
-$ yum install -y ansible python-paramiko
+$ yum install -y python3-pip
+$ python3 -m pip install --upgrade pip setuptools wheel
+$ python3 -m pip install --upgrade ansible paramiko
 
 # git clone ocboot
 $ git clone -b release/3.8 https://github.com/yunionio/ocboot && cd ./ocboot
@@ -104,7 +106,7 @@ If you encounter problems, please go to [GitHub mention issue](https://github.co
 # The principle of downgrading is to modify the image version of each service
 # For example, the current version is v3.8.3 and then you want to downgrade to v3.7.8
 # 在第一个控制节点执行如下命令降级会 v3.7.8
-$ /opt/yunion/bin/ocadm cluster update --version v3.7.8 --wait 
+$ /opt/yunion/bin/ocadm cluster update --version v3.7.8 --wait
 
 # Downgrading will re-pull a new mirror and can open another window
 # Use the following command to view the updates for each pod

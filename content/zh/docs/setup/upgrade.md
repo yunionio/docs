@@ -49,7 +49,9 @@ $ kubectl -n onecloud get onecloudclusters default -o=jsonpath='{.spec.version}'
 
 ```bash
 # 本地安装 ansible
-$ yum install -y ansible python-paramiko
+$ yum install -y python3-pip
+$ python3 -m pip install --upgrade pip setuptools wheel
+$ python3 -m pip install --upgrade ansible paramiko
 
 # 下载 ocboot 工具到本地
 $ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./ocboot
