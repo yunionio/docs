@@ -817,6 +817,10 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   PerformStatusInput:
     properties:
+      power_states:
+        description: 电源状态
+        type: string
+        x-go-name: PowerStates
       reason:
         description: 更改状态的原因描述
         type: string
@@ -1014,6 +1018,29 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   StatusStatistic:
     properties:
+      TotalCpuCount:
+        description: CPU总量
+        format: int64
+        type: integer
+      TotalDiskSizeMb:
+        description: 存储总量
+        format: int64
+        type: integer
+      TotalMemSizeMb:
+        description: 内存总量
+        format: int64
+        type: integer
+      status_info:
+        items:
+          $ref: '#/definitions/StatusStatisticStatusInfo'
+        type: array
+        x-go-name: StatusInfo
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  StatusStatisticStatusInfo:
+    properties:
+      Status:
+        type: string
       pending_deleted_count:
         description: |-
           回收站数量
@@ -1891,6 +1918,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/guest_image_GetPropertySplitableExportOutput'
@@ -1977,18 +2014,18 @@ paths:
         name: refresh
         type: boolean
         x-go-name: Refresh
-      - description: 配额所属范围，可能值为projects和domains，分别代表项目的配额和域的配额
-        in: path
-        name: scope
-        required: true
-        type: string
-        x-go-name: Scope
       - description: 指定项目或者域的ID
         in: path
         name: scopeId
         required: true
         type: string
         x-go-name: ScopeId
+      - description: 配额所属范围，可能值为projects和domains，分别代表项目的配额和域的配额
+        in: path
+        name: scope
+        required: true
+        type: string
+        x-go-name: Scope
       responses:
         "200":
           $ref: '#/responses/models_GetImageQuotaOutput'
@@ -2984,6 +3021,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/image_GetPropertySplitableExportOutput'
@@ -3092,10 +3139,7 @@ responses:
     schema:
       properties:
         guest_image:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   guest_image_GetPropertyTagValuePairsOutput: {}
   guest_image_GetPropertyTagValueTreeOutput: {}
@@ -3214,10 +3258,7 @@ responses:
     schema:
       properties:
         image:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   image_GetPropertyTagValuePairsOutput: {}
   image_GetPropertyTagValueTreeOutput: {}
