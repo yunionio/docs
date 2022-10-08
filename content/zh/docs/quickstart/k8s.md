@@ -45,7 +45,7 @@ $ cd charts/cloudpods
 
 ### 测试环境安装
 
-测试环境安装方法如下，改方法会在 Kubernetes 集群里部署 mysql ，local-path-provisioner CSI 依赖插件，不需要连接集群之外的 mysql 。
+测试环境安装方法如下，该方法会在 Kubernetes 集群里部署 mysql ，local-path-provisioner CSI 依赖插件，不需要连接集群之外的 mysql 。
 
 ```bash
 $ helm install --name-template default --namespace onecloud --debug  . -f values-dev.yaml  --create-namespace
