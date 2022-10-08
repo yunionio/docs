@@ -1511,6 +1511,10 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   PerformStatusInput:
     properties:
+      power_states:
+        description: 电源状态
+        type: string
+        x-go-name: PowerStates
       reason:
         description: 更改状态的原因描述
         type: string
@@ -2459,12 +2463,6 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/keystone/tokens
   SAuthenticationIdentity:
     properties:
-      OAuth2:
-        properties:
-          code:
-            type: string
-            x-go-name: Code
-        type: object
       access_key_secret:
         description: |-
           当认证方式为aksk时，通过该字段提供客户端AK/SK信息
@@ -2499,10 +2497,31 @@ definitions:
            saml     | 作为SAML 2.0 SP通过IDP认证                                            |
            oidc     | 作为OpenID Connect/OAuth2 Client认证                                 |
            oauth2   | OAuth2认证                                                          |
+           verify   | 手机短信或邮箱认证                                                     |
         items:
           type: string
         type: array
         x-go-name: Methods
+      mobile:
+        properties:
+          contact_type:
+            type: string
+            x-go-name: ContactType
+          uid:
+            type: string
+            x-go-name: Uid
+          verify_code:
+            type: string
+            x-go-name: VerifyCode
+        type: object
+        x-go-name: Verify
+      oauth2:
+        properties:
+          code:
+            type: string
+            x-go-name: Code
+        type: object
+        x-go-name: OAuth2
       oidc_auth:
         properties:
           code:
@@ -3194,6 +3213,29 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   StatusStatistic:
     properties:
+      TotalCpuCount:
+        description: CPU总量
+        format: int64
+        type: integer
+      TotalDiskSizeMb:
+        description: 存储总量
+        format: int64
+        type: integer
+      TotalMemSizeMb:
+        description: 内存总量
+        format: int64
+        type: integer
+      status_info:
+        items:
+          $ref: '#/definitions/StatusStatisticStatusInfo'
+        type: array
+        x-go-name: StatusInfo
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  StatusStatisticStatusInfo:
+    properties:
+      Status:
+        type: string
       pending_deleted_count:
         description: |-
           回收站数量
@@ -3315,7 +3357,7 @@ definitions:
       lang:
         type: string
         x-go-name: Lang
-      mobule:
+      mobile:
         type: string
         x-go-name: Mobile
       name:
@@ -4086,6 +4128,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/credential_GetPropertySplitableExportOutput'
@@ -4613,6 +4665,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/domain_GetPropertySplitableExportOutput'
@@ -5105,6 +5167,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/endpoint_GetPropertySplitableExportOutput'
@@ -5773,6 +5845,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/group_GetPropertySplitableExportOutput'
@@ -6593,6 +6675,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/identity_provider_GetPropertySplitableExportOutput'
@@ -7340,6 +7432,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/policy_GetPropertySplitableExportOutput'
@@ -7963,6 +8065,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/project_GetPropertySplitableExportOutput'
@@ -8432,6 +8544,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/region_GetPropertySplitableExportOutput'
@@ -8718,6 +8840,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/role_policy_GetPropertySplitableExportOutput'
@@ -9401,6 +9533,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/role_GetPropertySplitableExportOutput'
@@ -9669,6 +9811,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/scope_resource_GetPropertySplitableExportOutput'
@@ -10110,6 +10262,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/service_certificate_GetPropertySplitableExportOutput'
@@ -10646,6 +10808,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/service_GetPropertySplitableExportOutput'
@@ -11379,6 +11551,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/user_GetPropertySplitableExportOutput'
@@ -11829,10 +12011,7 @@ responses:
     schema:
       properties:
         identity_provider:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   identity_provider_GetPropertyTagValuePairsOutput: {}
   identity_provider_GetPropertyTagValueTreeOutput: {}

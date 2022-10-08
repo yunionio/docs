@@ -886,6 +886,13 @@ definitions:
         x-go-name: UserId
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/cloudid
+  ClouduserCreateAccessKeyInput:
+    properties:
+      name:
+        type: string
+        x-go-name: Name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/cloudid
   ClouduserCreateInput:
     properties:
       __meta__:
@@ -1011,6 +1018,13 @@ definitions:
         x-go-name: Status
     required:
     - name
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis/cloudid
+  ClouduserDeleteAccessKeyInput:
+    properties:
+      access_key:
+        type: string
+        x-go-name: AccessKey
     type: object
     x-go-package: yunion.io/x/onecloud/pkg/apis/cloudid
   ClouduserDetachPolicyInput:
@@ -1357,6 +1371,10 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   PerformStatusInput:
     properties:
+      power_states:
+        description: 电源状态
+        type: string
+        x-go-name: PowerStates
       reason:
         description: 更改状态的原因描述
         type: string
@@ -2005,6 +2023,29 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   StatusStatistic:
     properties:
+      TotalCpuCount:
+        description: CPU总量
+        format: int64
+        type: integer
+      TotalDiskSizeMb:
+        description: 存储总量
+        format: int64
+        type: integer
+      TotalMemSizeMb:
+        description: 内存总量
+        format: int64
+        type: integer
+      status_info:
+        items:
+          $ref: '#/definitions/StatusStatisticStatusInfo'
+        type: array
+        x-go-name: StatusInfo
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  StatusStatisticStatusInfo:
+    properties:
+      Status:
+        type: string
       pending_deleted_count:
         description: |-
           回收站数量
@@ -2540,6 +2581,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/cloudgroupcache_GetPropertySplitableExportOutput'
@@ -3440,6 +3491,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/cloudgroup_GetPropertySplitableExportOutput'
@@ -4307,6 +4368,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/cloudpolicy_GetPropertySplitableExportOutput'
@@ -4858,6 +4929,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/cloudpolicycache_GetPropertySplitableExportOutput'
@@ -5653,6 +5734,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/cloudrole_GetPropertySplitableExportOutput'
@@ -6011,6 +6102,23 @@ paths:
       summary: 获取公有云用户详情
       tags:
       - clouduser
+  /cloudusers/{id}/access-keys:
+    get:
+      description: 获取指定信息AccessKeys
+      operationId: clouduser_GetDetailsAccessKeys
+      parameters:
+      - description: The Id or Name of clouduser
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_GetDetailsAccessKeysOutput'
+      summary: 获取指定信息AccessKeys
+      tags:
+      - clouduser
   /cloudusers/{id}/attach-policy:
     post:
       description: '用户状态必须为: available'
@@ -6120,6 +6228,56 @@ paths:
         "200":
           $ref: '#/responses/clouduser_PerformClassMetadataOutput'
       summary: 更新资源的 class 标签
+      tags:
+      - clouduser
+  /cloudusers/{id}/create-access-key:
+    post:
+      description: 执行操作CreateAccessKey
+      operationId: clouduser_PerformCreateAccessKey
+      parameters:
+      - description: The Id or Name of clouduser
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            clouduser:
+              $ref: '#/definitions/ClouduserCreateAccessKeyInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_PerformCreateAccessKeyOutput'
+      summary: 执行操作CreateAccessKey
+      tags:
+      - clouduser
+  /cloudusers/{id}/delete-access-key:
+    post:
+      description: 执行操作DeleteAccessKey
+      operationId: clouduser_PerformDeleteAccessKey
+      parameters:
+      - description: The Id or Name of clouduser
+        in: path
+        name: id
+        required: true
+        type: string
+        x-go-name: Id
+      - in: body
+        name: body
+        schema:
+          properties:
+            clouduser:
+              $ref: '#/definitions/ClouduserDeleteAccessKeyInput'
+          type: object
+        x-go-name: Body
+      responses:
+        "200":
+          $ref: '#/responses/clouduser_PerformDeleteAccessKeyOutput'
+      summary: 执行操作DeleteAccessKey
       tags:
       - clouduser
   /cloudusers/{id}/detach-policy:
@@ -6524,6 +6682,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/clouduser_GetPropertySplitableExportOutput'
@@ -7229,6 +7397,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/saml_provider_GetPropertySplitableExportOutput'
@@ -7894,6 +8072,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/samluser_GetPropertySplitableExportOutput'
@@ -7974,10 +8162,7 @@ responses:
     schema:
       properties:
         cloudgroup:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   cloudgroup_GetPropertyTagValuePairsOutput: {}
   cloudgroup_GetPropertyTagValueTreeOutput: {}
@@ -8072,10 +8257,7 @@ responses:
     schema:
       properties:
         cloudgroupcache:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   cloudgroupcache_GetPropertyTagValuePairsOutput: {}
   cloudgroupcache_GetPropertyTagValueTreeOutput: {}
@@ -8157,10 +8339,7 @@ responses:
     schema:
       properties:
         cloudpolicy:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   cloudpolicy_GetPropertyTagValuePairsOutput: {}
   cloudpolicy_GetPropertyTagValueTreeOutput: {}
@@ -8253,10 +8432,7 @@ responses:
     schema:
       properties:
         cloudpolicycache:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   cloudpolicycache_GetPropertyTagValuePairsOutput: {}
   cloudpolicycache_GetPropertyTagValueTreeOutput: {}
@@ -8349,10 +8525,7 @@ responses:
     schema:
       properties:
         cloudrole:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   cloudrole_GetPropertyTagValuePairsOutput: {}
   cloudrole_GetPropertyTagValueTreeOutput: {}
@@ -8412,6 +8585,7 @@ responses:
         clouduser:
           $ref: '#/definitions/ClouduserDetails'
       type: object
+  clouduser_GetDetailsAccessKeysOutput: {}
   clouduser_GetDetailsChangeOwnerCandidateDomainsOutput:
     schema:
       properties:
@@ -8473,6 +8647,8 @@ responses:
   clouduser_PerformAttachPolicyOutput: {}
   clouduser_PerformChangeOwnerOutput: {}
   clouduser_PerformClassMetadataOutput: {}
+  clouduser_PerformCreateAccessKeyOutput: {}
+  clouduser_PerformDeleteAccessKeyOutput: {}
   clouduser_PerformDetachPolicyOutput: {}
   clouduser_PerformJoinGroupOutput: {}
   clouduser_PerformLeaveGroupOutput: {}
@@ -8542,10 +8718,7 @@ responses:
     schema:
       properties:
         saml_provider:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   saml_provider_GetPropertyTagValuePairsOutput: {}
   saml_provider_GetPropertyTagValueTreeOutput: {}
