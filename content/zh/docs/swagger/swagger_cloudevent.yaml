@@ -205,6 +205,10 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   PerformStatusInput:
     properties:
+      power_states:
+        description: 电源状态
+        type: string
+        x-go-name: PowerStates
       reason:
         description: 更改状态的原因描述
         type: string
@@ -240,6 +244,29 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/util/tagutils
   StatusStatistic:
     properties:
+      TotalCpuCount:
+        description: CPU总量
+        format: int64
+        type: integer
+      TotalDiskSizeMb:
+        description: 存储总量
+        format: int64
+        type: integer
+      TotalMemSizeMb:
+        description: 内存总量
+        format: int64
+        type: integer
+      status_info:
+        items:
+          $ref: '#/definitions/StatusStatisticStatusInfo'
+        type: array
+        x-go-name: StatusInfo
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  StatusStatisticStatusInfo:
+    properties:
+      Status:
+        type: string
       pending_deleted_count:
         description: |-
           回收站数量
@@ -702,6 +729,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/cloudevent_GetPropertySplitableExportOutput'
@@ -1268,6 +1305,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/cloudprovider_GetPropertySplitableExportOutput'
@@ -1399,10 +1446,7 @@ responses:
     schema:
       properties:
         cloudprovider:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   cloudprovider_GetPropertyTagValuePairsOutput: {}
   cloudprovider_GetPropertyTagValueTreeOutput: {}

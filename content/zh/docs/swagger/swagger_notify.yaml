@@ -641,6 +641,10 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   PerformStatusInput:
     properties:
+      power_states:
+        description: 电源状态
+        type: string
+        x-go-name: PowerStates
       reason:
         description: 更改状态的原因描述
         type: string
@@ -690,6 +694,9 @@ definitions:
       receiver_name:
         type: string
         x-go-name: ReceiverName
+      receiver_type:
+        type: string
+        x-go-name: ReceiverType
       send_by:
         type: string
         x-go-name: SendBy
@@ -742,6 +749,10 @@ definitions:
           type: string
         type: array
         x-go-name: EnabledContactTypes
+      force_verified:
+        description: force verified if admin create the records
+        type: boolean
+        x-go-name: ForceVerified
       generate_name:
         description: |-
           生成资源名称的模板，如果name为空，则为必填项
@@ -955,6 +966,9 @@ definitions:
           type: string
         type: array
         x-go-name: EnabledContactTypes
+      force_verified:
+        type: boolean
+        x-go-name: ForceVerified
       international_mobile:
         $ref: '#/definitions/SInternationalMobile'
       name:
@@ -1301,6 +1315,29 @@ definitions:
     x-go-package: yunion.io/x/onecloud/pkg/apis
   StatusStatistic:
     properties:
+      TotalCpuCount:
+        description: CPU总量
+        format: int64
+        type: integer
+      TotalDiskSizeMb:
+        description: 存储总量
+        format: int64
+        type: integer
+      TotalMemSizeMb:
+        description: 内存总量
+        format: int64
+        type: integer
+      status_info:
+        items:
+          $ref: '#/definitions/StatusStatisticStatusInfo'
+        type: array
+        x-go-name: StatusInfo
+    type: object
+    x-go-package: yunion.io/x/onecloud/pkg/apis
+  StatusStatisticStatusInfo:
+    properties:
+      Status:
+        type: string
       pending_deleted_count:
         description: |-
           回收站数量
@@ -2275,6 +2312,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/config_GetPropertySplitableExportOutput'
@@ -2770,6 +2817,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/event_GetPropertySplitableExportOutput'
@@ -3332,6 +3389,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/notification_GetPropertySplitableExportOutput'
@@ -4101,6 +4168,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/receiver_GetPropertySplitableExportOutput'
@@ -5008,6 +5085,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/robot_GetPropertySplitableExportOutput'
@@ -5286,6 +5373,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/subscriber_receiver_GetPropertySplitableExportOutput'
@@ -5858,6 +5955,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/subscriber_GetPropertySplitableExportOutput'
@@ -6386,6 +6493,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/template_GetPropertySplitableExportOutput'
@@ -6877,6 +6994,16 @@ paths:
         name: table
         type: string
         x-go-name: Table
+      - format: int64
+        in: query
+        name: offset
+        type: integer
+        x-go-name: Offset
+      - format: int64
+        in: query
+        name: limit
+        type: integer
+        x-go-name: Limit
       responses:
         "200":
           $ref: '#/responses/topic_GetPropertySplitableExportOutput'
@@ -7099,10 +7226,7 @@ responses:
     schema:
       properties:
         notification:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   notification_GetPropertyTagValuePairsOutput: {}
   notification_GetPropertyTagValueTreeOutput: {}
@@ -7193,10 +7317,7 @@ responses:
     schema:
       properties:
         receiver:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   receiver_GetPropertyTagValuePairsOutput: {}
   receiver_GetPropertyTagValueTreeOutput: {}
@@ -7319,10 +7440,7 @@ responses:
     schema:
       properties:
         robot:
-          additionalProperties:
-            $ref: '#/definitions/StatusStatistic'
-          type: object
-          x-go-name: Output
+          $ref: '#/definitions/StatusStatistic'
       type: object
   robot_GetPropertyTagValuePairsOutput: {}
   robot_GetPropertyTagValueTreeOutput: {}
