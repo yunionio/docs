@@ -218,6 +218,12 @@ Cloudpods自身是一个完整的私有云，同时也可以统一纳管其他�
 
 ![多云管理](../images/cloudaccount.png)
 
+## All in One 部署视频
+
+本视频主要用来帮助大家了解如何使用 ocboot 部署工具快速以 All in One 的方式部署 Cloudpods 服务，链接如下：
+
+https://www.bilibili.com/video/BV19g411e7Eh/
+
 ## FAQ
 
 ### 1. 在 All in One 部署完成后宿主机列表没有宿主机？
