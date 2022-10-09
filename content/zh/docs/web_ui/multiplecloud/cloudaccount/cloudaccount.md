@@ -1047,14 +1047,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 3. 配置以下信息：
     - 名称：飞天云账号的名称。
     - 密钥ID/密码：通过Access Key验证方式对接阿里云平台，Access Key由密钥ID（Access Key ID）和密码（Access Key Secret）组成。具体请参考[飞天云相关参数获取方式](#飞天云相关参数获取方式)
-    - 虚拟机端点：必填，通过飞天API的ESC Endpoint信息对接飞天云的虚拟机资源。
-    - VPC端点：必填，通过飞天API的VPC Endpoint信息对接飞天云的VPC资源。
-    - 负载均衡端点：选填，通过飞天API的SLB Endpoint信息对接飞天云的负载均衡资源。
-    - 对象存储端点：选填，通过飞天API的OSS Endpoint信息对接飞天云的对象存储资源。
-    - RDS端点：选填，通过飞天API的RDS Endpoint信息对接飞天云的RDS资源。
-    - Redis端点：选填，通过飞天API的Redis Endpoint信息对接飞天云的Redis资源。
-    - 操作日志端点：选填，通过飞天API的ActionTrai Endpoint信息对接飞天云的操作日志。
-    - 监控端点：选填，通过飞天API的Metrics Endpoint信息对接飞天云的监控。
+    - 秘钥ID: 假设秘钥是: NbzBaQ94MPzjZf5i, 可查看的最高组织Id是: 4, 则秘钥需要填写: NbzBaQ94MPzjZf5i/4
     - 域：选择云账号所属的域。当云账号私有状态下，域下所有项目用户都可以使用云账号创建资源。
    - 资源归属项目：选择将云账号上的资源同步到{{<oem_name>}}平台的本地项目。
    - 代理：当云账号需要代理才可以正常访问时设置该项，留空代表直连。如没有合适的代理，直接单击“新建”超链接，在弹出的新建代理对话框中设置相关参数，创建代理。
@@ -1075,6 +1068,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 4. 在组织结构中，单击要添加的上级组织后面的设置图标。
 5. 在弹出的下拉菜单中，选择 **_"获取AccessKey"_** 。
 6. 在弹出的对话框中，查看组织Accesskey信息。
+7. 组织Id获取需要打开浏览器调试，查找ListResourceGroup API请求, 在返回值里面找第一个organizationID
 
 ##### 飞天云获取Endpoint
 
