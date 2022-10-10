@@ -67,5 +67,5 @@ bash-5.1# openstackcli host-list
 ```
 ![a19f70a99ed18986ac2edd60ea86be3](https://user-images.githubusercontent.com/32036395/157816747-cb7466dd-679e-4e89-bacc-c58446950bfa.png)
 
-解决方法参考 https://www.cloudpods.org/zh/docs/multicloud/cloudaccounts/tutorial/create/
+解决方法参考 [新建OpenStack账号](../../../../web_ui/multiplecloud/cloudaccount/cloudaccount/#新建openstack账号)
 
