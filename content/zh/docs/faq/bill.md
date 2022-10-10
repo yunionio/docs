@@ -2,6 +2,7 @@
 title: "费用"
 linktitle: "费用"
 weight: 9
+edition: ee
 description: >
  帮助用户解决费用、账单等方面的问题。
 ---
