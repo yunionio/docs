@@ -1,21 +1,8 @@
 ---
 title: "运维监控"
 weight: 10
-oem_ignore: true
 description: 帮助用户解决产品运维、数据迁移、告警、监控方面的问题。
 ---
-
-## License如何计算？
-
-平台上License根据使用场景分为两类，私有云授权和云管授权。
-
-![](../../admin/images/license/licenseinfo1.png)
-
-私有云授权按照宿主机的CPU数量计算，云管授权按照虚拟机数量计算。
-
--	CPU数量：即基础设施中启用状态的服务器的CPU颗数（Socket数）总和，如四路x86服务器有两颗CPU，在基础设施中启用该服务器，License已使用数量为2。
--	虚拟机数量：云管平台纳管的各个公有云平台的虚拟机数量的总和。
-
 
 ## Host服务问题
 
