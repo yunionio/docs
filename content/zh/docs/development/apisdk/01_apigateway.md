@@ -56,7 +56,7 @@ climc service-config-edit yunionapi
   enable_backend_service_proxy: true
 ```
 
-设置后重启apigateway服务。
+设置后需重启apigateway服务。
 
 ### SDK和climc使用统一API入口
 
