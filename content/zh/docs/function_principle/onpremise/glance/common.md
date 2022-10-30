@@ -60,7 +60,12 @@ description: >
 ### win10 iso：
 
 链接：https://pan.baidu.com/s/1NvxIjXC8GozqcECwT4xsFA?pwd=0oh2 
-提取码：0oh2     
+提取码：0oh2
+
+### win10 qcow2：
+
+链接：https://pan.baidu.com/s/17ynz8kb0JCjXA9us3pt05w?pwd=e2ya 
+提取码：e2ya 
 
 ### windows server 2012-R2：
 
