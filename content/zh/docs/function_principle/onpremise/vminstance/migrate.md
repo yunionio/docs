@@ -17,11 +17,12 @@ description: >
 
 热迁移和冷迁移比起来，能够在不关机，保证业务运行的情况下，将虚拟机从一台宿主机迁移到另一台宿主机。
 
-但热迁移默认要求目标宿主机和源宿主机的 CPU microcode 一致，可以通过以下命令查看 CPU 的 microcode：
+但热迁移默认要求目标宿主机和源宿主机的 CPU 型号与 CPU microcode 一致，可以通过以下命令查看 CPU 的型号和 microcode：
 
 ```bash
-$ cat /proc/cpuinfo | grep microcode | uniq
-microcode       : 0xca
+$ cat /proc/cpuinfo | grep -e 'model name' -e 'microcode'  | sort | uniq
+microcode       : 0x42e
+model name      : Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz
 ```
 
 ## Climc
@@ -109,7 +110,7 @@ $ climc server-migrate --rescue-mode \
 
 ```bash
 $ climc server-live-migrate --help
-Usage: climc server-live-migrate [--skip-cpu-check] [--prefer-host PREFER_HOST] <ID>
+Usage: climc server-live-migrate [--skip-cpu-check] [--skip-kernel-check] [--enable-tls] [--quickly-finish] [--max-bandwidth-mb MAX_BANDWIDTH_MB] [--keep-dest-guest-on-failed] [--help] [--prefer-host PREFER_HOST] <ID>
 
 Live-Migrate server
 
@@ -120,6 +121,18 @@ Positional arguments:
 Optional arguments:
     [--skip-cpu-check]
         Skip check CPU mode of the target host
+    [--skip-kernel-check]
+        Skip target kernel version check
+    [--enable-tls]
+        Enable tls migration
+    [--quickly-finish]
+        quickly finish, fix downtime after a few rounds of memory synchronization
+    [--max-bandwidth-mb MAX_BANDWIDTH_MB]
+        live migrate downtime, unit MB
+    [--keep-dest-guest-on-failed]
+        do not delete dest guest on migrate failed, for debug
+    [--help]
+        Print usage and this help message and exit.
     [--prefer-host PREFER_HOST]
         Server migration prefer host id or name
 ```
@@ -132,18 +145,39 @@ Optional arguments:
 $ climc server-live-migrate vm1
 ```
 
-- 热迁移默认要求目标宿主机和虚拟机当前所在的宿主机 CPU microcode 、内核版本等一致， 如果不一致该宿主机则会被调度器过滤掉，如果环境里面实在没有 CPU 一致的目标宿主机，可以使用 `--skip-cpu-check` 绕过 CPU microcode 的检查
+- 热迁移默认要求目标宿主机和虚拟机当前所在的宿主机 CPU 、内核版本等一致， 如果不一致该宿主机则会被调度器过滤掉，如果环境里面实在没有 CPU 一致的目标宿主机，可以使用 `--skip-cpu-check` 绕过 CPU 的检查。默认不限制热迁移的带宽。默认 Downtime 最大是 300ms。
 
 ```bash
 $ climc server-live-migrate --skip-cpu-check vm1
 ```
 
-- 指定 vm1 热迁移到目标宿主机 host1 ，并且绕过 CPU microcode 检查
+- 指定 vm1 热迁移到目标宿主机 host1 ，并且绕过 CPU 检查
 
 ```bash
 $ climc server-live-migrate \
     --prefer-host host1 \
     --skip-cpu-check \
+    vm1
+```
+
+- 指定 vm1 热迁移到目标宿主机 host1 ，并且绕过 CPU 检查，并且限制热迁移带宽(最低 100 MB/s)
+
+```bash
+$ climc server-live-migrate \
+    --prefer-host host1 \
+    --skip-cpu-check \
+    --max-bandwidth-mb 100 \
+    vm1
+```
+
+- 指定 vm1 热迁移到目标宿主机 host1 ，并且绕过 CPU 检查，并且限制热迁移带宽和打开快速收敛。快速收敛是让虚机内存拷贝一定轮次后调整热迁移 downtime 让热迁移完成最后一次拷贝。
+
+```bash
+$ climc server-live-migrate \
+    --prefer-host host1 \
+    --skip-cpu-check \
+    --max-bandwidth-mb \
+    --quickly-finish \
     vm1
 ```
 
@@ -157,31 +191,14 @@ $ climc server-live-migrate \
 
 通过如下步骤开启宕机自动迁移：
 
-##### 修改宿主机host配置
-
 ```bash
-vi /etc/yunion/host.conf
-把
-enable_health_checker: false
-改为true
-enable_health_checker: true
+$ climc host-auto-migrate-on-host-down --help
+Usage: climc host-auto-migrate-on-host-down [--auto-migrate-on-host-shutdown {enable,disable}] [--help] [--auto-migrate-on-host-down {enable,disable}] <ID>
+
+# 分为宕机自动迁移和关机自动迁移，要打开关机自动迁移必须同时打开宕机自动迁移
+# 只打开宕机自动迁移
+$ climc host-auto-migrate-on-host-down --auto-migrate-on-host-down enable <host_id>
+# 同时打开关机自动迁移和宕机自动迁移
+$ climc host-auto-migrate-on-host-down --auto-migrate-on-host-down enable --auto-migrate-on-host-shutdown enable <host_id>
 ```
 
-##### 修改region服务的配置
-
-```bash
-climc service-config-show region2
-climc service-config-edit region2
-把
-enable_host_health_check: false
-改为
-enable_host_health_check: true
-climc host-auto-migrate-on-host-down --enable  {宿主机ID}
-```
-
-##### 重启服务
-
-```bash
-kubectl -n onecloud rollout restart daemonset default-host
-kubectl -n onecloud rollout restart deployment default-region
-```
