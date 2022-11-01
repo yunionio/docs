@@ -18,7 +18,7 @@ Helm仓库用于存储虚拟机和容器应用等。
 推荐使用的Helm仓库的URL：
 
 - 虚拟机Helm仓库：https://cloudpods-charts.oss-cn-hongkong.aliyuncs.com/
-- 容器Helm仓库：https://apphub.aliyuncs.com
+- 容器Helm仓库：http://mirror.azure.cn/kubernetes/charts/
 {{% /alert %}}
 
 
