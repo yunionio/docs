@@ -198,7 +198,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     Ubuntu 20.04版本以及之后版本，请执行以下脚本启用脚本：
 
     ```bash
-    $ sudo /lib/systemd/systemd-sysv-install enable init-sshkey
+    $ sudo /lib/systemd/systemd-sysv-install enable ssh-initkey
     ```
 
 4. （Ubuntu 16.04以上版本设置）关闭网卡持久化功能，保证网卡名称为“eth0，eth1”形式。修改/etc/default/grub文件，在GRUB_CMDLINE_LINUX中添加"net.ifnames=0 biosdevname=0"参数。

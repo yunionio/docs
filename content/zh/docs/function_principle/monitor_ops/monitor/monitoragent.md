@@ -6,22 +6,21 @@ description: >
   监控代理的工作原理
 ---
 
-监控 Agent 是运行在虚拟机上的 daemon，采集监控数据，并把数据传回{{<oem_name>}}的 InfluxDB。
+监控代理 是运行在虚拟机上的 telegraf 守护进程，采集监控数据，并把数据传回{{<oem_name>}}的 InfluxDB。
 
-由此，可以衍生出三个问题：如何安装 Agent，如何采集数据，以及如何传输监控数据。
+本文介绍三个问题：如何安装监控代理，如何采集监控数据，以及如何传输监控数据。
 
-## 如何安装 Agent
+## 安装监控代理
 
-{{<oem_name>}}使用 Ansible 将 Agent 安装到虚拟机上，为了能够做到这一点，我们需要保证
-{{<oem_name>}}能够连接到虚拟机并且能够登录到虚拟机；这里我们先假设{{<oem_name>}}能够过连接到
-虚拟机，故而来优先讨论解决登录问题。
+针对KVM虚拟机，平台支持在创建虚拟机时或关机时自动安装telegraf二进制和服务，安装路径在 /opt/.cloud-monitor/。
+
+针对运行时的KVM虚拟机，以及纳管的虚拟机，{{<oem_name>}} 使用 ansible 将 Agent 安装到虚拟机上。 为此，我们需要保证 ansible 控制服务能够 ssh 登录虚拟机
 
 ![host_install](../images/20210805163249.png)
 
-### 如何登录虚拟机
+### SSH免密登录虚拟机
 
-假设{{<oem_name>}}已经能够连接到 VPC 内部的虚拟机，比如说通过 NAT网关或者虚拟机已经绑
-定了 EIP 等。
+{{<oem_name>}}已经能够连接到 VPC 内部的虚拟机，比如说通过 NAT网关或者虚拟机已经绑定了 EIP 等。
 
 ![connect_direct](../images/20210805163416.png)
 
@@ -45,10 +44,10 @@ description: >
 
 ![exec_script](../images/20210805164239.png)
 
-### 如何连接虚拟机
+### ansible服务访问虚拟机
 
-{{<oem_name>}}不能直接连接到虚拟机，是一种最广泛的情况。比如公有云 VPC 内部且没有配置
-Nat 以及 EIP 的虚拟机。对于此种情况，我们使用 SSH 代理，具体来说是 Local Port 
+{{<oem_name>}}的ansible服务一般不能直接访问云平台内的虚拟机。比如公有云 VPC 内部且没有配置
+NAT 以及 EIP 的虚拟机。对于此种情况，我们使用 SSH 代理，具体来说是 Local Port 
 Forwarding。
 
 #### SSH Local Port Forwarding 
@@ -73,22 +72,27 @@ proxyB 会把请求转发到`172.31.25.194:80`
 
 然后 VMA 只要访问`10.127.30.251:12345`就能够访问 VMB 上的 web 服务。
 
-## 如何收集数据
+## 采集监控数据
 
-我们的监控数据存储在 InfluxDB 中，所以采集数据的 Agent 优先选择了 Telegraf，在其
-基础上修改了一些代码并定制了配置文件以满足{{<oem_name>}}采集数据的要求。
+监控数据存储在 InfluxDB 服务中，所以采集数据的 Agent 优先选择了 Telegraf，在其基础上修改了一些代码并定制了配置文件以满足{{<oem_name>}}采集数据的要求。
 
 配置主要描述了需要什么样的监控数据，数据的标签以及数据存储的地址。
 
-## 如何传输监控数据
+## 上报监控数据
 
-最简单的，如果虚拟机可以直接连接到{{<oem_name>}}中的 InfluxDB，那么数据就可以直接传输
-回来。
+Telegraf 可以通过以下几种方式向influxdb上报数据
 
-在安装 Agent 的过程中，{{<oem_name>}}回去检测是否可以从虚拟机直接访问 InfluxDB，如何不
-可以，就要使用 SSH 代理，具体来说是 Remote Port Forwarding。
+### 直接上报
+
+如果虚拟机可以直接连接到{{<oem_name>}}中的 InfluxDB，那么数据就可以直接上报。一般KVM虚拟机，裸金属都适用这个场景。
+
+如果是KVM虚拟机，可以向虚拟机所在宿主机本地的metadata服务接口上报监控数据，上报地址为：http://169.254.169.254/monitor 
+
+通过向metadata上报数据，就不要求云平台的 InfluxdDB 必须要被虚拟机网络访问。
 
 ### SSH Remote Port Forwarding
+
+如果主机无法直接访问influxdb，则需要设置ssh代理服务，通过SSH Remote Port Forwarding 建立从虚拟机到Influxdb的通信通道。
 
 ![question2](../images/20210805165957.png)
 
