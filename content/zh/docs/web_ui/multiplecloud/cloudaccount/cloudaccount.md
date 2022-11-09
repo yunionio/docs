@@ -1089,7 +1089,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
 2. 选择云平台为HCSO，单击 **_"下一步：配置云账号"_** 按钮，进入配置云账号页面。
 3. 配置以下参数：
     - 名称：HCSO账号的名称。
-    - 密钥ID/密码：通过Access Key验证方式对接HCSO平台，Access Key由密钥ID（Access Key ID）和密码（Access Key Secret）组成。具体请参考[HCSO相关参数获取方式](#HCSO相关参数获取方式)
+    - 密钥ID/密码：通过Access Key验证方式对接HCSO平台，Access Key由密钥ID（Access Key ID）和密码（Access Key Secret）组成。具体请参考[HCSO相关参数获取方式](#hcso相关参数获取方式)
     - 默认区域/端点(Endpoint))域名：以地址iam.cn-north-1.test.com为例. 其中`iam`指统一身份认证服务,`cn-north-1`指端点区域,`test.com`即端点(Endpoint)域名。
     - 统一认证服务端点/弹性云服务器端点/虚拟私有云端点/镜像服务端点/云硬盘端点/分布式缓存端点/弹性负载均衡端点/对象存储服务端点/关系型数据库端点/NAT网关端点/云审计服务端点/监控服务端点/企业项目端点/文件系统（SFS Turbo）端点：选填，通过API使用资源时，需要指定对应的终端节点，请向企业管理员获取终端节点信息。
     - 子网DNS：设置环境中的子网默认DNS地址，最多可以设置两个，请使用英文','隔开.例如： 10.125.0.26,10.125.0.27。
