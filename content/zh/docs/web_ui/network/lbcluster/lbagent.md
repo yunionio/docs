@@ -90,7 +90,7 @@ $ climc project-add-user system lbagent admin
 $ climc sshkeypair-show --admin
 ``` 
 {{% /alert %}}
-    - Yum源地址：Yum源地址，[https://yunioniso.oss-cn-beijing.aliyuncs.com/iso/{version}/rpms](https://yunioniso.oss-cn-beijing.aliyuncs.com/iso/{version}/rpms)，且建议不勾选Yum源TLS校验。
+    - Yum源地址：Yum源地址，[https://yunioniso.oss-cn-beijing.aliyuncs.com/iso/3.9/rpms](https://yunioniso.oss-cn-beijing.aliyuncs.com/iso/3.9/rpms)，且建议不勾选Yum源TLS校验。
      
 3. 单击 **_"确定"_** 按钮，弹出部署对话框，查看节点的部署情况。
 4. 若部署未执行完成，可再次单击 **_"部署"_** 按钮，在弹出的部署对话框中的单击”任务正在执行中框中“提示框的”详情“超链接，查看节点的部署情况。
