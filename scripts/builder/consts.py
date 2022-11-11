@@ -1,8 +1,10 @@
+import os
+
 MODE_ONLINE = 'online'
 MODE_OFFLINE = 'offline'
 MODE_OEM = 'oem'
 
-VERSION_ARRAY = [
+DEFAULT_VERSION_ARRAY = [
     '3.9',
     '3.8',
     '3.7',
@@ -11,3 +13,11 @@ VERSION_ARRAY = [
     '3.3',
     '3.2'
 ]
+
+
+def VERSION_ARRAY():
+    # VERSIONS='3.9,3.8'
+    versions = os.environ.get('VERSIONS', None)
+    if versions:
+        return versions.split(',')
+    return DEFAULT_VERSION_ARRAY
