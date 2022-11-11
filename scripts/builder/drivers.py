@@ -98,7 +98,7 @@ class BaseDriver(object):
         self.update_branch(branch)
 
     def multi_versions_build(self, content_dir, args):
-        versions = VERSION_ARRAY
+        versions = VERSION_ARRAY()
         cur_branch = run_process('git rev-parse --abbrev-ref HEAD')
         print("args.out_fetch: %s" % args.out_fetch)
         if not args.out_fetch:
