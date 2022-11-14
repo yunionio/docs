@@ -144,3 +144,5 @@ $ /opt/yunion/bin/ocadm init phase upload-certs | grep -v upload-certs
 $ kubectl get pods -n onecloud -o wide | grep host | grep $your-reset-node
 $ kubectl delete pods -n onecloud default-host-xxxx
 ```
+
+以上手动的步骤参考了 ocboot join master-node 的逻辑，可参考 [https://github.com/yunionio/ocboot/blob/master/onecloud/roles/master-node/tasks/main.yml](https://github.com/yunionio/ocboot/blob/master/onecloud/roles/master-node/tasks/main.yml) 。
