@@ -102,3 +102,45 @@ $ ./ocboot.py install ./config-k8s-ha.yml
 等待部署完成后，就可以使用浏览器访问 https://10.127.190.10 (VIP), 输入用户名 `admin` 和密码 `admin@123`，进入前端。
 
 另外部署完成后，可以给已有集群添加节点，参考文档：[添加计算节点](../host)。
+
+## 常见问题
+
+### 1. 如何手动重新添加控制控制节点？
+
+3个控制节点都会运行 kube-apiserver, etcd 这些关键服务，如果遇到某一个节点遇到 etcd 数据不一致，可以将该节点 reset 后重新加入集群，步骤如下：
+
+```bash
+# 到其他正常的控制节点创建 join token
+$ export KUBECONFIG=/etc/kubernetes/admin.conf
+$ ocadm token create --description "ocadm-playbook-node-joining-token" --ttl 90m
+2fmpbx.7zikd8sp5uhaxrjr
+
+# 获取控制节点认证
+$ /opt/yunion/bin/ocadm init phase upload-certs | grep -v upload-certs
+6150f8da2dcdf3a8a730f407ddce9f1cb9f24b15ffa4e4b3680e16ed40201cf0
+
+##########  注意下面的命令需要登陆到需要重新加入的节点执行  ###########
+# 如果该节点曾经作为计算节点加入过云平台
+# 需要备份当前宿主机 /etc/yunion/host.conf 配置
+[your-reset-node] $ cp /etc/yunion/host.conf /etc/yunion/host.conf.manual.bk
+
+# 登陆到需要重新 reset 加入的节点，reset 当前的 kubernetes 环境
+[your-reset-node] $ kubeadm reset -f
+
+# 假设当前的网卡为 bond0(如果不做 bond ，物理网卡一般为 eth0 之类的名称)，ip 为 172.16.84.40，需要加入集群 172.16.84.101:6443 集群
+[your-reset-node] $ ocadm join \
+        --control-plane 172.16.84.101:6443 \ # 加入的目标集群
+        --token 2fmpbx.7zikd8sp5uhaxrjr --certificate-key 6150f8da2dcdf3a8a730f407ddce9f1cb9f24b15ffa4e4b3680e16ed40201cf0 --discovery-token-unsafe-skip-ca-verification \ # 加入认证信息
+        --apiserver-advertise-address 172.16.84.40 --node-ip 172.16.84.40 \ # 该节点 ip
+        --as-onecloud-controller \ # 作为 cloudpods 控制节点
+        --enable-host-agent \ # 作为 cloudpods 计算节点
+        --host-networks 'bond0/br0/172.16.84.40' \ # 计算节点的桥接网络，意思创建 br0 网桥，并把 bond0 加入进来，给 br0 网桥配置 ip 172.16.84.40
+        --high-availability-vip 172.16.84.101 --keepalived-version-tag v2.0.25 # keepalived 的 vip ，保证 kube-apiserver 的高可用性
+
+# 等待加入完成后，还原 /etc/yunion/host.conf.manual.bk 配置
+[your-reset-node] $ cp /etc/yunion/host.conf.manual.bk /etc/yunion/host.conf
+
+# 重启 host 服务
+$ kubectl get pods -n onecloud -o wide | grep host | grep $your-reset-node
+$ kubectl delete pods -n onecloud default-host-xxxx
+```
