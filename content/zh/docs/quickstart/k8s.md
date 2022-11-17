@@ -15,6 +15,8 @@ description: >
 
 已经验证过的Kubernetes发行版本包括：
 - 阿里云 ACK
+- Azure AKS
+- 腾讯云 TKE
 
 该部署方法仅适用于多云管理功能的使用，比如管理公有云(aws, 阿里云, 腾讯云等)或者其它私有云(zstack, openstack 等)，无法使用内置私有云相关功能(因为内置私有云需要节点上面安装配置 qemu, openvswitch 等各种虚拟化软件)
 {{% /alert %}}
@@ -25,12 +27,12 @@ Cloudpods 相关的组件运行在 Kubernetes 之上，环境以及相关的软�
 
 - Kubernetes 集群配置要求:
     - Kubernetes 版本: 1.15 ~ 1.24
-    - 系统配置：至少 CPU 4核, 内存 8G, 节点有存储 100G
+    - 系统配置：至少 CPU 4核, 内存 8G, 节点存储 100G
     - 节点需要能够访问公网
     - 提供 ingress controller
     - 内部 coredns 解析
     - 支持 Helm，安装 helm 工具请参考 https://helm.sh/docs/intro/install/
-- 提供 Mysql 数据库(可选): 可以选择使用连接的数据库是在部署在 Kubernetes 集群内还是使用外部的，生产环境建议使用外部单独管理的 Mysql
+- 提供 Mysql 数据库(可选): 可以选择使用连接的数据库是在部署在 Kubernetes 集群内还是使用外部的，生产环境建议使用外部单独管理的 Mysql (如果公有云RDS服务)
 
 ## 部署
 
