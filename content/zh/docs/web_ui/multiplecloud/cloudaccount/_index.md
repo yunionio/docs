@@ -17,7 +17,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <th rowspan="2"> 分类 </th>
         <th rowspan="2">云资源类型</th>
         <th style="text-align: center;" colspan="11">公有云</th>
-        <th style="text-align: center;" colspan="7">私有云</th>
+        <th style="text-align: center;" colspan="11">私有云</th>
     </tr>
     <tr>
         <th>阿里云</th>
@@ -38,10 +38,18 @@ table tr th, table tr td  { border:1px solid #808080; }
         <th>OpenStack</th>
         <th>VMware</th>
         <th>{{<oem_name>}}</th>
+        <th>DStack</th>
+        <th>Nutanix</th>
+        <th>BingoCloud</th>
+        <th>inCloud Sphere</th>
     </tr>
     <tr>
         <th rowspan="7">主机</th>
         <th>虚拟机</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -81,6 +89,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>系统镜像</th>
@@ -102,9 +114,17 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td>Y</td>
+        <td>Y</td>
     </tr>
     <tr>
         <th>硬盘</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -144,6 +164,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td></td>
         <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>自动快照策略</th>
@@ -165,6 +189,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>安全组</th>
@@ -186,9 +214,13 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td></td>
         <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
-        <th rowspan="8">网络</th>
+        <th rowspan="9">网络</th>
         <th>专有网络VPC</th>
         <td>Y</td>
         <td>Y</td>
@@ -207,6 +239,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td></td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td>Y</td>
         <td>Y</td>
     </tr>
     <tr>
@@ -227,6 +263,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
     </tr>
@@ -250,6 +290,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td></td>
         <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td>Y</td>
+        <td></td>
     </tr>
     <tr>
         <th>NAT网关</th>
@@ -271,6 +315,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>DNS解析</th>
@@ -279,6 +327,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -313,12 +365,20 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>CDN</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -355,9 +415,38 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
-        <th rowspan="2">存储</th>
+        <th>IPv6网关</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th rowspan="3">存储</th>
         <th>对象存储</th>
         <td>Y</td>
         <td>Y</td>
@@ -377,6 +466,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>NAS文件存储</th>
@@ -388,6 +481,35 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th>表格存储</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
         <td></td>
         <td></td>
         <td></td>
@@ -420,6 +542,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>Redis</th>
@@ -441,12 +567,20 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>MongoDB</th>
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -484,12 +618,20 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>Elasticsearch</th>
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -527,6 +669,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>Kubernetes集群新建</th>
@@ -548,6 +694,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>监控</th>
@@ -570,6 +720,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td>Y</td>
         <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>费用</th>
@@ -592,6 +746,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th rowspan="2">其他</th>
@@ -614,6 +772,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
     </tr>
     <tr>
         <th>免密登录云平台</th>
@@ -630,6 +792,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
