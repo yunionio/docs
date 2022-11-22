@@ -140,9 +140,10 @@ $ sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
     - MySQL Host IP：MySQL服务器的IP地址；
     - MySQL Port Number：MySQL服务器的端口号。
     - MySQL Username：连接MySQL服务器的用户名，推荐使用root用户，如果使用其他用户，还需要为用户授权。
+
     ```bash
-GRANT ALL PRIVILEGES ON * . * TO '<USERNAME>'@'%' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON * . * TO '<USERNAME>'@'localhost' WITH GRANT OPTION;
+    GRANT ALL PRIVILEGES ON * . * TO '<USERNAME>'@'%' WITH GRANT OPTION;
+    GRANT ALL PRIVILEGES ON * . * TO '<USERNAME>'@'localhost' WITH GRANT OPTION;
     ```
     - MySQL Password：连接MySQL服务器的用户密码。
     ![](../images/k8s-connectmysql1.png)
@@ -239,6 +240,19 @@ yun::init::step yun::tui::reboot
 1. 以root用户ssh远程登录服务器,至此host节点部署完成。
 
 2. 用户部署完成后，可在{{<oem_name>}}平台宿主机页面中查看到host节点。宿主机注册到云管平台上后默认为禁用状态，需要在界面上启用宿主机，启用状态的宿主机可以用于创建虚拟机。
+
+{{% alert title="注意" color="warning" %}}
+平台若部署在虚拟机上且需要内置私有云功能，需要手工启用host-agent组件，
+具体命令如下：
+- 查看节点名称
+
+    kubectl get nodes 
+
+- 启用host-agent
+
+    ocadm node enable-host-agent  --node 节点名称
+
+{{% /alert %}}
 
 ## 启用Baremetal服务
 
