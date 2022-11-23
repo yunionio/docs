@@ -12,7 +12,7 @@ description: >
 
 ### 停止onecloud-operator
 
-集群由onecloud-operator创建并维护，为了暂停集群服务，需要暂时停止operator的运行。方法为修改deployment onecloud-operator，修改pod的replicas为0，从而删除operator的实例
+集群由onecloud-operator创建并维护，为了暂停集群服务，需要暂时停止operator的运行。方法为修改deployment onecloud-operator，修改pod的replicas为0，从而删除operator的实例（注意：保留onecloud-operator deployment，仅修改replicas，删除对应pod）。
 
 ```
 kubectl -n onecloud edit deployment onecloud-operator
@@ -23,7 +23,7 @@ kubectl -n onecloud edit deployment onecloud-operator
 通过删除控制服务的deployment实现停止控制服务。然而，为了不影响虚拟机的正常运行，部分控制服务应保持继续运行：default-ovn-north、default-influxdb。
 
 ```
-kubectl -n onecloud get deployments | awk '{print $1}' | grep -v default-ovn-north | grep -v default-influxdb | xargs kubectl -n onecloud delete deployments
+kubectl -n onecloud get deployments | awk '{print $1}' | grep -vE 'default-ovn-north|default-influxdb|onecloud-operator' | xargs kubectl -n onecloud delete deployments
 ```
 
 ### 停止部分daemonset服务
