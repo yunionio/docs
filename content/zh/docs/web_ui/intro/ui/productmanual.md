@@ -1,7 +1,6 @@
 ---
 title: "产品手册"
 weight: 11
-edition: ee
 description: >
     该功能用于查看产品配套手册。
 ---
