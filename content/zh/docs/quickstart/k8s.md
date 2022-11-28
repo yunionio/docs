@@ -15,8 +15,9 @@ description: >
 
 已经验证过的Kubernetes发行版本包括：
 - 阿里云 ACK
-- Azure AKS
 - 腾讯云 TKE
+- Azure AKS
+- AWS ECS
 
 该部署方法仅适用于多云管理功能的使用，比如管理公有云(aws, 阿里云, 腾讯云等)或者其它私有云(zstack, openstack 等)，无法使用内置私有云相关功能(因为内置私有云需要节点上面安装配置 qemu, openvswitch 等各种虚拟化软件)
 {{% /alert %}}
