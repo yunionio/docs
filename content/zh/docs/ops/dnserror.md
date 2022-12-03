@@ -81,12 +81,23 @@ kubectl -n kube-system edit daemonset calico-node
           value: can-reach=10.61.1.254
 ```
 
+默认集群配置的 IP_AUTODETECTION_METHOD 为 can-reach=<primary_master_ip> ，比如上面例子中的 10.61.1.254 应该就是第一个 K8s 控制节点的 IP 。
+
+IP_AUTODETECTION_METHOD 还可以配置为其他的值，可以参考 calico 官方文档：[Configuring calico/node/Manifest](https://projectcalico.docs.tigera.io/reference/node/configuration#ip-autodetection-methods)。
+
+其中常用的配置可以设置成：`IP_AUTODETECTION_METHOD=kubernetes-internal-ip`，这个就会使用 K8s 节点的 Status.Addresses 作为ip-in-ip 发送的端口。
+
+
 ### 链路问题
 
 如上一步确认无误，则需要确认calico的报文能够正常发送到对端节点，可通过tcpdump在源和目的节点抓包确认。
 
 ```bash
-tcpdump -i <if_of_calico_node> -nnn ip proto 4 and host <ip_of_dst_node>
+# 格式为
+# tcpdump -i <if_of_calico_node> -nnn "ip proto 4" and host <ip_of_dst_node>
+
+# 比如要在控制节点的 br0 上抓来自于计算节点(IP: 10.130.0.13) 的 ip-in-ip 包，命令如下：
+$ tcpdump -i br0 -nnn "ip proto 4" and host 10.130.0.13
 ```
 
 ## 常见故障原因
