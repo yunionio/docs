@@ -111,7 +111,7 @@ $ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./o
 可以直接执行run.py来快速部署一个AllInOne的Cloudpods实例，其中<host_ip>为部署所在主机的主IP地址。
 
 ```bash
-$ ./run.py <host_ip>
+$ python3 ./run.py <host_ip>
 ```
 
 这种方式其实是自动在当前目录生成一个名为config-allinone-current.yaml的配置文件，基于该配置文件的参数来执行部署。
@@ -164,7 +164,7 @@ EOF
 
 ```bash
 # 开始部署
-$ ./run.py ./config-allinone.yml
+$ python3 ./run.py ./config-allinone.yml
 ```
 
 ## 部署完成
