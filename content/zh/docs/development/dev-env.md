@@ -68,7 +68,7 @@ docker --version
 
 ### 配置 Docker
 
-后续的代码编译和打包使用了 [docker buildx](https://github.com/docker/buildx/) 的功能，需要做在让 docker daemon 开启 experimental 特性。
+后续的代码编译和打包使用了 [docker buildx](https://github.com/docker/buildx/) 的功能，需要做在让 docker daemon 开启 experimental 特性，用于编译不同架构的镜像，可参考 docker 官方的 [Building multi-platform images](https://docs.docker.com/build/building/multi-platform/) 文档。
 
 ```bash
 # 在 docker daemon 的配置里面打开 experimental 特性
@@ -79,6 +79,10 @@ $ cat /etc/docker/daemon.json
 
 # 重启 docker 服务
 $ systemctl restart docker
+
+# 打开 binfmt_misc 特性，用于 qemu 模拟编译其他架构镜像
+# 详细说明参考：https://docs.docker.com/build/building/multi-platform/#building-multi-platform-images
+$ docker run --privileged --rm tonistiigi/binfmt --install all
 
 # 创建 buildx context
 $ docker buildx create --use --name build --node build --driver-opt network=host
