@@ -46,13 +46,18 @@ $ git clone https://github.com/yunionio/ocboot
 $ cd charts/cloudpods
 ```
 
+{{% alert title="注意" color="warning" %}}
+接下来会使用 helm 安装 cloudpods chart，在使用 `helm install` 的时候必须指定 `--namespace onecloud`，不能使用其他的 namespace。
+
+原因是 operator 服务还不支持把平台的服务部署到其他 namespace ，这个后续会改进。
+{{% /alert %}}
+
 ### 测试环境安装
 
 测试环境安装方法如下，该方法会在 Kubernetes 集群里部署 mysql ，local-path-provisioner CSI 依赖插件，不需要连接集群之外的 mysql 。
 
 ```bash
 # 注意这里的 `--namespace onecloud` 不能改成其他的，必须是 onecloud
-# 原因是 operator 服务还不支持把平台的服务部署到其他 namespace ，这个后续会改进
 $ helm install --name-template default --namespace onecloud --debug  . -f values-dev.yaml  --create-namespace
 ```
 
@@ -116,13 +121,51 @@ $ helm install --name-template default --namespace onecloud --debug  . -f values
 +# 设置 ingress
  ingress:
    enabled: true
++  # 设置 ingress 的 className，比如集群里面使用 nginx-ingress-controller
++  # 这里的 className 就写 nginx
++  # className: nginx
    className: ""
 ```
 
 修改完 values-prod.yaml 文件后，用以下命令部署：
 
 ```bash
+# 注意这里的 `--namespace onecloud` 不能改成其他的，必须是 onecloud
 $ helm install --name-template default --namespace onecloud . -f values-prod.yaml  --create-namespace
+```
+
+## 查看部署服务状态
+
+使用 helm install 安装完 cloudpods chart 后，使用以下命令查看部署的 pod 状态。
+
+```bash
+# 正常运行情况下，在 onecloud namespace 下会有这些 pod
+$ kubectl get pods -n onecloud
+NAME                                               READY   STATUS    RESTARTS   AGE
+default-cloudpods-ansibleserver-779bcbc875-nzj6k   1/1     Running   0          140m
+default-cloudpods-apigateway-7877c64f5c-vljrs      1/1     Running   0          140m
+default-cloudpods-climc-6f4bf8c474-nj276           1/1     Running   0          139m
+default-cloudpods-cloudevent-79c894bbfc-zdqcs      1/1     Running   0          139m
+default-cloudpods-cloudid-67c7894db7-86czj         1/1     Running   0          139m
+default-cloudpods-cloudmon-5cd9866bdf-c27fc        1/1     Running   0          68m
+default-cloudpods-cloudproxy-6679d94fc7-gm5tx      1/1     Running   0          139m
+default-cloudpods-devtool-6db6f4d454-ldw69         1/1     Running   0          139m
+default-cloudpods-esxi-agent-7bcc56987b-lgpnf      1/1     Running   0          139m
+default-cloudpods-etcd-q8j5c29tm2                  1/1     Running   0          145m
+default-cloudpods-glance-7547c455d5-fnzqq          1/1     Running   0          140m
+default-cloudpods-influxdb-c9947bdc8-x8xth         1/1     Running   0          139m
+default-cloudpods-keystone-6cc64bdcc7-xhh7m        1/1     Running   0          145m
+default-cloudpods-kubeserver-5544d59c98-l9d74      1/1     Running   0          140m
+default-cloudpods-logger-8f56cd9b5-f9kbp           1/1     Running   0          139m
+default-cloudpods-monitor-746985b5cf-l8sqm         1/1     Running   0          139m
+default-cloudpods-notify-dd566cfd6-hxzr4           10/10   Running   0          139m
+default-cloudpods-operator-7478b6c64b-wbg26        1/1     Running   0          72m
+default-cloudpods-region-7dfd9b888-hsvv8           1/1     Running   0          144m
+default-cloudpods-scheduledtask-7d69b877f7-4ltm6   1/1     Running   0          139m
+default-cloudpods-scheduler-8495f85798-zgvq2       1/1     Running   0          140m
+default-cloudpods-web-5bc6fcf78d-4f7lw             1/1     Running   0          140m
+default-cloudpods-webconsole-584cfb4796-4mtnj      1/1     Running   0          139m
+default-cloudpods-yunionconf-677b4448b6-tz62m      1/1     Running   0          139m
 ```
 
 ## 创建默认管理用户
@@ -137,8 +180,11 @@ $ helm install --name-template default --namespace onecloud . -f values-prod.yam
 
 ```bash
 # 进入 climc pod
-$ kubectl exec -ti -n onecloud $(kubectl get pods -n onecloud | grep climc | awk '{print $1}') sh
-/ #
+$ kubectl exec -ti -n onecloud $(kubectl get pods -n onecloud | grep climc | awk '{print $1}') -- bash
+Welcome to Cloud Shell :-) You may execute climc and other command tools in this shell.
+Please exec 'climc' to get started
+
+bash-5.1#
 ```
 
 ### 创建用户
@@ -242,7 +288,7 @@ $ helm delete -n onecloud default
 
 ## 其它问题
 
-### 切换成开源/企业版本
+### 1. 如何切换成开源/企业版本？
 
 现在默认 k8s 部署的集群是开源版本(ee)，可以通过下面的操作切换成企业版本(ce)：
 
@@ -264,4 +310,20 @@ $ helm delete -n onecloud default
 
 ```bash
 $ helm upgrade -n onecloud default . -f values-prod.yaml
+```
+
+### 2. onecloud namespace 缺少 keystone, glance, region 等 pod
+
+如果执行 `helm install` 后，执行 `kubectl get pods -n onecloud` 发现只有 operator 这个 pod，而没有出现 keystone, glance, region 这些平台相关服务的 pod ，可以使用下面的命令查看 operator pod 的日志排查问题。
+
+出现这种情况的原因一般都是 operator 在创建 keystone, region 这些平台相关服务出现了错误。常见的问题有 operator 无法使用相关的 mysql 用户创建用户和数据库；或者创建了 keystone 服务后，又无法通过 K8s 内部 service 域名访问 keystone pod 等。
+
+```bash
+# 将 operator 的所有日志重定向到文件
+$ kubectl logs -n onecloud $(kubectl get pods -n onecloud | grep operator | awk '{print $1}') > /tmp/operator.log
+# 然后查看 /tmp/operator.log 里面有没有相关错误
+
+
+# 查看 operator 日志当中有没有 requeuing 关键字，一般错误会反馈到这里
+$ kubectl logs -n onecloud $(kubectl get pods -n onecloud | grep operator | awk '{print $1}') | grep requeuing
 ```
