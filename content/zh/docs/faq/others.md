@@ -34,7 +34,8 @@ description: >
 ## 开源版如何开启多租户功能？
 
 1. 需要开启三级权限，通过climc service-config-edit common且修改："non_default_domain_projects": true
-2. 三级权限修改后，无法关闭。
+2. 重启相关服务以便立即生效，在控制节点上执行 kubectl rollout restart deployment -n onecloud default-keystone default-apigateway 
+3. 三级权限修改后，无法关闭。
 
 ## API 有没有详细点的调用说明？
 
