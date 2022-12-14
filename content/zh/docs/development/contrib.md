@@ -57,11 +57,12 @@ $ git push origin feature/implement-x # push 分支到自己的 repo
 
 ```bash
 # 自行下载安装 github 的 cli 工具：https://github.com/github/hub
-# OSX 使用: brew install hub
+# macOS 使用: brew install hub
 # Debian: sudo apt install hub
 # 二进制安装: https://github.com/github/hub/releases
 
 # 设置github的用户名
+# 可已把该环境变量放到 ~/.bashrc 里面，如果使用的 zsh 则放到 ~/.zshrc 里面
 $ export GITHUB_USER=<your_username>
 
 # 使用脚本自动 cherry-pick PR 到 release 分支
@@ -80,3 +81,51 @@ $ git am --continue
 {{% alert title="注意" %}}
 提交 git 代码后需要书写 commit 内容，规范请参考: [Git 提交内容规范](../git-convention)。
 {{% /alert %}}
+
+## 开发效率提升推荐配置
+
+上述的提 PR 流程使用到了很多命令行操作，特别是在执行 `./scripts/cherry_pick_pull.sh` 脚本的时候会输入很多字符。以及每次执行该脚本都需要输入 github 的 token。重复执行这些操作会让人觉得浪费时间。
+
+下面提供一些配置和工具，可以提升一些命令行下的开发效率，请根据自己的实际需要选择配置。
+
+### 避免每次输入 github 认证信息
+
+每次 push 代码或者执行 cherry_pick_pull.sh 脚本的时候，都需要输入 github 账号和 token，可以配置 git credential cache 缓存输入的认证信息。
+
+```bash
+# tells Git to keep your password cached in memory for a particular amount of minutes
+$ git config --global credential.helper "cache --timeout=86400"
+```
+
+另外如果想实现 github 自动登陆，可以创建 `~/.netrc` 文件，里面配置 github 用户名和 token。
+
+```bash
+$ cat ~/.netrc
+machine github.com
+login $github_user
+password $github_token
+```
+
+### 提升命令重复输入效率
+
+在 shell 里面重复输入命令，可以通过'上键'或者'Ctrl-p' 输入上一条执行过的命令。
+
+另外一个好用的功能是输入 'Ctrl-r' 就会进入 shell 的已输入命令查找模式，然后在这个模式里面输入之前命令的关键字，就可以进行查找。如果不匹配重复按 'Ctrl-r' 就会继续找，找到想要的命令后，按下 'Enter' 就可以重复输入之前输入的命令。合理的使用 'Ctrl-r' 可以极大的提升重复相关命令的输入效率。
+
+另外推荐安装一个不错的命令行模糊查找工具(command-line fuzzy finder)，叫做 [fzf](https://github.com/junegunn/fzf) ，参考该文档安装 [fzf installation](https://github.com/junegunn/fzf#installation)。安装配置完该工具后，再使用 'Ctrl-r' ，就会进入一个命令行模糊查找的模式，比 shell 自带的 'Ctrl-r' 命令查找要好用。
+
+另外关于命令行下的使用思想，非常建议阅读这篇文章：[The Art of Command Line](https://github.com/jlevy/the-art-of-command-line)。
+
+### 美化 shell
+
+在 linux 和 macOS 系统自带的 shell 默认是 bash，进入 git 代码仓库，$PS1 是没有显示 git branch 等信息的，可以使用下面的方式美化系统的 shell，提供更舒适的命令行操作体验。
+
+下面提供2种方式美化 shell ，请根据自己需要选择其一就行：
+
+1. bash + [oh-my-bash](https://github.com/ohmybash/oh-my-bash) 的方式
+    - 系统自带 bash，所以只需要参考 [oh-my-bash 安装文档](https://github.com/ohmybash/oh-my-bash#getting-started)配置即可。
+
+2. zsh + [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh)：这种方式需要安装 zsh 和 ohmyzsh 插件，zsh 和 bash 类似都是 shell ，但提供更丰富的特性，结合 ohmyzsh 插件使用是很多开发者的选择
+    - zsh 安装参考文档: [安装 zsh](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
+    - ohmyzsh 插件安装参考: [安装 ohmyzsh](https://github.com/ohmyzsh/ohmyzsh#basic-installation)
+    - 另外需要注意的是 zsh 的默认配置文件在 `~/.zshrc`，如果之前在 `~/.bashrc` 里面加了一些环境变量，需要迁移到 `~/.zshrc` 里面。
