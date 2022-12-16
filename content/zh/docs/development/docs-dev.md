@@ -182,12 +182,6 @@ description: "document description"
 
 # edition 标记文档包含在ce(开源版)或者ee(企业版)，如果不设置则表示两个版本都会包含
 edition: ce
-
-# docscope 表示文档所属的作用域，这个在离线编译模式会用到，默认为 system ，可以设置为 domain 和 project
-docscope: project
-
-# oem_ignore 表示该文档会在 oem 模式下编译被忽略
-oem_ignore: true
 ```
 
 ### 预览文档
@@ -271,16 +265,13 @@ $ hugo serve --port 8088 -D
 
 ## 编译打包文档
 
-编译打包文档是指通过 hugo 这个工具，把文档转换成最终的 HTML 站点，最后发布到线上或者打包成一个容器镜像。
+编译打包文档是指通过 hugo 这个工具，把文档转换成最终的 HTML 站点，最后发布到线上。
 
 编译打包后的文档，有下面这4种输出结果，其中 ce 是 'Community Edition'，ee 是 'Enterprise Edition' 简写。
 
 - 在线文档：发布到线上
     - 开源版本(ce)：在线开源版文档，发布到 [https://www.cloudpods.org](https://www.cloudpods.org)
     - 企业版本(ee)：在线商业版文档，发布到 [https://docs.yunion.cn](https://docs.yunion.cn)
-- 离线文档：作为容器镜像打包
-    - 企业版本(ee)：商业版离线文档，集成到 Cloudpods 商业版本
-    - OEM 版本(ee)：商业版 OEM 离线文档，集成到 Cloudpods OEM 商业版本
 
 ### 在线文档
 
@@ -306,106 +297,4 @@ $ make ee-local-serve
 
 # 将 ee 文档编译成 HTML 站点
 $ make ee-build
-```
-
-### 离线文档
-
-离线文档最终是以容器镜像的方式打包，关于 docker 的设置请参考文档：[安装配置 Docker](../dev-env/#安装配置-docker)
-
-#### ee 商业版本
-
-```bash
-# 编译离线文档，最终的 HTML 站点会输出到 public 目录
-$ make ee-build-offline
-
-# 制作 ee 镜像
-$ REGISTRY=registry.cn-beijing.aliyuncs.com/yunionio TAG=your-test-tag make ee-image
-```
-
-#### OEM 商业版本
-
-```bash
-# 编译打包
-$ OEM=OEMCLOUD OEM_NAME=OEM_NAME \
-    REGISTRY=registry.cn-beijing.aliyuncs.com/yunionio TAG=your-test-tag \
-    make ee-image
-```
-
-## 生成 docx word 文档
-
-### 安装依赖
-
-依赖如下:
-
-- [pandoc](https://github.com/jgm/pandoc): 将 markdown 转换成 docx
-- [wkhtmltopdf](https://github.com/wkhtmltopdf/wkhtmltopdf): 将 html 页面转换成 pdf
-- [imagemagick](https://imagemagick.org/script/download.php): 将 pdf 转换成 png
-- python3 相关依赖包如下:
-    - [panflute](https://github.com/sergiocorreia/panflute): pandoc 对应的 python lib
-
-```bash
-# 安装依赖 pandoc == 2.9.2.1
-# 从页面下载所需的操作系统版本: https://github.com/jgm/pandoc/releases/tag/2.9.2.1
-
-# 安装其它依赖
-# for macOS
-$ brew cask install wkhtmltopdf
-$ brew install imagemagick ghostscript
-
-# python 依赖
-$ pip3 install panflute
-```
-
-### 生成 docx 文档
-
-可以根据需要选择需要生成 docx 的部分。
-
-```bash
-# 进入 scripts 目录
-$ cd ./scripts
-
-# 清理 _output 目录
-$ make clean
-
-# 比如要选择生成 quickstart 目录下面的文档
-# 该命令会把对应的 markdown 文件转换处理放到 _output 目录
-$ ./collect-input.py ../content/zh/docs/quickstart ./_output
-
-# 该命令会调用 pandoc 把 _output 的 *.md 聚合生成 docx
-$ make gen-docx
-
-# 输出的 docx 文档在
-$ ls _output/output.docx
-
-
-# 选择子目录生成文档
-# 下面命令选择了 web_ui 里面的 computing ，docker 和 database 目录的内容生成 docx
-$ make clean
-$ ./collect-input.py ../content/zh/docs/web_ui ./_output computing docker database
-$ make gen-docx
-```
-
-上述的命令不会区分 'ce' 和 'ee' 的版本，如果要生成的文档需要区分 'ce' 和 'ee'，则需要先编译不通版本文档，然后再转换，命令如下：
-
-```bash
-# 假设现在在 scripts 目录，需要回到 docs 目录
-$ cd ..
-
-# 编译 ee 离线文档
-$ make ee-build-offline
-
-# 编译后的文档会保存在 ./_output 目录里面，对应结构如下；
-$ tree -L 1  _output
-_output
-├── content_ee_domain # domain 域视图相关的文档
-├── content_ee_project # project 项目视图相关的文档 
-└── content_ee_system # system 系统视图相关文档，也是最全的文档
-
-# 转换对应文档
-$ cd ./scripts
-$ make clean
-# 收集系统视图下的所有文档
-$ ./collect-input.py ../_output/content_ee_system/zh/docs ./_output
-# 转换成 docx
-$ make gen-docx
 ```
