@@ -22,24 +22,37 @@ $ git remote add upstream https://github.com/yunionio/cloudpods
 
 ## 提交代码流程
 
-- 从 master checkout 出 feature 或者 bugfix 分支
+### 1. 从 master checkout 出 feature 或者 bugfix 分支
 
 ```bash
 # checkout 新分支
 $ git fetch upstream --tags
+
+# 下面假设新的分支名为 'feature/implement-x'
+# 分支名应该有语义性，描述这次开发要实现或者修复什么
 $ git checkout -b feature/implement-x upstream/master
 ```
 
-- 在新的分支上进行开发
-- 开发完成后，进行提交PR前的准备操作
+### 2. 在新的分支上进行开发
+
+所有的代码修改，都在新的分支上进行。
+
+如果不熟悉 git 相关的操作，可参考这个文档先学习 git 的基本操作：[Git-Tutorials](https://github.com/twtrubiks/Git-Tutorials)。
+
+### 3. 开发完成后，进行提交PR前的准备操作
 
 ```bash
-$ git fetch upstream         # 同步远程 upstream master 代码
-$ git rebase upstream/master # 有冲突则解决冲突
-$ git push origin feature/implement-x # push 分支到自己的 repo
+# 同步远程 upstream master 代码
+$ git fetch upstream         
+
+# 有冲突则解决冲突
+$ git rebase upstream/master 
+
+# push 分支到自己的 repo
+$ git push origin feature/implement-x 
 ```
 
-- 在GitHub的Web界面完成提交PR的流程
+### 4. 在GitHub的Web界面完成提交PR的流程
 
 ![](../images/submitPR.png)
 
@@ -53,7 +66,9 @@ $ git push origin feature/implement-x # push 分支到自己的 repo
 
 ​	所有Label都可以在issues——Labels下查询到，带area/前缀的Label均可以使用评论"/area"的形式添加
 
-- 如果是 bugfix 或者需要合并到之前 release 分支的 feature PR，需要额外使用脚本将此PR cherry-pick 到对应的 release 分支
+### 5. cherry-pick 代码
+
+如果是 bugfix 或者需要合并到之前 release 分支的 feature PR，需要额外使用脚本将此PR cherry-pick 到对应的 release 分支
 
 ```bash
 # 自行下载安装 github 的 cli 工具：https://github.com/github/hub
