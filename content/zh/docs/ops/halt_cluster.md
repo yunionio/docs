@@ -23,7 +23,7 @@ kubectl -n onecloud edit deployment onecloud-operator
 通过删除控制服务的deployment实现停止控制服务。然而，为了不影响虚拟机的正常运行，部分控制服务应保持继续运行：default-ovn-north、default-influxdb。
 
 ```
-kubectl -n onecloud get deployments | awk '{print $1}' | grep -vE 'default-ovn-north|default-influxdb|onecloud-operator' | xargs kubectl -n onecloud delete deployments
+kubectl -n onecloud get deployments | awk '{print $1}' | grep -vE 'default-ovn-north|default-influxdb|onecloud-operator|NAME' | xargs kubectl -n onecloud delete deployments
 ```
 
 ### 停止部分daemonset服务
