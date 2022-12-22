@@ -486,7 +486,7 @@ log_level = 'debug'
 auto_sync_table = true
 EOF
 
-# 启动 region 服务
+# 启动 monitor 服务
 $ /root/cloudpods/_output/bin/monitor --conf /etc/yunion/monitor.conf
 ```
 
