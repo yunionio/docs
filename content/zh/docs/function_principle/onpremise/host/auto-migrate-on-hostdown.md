@@ -26,6 +26,10 @@ host-agent 启动时会向 etcd 注册一个 key. 当开启宕机自动迁移，
 
 ```bash
 # climc 命令
+
+# 修改region服务的配置
+$ climc service-config --config '{"default":{"enable_host_health_check":true}}' region2
+
 $ climc host-auto-migrate-on-host-down --help
 Usage: climc host-auto-migrate-on-host-down [--auto-migrate-on-host-shutdown {enable,disable}] [--help] [--auto-migrate-on-host-down {enable,disable}] <ID> ...
 
@@ -37,4 +41,7 @@ $ climc host-auto-migrate-on-host-down --auto-migrate-on-host-down enable --auto
 
 # 取消宕机自动迁移
 $ climc host-auto-migrate-on-host-down <ID>
+
+# 重启region服务
+kubectl -n onecloud rollout restart deployment default-region
 ```
