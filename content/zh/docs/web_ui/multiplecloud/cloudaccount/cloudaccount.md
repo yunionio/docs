@@ -685,9 +685,9 @@ description: >
  
     ![](../../../../faq/image/google_project.png)
 
-3. 在左侧导航栏中选择“服务账号”，进入指定项目的服务账号页面。
+3. 在左侧导航栏中进入“IAM和管理员”页面，单击 **_"服务账号"_** 按钮，进入服务账号页面。
 4. 单击 **_"创建服务账号"_** 按钮，进入创建服务账号页面。
-5. 配置服务账号名称、服务账号ID、服务账号说明等，单击 **_"创建"_** 按钮，创建服务账号并向此服务帐号授予对项目的访问权限。
+5. 配置服务账号名称、服务账号ID、服务账号说明等，单击 **_"创建并继续"_** 按钮，创建服务账号并向此服务帐号授予对项目的访问权限。
 
     ![](../../../../faq/image/google_createserviceaccount.png)
 
@@ -697,11 +697,13 @@ description: >
 
 7. 向用户授予访问此服务帐号的权限 (可选)步骤对云管平台无影响，请用户根据需求设置，配置完成后，单击 **_"继续"_** 按钮。
 
-8. 在服务账号页面，单击新创建的服务账号右侧操作列![colum](../../../../faq/image/colum.png)按钮，单击 **_"创建密钥"_** 菜单项。
+8. 在服务账号页面，单击新创建的服务账号右侧操作列![colum](../../../../faq/image/colum.png)按钮，单击 **_"管理密钥"_** 菜单项。
  
-    ![](../../../../faq/image/google_serviceaccount1.png) 
+    ![](../../../../faq/image/google_serviceaccount.png) 
 
-9. 选择密钥类型为“JSON”，单击 **_"创建"_** 按钮，下载json格式的密钥文件，内容如下，分别获取project_id、private_key_id、private_key、client_email等内容。
+9. 进入密钥页面，单击 **_"添加密钥"_** 按钮，弹出对话框单击 **_"创建新密钥"_** 按钮，选择密钥类型为“JSON”，单击 **_"创建"_** 按钮，下载json格式的密钥文件，内容如下，分别获取project_id、private_key_id、private_key、client_email等内容。
+
+    ![](../../../../faq/image/google_create1.png) 
 
     ![](../../../../faq/image/google_create.png) 
 
@@ -739,7 +741,8 @@ description: >
 
 **{{<oem_name>}}管理谷歌云需要启用API**：
 
-获取密钥文件后，还需要在Google API库中启用授权项目中的项目资源管理API（Cloud Resource Manager API）和自定义镜像创建机器API（Cloud Build API）。启用API后，用户可在{{<oem_name>}}平台管理使用谷歌云。
+获取密钥文件后，还需要在Google API库中启用授权项目中的项目资源管理API（Cloud Resource Manager API）、自定义镜像创建机器API（Cloud Build API）和计算引擎API（Compute Engine API
+）。启用API后，用户可在{{<oem_name>}}平台管理使用谷歌云。
   
 1. 在API库的[Cloud Resource Manager API](https://console.developers.google.com/apis/library/cloudresourcemanager.googleapis.com)页面中启用授权项目的Cloud Resource Manager API。可通过顶部切换授权项目。
    ![](../../../../faq/image/cloudresourcemanagerapi.png)
