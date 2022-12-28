@@ -110,6 +110,11 @@ $ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./o
 
 可以直接执行run.py来快速部署一个AllInOne的Cloudpods实例，其中<host_ip>为部署所在主机的主IP地址。
 
+
+{{% alert title="注意" color="warning" %}}
+如果待部署的主机是一台虚拟机，默认是不会在虚拟机里面部署内置私有云虚拟化相关组件的，如果需要在虚拟机里面使用内置私有云（相当于嵌套虚拟化），请使用[自定义配置部署](#自定义配置部署)。
+{{% /alert %}}
+
 ```bash
 # 直接部署，会从 registry.cn-beijing.aliyuncs.com 拉取容器镜像
 $ ./run.py <host_ip>
@@ -162,6 +167,8 @@ primary_master_node:
   onecloud_user_password: admin@123
   # 该节点作为 Cloudpods 私有云计算节点
   as_host: true
+  # 虚拟机强行作为 Cloudpods 内置私有云计算节点（默认为 false）。开启此项时，请确保as_host: true
+  as_host_on_vm: true
   # 启用 minio 作为后端对象存储
   enable_minio: true
   # 设置镜像仓库，如果待部署的机器处于海外，可以用 dockerhub 的镜像仓库：docker.io/yunion
