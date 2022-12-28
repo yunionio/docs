@@ -43,7 +43,7 @@ $ kubectl get pods -n kube-system | grep traefik | awk '{print $1}' | xargs kube
 
 ### 4. 修改服务 api_server 入口配置
 
-因为使用域名 `foo.bar.com` 访问，需要修改云平台的默认 api_server 配置，这个配置会影响前端 VNC 连接的地址。将旧的 https://<ip> 访问地址改为 `http://foo.bar.com`，操作如下：
+因为使用域名 `foo.bar.com` 访问，需要修改云平台的默认 api_server 配置，这个配置会影响前端 VNC 连接的地址。将旧的 https://<ip> 访问地址改为 `https://foo.bar.com`，操作如下：
 
 ```bash
 $ climc service-config-edit common
