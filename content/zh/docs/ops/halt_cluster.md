@@ -10,31 +10,41 @@ description: >
 
 ## 停止服务
 
-### 停止onecloud-operator
+### 停止平台服务
 
-集群由onecloud-operator创建并维护，为了暂停集群服务，需要暂时停止operator的运行。方法为修改deployment onecloud-operator，修改pod的replicas为0，从而删除operator的实例（注意：保留onecloud-operator deployment，仅修改replicas，删除对应pod）。
+平台服务由 operator 管理，可以通过给 operator 添加 '-stop-services' 启动参数，停止大部分控制服务。为了不影响虚拟机的正常运行，部分控制服务应保持继续运行，比如：default-ovn-north、default-influxdb和default-host。
 
+```bash
+$ kubectl edit deployment -n onecloud onecloud-operator
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        k8s-app: onecloud-operator
+    spec:
+      containers:
+      - command:
+        - /bin/onecloud-controller-manager
+        - -stop-services # 改这个地方，加上 '-stop-services' 参数
 ```
-kubectl -n onecloud edit deployment onecloud-operator
+
+然后 operator 会重建，开始删除控制服务，最终还保留的 pod 如下：
+
+```bash
+$ kubectl get pods -n onecloud
+NAME                                 READY   STATUS    RESTARTS   AGE
+default-etcd-swbzmncg2x              1/1     Running   0          16d
+default-host-xqwr6                   3/3     Running   0          19h
+default-influxdb-7476dbb84c-6qhqm    1/1     Running   0          10d
+default-ovn-north-67b97ffcfd-54lvp   1/1     Running   0          10d
+onecloud-operator-6967685b4-6p2qx    1/1     Running   0          80s
 ```
 
-### 停止部分控制服务
-
-通过删除控制服务的deployment实现停止控制服务。然而，为了不影响虚拟机的正常运行，部分控制服务应保持继续运行：default-ovn-north、default-influxdb。
-
-```
-kubectl -n onecloud get deployments | awk '{print $1}' | grep -vE 'default-ovn-north|default-influxdb|onecloud-operator|NAME' | xargs kubectl -n onecloud delete deployments
-```
-
-### 停止部分daemonset服务
-
-还有部分daemonset服务需要停止：default-region-dns、default-yunionagent。
-
-```
-kubectl -n onecloud delete daemonsets default-region-dns default-yunionagent
-```
 
 ## 恢复服务
 
-通过恢复onecloud-operator实例来恢复服务。修改onecloud-operator的replicas为1，保存退出后，等待集群服务恢复。
+删除 onecloud-operator deployment command 里面的 '-stop-services' 启动参数，operator 会重建之前删除的服务。
 
+```bash
+$ kubectl edit deployment -n onecloud onecloud-operator
+```
