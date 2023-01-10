@@ -6,8 +6,6 @@ This repository contains [Cloudpods](https://github.com/yunionio/cloudpods) rela
 
 ## Installing Dependencies
 
-The documentation is compiled and developed using [docker](https://docs.docker.com/get-started/overview/) running [hugo](https://gohugo.io/) container, which has the advantage of not requiring local installation and configuration of hugo to ensure a uniform development environment.
-
 - hugo v0.83.0:
     - Linux: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_Linux-64bit.tar.gz
     - MacOS:
@@ -44,7 +42,7 @@ The documents are in the content/{en,zh} directory, select the desired section t
 There are no multiple versions of the documentation in the development phase. To see the effect of multiple versions of the documentation, you can run the following command.
 
 ```bash
-# Compiling multiple versions of documentation using docker.
+# Compiling multiple versions of documentation.
 # Then the documentation site will be in the . /public directory.
 $ make ce-build
 $ cd public && python3 -m http.server 1313
@@ -62,3 +60,7 @@ $ git pull --recurse-submodules
 ```
 $ REGISTRY=registry.cn-beijing.aliyuncs.com/yunionio TAG=your-tag ARCH=all make ee-image
 ```
+
+## Contribution
+
+You are welcome to do any kind of contribution to the project. Please refer to [CONTRIBUTING](https://www.cloudpods.org/zh/docs/development/docs-dev/) for guidelines.

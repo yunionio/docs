@@ -6,8 +6,6 @@
 
 ## 安装依赖
 
-文档的编译开发使用 [docker](https://docs.docker.com/get-started/overview/) 运行 [hugo](https://gohugo.io/) 容器来进行，这样的好处是不需要在本地安装配置 hugo ，保证开发环境的统一。
-
 - hugo v0.83.0:
     - Linux: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_Linux-64bit.tar.gz
     - MacOS:
@@ -57,7 +55,7 @@ oem_ignore: true
 开发阶段的文档是没有多版本的，如果要查看多版本文档的效果，可以运行以下命令。
 
 ```bash
-# 使用 docker 编译多版本的文档
+# 编译多版本的文档
 # 生成的文档网站会在 ./public 目录下
 $ make ce-build
 $ cd public && python3 -m http.server 1313
@@ -66,7 +64,6 @@ $ cd public && python3 -m http.server 1313
 ### EE 离线文档
 
 ```bash
-# 使用 docker 编译多版本的文档
 # 生成的文档网站会在 ./public 目录下
 $ make ee-build-offline
 $ cd public && python3 -m http.server 1313
@@ -84,3 +81,7 @@ $ git pull --recurse-submodules
 ```
 $ REGISTRY=registry.cn-beijing.aliyuncs.com/yunionio TAG=your-tag ARCH=all make ee-image
 ```
+
+## 贡献文档
+
+欢迎贡献任何方面的文档内容，具体的流程请参考[贡献文档](https://www.cloudpods.org/zh/docs/development/docs-dev/)。
