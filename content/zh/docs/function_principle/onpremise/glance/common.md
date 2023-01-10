@@ -9,6 +9,14 @@ description: >
 
 ## 常用镜像百度网盘提取链接及提取码
 
+### x86 centos7流：
+
+链接：https://pan.baidu.com/s/1qDXu6xwJe2z9_OYjXMkviA?pwd=spc3 
+提取码：spc3
+
+链接：https://pan.baidu.com/s/1eyczm6_a_Oj__WrZvYKn6Q?pwd=ffmo 
+提取码：ffmo
+
 ### x86 centos8流：
 
 链接：https://pan.baidu.com/s/1LlOdu3vkzzCN8OUlBOypqw 
