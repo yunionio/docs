@@ -137,12 +137,15 @@ class SingleMDFile(object):
 
     def call_pandoc(self, target_dir, outpath):
         env = os.environ.copy()
-        env[OUTPUT_META_BASEFILE_KEY] = get_output_meta_file(target_dir)
-        process = subprocess.Popen([
+        meta_file = get_output_meta_file(target_dir)
+        env[OUTPUT_META_BASEFILE_KEY] = meta_file
+        cmd = [
             "pandoc", "-f", "markdown-markdown_in_html_blocks+raw_html",
             "--lua-filter", "./pandoc-table-filter.lua",
             "--filter", "./pandoc-doc-filter.py",
-            "-t", "markdown", outpath, "-o", outpath], env=env)
+            "-t", "markdown", outpath, "-o", outpath]
+        print("Execute: %s=%s %s" % (OUTPUT_META_BASEFILE_KEY, meta_file,' '.join(cmd)))
+        process = subprocess.Popen(cmd, env=env)
         process.wait()
 
     def output(self, target_dir):
