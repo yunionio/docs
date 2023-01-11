@@ -108,4 +108,10 @@ $ tcpdump -i br0 -nnn "ip proto 4" and host 10.130.0.13
 
 ### 内核问题
 
-特定内核在开启GSO之后会导致ip-in-ip报文丢弃
+特定内核在开启GSO之后会导致ip-in-ip报文丢弃，可尝试通过下面的命令关闭网卡相关特性，看是否解决问题：
+
+```bash
+# 假设 k8s 节点之间通过 eth0 网卡通信
+$ ethtool --offload eth0 rx off tx off 
+$ ethtool -K eth0 gso off
+```
