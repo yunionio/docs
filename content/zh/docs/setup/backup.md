@@ -22,19 +22,24 @@ description: >
 #### 备份命令
 
 ```bash
-usage: ocboot.py backup [-h] [--backup-path BACKUP_PATH] config
+usage: python3 ocboot.py backup [-h] [--backup-path BACKUP_PATH] [--light] config
+
 positional arguments:
   config                config yaml file
+
 optional arguments:
   -h, --help            show this help message and exit
   --backup-path BACKUP_PATH
-                        backup path
+                        backup path, default: /opt/backup
+  --light               ignore yunionmeter and yunionlogger database; ignore
+                        tables start with 'opslog' and 'task'.
 ```
 
 下面介绍各个参数的作用和注意事项
 
 - `--backup-path`保存备份文件的目标目录，备份的内容包括config配置文件，通过`mysqldump`命令备份的数据库临时文件的压缩包`onecloud.sql.tgz`，请确保目标目录磁盘空间足够且可写。
 - `config`是必选参数，即需要备份的配置文件名称，例如`config-allinone.yml, config-nodes.yml, config-k8s-ha.yml，`以及使用快速安装时会生成的`config-allinone-current.yml`，因此备份命令不对配置文件名称作假设，**需由使用者自行输入配置文件名称**。
+- `--light` 这个选项用来做精简备份，原理是在备份过程中，忽略掉一些尺寸较大的特定文件，主要是账单、操作日志等相关的文件。默认保留。
 
 {{% alert title="注意" color="warning" %}}
 - 如果平台通过ocboot部署，请将用户自己配置的`config`文件或快速安装生成的`config-allinone-current.yml`文件等都拷贝到`/opt/ocboot`目录。
@@ -55,6 +60,33 @@ $ cd /opt/ocboot
 # 在`/opt/ocboot`目录执行备份命令，将备份文件保存到`/opt/backup`目录
 $ ./ocboot.py backup --backup-path /opt/backup config.yml
 ```
+
+#### FAQ
+
+* Q:  备份时提示缺`MySQLdb` 包怎么办？
+
+* A：在centos上，可以执行如下命令来安装（其他os发行版请酌情修改，或联系客服）：
+
+  ```bash
+  sudo yum install -y mariadb-devel python3-devel
+  sudo yum groupinstall -y "Development Tools"
+  sudo pip3 install mysqlclient
+  ```
+
+* Q: 怎样查看、手工解压备份文件？
+
+* A：备份文件默认用户名为: `/opt/backup/onecloud.sql.gz`, 预览、手工解压的方式如下：
+
+  ```bash
+  # 预览该文件：
+  gunzip --stdout /opt/backup/onecloud.sql.gz | less
+  
+  # 解压，同时保留源文件：
+  gunzip --stdout /opt/backup/onecloud.sql.gz > /opt/backup/onecloud.sql
+  
+  # 有些高版本的gunzip 提供 -k/--keep 选项，来保存源文件。可以直接执行：
+  gunzip -k /opt/backup/onecloud.sql.gz
+  ```
 
 ### 恢复平台
 
