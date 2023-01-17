@@ -39,6 +39,19 @@ ocboot config.yaml 中设置 enable_hugepage 为 true，宿主机为 x86_64架�
 
 2、重启宿主机
 
+重启后，查看如下参数，确认1GB大页内存是否预留成功
+
+```bash
+$ cat /sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages
+110
+$ cat /sys/kernel/mm/hugepages/hugepages-1048576kB/free_hugepages
+110
+$ free -h
+              total        used        free      shared  buff/cache   available
+Mem:           125G        113G        7.6G        4.5M        4.5G         11G
+Swap:            0B          0B          0B
+```
+
 ### 配置预留内存
 
 默认情况下预留内存是宿主机当前内存的 %10，最大不超过 20G，如果想要手动配置宿主机的预留内存，则可以通过设置 RESERVED_MEM 来配置。
