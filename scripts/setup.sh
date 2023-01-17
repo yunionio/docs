@@ -9,7 +9,7 @@ CUR_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 pushd $(dirname "$0")/.. > /dev/null
 
-git submodule update --init --recursive
+git submodule update --init --recursive --force
 
 pushd themes > /dev/null
 if [ ! -d "docsy" ]; then
