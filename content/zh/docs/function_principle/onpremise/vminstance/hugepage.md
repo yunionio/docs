@@ -19,61 +19,46 @@ description: >
 
 ## 开启native大页内存
 
-下面介绍启用native大页的方法：
+通过 ocboot 部署的环境默认会安装 `oc-hugetlb-gigantic-pages.service` 服务，可使用 `systemctl status oc-hugetlb-gigantic-pages.service` 查看
 
-1、设置/etc/yunion/host.conf的hugepages_options 为native
+### 部署时开启大页
 
-2、预留大页内存
-
-有两种方式: 自动和手动。
-
-2.1 自动预留大页内存
-
-重启宿主机，宿主机重启后，host服务会根据该宿主机的物理内存总量，减去预留内存量（mem_reserved），再减去kubelet Evition需要预留的内存（一般为500MB），剩下的内存预留。
-
-自动预留大页内存只能预留2MB的大页。
-
-2.2 手动预留大页内存
-
-手动方式需修改内核启动参数，在系统启动时刻就把大页内存预留出来。这种方式能够保证大页内存的空间连续性，能够域1GB的大页。但是1GB的大页预留后将无法修改。如果采用手动预留大页内存，建议预留1GB的大页。
-
-注意：使用1GB大页内存的虚拟机的内存必须是1GB的整数倍。
-
-下面是手动预留1GB大页内存的步骤：
-
-设置内核启动参数，让宿主机在启动后自动预留大页内存，需要设置如下两个参数：
-
-* hugepagesz：大页内存的大小。对于x86_64的宿主机，一般支持2MB或1GB的大页。可以通过查看/proc/cpuinfo的flags判断宿主机支持哪种大页。如果flags中包含pse，则支持2MB大页。如果flags中包含pdpe1gb，则支持1GB大页。对于arm的宿主机，支持2MB或1GB的大页。推荐使用1GB大页。
-
-* hugepages：预留大页的数量，总预留内存为 hugepagesz x hugepages。由于大页内存无法给操作系统使用，因此需要留足够的普通内存。一般是给操作系统预留至少10G，或10%的内存。
-
-举例：
-
-修改 /etc/default/grub，在GRUB_CMDLINE_LINUX末尾添加（宿主机有128GB内存，分配给大页110GB，给操作系统预留18GB内存）：
-
-```bash
-hugepagesz=1GB hugepages=110
+ocboot config.yaml 中设置 enable_hugepage 为 true，宿主机为 x86_64架构，且内存超过 30G时生效，预留内存为总内存的10%，最大预留20G内存。
+```
+  as_host: true
+  # 虚拟机强行作为 OneCloud 私有云计算节点（默认为 false）。开启此项时，请确保as_host: true
+  as_host_on_vm: true
+  # 是否宿主机开启大页内存(宿主机为 x86_64架构，且内存超过 30G时生效，预留内存为总内存的10%，最大预留20G内存)
+  enable_hugepage: false
 ```
 
-然后执行
+### 部署完成后想开启大页
+环境部署完成后想启用native大页：
 
-```bash
-grub2-mkconfig -o /boot/grub2/grub.cfg（BIOS引导执行这个）
+1、设置/etc/yunion/host.conf的hugepages_options 为 native
 
-grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg（UEFI引导执行这个）
+2、重启宿主机
+
+### 配置预留内存
+
+默认情况下预留内存是宿主机当前内存的 %10，最大不超过 20G，如果想要手动配置宿主机的预留内存，则可以通过设置 RESERVED_MEM 来配置。
+
+```
+[Unit]
+Description=OC HugeTLB Gigantic Pages Reservation
+DefaultDependencies=no
+Before=dev-hugepages.mount
+ConditionPathExists=/sys/kernel/mm/hugepages
+ConditionKernelCommandLine=hugepagesz=1G
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# Environment="RESERVED_MEM=24" # 可配置的 RESERVED_MEM
+ExecStart=/usr/lib/systemd/oc-hugetlb-reserve-pages.sh
+
+[Install]
+WantedBy=sysinit.targe
 ```
 
-修改完成后，重启宿主机
 
-重启后，查看如下参数，确认1GB大页内存是否预留成功
-
-```bash
-$ cat /sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages
-110
-$ cat /sys/kernel/mm/hugepages/hugepages-1048576kB/free_hugepages
-110
-$ free -h
-              total        used        free      shared  buff/cache   available
-Mem:           125G        113G        7.6G        4.5M        4.5G         11G
-Swap:            0B          0B          0B
-```
