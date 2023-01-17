@@ -176,4 +176,13 @@ $ climc sshkeypair-show --project <project-name>
 ```
 **应用场景**：通过注入密钥文件，在云管平台上的虚拟机的Web SSH功能可以以cloudroot用户免密登录到虚拟机。后续平台的自动化运维功能也是基于该功能。
 
+## 实例名称同步
 
+平台自3.10开始默认开启实例名称同步, 若云上的实例名称发生变化后，当云账号同步完成资源或者单独指定实例进行状态同步，实例的名称会跟随云上进行同步
+可以通过以下命令进行打开或者关闭
+```bash
+# 开启实例名称同步
+$ climc service-config --config enable_sync_name=true region2
+# 关闭实例名称同步
+$ climc service-config --config enable_sync_name=false region2
+```
