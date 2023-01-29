@@ -51,7 +51,7 @@ description: >
 
 ```bash
 # 创建 kvm vm1
-$ climc server-create --hypervisor kvm --disk centos7.qcow2:60g --disk 100g:ext4:/opt --disk 50g:xfs:/data --ncpu 4 --net net1 --auto-start vm1 4g
+$ climc server-create --hypervisor kvm --disk centos7.qcow2:60g --disk 100g:ext4:/opt --disk 50g:xfs:/data --ncpu 4 --net net1 --auto-start vm1 --mem-spec 4g
 
 ```
 
