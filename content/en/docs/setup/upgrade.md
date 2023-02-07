@@ -52,14 +52,14 @@ $ python3 -m pip install --upgrade pip setuptools wheel
 $ python3 -m pip install --upgrade ansible paramiko
 
 # git clone ocboot
-$ git clone -b release/3.8 https://github.com/yunionio/ocboot && cd ./ocboot
+$ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
 ## Fetch ocboot latest source code
 
 ```bash
-$ git checkout release/3.8
 $ git pull
+$ git checkout {{<release_version>}}
 ```
 
 ## Upgrade Cloudpods cluster services
