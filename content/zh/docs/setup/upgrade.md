@@ -60,8 +60,8 @@ $ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./o
 ## 更新 ocboot 代码
 
 ```bash
-$ git checkout {{<release_branch>}}
 $ git pull
+$ git checkout {{<release_version>}}
 ```
 
 ## 更新 Cloudpods 服务
