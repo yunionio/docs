@@ -9,7 +9,7 @@ description: >
 
 cloudpods-operator会在Kubernetes集群中注入CRD资源oc，该CRD定义了一个服务集群的状态，可以通过修改oc来更改集群的状态，达到IaC的效果。
 
-1、修改集群整体状态
+## 1、修改集群整体状态
 
 主要几个参数：
 
@@ -54,7 +54,7 @@ cloudpods-operator会在Kubernetes集群中注入CRD资源oc，该CRD定义了�
 当前可用区，默认为 zone0
 
 
-2. 修改单个组件的属性
+## 2. 修改单个组件的属性
 
 每个组件都可以设置如下属性：
 
