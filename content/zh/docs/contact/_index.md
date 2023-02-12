@@ -8,7 +8,7 @@ description: >
 img: /images/icons/icon-contact.svg
 ---
 
-* 哔哩哔哩:  https://space.bilibili.com/623431553/
+* 哔哩哔哩:  https://space.bilibili.com/3493131737631540/
 
 * 知乎： https://www.zhihu.com/org/yun-lian-yi-yun
 
