@@ -91,25 +91,27 @@ description: >
 
 使用{{<oem_name>}}管理阿里云资源，需要接入云账号的有足够的权限，下面列出管理云资源所用到的权限策略，如果由于接入账号未被授权导致的错误提示，请按照以下说明对接入账号进行授权：
 
-| 功能                               | 只读权限                                          | 可读可写权限                                 |
+| 权限备注                               | 只读权限                                          | 读写权限                                 |
 | :----------                        | :--------                                         | :----------                                  |
-| 所有功能总和                       | ReadOnlyAccess                                    | AdministratorAccess                          |
-| 虚拟机, 安全组, 镜像, 磁盘, 快照   | AliyunECSReadOnlyAccess                           | AliyunECSFullAccess                          |
-| Vpc, Vpc对等连接, 路由表           | AliyunVPCReadOnlyAccess                           | AliyunVPCFullAccess                          |
-| Eip                                | AliyunEIPReadOnlyAccess                           | AliyunEIPFullAccess                          |
-| 弹性网卡                           | AliyunVPCNetworkIntelligenceReadOnlyAccess        | AliyunECSNetworkInterfaceManagementAccess    |
-| 对象存储                           | AliyunOSSReadOnlyAccess                           | AliyunOSSFullAccess                          |
-| NAT                                | AliyunNATGatewayReadOnlyAccess                    | AliyunNATGatewayFullAccess                   |
-| 负载均衡                           | AliyunSLBReadOnlyAccess<br>AliyunALBFullAccess    | AliyunSLBFullAccess<br>AliyunALBFullAccess   |
-| RDS                                | AliyunRDSReadOnlyAccess                           | AliyunRDSFullAccess                          |
-| 弹性缓存                           | AliyunKvstoreReadOnlyAccess                       | AliyunKvstoreFullAccess                      |
-| 操作日志                           | AliyunActionTrailFullAccess                       | AliyunActionTrailFullAccess                  |
-| NAS                                | AliyunNASReadOnlyAccess                           | AliyunNASFullAccess                          |
-| WAF                                | AliyunYundunWAFReadOnlyAccess                     | AliyunYundunWAFFullAccess                    |
-| IAM                                | AliyunRAMReadOnlyAccess                           | AliyunRAMFullAccess                          |
-| DNS                                | AliyunDNSReadOnlyAccess<br>AliyunPubDNSFullAccess | AliyunDNSFullAccess<br>AliyunPubDNSFullAccess|
-| 账单,余额,费用                     | AliyunFinanceConsoleReadOnlyAccess                | AliyunFinanceConsoleFullAccess               |
-| 监控                               | AliyunCloudMonitorReadOnlyAccess                  | AliyunCloudMonitorFullAccess                 |
+| 管理所有阿里云资源的权限                       | ReadOnlyAccess                                    | AdministratorAccess                          |
+| 管理云服务器服务(ECS)的权限   | AliyunECSReadOnlyAccess                           | AliyunECSFullAccess                          |
+| 管理专有网络(VPC)的权限           | AliyunVPCReadOnlyAccess                           | AliyunVPCFullAccess                          |
+| 管理弹性公网IP(EIP)的权限                                | AliyunEIPReadOnlyAccess                           | AliyunEIPFullAccess                          |
+| 管理ECS弹性网卡的权限                           | AliyunVPCNetworkIntelligenceReadOnlyAccess        | AliyunECSNetworkInterfaceManagementAccess    |
+| 管理对象存储服务(OSS)权限                           | AliyunOSSReadOnlyAccess                           | AliyunOSSFullAccess                          |
+| 管理NAT网关(NAT Gateway)的权限                                | AliyunNATGatewayReadOnlyAccess                    | AliyunNATGatewayFullAccess                   |
+| 管理应用型负载均衡服务(ALB)的权限                                | AliyunALBReadOnlyAccess                    | AliyunALBFullAccess                   |
+| 管理负载均衡服务(SLB)的权限                           | AliyunSLBReadOnlyAccess    | AliyunSLBFullAccess   |
+| 管理云数据库服务(RDS)的权限                                | AliyunRDSReadOnlyAccess                           | AliyunRDSFullAccess                          |
+| 管理云数据库Redis版(Kvstore)的权限                           | AliyunKvstoreReadOnlyAccess                       | AliyunKvstoreFullAccess                      |
+| 管理操作审计(ActionTrail)的权限                           | AliyunActionTrailFullAccess                       | AliyunActionTrailFullAccess                  |
+| 管理文件存储服务(NAS)的权限                                | AliyunNASReadOnlyAccess                           | AliyunNASFullAccess                          |
+| 管理云盾应用防火墙(WAF)的权限                                | AliyunYundunWAFReadOnlyAccess                     | AliyunYundunWAFFullAccess                    |
+| 管理访问控制(RAM)的权限，即管理用户以及授权的权限                                | AliyunRAMReadOnlyAccess                           | AliyunRAMFullAccess                          |
+| 管理公共DNS(PubDNS)的权限                                | AliyunPubDNSReadOnlyAccess | AliyunPubDNSFullAccess|
+| 管理云解析(DNS)的权限                                | AliyunDNSReadOnlyAccess | AliyunDNSFullAccess|
+| 管理企业财务管理(EFC)的权限                     | AliyunFinanceConsoleReadOnlyAccess                | AliyunFinanceConsoleFullAccess               |
+| 管理云监控(CloudMonitor)的权限                               | AliyunCloudMonitorReadOnlyAccess                  | AliyunCloudMonitorFullAccess                 |
 
 ##### 如何给子账号授权
 
@@ -190,23 +192,22 @@ description: >
 
 ##### 通过平台管理AWS资源，需要云账号具备哪些权限？
 
-| 功能                                              | 只读权限                                          | 可读可写权限                                 |
+| 权限备注                                              | 只读权限                                          | 读可权限                                 |
 | :----------                                       | :--------                                         | :----------                                  |
-| 所有功能总和                                      | ReadOnlyAccess                                    | AdministratorAccess                          |
-| 虚拟机, 磁盘, 安全组, 镜像, 快照, 磁盘, 镜像      | AmazonEC2ReadOnlyAccess                           | AmazonEC2FullAccess                          |
-| 项目                                              | -                                                 | -                                            |
-| Vpc, Vpc对等连接, 路由表, NAT, 弹性网卡,EIP, NAT  | AmazonVPCReadOnlyAccess                           | AmazonVPCFullAccess                          |
-| 对象存储                                          | AmazonS3ReadOnlyAccess                            | AmazonS3FullAccess                           |
-| 负载均衡                                          | ElasticLoadBalancingReadOnly                      | ElasticLoadBalancingFullAccess               |
-| RDS                                               | AmazonRDSReadOnlyAccess                           | AmazonRDSFullAccess                          |
-| 弹性缓存                                          | AmazonElastiCacheReadOnlyAccess                   | AmazonElastiCacheFullAccess                  |
-| 操作日志                                          | AWSCloudTrailReadOnlyAccess                       | AWSCloudTrail_FullAccess                     |
-| NAS                                               | AmazonElasticFileSystemReadOnlyAccess             | AmazonElasticFileSystemFullAccess            |
-| WAF                                               | AWSWAFReadOnlyAccess                              | AWSWAFFullAccess                             |
-| IAM                                               | IAMReadOnlyAccess                                 | IAMFullAccess                                |
-| DNS                                               | AmazonRoute53DomainsReadOnlyAccess                | AmazonRoute53DomainsFullAccess               |
-| 账单,费用                                         | AWSBillingReadOnlyAccess                          | Billing                                      |
-| 监控                                              | CloudWatchReadOnlyAccess                          | CloudWatchFullAccess                         |
+| 管理所有AWS资源的权限                                      | ReadOnlyAccess                                    | AdministratorAccess                          |
+| 管理云服务器服务(Amazon EC2)的权限      | AmazonEC2ReadOnlyAccess                           | AmazonEC2FullAccess                          |
+| 管理专有网络(Amazon VPC)的权限  | AmazonVPCReadOnlyAccess                           | AmazonVPCFullAccess                          |
+| 管理对象存储(Amazon S3)的权限                                          | AmazonS3ReadOnlyAccess                            | AmazonS3FullAccess                           |
+| 管理负载均衡服务(ELB)的权限                                         | ElasticLoadBalancingReadOnly                      | ElasticLoadBalancingFullAccess               |
+| 管理云数据库服务(Amazon RDS)的权限                                               | AmazonRDSReadOnlyAccess                           | AmazonRDSFullAccess                          |
+| 管理云缓存(Amazon ElastiCache)的权限                                          | AmazonElastiCacheReadOnlyAccess                   | AmazonElastiCacheFullAccess                  |
+| 管理操作审计(AWS CloudTrail)的权限                                          | AWSCloudTrailReadOnlyAccess                       | AWSCloudTrail_FullAccess                     |
+| 管理文件存储服务(Amazon EFS)的权限                                               | AmazonElasticFileSystemReadOnlyAccess             | AmazonElasticFileSystemFullAccess            |
+| 管理应用防火墙(WAF)的权限                                               | AWSWAFReadOnlyAccess                              | AWSWAFFullAccess                             |
+| 管理身份和访问管理(IAM)的权限                                               | IAMReadOnlyAccess                                 | IAMFullAccess                                |
+| 管理云域名系统(Amazon Route 53)的权限                                               | AmazonRoute53ReadOnlyAccess                | AmazonRoute53FullAccess               |
+| 管理计费和成本的权限                                         | AWSBillingReadOnlyAccess                          | Billing                                      |
+| 管理云监控(Amazon CloudWatch)的权限                                              | CloudWatchReadOnlyAccess                          | CloudWatchFullAccess                         |
 
 ##### 如何获取账单存储桶URL？
 
@@ -414,21 +415,19 @@ description: >
 
 ##### 管理Azure云资源，需要云账号具备哪些权限
 
-| 功能                                                      | 只读权限                                              | 可读可写权限                                                      |
+| 权限备注                                                      | 只读权限                                              | 读写权限                                                      |
 | :----------                                               | :--------                                             | :----------                                                       |
-| 所有功能总和                                              | Reader                                                | Owner                                                             |
-| 虚拟机, 磁盘, 安全组, 镜像, 快照, 磁盘, 镜像, 负载均衡    | -                                                     | Virtual Machine Contributor<br>Classic Virtual Machine Contributor|
-| 项目                                                      | -                                                     | -                                                                 |
-| Vpc, Vpc对等连接, 路由表, NAT, 弹性网卡,EIP, NAT, WAF     | -                                                     | Network Contributor,<br>Classic Network Contributor               |
-| 对象存储                                                  | Storage Blob Data Reader                              | Storage Blob Data Owner                                           |
-| RDS                                                       | Cloud SQL Viewer                                      | Cloud SQL Admin                                                   |
-| 弹性缓存                                                  | Redis Enterprise Cloud Viewer                         | Redis Enterprise Cloud Admin                                      |
-| NAS                                                       | Storage File Data SMB Share Reader                    | Storage File Data SMB Share Contributor                           |
-| WAF                                                       | -                                                     | -                                                                 |
-| IAM                                                       | -                                                     | Graph Owner<br>Resource Policy Contributor                        |
-| DNS                                                       | -                                                     | DNS Zone Contributor<br>Private DNS Zone Contributor              |
-| 账单,费用                                                 | Billing Reader<br>Cost Management Reader              | Cost Management Contributor                                       |
-| 监控,操作日志                                             | Monitoring Reader                                     | Monitoring Contributor                                            |
+| 管理所有资源的权限                                              | Reader                                                | Owner                                                             |
+| 管理虚拟机资源的权限    | -                                                     | Virtual Machine Contributor<br>Classic Virtual Machine Contributor|
+| 管理网络资源的权限     | -                                                     | Network Contributor,<br>Classic Network Contributor               |
+| 管理对象存储的权限                                                  | Storage Blob Data Reader                              | Storage Blob Data Owner                                           |
+| 管理云数据库的权限                                                       | Cloud SQL Viewer                                      | Cloud SQL Admin                                                   |
+| 管理Redis的权限                                                  | Redis Enterprise Cloud Viewer                         | Redis Enterprise Cloud Admin                                      |
+| 管理文件存储的权限                                                       | Storage File Data SMB Share Reader                    | Storage File Data SMB Share Contributor                           |
+| 管理资源策略和角色的权限                                                       | -                                                     | Graph Owner<br>Resource Policy Contributor                        |
+| 管理DNS的权限                                                       | -                                                     | DNS Zone Contributor<br>Private DNS Zone Contributor              |
+| 管理账单费用的权限                                                 | Billing Reader<br>Cost Management Reader              | Cost Management Contributor                                       |
+| 管理监控的权限                                             | Monitoring Reader                                     | Monitoring Contributor                                            |
 
 ##### 如何获取Azure合约编号和密钥
 
@@ -490,26 +489,26 @@ description: >
 
 ##### 通过平台管理华为云资源，需要云账号具备哪些权限
 
-| 功能                                          | 只读权限                                          | 可读可写权限                                     |
+| 权限备注                                          | 只读权限                                          | 读写权限                                     |
 | :----------                                   | :--------                                         | :----------                                      |
-| 所有功能总和                                  | Tenant Guest<br>IAM ReadOnlyAccess                | Tenant Administrator<br>Security Administrator   |
-| 虚拟机                                        | ECS ReadOnlyAccess                                | ECS FullAccess                                   |
-| 磁盘, 快照                                    | EVS ReadOnlyAccess                                | EVS FullAccess                                   |
-| 项目                                          | EPS ReadOnlyAccess                                | EPS FullAccess                                   |
-| 镜像                                          | IMS ReadOnlyAccess                                | IMS FullAccess                                   |
-| Vpc, Vpc对等连接, 路由表, 弹性网卡,EIP,安全组 | VPC ReadOnlyAccess                                | VPC FullAccess                                   |
-| NAT                                           | NAT ReadOnlyAccess                                | NAT FullAccess                                   |
-| 对象存储                                      | OBS ReadOnlyAccess                                | OBS Administrator                                |
-| 负载均衡                                      | ELB ReadOnlyAccess                                | ELB FullAccess                                   |
-| RDS                                           | RDS ReadOnlyAccess                                | RDS FullAccess                                   |
-| 弹性缓存                                      | DCS ReadOnlyAccess                                | DCS FullAccess                                   |
-| 操作日志                                      | CTS ReadOnlyAccess                                | CTS FullAccess                                   |
-| NAS                                           | SFS ReadOnlyAccess<br>SFS Turbo ReadOnlyAccess    | SFS FullAccess<br>SFS Turbo FullAccess           |
-| WAF                                           | WAF ReadOnlyAccess                                | WAF FullAccess                                   |
-| IAM                                           | IAM ReadOnlyAccess                                | Security Administrator                           |
-| DNS                                           | DNS ReadOnlyAccess                                | DNS FullAccess                                   |
-| 账单,余额,费用                                | BSS Operator                                      | BSS Administrator                                |
-| 监控                                          | CES ReadOnlyAccess                                | CES FullAccess                                   |
+| 管理所有华为云资源的权限(除IAM权限)                                  | Tenant Guest                | Tenant Administrator   |
+| 管理弹性云服务器的权限                                        | ECS ReadOnlyAccess                                | ECS FullAccess                                   |
+| 管理云硬盘的权限                                    | EVS ReadOnlyAccess                                | EVS FullAccess                                   |
+| 管理企业项目管理服务的权限                                          | EPS ReadOnlyAccess                                | EPS FullAccess                                   |
+| 管理镜像服务的权限                                          | IMS ReadOnlyAccess                                | IMS FullAccess                                   |
+| 管理虚拟私有云的权限 | VPC ReadOnlyAccess                                | VPC FullAccess                                   |
+| 管理NAT网关服务的权限                                           | NAT ReadOnlyAccess                                | NAT FullAccess                                   |
+| 管理对象存储服务的权限                                      | OBS ReadOnlyAccess                                | OBS Administrator                                |
+| 管理弹性负载均衡服务的权限                                      | ELB ReadOnlyAccess                                | ELB FullAccess                                   |
+| 管理关系型数据库服务的权限                                           | RDS ReadOnlyAccess                                | RDS FullAccess                                   |
+| 管理分布式缓存服务的权限                                      | DCS ReadOnlyAccess                                | DCS FullAccess                                   |
+| 管理云审计服务的权限                                      | CTS ReadOnlyAccess                                | CTS FullAccess                                   |
+| 管理弹性文件服务的权限<br>管理弹性文件服务SFS Turbo的权限                                           | SFS ReadOnlyAccess<br>SFS Turbo ReadOnlyAccess    | SFS FullAccess<br>SFS Turbo FullAccess           |
+| 管理web应用防火墙服务的权限                                           | WAF ReadOnlyAccess                                | WAF FullAccess                                   |
+| 管理统一身份认证服务的权限                                           | IAM ReadOnlyAccess                                | Security Administrator                           |
+| 管理云解析服务的权限                                           | DNS ReadOnlyAccess                                | DNS FullAccess                                   |
+| 管理费用中心(BSS)的权限                                | BSS Operator                                      | BSS Administrator                                |
+| 管理云监控服务的权限                                          | CES ReadOnlyAccess                                | CES FullAccess                                   |
 
 ##### 如何获取账单存储桶URL？
 
@@ -572,23 +571,23 @@ description: >
 
 ##### 通过平台管理腾讯云资源，需要云账号具备哪些权限
 
-| 功能                                          | 只读权限                                                                                                          | 可读可写权限                                                                                      |
+| 权限备注                                          | 只读权限                                                                                                          | 读写权限                                                                                      |
 | :----------                                   | :--------                                                                                                         | :----------                                                                                       |
-| 所有功能总和                                  | ReadOnlyAccess                                                                                                    | AdministratorAccess                                                                               |
-| 虚拟机, 安全组, 镜像, 磁盘, 快照              | QcloudCVMReadOnlyAccess                                                                                           | QcloudCVMFullAccess                                                                               |
-| Vpc, Vpc对等连接, 路由表, NAT, 弹性网卡       | QcloudVPCReadOnlyAccess                                                                                           | QcloudVPCFullAccess                                                                               |
-| Eip                                           | -                                                                                                                 | QcloudEIPFullAccess                                                                               |
-| 对象存储                                      | QcloudCOSReadOnlyAccess                                                                                           | QcloudCOSFullAccess                                                                               |
-| 负载均衡                                      | QcloudCLBReadOnlyAccess                                                                                           | QcloudCLBFullAccess                                                                               |
-| RDS                                           | QcloudMariaDBReadOnlyAccess<br>QcloudCDBReadOnlyAccess<br>QcloudSQLServerReadOnlyAccess<br>QcloudPostgreSQLReadOnlyAccess  | QcloudMariaDBFullAccess<br>QcloudCDBFullAccess<br>QcloudSQLServerFullAccess<br>QcloudPostgreSQLFullAccess  |
-| 弹性缓存                                      | QcloudRedisReadOnlyAccess                                                                                         | QcloudRedisFullAccess                                                                             |
-| 操作日志                                      | QcloudAuditReadOnlyAccess                                                                                         | QcloudAuditFullAccess                                                                             |
-| NAS                                           | -                                                                                                                 | -                                                                                                 |
-| WAF                                           | -                                                                                                                 | -                                                                                                 |
-| IAM                                           | QcloudCamReadOnlyAccess                                                                                           | QcloudCamFullAccess                                                                               |
-| DNS                                           | QcloudDNSPodReadOnlyAccess<br>QcloudPrivateDNSReadOnlyAccess                                                         | QcloudPrivateDNSFullAccess<br>QcloudDNSPodFullAccess                                                 |
-| 账单,余额,费用                                | -                                                                                                                 | QCloudFinanceFullAccess                                                                           |
-| 监控                                          | QcloudMonitorReadOnlyAccess                                                                                       | QcloudMonitorFullAccess                                                                           |
+| 管理所有腾讯云资源的权限                                  | ReadOnlyAccess                                                                                                    | AdministratorAccess                                                                               |
+| 管理云服务器(CVM)的权限              | QcloudCVMReadOnlyAccess                                                                                           | QcloudCVMFullAccess                                                                               |
+| 管理私有网络(VPC)的权限       | QcloudVPCReadOnlyAccess                                                                                           | QcloudVPCFullAccess                                                                               |
+| 管理弹性IP(EIP)的权限                                           | -                                                                                                                 | QcloudEIPFullAccess                                                                               |
+| 管理对象存储(COS)的权限                                      | QcloudCOSReadOnlyAccess                                                                                           | QcloudCOSFullAccess                                                                               |
+| 管理负载均衡(CLB)的权限                                      | QcloudCLBReadOnlyAccess                                                                                           | QcloudCLBFullAccess                                                                               |
+| 管理云数据库MariaDB的权限<br>管理云数据库CDB的权限<br>管理云数据库SQL Server的权限<br>管理云数据库PostgreSQL的权限                                           | QcloudMariaDBReadOnlyAccess<br>QcloudCDBReadOnlyAccess<br>QcloudSQLServerReadOnlyAccess<br>QcloudPostgreSQLReadOnlyAccess  | QcloudMariaDBFullAccess<br>QcloudCDBFullAccess<br>QcloudSQLServerFullAccess<br>QcloudPostgreSQLFullAccess  |
+| 管理云数据库Redis的权限                                      | QcloudRedisReadOnlyAccess                                                                                         | QcloudRedisFullAccess                                                                             |
+| 管理云审计(CloudAudit)的权限                                      | QcloudAuditReadOnlyAccess                                                                                         | QcloudAuditFullAccess                                                                             |
+| 管理文件存储(CFS)的权限                                           | QcloudCFSReadOnlyAccess                                                                                                                 | QcloudCFSFullAccess                                                                                                 |
+| 管理web应用防火墙以及获取SSL证书列表的权限                                           | QcloudWAFReadOnlyAccess                                                                                                                 | 	QcloudWAFFullAccess                                                                                                 |
+| 管理用户与权限(CAM)的权限                                           | QcloudCamReadOnlyAccess                                                                                           | QcloudCamFullAccess                                                                               |
+| 管理私有域解析(Private DNS)的权限<br>管理DNSPod的权限                                           | QcloudDNSPodReadOnlyAccess<br>QcloudPrivateDNSReadOnlyAccess                                                         | QcloudPrivateDNSFullAccess<br>QcloudDNSPodFullAccess                                                 |
+| 管理账户内财务相关内容的权限                                | -                                                                                                                 | QCloudFinanceFullAccess                                                                           |
+| 管理云监控(Monitor)的权限                                          | QcloudMonitorReadOnlyAccess                                                                                       | QcloudMonitorFullAccess                                                                           |
 
 ### 新建UCloud账号
 
@@ -757,22 +756,20 @@ description: >
 
 ##### 通过平台管理Google云资源，需要云账号具备哪些权限
 
-| 功能                                                      | 只读权限                                              | 可读可写权限                     |
+| 权限备注                                                      | 只读权限                                              | 读写权限                     |
 | :----------                                               | :--------                                             | :----------                      |
-| 所有功能总和                                              | Viewer                                                | Editor                           |
-| 虚拟机, 磁盘, 安全组, 镜像, 快照, 磁盘, 镜像, 负载均衡    | Compute Viewer                                        | Compute Editor                   |
-| 项目                                                      | -                                                     | -                                |
-| Vpc, Vpc对等连接, 路由表, NAT, 弹性网卡,EIP, NAT          | Compute Network Viewer                                | Compute Network Admin            |
-| 对象存储                                                  | Storage Legacy Bucket Reader<br>Storage Object Viewer | Storage Admin                    |
-| RDS                                                       | Cloud SQL Viewer                                      | Cloud SQL Admin                  |
-| 弹性缓存                                                  | Redis Enterprise Cloud Viewer                         | Redis Enterprise Cloud Admin     |
-| 操作日志                                                  | Logs Viewer                                           | Logging Admin                    |
-| NAS                                                       | Cloud Filestore Viewer                                | Cloud Filestore Editor           |
-| WAF                                                       | -                                                     | -                                |
-| IAM                                                       | Role Viewer                                           | Role Administrator               |
-| DNS                                                       | DNS Reader                                            | DNS Administrator                |
-| 账单,费用                                                 | Billing Account Viewer                                | Billing Account Administrator    |
-| 监控                                                      | Monitoring Viewer                                     | Monitoring Admin                 |
+| 管理谷歌云所有资源的权限                                              | Viewer                                                | Editor                           |
+| 管理云服务器的权限    | Compute Viewer                                        | Compute Editor                   |
+| 管理网络资源的权限          | Compute Network Viewer                                | Compute Network Admin            |
+| 管理对象存储资源的权限                                                  | Storage Legacy Bucket Reader<br>Storage Object Viewer | Storage Admin                    |
+| 管理云数据库的权限                                                       | Cloud SQL Viewer                                      | Cloud SQL Admin                  |
+| 管理Redis的权限                                                  | Redis Enterprise Cloud Viewer                         | Redis Enterprise Cloud Admin     |
+| 管理日志的权限                                                  | Logs Viewer                                           | Logging Admin                    |
+| 管理文件存储的权限                                                       | Cloud Filestore Viewer                                | Cloud Filestore Editor           |
+| 管理项目中所有自定义角色的权限                                                       | Role Viewer                                           | Role Administrator               |
+| 管理DNS的权限                                                       | DNS Reader                                            | DNS Administrator                |
+| 管理账户账单的权限                                                 | Billing Account Viewer                                | Billing Account Administrator    |
+| 管理监控的权限                                                      | Monitoring Viewer                                     | Monitoring Admin                 |
 
 ##### 如何在谷歌云平台配置并获取Bigquery配置信息?
 
