@@ -4,7 +4,7 @@ linkTitle: "升级相关"
 edition: ce
 weight: 91
 description: >
-  介绍如何升级服务版本
+  介绍如何升级服务版本到指定版本
 ---
 
 本文介绍从 v3.8.x 升级到 v3.9.x 的步骤以及注意事项。
@@ -30,8 +30,8 @@ description: >
 
 使用我们编写的 [ocboot](https://github.com/yunionio/ocboot) 工具进行升级，这个工具主要是调用 ansible 来升级集群里面的所有节点。
 
-1. 使用 git 拉取最新的 [ocboot](https://github.com/yunionio/ocboot) 代码，切换到 {{<release_branch>}} 分支
-2. 使用 [ocboot](https://github.com/yunionio/ocboot) 进行大版本升级
+1. 使用 git 拉取最新的 [ocboot](https://github.com/yunionio/ocboot) 代码，切换到 {{<release_version>}} tag
+2. 使用 [ocboot](https://github.com/yunionio/ocboot) 里面的 `./ocboot.py upgrade` 命令进行版本升级
 
 ## 查看当前版本
 
@@ -60,11 +60,11 @@ $ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./o
 ## 更新 ocboot 代码
 
 ```bash
-$ git pull
+$ git fetch
 $ git checkout {{<release_version>}}
 ```
 
-## 更新 Cloudpods 服务
+## 升级 Cloudpods 服务
 
 更新服务的原理是通过本机 ssh 免密码远程登录到集群的第一个控制节点，获取所有节点的信息后，然后通过 ansible 执行 playbook 更新，所以有以下要求：
 
