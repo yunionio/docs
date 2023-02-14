@@ -1,8 +1,8 @@
 ---
-title: "SR-IOV 网卡透传"
+title: "网卡卸载"
 weight: 30
 description: >
-  介绍如何开启 SR-IOV 网卡透传与 climc 命令行使用
+  介绍 SR-IOV 网卡透传与 OVS Offload 硬件卸载使用方式。
 ---
 
 ## SR-IOV 介绍
@@ -20,7 +20,7 @@ SR-IOV 中的两种新功能类型是：
 与物理功能关联的一种功能。VF 是一种轻量级 PCIe 功能，可以与物理功能以及与同一物理功能关联的其他 VF 共享一个或多个物理资源。VF 仅允许拥有用于其自身行为的配置资源。
 
 
-## 宿主机开启 SR-IOV
+### 宿主机开启 SR-IOV
 
 1. BIOS 中打开设备 SR-IOV 功能(根据机型和设备的型号不同，具体操作方式也可能不一样，具体参考实际机型配置)。
 2. Intel VT-d 或 AMD IOMMU 已在系统的 BIOS 中启用。具体请参阅机器的 BIOS 配置菜单，或其它相关信息。
@@ -50,20 +50,21 @@ $ grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
 5. 设置好后重启宿主机，查看 /proc/cmdline 确认配置生效。
 
-## host-agent 启用 SR-IOV
+### host-agent 启用 SR-IOV
 登陆到对应的宿主机节点
 ```bash
 # SR-IOV 默认是不启用的，需要修改 host-agent 配置
-$ vi /etc/yunion/host.conf
-disable_sriov_nic: false
-
 # 配置 SR-IOV 对应的网络 eg:
 $ vi /etc/yunion/host.conf
 networks:
 - eth1/br0/192.168.100.111
 - eth2/br1/bcast0
-# 上面包含了两种配置方式，第一个参数是物理网卡名称，第二个参数是网桥名称，
+# networks包含了两种配置方式，第一个参数是物理网卡名称，第二个参数是网桥名称，
 # 第三个参数有两种，一种是 ip 地址，另外一种是 wire，对于不想配置 ip地址的网卡可以使用 wire 属性，wire 代表的是这个网卡所在的二层网络。
+sriov_nics:
+- eth2
+# 为 eth2 网卡打开 sriov
+
 ```
 
 修改完成后重启 host-agent 服务: `kubectl rollout restart ds default-host`, 重启完成等待 host-agent 服务启动成功后可以在控制节点使用 climc 查看配置的 VF 网卡.
@@ -103,3 +104,37 @@ $ climc server-attach-network c15a5a99-75ea-4b8c-8c7a-521e5f980db4 \
                               'sriov-nic-model=I350 Ethernet Controller Virtual Function:8056e77e-dc14-44b5-8ef9-e43aff344c0d'
 
 ```
+
+
+## OVS Offload
+
+OVS Offload 是基于 SR-IOV 实现的一种硬件卸载的技术了；如果硬件支持 OVS Offload, 则能够让 OVS 数据面卸载到网卡上，OVS 控制面不用做任何更改。
+OVS Offload 的基础配置依赖于 SR-IOV 的配置，确保宿主机已经打开了 SR-IOV。然后需要安装开启 OVS Offload 必要的依赖，如 Mellanox 网卡需要安装 MLNX_OFED 驱动。
+
+### host-agent 启用 SR-IOV
+
+由于 ovs offload 对 connection tracking 支持的不好，所以需要关闭安全组：
+```bash
+$ kubectl -n onecloud edit cm default-host
+disable_security_group: true # 改为 true
+```
+
+登陆到对应的宿主机节点
+```bash
+# SR-IOV 默认是不启用的，需要修改 host-agent 配置
+# 配置 SR-IOV 对应的网络 eg:
+$ vi /etc/yunion/host.conf
+networks:
+- eth1/br0/192.168.100.111
+- eth2/br1/bcast0
+# networks包含了两种配置方式，第一个参数是物理网卡名称，第二个参数是网桥名称，
+# 第三个参数有两种，一种是 ip 地址，另外一种是 wire，对于不想配置 ip地址的网卡可以使用 wire 属性，wire 代表的是这个网卡所在的二层网络。
+ovs_offload_nics:
+- eth2
+# 为 eth2 网卡打开 ovs offload
+```
+
+修改完成后重启 host-agent 服务: `kubectl rollout restart ds default-host`,在使用上与 SR-IOV 一致。
+
+Mellanox 配置参考文档：
+> https://docs.nvidia.com/networking/display/MLNXOFEDv471001/OVS+Offload+Using+ASAP2+Direct#OVSOffloadUsingASAP2Direct-Overview
