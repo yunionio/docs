@@ -51,18 +51,35 @@ $ ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.168.222.140
 $ ssh root@10.168.222.140 "hostname"
 ```
 
-控制节点应该已经部署好了 docker，为了环境干净，可以直接在容器里面使用 ocboot 的添加计算节点，步骤如下：
+### 拉取 ocboot 代码
+
+如果本地已经有 ocboot 工具可以跳过此步，只用把代码更新到对应的分支。
 
 ```bash
-# 下载 ocboot 代码
-$ git clone https://github.com/yunionio/ocboot
-$ cd ocboot
+# 本地安装 ansible
+$ yum install -y python3-pip
+$ python3 -m pip install --upgrade pip setuptools wheel
+$ python3 -m pip install --upgrade ansible paramiko
 
-# 使用 run-in-docker.sh 添加节点
-$ ./run-in-docker.sh add-node 10.168.26.216 10.168.222.140
+# 下载 ocboot 工具到本地
+$ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
-等 ocboot 容器镜像拉取完后，就会调用 ansible-playbook 把对应的计算节点加入进来。
+### 更新 ocboot 代码
+
+```bash
+$ git fetch
+$ git checkout {{<release_version>}}
+```
+
+### 添加节点
+
+```bash
+# 使用 ocboot 添加节点
+$ ./ocboot.py add-node 10.168.26.216 10.168.222.140
+```
+
+该命令会使用 ansible-playbook 把对应的计算节点加入进来。
 
 
 ### 启用计算节点(宿主机)

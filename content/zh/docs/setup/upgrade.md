@@ -1,8 +1,8 @@
 ---
-title: "升级相关"
-linkTitle: "升级相关"
+title: "升级服务"
+linkTitle: "升级服务"
 edition: ce
-weight: 91
+weight: 90
 description: >
   介绍如何升级服务版本到指定版本
 ---
@@ -113,4 +113,34 @@ $ /opt/yunion/bin/ocadm cluster update --version {{<pre_release_version>}} --wai
 # 降级会重新拉取新的镜像，可以再开一个窗口
 # 使用下面的命令查看每个 pod 的更新情况
 $ kubectl -n onecloud get pods -w
+```
+
+## 回退操作
+
+ocboot 从 v3.9.7 版本起，每次升级集群服务的时候，会把 operator 的 deployment yaml 和 onecloudcluster 的 yaml 文件备份到 `/opt/yunion/ocboot/_upgrade/` 里面，方便以后手动回滚组件。
+
+当出现升级失败，或者升级后想要回退到升级前的版本，可以使用以下的操作：
+
+```bash
+# 查看 /opt/yunion/ocboot/_upgrade/ 目录里面的升级备份目录
+# 里面的子目录以升级前时间作为目录名
+$ ls  /opt/yunion/ocboot/_upgrade/
+2023.02.20-10:10:07
+
+# 比如想要回退到 2023.02.20-10:10:07 前的版本，就进行以下操作
+$ cd /opt/yunion/ocboot/_upgrade/2023.02.20-10\:10\:07/
+# 查看相关 yaml 文件
+$ ls -lh
+-rw-r--r-- 1 root root  61K Feb 20 10:10 oc.yml # oc.yaml 为 onecloudcluster 描述文件
+-rw-r--r-- 1 root root 3.9K Feb 20 10:10 operator.yml # operator.yaml 为 operator deployment 描述文件
+
+# 先回退 operator
+$ kubectl apply -f operator.yml
+deployment.extensions/onecloud-operator configured
+# 等到新创建的 operator 变成 Running，如果是 ContainerCreating 状态就等待一段时间
+$ kubectl get pods -n onecloud | grep operator
+onecloud-operator-5557d86d74-7s5sl                   1/1     Running   0          2s
+
+# 再回退 onecloudcluster 就可以了
+$ kubectl apply -f oc.yaml
 ```
