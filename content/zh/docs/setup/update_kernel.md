@@ -1,7 +1,7 @@
 ---
 title: "升级内核"
 edition: ce
-weight: 90
+weight: 91
 description: >-
      升级内核.
 ---
