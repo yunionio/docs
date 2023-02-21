@@ -913,7 +913,7 @@ description: >
 1. 新建VMware云账号，自动在{{<oem_name>}}平台创建二层网络和IP子网，VMware网络与{{<oem_name>}}平台二层网络和IP子网的对应关系如下：
     - 一个vSwitch或Distributed vSwitch对应一个二层网络；
     - 同一个二层网络下具体相同VLAN的连续IP地址段为一个IP子网；
-2. VMware云账号添加完成后，如自动添加的二层网络和IP子网不符合组网需求，请根据VMware的实际网络环境进行合并wire和合并IP子网的操作；合并wire操作不可逆，如配置错误，请删除云账号后重新添加。
+2. VMware云账号添加完成后，如自动添加的二层网络和IP子网不符合组网需求，请根据VMware的实际网络环境进行合并wire和合并IP子网的操作；合并wire操作不可逆，如配置错误，请删除云账号后重新添加,网络问题参考：[VMware网络原理](../../../../function_principle/multicloud/cloudaccounts/vmware_net)。
 
 **操作步骤**
 
