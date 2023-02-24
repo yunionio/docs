@@ -77,6 +77,31 @@ $ git checkout {{<release_version>}}
 ```bash
 # 使用 ocboot 添加节点
 $ ./ocboot.py add-node 10.168.26.216 10.168.222.140
+
+# 默认情况是不允许虚拟机作为计算节点的，如果需要目标虚拟机作为计算节点，需要设置 --enable-host-on-vm 参数
+$ ./ocboot.py add-node --enable-host-on-vm 10.168.26.216 10.168.222.140
+
+# 其他选项，使用 '--help' 参考帮助
+$ ./ocboot.py add-node --help
+usage: ocboot.py add-node [-h] [--user SSH_USER] [--key-file SSH_PRIVATE_FILE] [--port SSH_PORT] [--node-port SSH_NODE_PORT]
+                          [--enable-host-on-vm]
+                          FIRST_MASTER_HOST TARGET_NODE_HOSTS [TARGET_NODE_HOSTS ...]
+
+positional arguments:
+  FIRST_MASTER_HOST     onecloud cluster primary master host, e.g., 10.1.2.56
+  TARGET_NODE_HOSTS     target nodes ip added into cluster
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --user SSH_USER, -u SSH_USER
+                        primary master host ssh user (default: root)
+  --key-file SSH_PRIVATE_FILE, -k SSH_PRIVATE_FILE
+                        primary master ssh private key file (default: /home/lzx/.ssh/id_rsa)
+  --port SSH_PORT, -p SSH_PORT
+                        primary master host ssh port (default: 22)
+  --node-port SSH_NODE_PORT, -n SSH_NODE_PORT
+                        worker node host ssh port (default: 22)
+  --enable-host-on-vm
 ```
 
 该命令会使用 ansible-playbook 把对应的计算节点加入进来。
