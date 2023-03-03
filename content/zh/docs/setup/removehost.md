@@ -19,7 +19,7 @@ climc host-delete <host_id>
 注意：如果删除宿主机记录失败，可能的原因是宿主机上还有未清理的虚拟机，或者宿主机的本地存储有未清理的磁盘。发生这个情况时，可以通过 climc 容器的 clean_host.sh 脚本自动清理该宿主机上残留的虚拟机和本地磁盘，并且删除宿主机的数据库记录
 
 ```bash
-kubectl -n onecloud exec -it default-climc-xxxxxxxx /bin/bash # 进入climc容器执行如下命令
+kubectl exec -ti -n onecloud $(kubectl get pods -n onecloud | grep climc | awk '{print $1}') sh # 进入climc容器执行如下命令
 cd /opt/yunion/scripts/tools/
 clean_host.sh <host_id>
 ```
