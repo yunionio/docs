@@ -146,6 +146,7 @@ $ climc server-purge <server_id>
 通过ssh远程连接控制节点，执行以下命令：
 
 ```bash
+kubectl exec -ti -n onecloud $(kubectl get pods -n onecloud | grep climc | awk '{print $1}') sh # 进入climc容器执行如下命令
 $ /opt/yunion/scripts/tools/clean_host.sh <host_id>
 ```
 
