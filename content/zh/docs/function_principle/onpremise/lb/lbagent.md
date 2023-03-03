@@ -66,6 +66,13 @@ sslverify=1
 EOF
 ```
 
+更新yum数据库：
+
+```bash
+yum clean all
+yum makecache
+```
+
 * 更新节点的内核为最新的计算节点的内核，重启节点使得新内核生效
 
 ```bash
@@ -103,5 +110,6 @@ systemctl enable --now ovn-controller
 
 ```bash
 yum install -y yunion-lbagent
+systemctl daemon-reload
 systemctl restart yunion-lbagent
 ```
