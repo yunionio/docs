@@ -251,13 +251,16 @@ https://www.bilibili.com/video/BV19g411e7Eh/
 
 1. 请确认部署用的yaml文件中是否有`as_host: true`配置项，若没有，则表示该节点只作为控制节点使用，不作为计算节点使用，因此宿主机列表中没有宿主机是正常的；
 2. 在控制节点查看host pod日志信息。
+
     ```bash
     # 查看host pod状态
     $ kubectl get pods -n onecloud |grep host
     # 查看host的日志
     $ kubectl logs -n onecloud default-host-xxxxxx -c host -f
     ```
+
     (1). 若日志报错信息中包含“register failed: try create network: find_matched == false”，则表示未成功创建包含宿主机的IP子网，导致宿主机注册失败，请创建包含宿主机网段的IP子网。
+
     ```
     # 创建包含宿主机网段的IP子网
     $ climc network-create bcast0  adm0 <start_ip> <end_ip> mask
