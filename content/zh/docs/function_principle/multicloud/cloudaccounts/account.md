@@ -29,7 +29,7 @@ export CTYUN_SECRET='YOUR SECRET'
 export CTYUN_REGION="cn-gzT"
  
 # 执行验证命令， 如果能正常列出可用区列表，说明与天翼云连接正常。
-# 如果报403错误，则可能是接入准备未就位。
+# 如果报403错误，则可能是接入准备未就位。 需要在用户调用API前，需将IP加入至天翼云白名单,具体参考 https://www.ctyun.cn/document/10014047/10016475 
 # 如果报 apigateway错误， 则可能是天翼云api接口调用错误或者发生变更。请联系云管平台开发人员定位
 ./ctyuncli region-list
 
