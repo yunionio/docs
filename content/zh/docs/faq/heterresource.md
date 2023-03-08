@@ -150,6 +150,12 @@ kubectl exec -ti -n onecloud $(kubectl get pods -n onecloud | grep climc | awk '
 $ /opt/yunion/scripts/tools/clean_host.sh <host_id>
 ```
 
+如果该宿主机是从物理机转换过来的，还需要重启 baremetal-agent 服务更新记录：
+
+```bash
+$ kubectl rollout restart deployment -n onecloud default-baremetal-agent
+```
+
 ## 为什么物理服务器Baremetal无法被云管平台纳管？
 
 请检查并确保物理服务器满足以下配置项：
