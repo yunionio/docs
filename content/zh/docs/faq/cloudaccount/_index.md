@@ -47,4 +47,12 @@ $ export API_VERSION=V2 #脚本使用V2版本的API，所以需要显式声明
 $ cd /opt/yunion/scripts/tools/
 $ ./clean_provider.sh <provider_id_or_name>
 ```
+## 如何设置OpenStack的虚拟机免密登陆？
 
+在云管平台中需要把OpenStack虚拟机所在的VPC中direct值设置为true，然后在平台中设置免密登陆成功，再安装监控agent。
+
+```bash
+$ source <(ocadm cluster rcadmin)
+$ climc server-show 虚拟机名称 | grep vpc_id  # 查看虚拟机所在vpc的id
+$ climc vpc-update --direct vpc_id  # vpc_id为上述查询的值
+```
