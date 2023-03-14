@@ -131,7 +131,7 @@ footer.d-print-none {
   main {
     section:first-of-type {
       padding-top: 4rem !important;
-      margin-bottom: 2rem;
+      // margin-bottom: 2rem;
     }
   }
 }
@@ -631,3 +631,16 @@ footer.d-print-none {
   height: 42px;
   line-height: 40px;
 }
+
+.cloudpods_screen_img {
+  width: 100%;
+  border: solid 1px #B2B2B2;
+  border-radius: 7px;
+  box-shadow: 3px 3px 5px #B2B2B2;
+}
+
+.justify-content-center{
+  justify-content: center!important;
+}
+
+

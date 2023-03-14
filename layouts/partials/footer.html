@@ -29,10 +29,10 @@ var _hmt = _hmt || [];
       {{ if (not $is_ee) }}
       <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
         {{ with .Site.Params.copyright }}<small class="text-white">Copyright &copy; 2017-{{ now.Year }} {{ .}}</small>{{ end }}
-        {{ with .Site.Params.icp_code }}<a href="https://beian.miit.gov.cn/" style="text-decoration:none; color:inherit;" class="text-white">{{ .}}</a>{{ end }}
+        {{ with .Site.Params.icp_code }}<a href="https://beian.miit.gov.cn/" style="text-decoration:none; color:inherit;display:block" class="text-white">{{ .}}</a>{{ end }}
         {{ with .Site.Params.privacy_policy }}<small class="ml-1"><a href="{{ . }}" target="_blank">{{ T "footer_privacy_policy" }}</a></small>{{ end }}
         {{ if not .Site.Params.ui.footer_about_disable }}
-          {{ with .Site.GetPage "about" }}<p class="mt-2"><a href="{{ .RelPermalink }}">{{ partial "title.html" . }}</a></p>{{ end }}
+          {{ with .Site.GetPage "about" }}<a class="text-white" style="display:block" href="{{ .RelPermalink }}">{{ partial "title.html" . }}</a>{{ end }}
         {{ end }}
       </div>
       {{ end }}
