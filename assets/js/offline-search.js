@@ -40,7 +40,9 @@
         let idx = null; // Fuse index
         const resultDetails = new Map(); // Will hold the data for the search results (titles and summaries)
         const options = {
+            shouldSort: true,
             useExtendedSearch: true,
+            includeMatches: true,
             findAllMatches: true,
             keys: [
                 "title",
@@ -164,21 +166,28 @@
 
                     const $entry = $('<div>').addClass('mt-4');
 
+                    let ancherObj = $('<a>').addClass('d-block').css({
+                        fontSize: '1.2rem',
+                    }).attr('href', href).text(doc.title);
+                    let descObj = $('<p>').text(doc.excerpt);
+                    if (or.matches.length !== 0) {
+                        for (let i = 0; i < or.matches.length; i++) {
+                            const match = or.matches[i];
+                            let value = match.value;
+                            if (value.length > 512) {
+                                value = value.substring(0, 512) + "...";
+                            }
+                            if (match.key === 'body') {
+                                descObj = $('<p>').text(value);
+                            }
+                        }
+                    }
+
+                    $entry.append(ancherObj);
                     $entry.append(
                         $('<small>').addClass('d-block text-muted').text(r.ref)
                     );
-
-                    $entry.append(
-                        $('<a>')
-                            .addClass('d-block')
-                            .css({
-                                fontSize: '1.2rem',
-                            })
-                            .attr('href', href)
-                            .text(doc.title)
-                    );
-
-                    $entry.append($('<p>').text(doc.excerpt));
+                    $entry.append(descObj);
 
                     $searchResultBody.append($entry);
                 });
