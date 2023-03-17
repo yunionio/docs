@@ -632,11 +632,21 @@ footer.d-print-none {
   line-height: 40px;
 }
 
-.cloudpods_screen_img {
+.screen_img_container {
+  position: relative;
   width: 100%;
   border: solid 1px #B2B2B2;
   border-radius: 7px;
   box-shadow: 3px 3px 5px #B2B2B2;
+  height: 0;
+  padding-bottom: 65%;
+  background: #B2B2B210;
+}
+.cloudpods_screen_img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 
 .justify-content-center{
