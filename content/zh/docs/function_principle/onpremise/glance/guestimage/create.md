@@ -22,7 +22,7 @@ climc命令如下：
 climc guest-image-create <name> --image <id_of_root_image> --image <id_of_data_image> --image ...
 ```
 
-要求所有镜像的状态都是active状态，并且第一个镜像要求设置了os_type。
+要求所有镜像的状态都是active状态，并且第一个镜像为系统盘，要求设置了os_type属性。
 
 ### Tip： 如何将vmware的ova虚拟机文件导入 {{<oem_name>}} 成为主机镜像？
 
