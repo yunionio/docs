@@ -14,4 +14,4 @@ img: /images/icons/icon-contact.svg
 
 * 微信
 
-![contact use wechat](/images/contact_me_qr_20210701.png)
+![contact use wechat](/images/contact_me_qr_20230321.png)
