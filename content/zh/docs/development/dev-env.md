@@ -316,3 +316,15 @@ apt-get update && apt-get install -y libcephfs-dev librbd-dev librados-dev
 {{% /tab %}}
 
 {{< /tabs >}}
+
+### 4. 如何更新cloudpods后端代码仓库的vendor目录的代码？
+
+cloupods依赖的第三方代码静态维护在vendor目录中。更新了cloudmux等依赖仓库的代码后，进入cloudpods仓库，执行如下命令更新vendor的代码：
+
+```bash
+make mod
+```
+
+### 5. 如何解决在cherrypick时出现的vendor代码的冲突？
+
+首先解决解决go.mod和go.sum的代码冲突，然后执行 make mod 刷新vendor里的代码。最后提交go.mod，go.sum以及vendor的所有变更。
