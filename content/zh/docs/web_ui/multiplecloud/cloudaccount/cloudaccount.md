@@ -1125,7 +1125,7 @@ $ kubectl rollout restart deployment -n kube-system coredns
     - 名称：HCS云账号的名称。
     - 备注：HCS云账号的备注。
     - 密钥ID/密码：通过Access Key验证方式对接HCS平台，Access Key由密钥ID（Access Key ID）和密码（Access Key Secret）组成。具体请参考[HCS相关参数获取方式](#hcs相关参数获取方式)。
-    - 认证地址：。
+    - 认证地址：HCS管理平台的认证地址，如region1.example.com。
     - 资源归属项目：选择将云账号上的资源同步到{{<oem_name>}}平台的本地项目。
     - 代理：当云账号需要代理才可以正常访问时设置该项，留空代表直连。如没有合适的代理，直接单击“新建”超链接，在弹出的新建代理对话框中设置相关参数，创建代理。
     - 只读模式：开启后，该云账号只会进行同步资源操作，无法进行其他任务操作，如新建、删除或修改等。
