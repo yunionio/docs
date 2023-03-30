@@ -137,3 +137,11 @@ $ docker compose down
 默认情况下，启动 docker 服务是默认打开 iptables 的，如果在 */etc/docker/daemon.json* 里面设置了 "bridge: none" 和 "iptables: false" 则无法使用 docker compose 功能。
 
 在运行 docker compose 之前请确保打开了 bridge 和 iptables 功能。
+
+### 2. docker-compose.yml 包含了很多服务，是怎么生成的？
+
+Cloudpods CMP 多云管理版本包含了很多服务，如果一个一个手写 compose 的配置会非常复杂，所以在 ocboot 里面有个 *generate-compose.py* 的脚本，负责生成 docker-compose.yml 文件，可以使用下面命令生成 compose 配置文件：
+
+```bash
+$ python3 generate-compose.py > compose/docker-compose.yml
+```
