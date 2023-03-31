@@ -78,6 +78,9 @@ $ docker compose up
 ```bash
 # 所有服务放到后台运行
 $ docker compose up -d
+
+# 服务放到后台后，可以通过 logs 自命令查看输出日志
+$ docker compose logs -f
 ```
 
 ### 2. 登陆 climc 命令行容器
@@ -129,7 +132,6 @@ data
 $ docker compose down
 ```
 
-
 ## 常见问题
 
 ### 1. docker 服务没有打开 iptables 和 bridge 导致容器网路无法创建
@@ -138,6 +140,7 @@ $ docker compose down
 
 在运行 docker compose 之前请确保打开了 bridge 和 iptables 功能。
 
+
 ### 2. docker-compose.yml 包含了很多服务，是怎么生成的？
 
 Cloudpods CMP 多云管理版本包含了很多服务，如果一个一个手写 compose 的配置会非常复杂，所以在 ocboot 里面有个 *generate-compose.py* 的脚本，负责生成 docker-compose.yml 文件，可以使用下面命令生成 compose 配置文件：
@@ -145,3 +148,21 @@ Cloudpods CMP 多云管理版本包含了很多服务，如果一个一个手写
 ```bash
 $ python3 generate-compose.py > compose/docker-compose.yml
 ```
+
+### 3. 如何升级服务?
+
+通过 docker compose 升级很方便，只用更新 docker-compose.yml 配置文件。
+
+比如 *ocboot/compose/docker-compose.yml* 更新了，就可以通过 git pull 最新的代码，然后重新启动就可以了，步骤如下：
+
+```bash
+# 使用 git pull 更新
+$ cd ocboot
+$ git pull
+
+# 重启 compose 服务
+$ cd compose
+$ docker compose down
+$ docker compose up -d
+```
+
