@@ -7,21 +7,21 @@ description: >
   介绍从开源版本切换为企业版本或从企业版本切换到开源版本
 ---
 
-默认情况下部署好的版本是 **开源版本(CE: Community Edition)**，可以使用 `ocadm cluster update` 命令切换成 **企业版本(EE: Enterprise Edition)**。
+默认情况下部署好的版本是 **开源版本(CE: Community Edition)**，可以到ocboot所在路径（通常建议安装路径为`/opt/ocboot`），执行 `python3 ocboot.py ee <IP>` 命令切换成 **企业版本(EE: Enterprise Edition)**。其中，`<IP>`为管理节点的IPv4地址。
 
 ## 切换操作
 
 ```bash
 # 切换到企业版
-$ ocadm cluster update --use-ee --wait
+$ python3 ocboot.py ee <IP>
 
 # 切换到开源版的 web 前端
-$ ocadm cluster update --use-ce --wait
+$ python3 ocboot.py ce <IP>
 ```
 
-`ocadm cluster update --use-ee/--use-ce` 命令会更新替换当前的 default-web deployment
+上述切换命令会更新替换当前的 `default-web deployment`，并删除对应的`configmap`，重启`web`服务。
 
-待所有pod启动后，由于开源版和企业版的前端分别依赖不同的 default-web configmap，直接切换过去会导致 default-web configmap 没有更新，web前端无法访问，因为需要删除web服务的nginx configmap，并重启 web 服务。
+如果web服务不正常，您也可以自行手工执行下面的操作，来确保web服务的彻底更新，或直接联系管理员：
 
 ```bash
 # 删除 default-web 的 configmap 文件
