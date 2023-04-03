@@ -80,6 +80,10 @@ $ git push origin feature/implement-x
 # 可已把该环境变量放到 ~/.bashrc 里面，如果使用的 zsh 则放到 ~/.zshrc 里面
 $ export GITHUB_USER=<your_username>
 
+# 访问这个连接添加自己的访问 token：https://github.com/settings/tokens
+# 设置github个人token
+$ export GITHUB_TOKEN=<your_access_token>
+
 # 使用脚本自动 cherry-pick PR 到 release 分支
 # 比如现在有一个提交的PR的编号为18，要把它合并到 release/3.4
 $ ./scripts/cherry_pick_pull.sh upstream/release/3.4 18
