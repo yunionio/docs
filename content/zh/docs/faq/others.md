@@ -31,12 +31,6 @@ description: >
 2. 纳管物理机方法可参考[在线文档](../../function_principle/onpremise/baremetal/create_register_redirect/)
 3. 物理机测试方法可参考[在线文档](../../function_principle/onpremise/baremetal/testcase/)
 
-## 开源版如何开启多租户功能？
-
-1. 需要开启三级权限，通过climc service-config-edit common且修改："non_default_domain_projects": true
-2. 重启相关服务以便立即生效，在控制节点上执行 kubectl rollout restart deployment -n onecloud default-keystone default-apigateway 
-3. 三级权限修改后，无法关闭。
-
 ## API 有没有详细点的调用说明？
 
 1. 具体调用方法可参考[在线文档](../../development/apisdk/01_api/)
