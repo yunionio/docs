@@ -169,8 +169,6 @@ primary_master_node:
   as_host: true
   # 虚拟机强行作为 Cloudpods 内置私有云计算节点（默认为 false）。开启此项时，请确保as_host: true
   as_host_on_vm: true
-  # 启用 minio 作为后端对象存储
-  enable_minio: true
   # 设置镜像仓库，如果待部署的机器处于海外，可以用 dockerhub 的镜像仓库：docker.io/yunion
   image_repository: registry.cn-beijing.aliyuncs.com/yunion
 EOF
