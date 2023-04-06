@@ -11,7 +11,9 @@ description: >
 
 #### 准备工作
 
-1. 宿主机即安装了host服务的计算节点，在云管平台上将物理机转换为宿主机时需要使用由我司提供的专门制作的宿主机镜像。
+1. 宿主机即安装了host服务的计算节点，在云管平台上将物理机转换为宿主机时需要使用由我司提供的专门制作的宿主机镜像，镜像可从下面地址获取：
+    - v3.9 镜像：https://iso.yunion.cn/vm-images/host-convert-v39-20230404.qcow2
+    - v3.9 UEFI 镜像(宿主机如果是 UEFI 启动)：https://iso.yunion.cn/vm-images/host-convert-uefi-v39-20230404.qcow2
 2. 将该镜像上传到管理平台，并记录该镜像的id信息。
 3. 在控制节点上通过climc命令设置物理机转换宿主机的默认镜像。
 
