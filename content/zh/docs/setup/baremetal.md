@@ -28,9 +28,8 @@ description: >
 dhcp_relay:
 - 10.168.222.150 # baremetal agent dhcp服务监听地址
 - 67             # baremetal agent dhcp服务监听端口
-# 然后重启host服务
-$ kubectl get pods -n onecloud -o wide | grep host
-default-host-p6d8h                       2/2     Running   0          78m    10.168.222.189   k8s-dev1   <none>           <none>
+# 然后登陆到控制节点，根据上面计算节点的ip，找到对应的pod，并重启host服务
+$ kubectl get pods -n onecloud -o wide | grep 10.168.222.150  | grep -vE 'image|deployer'
 default-host-xdc7x                       2/2     Running   0          78m    10.168.222.150   k8s-dev2   <none>           <none>
 # 找到对应的 pod 删除等待 host 服务自动重启
 $ kubectl delete pods -n onecloud default-host-xdc7x
@@ -38,10 +37,16 @@ $ kubectl delete pods -n onecloud default-host-xdc7x
 
 ### 启用 baremetal-agent
 
-然后选择 node 启用 baremetal-agent。
+登陆控制节点，然后选择 node 启用 baremetal-agent。
 ```bash
-# $listen_interface 指的是 baremetal-agent 监听的网卡名称
 $ ocadm baremetal enable --node $node_name --listen-interface $listen_interface
+# $listen_interface 指的是 baremetal-agent 监听的网卡名称，即计算节点ip所在的网卡名称
+$ ip a show |grep 10.168.222.150
+    inet 10.168.222.150/24 brd 10.168.222.255 scope global br0
+# $node_name 指的是计算节点添加到k8s集群的节点名称，登陆控制节点，通过计算节点的ip找到对应节点名称
+$ kubectl get nodes -o wide | grep 10.168.222.150 | awk '{print $1}'
+k8s-dev2
+$ ocadm baremetal enable --node k8s-dev2 --listen-interface br0
 # 观察 baremetal agent pod 状态查看是否启动成功
 $ watch "kubectl get pods -n onecloud | grep baremetal"
 default-baremetal-agent-7c84996c9b-hhllw   1/1     Running   0          3m10s
