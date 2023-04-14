@@ -1,220 +1,54 @@
 ---
-title: "climc 使用介绍"
-weight: 1
+title: "climc 使用"
+weight: 3
 description: >
-    介绍如何安装部署Climc命令行工具，并使用。
+    介绍如何使用Climc命令行工具。
 ---
 
-云平台的命令行管理工具是 `climc`, 可以通过该工具向后端各个服务发送API请求, 实现对资源的操控。
+### 参数说明
 
-通过快速开始的[All in One安装](../../../quickstart/allinone/)或[安装部署](../../../setup)章节搭建开源版{{<oem_name>}}环境时，控制节点都会安装climc，可直接跳过安装climc章节直接查看使用climc章节。
+```shell
+# 查看climc帮助信息
+$ climc --help | head
+Usage: climc [--version] [--timeout TIMEOUT] [--insecure|-k] [--cert-file CERT_FILE] [--key-file KEY_FILE] [--completion {bash,zsh}] [--use-cached-token] [--os-username OS_USERNAME] [--os-password OS_PASSWORD] [--os-project-name OS_PROJECT_NAME] [--os-project-domain OS_PROJECT_DOMAIN] [--os-domain-name OS_DOMAIN_NAME] [--os-access-key OS_ACCESS_KEY] [--os-secret-key OS_SECRET_KEY] [--os-auth-token OS_AUTH_TOKEN] [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME] [--os-zone-name OS_ZONE_NAME] [--os-endpoint-type {publicURL,internalURL,adminURL}] [--output-format {table,kv,json,flatten-table,flatten-kv}] [--parallel-run PARALLEL_RUN] [--help] [--debug] <SUBCOMMAND> ...
 
-目前Web控制台已支持cloudshell功能，可以在管理后台视图，单击web控制台右上角cloudshell图标，直接进入climc所在容器内使用climc命令。
+Command-line interface to the API server.
 
-下面介绍如何在非控制节点上安装climc。
+Positional arguments:
+    <SUBCOMMAND>
+        cloud-account-sync
+          Sync cloudaccount
+        lbbackend-list
+          List lbbackends
+# [--xxx] 以中括号括起来的参数都是可选参数, 可传可不传
+# [--xxx|-x] 此参数后面不需要跟任何参数,--xxx和-x效果相同, 可任意使用, 例如: --debug, -k
+# [--xxx XXX] 此参数后面必须跟一个参数, 例如: --timeout 300
+# [--xxx {xxx,xxx,xxx}] 此参数后面必须跟一个参数, 且参数必须是在大括号之内的一个, 例如: --os-endpoint-type publicURL
+# <XXXX> 此参数属于必传参数, 若存在多个尖括号参数, 则需要根据尖括号参数顺序依次传参, 例如上面的<SUBCOMMAND> 可以指定为 cloud-account-sync
+# 以上参数必须跟在climc命令之后
 
-## 安装
+# 组合上面的参数命令为
+$ climc --debug -k --timeout --os-endpoint-type publicURL cloud-account-sync
 
-可以通过 yum 或者源码编译的方式安装climc。
+# 查看子命令帮助信息 climc <SUBCOMMAND> --help, 例如:
+$ climc cloud-account-sync --help
+Usage: climc cloud-account-sync [--full-sync] [--deep-sync] [--xor] [--region REGION] [--zone ZONE] [--host HOST] [--resources {project,compute,network,eip,loadbalancer,objectstore,rds,cache,event,cloudid,dnszone,public_ip,intervpcnetwork,saml_auth,quota,nat,nas,waf,mongodb,es,kafka,app,cdn,container,ipv6_gateway,tablestore,modelarts,vpcpeer,misc}] [--help] [--force] <ID>
 
-### RPM 安装
+Sync cloudaccount
 
-添加 yunion 的 yum 源，如果已经添加可以忽略这一步。
+Positional arguments:
+    <ID>
+        ID or Name of cloud account
 
-```bash
-$ cat <<EOF >/etc/yum.repos.d/yunion.repo
-[yunion]
-name=Packages for Yunion Multi-Cloud Platform
-baseurl=https://iso.yunion.cn/yumrepo-3.7
-sslverify=0
-failovermethod=priority
-enabled=1
-gpgcheck=0
-EOF
-```
+Optional arguments:
+    [--full-sync]
 
-安装 climc
+# 此时显示的所有参数都需要跟在子命令之后, 注意有个<ID>参数需要必填,这里以aliyun-account举例, 例如
+$ climc cloud-account-sync --full-sync aliyun-account
 
-```bash
-$ sudo yum install -y yunion-climc
-$ ls -alh /opt/yunion/bin/climc
--rwxr-xr-x 1 root root 24M Jul 18 19:04 /opt/yunion/bin/climc
-```
+# <SUBCOMMAND> 子命令列表非常多, 可以通过关键字过滤查找, 例如找可用区:
+$ climc --help | grep zone
 
-### 源码编译安装
-
-首先需要搭建 go 的开发环境，然后 clone 代码并编译:
-
-```bash
-# 克隆代码
-$ cd $GOPATH/src/yunion.io/x/
-$ git clone https://github.com/yunionio/cloudpods.git
-
-# 编译 climc
-$ cd $GOPATH/src/yunion.io/x/cloudpods
-$ make cmd/climc
-
-# 等待编译完成后，climc 在 _output/bin 目录下
-$ ls -alh _output/bin/climc
--rwxr-xr-x 1 lzx lzx 25M Jul 15 17:10 _output/bin/climc
-```
-
-可以根据自己的需要，将编译好的 climc 放到对应的目录，或者直接写 alias 对应到 $GOPATH/src/yunion.io/x/cloudpods/_output/bin/climc 。
-
-## 使用
-
-安装好 climc 后，可以将对应的可执行目录加入到 PATH 环境变量，下面假设 climc 所在的目录是 /opt/yunion/bin 。
-
-```bash
-# 根据自己的需要加到 bash 或者 zsh 配置文件里面
-$ echo 'export PATH=$PATH:/opt/yunion/bin' >> ~/.bashrc && source ~/.bashrc
-$ climc --help
-```
-
-### 认证配置
-
-climc 请求云平台后端服务的流程如下:
-
-1. 通过配置信息，使用用户名密码从 keystone 获取 token
-2. token 中包含了后端服务的 endpoint 地址
-3. climc 将对应资源的 CURD 请求发往所属的后端服务
-
-所以在操作资源前，我们需要通过环境变量告诉 climc 想要操作的云平台和认证信息。
-
-目前climc支持两种认证方式：
-
-- 通过用户名／密码认证
-- 通过Access Key／Secret认证（从2.11开始支持） 
-
-#### 控制节点认证配置
-
-在控制节点上可直接通过以下命令认证配置。
-
-```bash
-# 获取环境变量
-$ ocadm  cluster rcadmin
-export OS_AUTH_URL=https://192.168.0.246:5000/v3
-export OS_USERNAME=sysadmin
-export OS_PASSWORD=3hV3***84srk
-export OS_PROJECT_NAME=system
-export YUNION_INSECURE=true
-export OS_REGION_NAME=region0
-export OS_ENDPOINT_TYPE=publicURL
-
-# 认证环境变量
-$ source <(ocadm cluster rcadmin)
-```
-注意: 如果执行 climc 时出现 *Error: Missing OS_AUTH_URL* 的错误提示时，请重新执行 `source <(ocadm cluster rcadmin)` 命令。
-
-#### 非控制节点认证配置
-
-在非控制节点做认证配置上首先需要在对应的控制节点上执行`ocadm cluster rcadmin`；
-将输出的认证信息保存到本地的文件中，通过source命令认证配置。
-
-以下为用户名／密码认证的配置文件模板，通过OS_USERNAME, OS_DOMAIN_NAME, OS_PASSWORD, OS_PROJECT_NAME, OS_PROJECT_DOMAIN等字段指定用户的信息和项目的信息。
-
-```bash
-# 在控制节点上获取认证所需要的配置信息。
-$ ocadm cluster rcadmin
-export OS_AUTH_URL=https://192.168.0.246:5000/v3
-export OS_USERNAME=sysadmin
-export OS_PASSWORD=3hV3***84srk
-export OS_PROJECT_NAME=system
-export YUNION_INSECURE=true
-export OS_REGION_NAME=region0
-export OS_ENDPOINT_TYPE=publicURL
-
-# 将上述认证信息保存到文件中，方便 source 使用
-$ cat <<EOF > ~/test_rc_admin
-# keystone 认证地址
-export OS_AUTH_URL=https://192.168.0.246:5000/v3
-# 用户名
-export OS_USERNAME=sysadmin
-# 用户密码
-export OS_PASSWORD=3hV3***84srk
-# 用户所属项目名称
-export OS_PROJECT_NAME=system
-# 允许 insecure https 连接
-export YUNION_INSECURE=true
-# 对应的 region
-export OS_REGION_NAME=region0
-# endpoint 类型为 public
-export OS_ENDPOINT_TYPE=publicURL
-EOF
-```
-
-以下为Access Key/Secret认证的配置文件模板，通过OS_ACCESS_KEY, OS_SECRET_KEY等两个字段指定用户的Access Key/secret。
-
-```bash
-# 在控制节点上获取用户在一个项目中的Access Key/Secret
-
-# 生成 Secret Key
-$ climc credential-create-aksk
-+--------+----------------------------------------------+
-| Field  |                    Value                     |
-+--------+----------------------------------------------+
-| expire | 0                                            |
-| secret | VGFxZkE3QTd2MmhCbmZkVkJDcFZFaGJYdUQ2c05mUXM= |
-+--------+----------------------------------------------+
-
-# ID为 Access Key
-$ climc credential-list
-+-----------------------+------------+------------+-----------------------+---------+---------+-----------+---------+-----------------------+-------------+--------------+-----------------------+------+-----------------------+----------------------+----------+----------------------+
-|         blob          | can_delete | can_update |      created_at       | deleted | domain  | domain_id | enabled |          id           | is_emulated |     name     |      project_id       | type |    update_version     |      updated_at      |   user   |       user_id        |
-+-----------------------+------------+------------+-----------------------+---------+---------+-----------+---------+-----------------------+-------------+--------------+-----------------------+------+-----------------------+----------------------+----------+----------------------+
-| {"expire":0,"secret": | true       | true       | 2020-06-15T11:43:32.0 | false   | Default | default   | true    | 0d184a3c9c484e4c892f4 | false       | --1592221412 | d53ea650bfe144da8ee8f | aksk | 0                     | 2020-06-15T11:43:32. | sysadmin | a063d8e2cd584cc48194 |
-| "VGFxZkE3QTd2MmhCbmZk |            |            | 00000Z                |         |         |           |         | 855935e37e7           |             |              | 3fba417b904           |      |                       | 000000Z              |          | 5e7169280435         |
-| VkJDcFZFaGJYdUQ2c05mU |            |            |                       |         |         |           |         |                       |             |              |                       |      |                       |                      |          |                      |
-| XM="}                 |            |            |                       |         |         |           |         |                       |             |              |                       |      |                       |                      |          |                      |
-+-----------------------+------------+------------+-----------------------+---------+---------+-----------+---------+-----------------------+-------------+--------------+-----------------------+------+-----------------------+----------------------+----------+----------------------+
-***  Total: 1 Pages: 1 Limit: 2048 Offset: 0 Page: 1  ***
-
-# 将认证信息保存到文件中，方便 source 使用
-$ cat <<EOF > ~/test_rc_aksk
-# Access Key
-export OS_ACCESS_KEY=0d184a3c9c484e4c892f4855935e37e7  
-# Secret
-export OS_SECRET_KEY=VG***5mUXM=
-# 允许 insecure https 连接
-export YUNION_INSECURE=true
-# keystone 认证地址
-export OS_AUTH_URL=https://192.168.0.246:5000/v3
-# 对应的 region
-export OS_REGION_NAME=region0
-EOF
-```
-
-模板配置完成后，通过以下名称认证环境变量。
-
-```bash
-# source 认证环境变量
-$ source ~/test_rc_admin
-# 或者想要使用 Access Key/Secret 登陆
-# source ~/test_rc_aksk
-
-# 执行climc。例如，查看虚拟机列表
-$ climc server-list
-```
-
-注意: 如果执行 climc 时出现 *Error: Missing OS_AUTH_URL* 的错误提示时，请 source 或设置认证云平台的环境变量。
-
-可以通过查看 climc 的版本号来获取构建的信息。
-
-```bash
-$ climc --version
-Yunion API client version:
- {
-  "major": "0",
-  "minor": "0",
-  "gitVersion": "v3.1.9-20200609.1",
-  "gitBranch": "tags/v3.1.8^0",
-  "gitCommit": "5591bbec4",
-  "gitTreeState": "clean",
-  "buildDate": "2020-06-09T12:00:48Z",
-  "goVersion": "go1.13.9",
-  "compiler": "gc",
-  "platform": "linux/amd64"
-}
 ```
 
 ### 运行模式
@@ -258,7 +92,7 @@ CRUD 举例:
 
 行为举例:
 
-<Resource>-<Action> 中的 Action 会对应资源的操作，不同的资源会根据可进行的操作进行命名。
+Resource-Action 中的 Action 会对应资源的操作，不同的资源会根据可进行的操作进行命名。
 
 - server-migrate: migrate 表示迁移虚拟机
 - server-change-config: change-config 表示调整虚拟机配置
@@ -266,35 +100,13 @@ CRUD 举例:
 
 想要知道资源有哪些操作，可以进入交互模式补全查询。
 
-### 使用帮助 help
-
-climc 的子命令有很多参数，参数分为必填参数和可选参数，使用 `climc <subcommand> --help` 这种格式，**help** 子命令会获取 <subcommand> 提供的参数和各个参数的解释。
-
-比如我要查看 `image-upload` 命令的参数和解释:
-
-```bash
-$ climc image-upload --help
-...
-Upload a local image
-
-Positional arguments:
-    <NAME>
-        Image Name
-    <FILE>
-        The local image filename to Upload
-
-Optional arguments:
-    [--private]
-        Make image private
-    [--format {raw,qcow2,iso,vmdk,docker,vhd}]
-        Image format
-    [--protected]
-...
-```
-
 ### 高级过滤 filter
 
-TODO
+```shell
+# filter 参数可参考: https://github.com/yunionio/cloudpods/blob/master/pkg/apis/list.go#L132
+$ climc <Resource>-list --filter 'condition1' --filter 'condition2'
+```
+
 
 ### Debug 模式
 
@@ -314,7 +126,7 @@ climc --debug <Resource>-<Action>
 
 - Request 使用黄色
 - CURL 使用蓝绿色
-- 根据状态码显示不同颜色，可参考代码: https://github.com/yunionio/onecloud/blob/master/pkg/util/httputils/httputils.go#L234
+- 根据状态码显示不同颜色，可参考代码: https://github.com/yunionio/pkg/blob/master/util/httputils/httputils.go#L754
 
 #### 在bash或zsh下的命令行参数提示补全
 
