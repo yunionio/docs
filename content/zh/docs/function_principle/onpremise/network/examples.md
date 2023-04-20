@@ -9,6 +9,8 @@ description: >
 
 这种场景下，每个计算节点只有一个网口(可以为Bonding)，既做管理口，也做业务口。虚拟机之间的业务流量是由宿主机对接的三层交换机转发。
 
+<img src="../singleport.png" width="400">
+
 ### VPC配置
 
 采用*Default* VPC
@@ -40,6 +42,8 @@ networks:
 ```
 
 #### 宿主机管理口使用非1的VLAN ID，并且交换机不支持设置TRUNK口的默认VLAN ID，这种情况如何配置？
+
+<img src="../singleportvlan.png" width="400">
 
 这种情况需要为宿主机设置一个VLAN子接口，宿主机使用这个VLAN子接口作为管理口，并且虚拟机交换机需要桥接到主接口上。下面以宿主机主接口为bond0，宿主机管理口的VLAN ID为3001为示例说明：
 
