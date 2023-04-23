@@ -132,7 +132,7 @@ server-purge命令使用如下：
 
 ```bash
 # 模拟宿主机下线操作，将宿主机禁用
-$ climc host-disabled <host_id> 
+$ climc host-disable <host_id> 
 # 删除宿主机上的虚拟机记录 
 $ climc server-purge <server_id>  
 ```
