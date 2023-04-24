@@ -1,6 +1,6 @@
 ---
 title: "贡献文档"
-weight: 101
+weight: 102
 description:
   介绍搭建 Cloudpods 文档编写开发环境，以及如何贡献文档
 ---
