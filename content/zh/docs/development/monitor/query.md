@@ -70,7 +70,8 @@ description:
         }
     ],
     "scope": "system", // 查询资源作用域，system 代表全局作用域，domain 代表域作用域，project 代表项目作用域
-    "from": "1h", // 查询过去到现在的时间
+    "from": "1h", // 查询过去 1h 的指标
+    "to": "now", // 到现在，非必需，默认就是从 from 到现在
     "interval": "1m", // 指标间隔
     "skip_check_series": false, // 是否跳过去云平台进行资源检查，补充缺失的 tag
     "signature": "3be888cf6e45cb72cc1103ec0fd789572e2f3dc93566a8fe86694518e83625e8" // 根据以上字段计算出来的签名
@@ -93,6 +94,7 @@ GROUP BY "vm_id", time(1m) fill(none)
 
 ```javascript
 {
+  "metric_query": [...],
   "from": "1474973725473", // 2016年9月27日星期二晚上6点55分 GMT+08:00
   "to":   "1474975757930", // 2016年9月27日星期二晚上7点29分 GMT+08:00
 }
