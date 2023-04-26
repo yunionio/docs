@@ -73,7 +73,7 @@ $ git checkout {{<release_version>}}
 
 如果没有设置免密码登录，请使用 *ssh-copy-id -i ~/.ssh/id_rsa.pub root@PRIMARY_MASTER_HOST* 命令把公钥下发到自己环境对应的节点。
 
-升级的版本号可以到 [CHANGELOG release/3.9 页面](../../development/changelog/release-3.9/) 查询。
+升级的版本号可以到 [CHANGELOG {{<release_branch>}} 页面](../../development/changelog/release-3.10/) 查询。
 
 ```bash
 # 使用 ocboot 相关服务升级到 {{<release_version>}} 版本
@@ -98,8 +98,8 @@ $ kubectl get pods -n onecloud --watch
 如果升级后遇到功能不符合预期或者 bug 之类的问题，可以通过下面的命令降级回滚。
 
 {{% alert title="注意" color="warning" %}}
-- 一般小版本降级没有问题，比如从 {{<release_version>}} 降级到 v3.9.0
-- 跨版本降级可能会有问题，比如从 {{<release_version>}} 降级到 v3.8.13
+- 一般小版本降级没有问题，比如从 {{<release_version>}} 降级到 v3.10.0
+- 跨版本降级可能会有问题，比如从 {{<release_version>}} 降级到 {{<pre_release_version>}}
 
 如果遇到问题请到 [GitHub 提 issue](https://github.com/yunionio/cloudpods/issues) 或者 [联系我们](/zh/docs/contact) 获取帮助。
 {{% /alert %}}
