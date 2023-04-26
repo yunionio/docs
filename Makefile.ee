@@ -7,7 +7,7 @@ clean:
 	rm -rf ./public
 
 online-build: clean
-	VERSIONS='3.9' ./scripts/build.py \
+	VERSIONS='3.10' ./scripts/build.py \
 		--host=https://docs.yunion.cn \
 		--edition=ee \
 		--multi-versions
