@@ -8,7 +8,7 @@ description: >
 ---
 
 
-假设这里要介入的云为测试云(TestCloud)
+假设这里要接入的云为测试云(TestCloud)
 
 ## 基础概念
 
