@@ -23,12 +23,12 @@ description: >
 
 ### 部署时开启大页
 
-ocboot config.yaml 中设置 enable_hugepage 为 true，宿主机为 x86_64架构，且内存超过 30G时生效，预留内存为总内存的10%，最大预留20G内存。
+宿主机为 x86_64 架构非控制节点默认开启，且内存超过 30G时生效，预留内存为总内存的10%，最大预留20G内存。可修改 config.yaml 中 enable_hugepage 控制开启或者关闭大页内存
 ```
   as_host: true
   # 虚拟机强行作为 OneCloud 私有云计算节点（默认为 false）。开启此项时，请确保as_host: true
   as_host_on_vm: true
-  # 是否宿主机开启大页内存(宿主机为 x86_64架构，且内存超过 30G时生效，预留内存为总内存的10%，最大预留20G内存)
+  # 是否宿主机开启大页内存(宿主机为 x86_64 架构非控制节点默认开启，且内存超过 30G 时生效，预留内存为总内存的20%，最大预留32G内存)
   enable_hugepage: false
 ```
 
