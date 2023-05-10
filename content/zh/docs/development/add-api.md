@@ -116,13 +116,18 @@ func init() {
 
 ## 测试
 
+这里注意编译最新的region服务后需要替换环境中的服务
+
+- [容器部署](../dev-env#docker-镜像编译上传)
+- [手动部署](../single_service_dev#计算服务region初始化)
+
 ```bash
 # 编译 climc 和 region
 $ make cmd/climc cmd/region
 
 # 执行climc
 $ cd cloudpods/_output/bin
-$ climc
+$ ./climc
 
 # 测试命令
 climc> dns-zone-exports <zone id>
