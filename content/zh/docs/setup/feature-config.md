@@ -31,6 +31,11 @@ Cloudpods 自2017年开始开发，有较长时间积累。但代码量大，功
 
 ### 举例
 
+```bash
+# 查看所有支持的功能特性
+$ climc --help | grep feature-config
+```
+
 子命令的格式和参数如下：
 
 ```bash
@@ -88,3 +93,4 @@ $ climc feature-config-jdcloud --switch off
 | ceph      | Ceph rados对象存储管理| feature-config-ceph      |
 | xsky      | Xsky 存储管理        | feature-config-xsky      |
 | k8s       | K8S 容器集群管理     | feature-config-k8s       |
+| proxmox   | PVE虚拟化管理        | feature-config-proxmox   |
