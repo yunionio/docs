@@ -8,6 +8,13 @@ description: >
 
 本文各个版本RPM REPO的地址
 
+## 3.10
+
+* CentOS 7 x86_64: https://iso.yunion.cn/centos/7/3.10/x86_64/
+* CentOS 7 arm64: https://iso.yunion.cn/centos/7/3.10/aarch64/
+* 银河麒麟 V10 SP2 x86_64: https://iso.yunion.cn/kylin/v10/3.10/x86_64/
+* 银河麒麟 V10 SP2 arm64: https://iso.yunion.cn/kylin/v10/3.10/aarch64/
+
 ## 3.9
 
 * CentOS 7 x86_64: https://iso.yunion.cn/centos/7/3.9/x86_64
