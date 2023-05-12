@@ -15,10 +15,20 @@ climc 请求云平台后端服务的流程如下:
 
 所以在操作资源前，我们可以通过环境变量告诉 climc 想要操作的云平台和认证信息。
 
-目前climc支持两种认证方式：
+目前climc支持三种认证方式：
 
 - 通过用户名／密码认证
-- 通过Access Key／Secret认证（从2.11开始支持） 
+- token认证 (目前cloudshell使用这种认证方式)
+- [通过Access Key／Secret认证](../../../development/apisdk/01_api)（从2.11开始支持） 
+
+
+{{% alert title="注意" color="warning" %}}
+
+1. 由于cloudshell在启动时已经注入了token环境变量, 因此不能看到token生成的过程，若需要查看token生成过程，需要换另外两种认证方式
+2. AccessKey认证方式类似于公有云的认证签名, 目前仅python和go的sdk支持, 若用其他语言接入需要自行实现[签名算法](https://github.com/yunionio/cloudpods/blob/10b1d9bdd35776cf8cb597d918fa571fbc356238/pkg/mcclient/aksk.go#L80)
+
+{{% /alert %}}
+
 
 #### 控制节点认证配置
 
