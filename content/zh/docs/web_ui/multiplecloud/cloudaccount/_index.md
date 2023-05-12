@@ -341,8 +341,8 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>Y</td>
+        <td>Y</td>
         <td>Y</td>
         <td></td>
         <td></td>
@@ -397,7 +397,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td></td>
@@ -509,8 +509,8 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>Y</td>
+        <td>Y</td>
         <td>Y</td>
         <td></td>
         <td></td>
@@ -594,9 +594,9 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
         <td>Y</td>
-        <td></td>
+        <td>Y</td>
+        <td>Y</td>
         <td></td>
         <td></td>
         <td></td>
@@ -622,7 +622,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td></td>
