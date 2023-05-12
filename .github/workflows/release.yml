@@ -6,6 +6,8 @@ on:
       - release/3.10  # Set a branch to deploy
       # - release/*  # Set a branch to deploy
       # - master  # Set a branch to deploy
+    tags:
+      - v3.*
 
 jobs:
   build:
