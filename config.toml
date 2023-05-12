@@ -144,7 +144,7 @@ time_format_blog = "02.01.2006"
 [params]
 oem = "cloudpods"
 oem_name = "Cloudpods"
-pre_release_version = "v3.9.9"
+pre_release_version = "v3.9.10"
 release_version = "v3.10.1"
 release_branch = "release/3.10"
 copyright = "The Cloudpods Authors."
