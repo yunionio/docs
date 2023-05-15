@@ -10,6 +10,12 @@ description: >
 ## git diff 参考(同时会有腾讯云对接)
 https://github.com/yunionio/cloudpods/pull/11595/files
 
+{{% alert title="说明" color="warning" %}}
+
+自v3.10开始, cloudpods对于各个云的操作都将移至[cloudmux](https://github.com/yunionio/cloudmux)仓库, pkg/cloudprovider及pkg/multicloud的改动需要到**cloudmux**进行
+
+{{% /alert %}}
+
 
 ## 定义 ElasticSearch 接口
 ```bash
@@ -94,6 +100,8 @@ func init() {
 
 ## 调试 aliyuncli 命令
 ```bash
+# 克隆cloudmux
+$ git clone https://github.com/yunionio/cloudmux.git && cd cloudmux
 # 编译 aliyuncli 命令
 $ make cmd/aliyuncli
 
