@@ -99,7 +99,7 @@ description: >
 
 ## 典型组网介绍
 
-![](../../images/networking1.png)
+![](../images/networking1.png)
 
 ### 组网说明
 
@@ -334,7 +334,7 @@ $ climc host-create \
 
 1. 在云管平台单击左上角![](../../user/images/intro/nav.png)导航菜单，在弹出的左侧菜单栏中单击 **_"系统配置/全局设置/全局设置"_** 菜单项，进入全局设置页面。
 
-    ![](../../images/autoregister.png)
+    ![](../images/autoregister.png)
 
 2. 单击 **_"编辑"_** 按钮，开启自动注册功能。
 
@@ -368,6 +368,6 @@ $ climc service-edit-config baremetal
 3. 单击"点击复制"链接，复制命令。
 4. 通过ssh等远程连接到物理服务器，在服务器中执行复制的命令。
 
-    ![](../../images/command.png)
+    ![](../images/command.png)
 
 5. 命令执行过程中需要输入服务器的IPMI用户名、密码以及IPMI IP，设置完成后等待一段时间，物理机会被注册到{{<oem_name>}}平台，同时将创建一个与之前物理机同配置的裸金属服务器。
