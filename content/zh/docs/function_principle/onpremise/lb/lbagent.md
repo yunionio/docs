@@ -93,6 +93,7 @@ systemctl enable --now openvswitch
 
 * 初始化ovn-controller: 
 
+其中：xx 为lbagent的主网口的IP地址，yy为 ovn-northd 容器所在宿主机的IP地址（access_ip）。
 ```bash
 # 配置ovn
 ovn_encap_ip=xx							# 隧道外层IP地址，EIP网关用它与其它计算节点通信
@@ -105,6 +106,16 @@ ovs-vsctl set Open_vSwitch . \
 # 启动ovn-controller
 systemctl enable --now ovn-controller
 ```
+
+* 修改lbagent配置
+
+修改 /etc/yunion/lbagent.conf，加入如下两行参数：
+
+```bash
+interface = 'eth0' # lbagent主网卡的名称，例如 eth0
+access_ip = 'xx.xx.xx.xx' # 主网卡的主IP地址
+```
+
 
 * 安装最新的yunion-lbgent，并重启
 
