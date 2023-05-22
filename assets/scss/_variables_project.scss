@@ -4,6 +4,12 @@ Add styles or override variables from the theme here.
 
 */
 
+$xs-screen: 0;
+$sm-screen: 576px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
 $td-enable-google-fonts: false;
 
 // $primary: #1688f7 !default;
@@ -11,9 +17,56 @@ $primary: #076f38 !default;
 $secondary: #fe7740 !default;
 // $dark: #fff !default;
 
-.showcase img {
-    margin: 0 30px;
+// .showcase img {
+//     margin: 0 30px;
+// }
+// 首页样式
+// xl
+.provider-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  img {
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,.2);
+    margin: 10px;
+    border-radius: 2px;
+    width: calc((100% - 70px) / 8);
+    max-width: 200px;
+  }
+  img:hover {
+    transform: scale(1.05);
+    transform-origin: 50% 50%;
+  }
 }
+
+@media (max-width: $lg-screen) {
+  .provider-wrapper {
+    img {
+      width: calc((100% - 70px) / 6);
+    }
+  }
+}
+
+@media (max-width: $md-screen) {
+  .provider-wrapper {
+    img {
+      width: calc((100% - 70px) / 5);
+    }
+  }
+}
+
+@media (max-width: $sm-screen) {
+  .provider-wrapper {
+    img {
+      width: calc((100% - 70px) / 3);
+    }
+  }
+}
+
+
+
+
+
 
 .navbar-bg-onscroll {
     box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
