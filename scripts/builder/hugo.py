@@ -129,7 +129,7 @@ contentDir = "%s"\n''' % (os.path.join(self._content_dir, 'en'))
             base_url += "/"
         if ver_dir:
             dest = os.path.join(dest, ver_dir)
-            base_url = base_url + '/' + ver_dir
+            base_url = base_url + '/' + ver_dir + '/'
 
         temp_config_file = self.generate_config_toml()
         cmd = ['hugo',
