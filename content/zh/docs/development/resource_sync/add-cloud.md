@@ -54,6 +54,18 @@ $ make cmd/testcli
 $ ./_output/bin/testcli --debug region-list
 ```
 
+{{% alert title="说明" color="warning" %}}
+
+- 在对接各个云平台时，一般云平台会提供对应的golang sdk，这里尽量仅使用提供的sdk的认证部分, 其余部分可通过REST API文档自行设计, 这样做有以下好处
+    - 摆脱golang sdk限制
+    - 可以统一处理err错误，例如后面要用到的cloudprovider.ErrNotFound错误
+    - 方便实现云账号只读同步及代理
+    - 轻量, 部分云平台的sdk用了大量指针, 仅仅指针判断会增加很多不必要的代码
+
+{{% /alert %}}
+
+
+
 ### 添加各个资源接口实现
 
 资源的实现类似于数的生长，自根到枝到叶, 越发扩散，region类似于树根, region底下有vpc, zone..., zone底下有host, storage...可依照这个顺序依次实现对应资源的接口
