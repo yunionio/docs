@@ -43,3 +43,7 @@ description: >
 
 1. 新版本会签发98年的证书。旧版本用kubeadm alpha certs renew all 续期或者升级ocadm，使用ocadm alpha certs renew all续期98年的。
 2. ocadm 应该只支持 1.15 的 k8s 集群。如果是平台创建的基于虚拟机部署的 k8s 集群，是使用  kubespray 部署的，应该默认还是一年，可以参考[在线文档](https://github.com/kubernetes-sigs/kubespray/issues/5464#issuecomment-647022647)手动更新证书
+
+## 为什么部分平台无法纳管？
+
+1. 默认我们展示稳定平台对接，具体可参考[在线文档](../../setup/feature-config/)
