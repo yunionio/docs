@@ -1,6 +1,7 @@
 ---
 title: "外部数据导入"
 weight: 9
+edition: ee
 description: 介绍如何设定外部数据
 ---
 
