@@ -39,17 +39,14 @@ slug: refactoring-bash-scripts-to-comply-with-the-google-coding-style
 7. 使用全局变量：尽量避免使用全局变量，因为它们很难调试和维护。
 
 8. 使用命令替换：使用`$()`语法而不是反引号 ``` `` ```来执行命令替换。
-9. 使用数组：使用数组来管理相关变量，而不是使用多个单独的变量。
 
-10. 使用“`set -u`”：使用“`set -u`”来检查未定义的变量，以避免在引用未定义的变量时产生错误。
+10. 使用数组：使用数组来管理相关变量，而不是使用多个单独的变量。
+
+11. 使用“`set -u`”：使用“`set -u`”来检查未定义的变量，以避免在引用未定义的变量时产生错误。
 
 这些规范有助于提高 Bash 代码的可读性、可维护性和可靠性。
 
-
-
 然后我搜索 "bash script style guideline"，最上面的结果是：
-
-
 
 ![image-20230430140433698](https://pic4.zhimg.com/v2-b4a917830a4156b60781d6c69243fe57_b.jpg)
 
@@ -183,8 +180,7 @@ fi
 * 新增代码确保合规
 * 将代码的规范检查，加入到日常的流程里。（goimport check)
 * 越早做，历史包袱越少。越晚做，历史包袱越沉重。
-* related PR: https://git.yunion.io/projects/CLOUD/repos/yunion-build/pull-requests/1355/diff#main.sh
-* 
+
 
 ## links
 
