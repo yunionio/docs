@@ -1,7 +1,7 @@
 ---
 title: "纳管对接 Proxmox 资源支持"
 edition: ce
-weight: 3
+weight: 400
 description:
   Proxmox 的虚拟机、网络和存储资源纳管到 cloudpods 平台的一些开发相关说明
 ---

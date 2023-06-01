@@ -1,6 +1,6 @@
 ---
 title: "外部数据"
-weight: 14
+weight: 300
 edition: ce
 description: >
   介绍如何导入外部数据及外部数据结构定义
