@@ -264,6 +264,21 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
     pnputil -i -a *.inf
     ```
 
+#### 设置系统时间
+
+Windows把系统硬件时间（CMOS时间）当作本地时间，即操作系统中显示的时间跟CMOS中显示的时间是一样的。而Linux/Unix/Mac把CMOS时间当作UTC时间，操作系统中显示的时间是CMOS时间经过换算得来的。直观地说，存在于Linux宿主机上的Windows虚拟机显示的时间会与北京时间正好差八个小时，因此，需要对系统做设置，使其显示北京时间。
+
+修改方法：运行regedit，打开注册表，在
+
+```
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation
+```
+
+下，右键新建New > DWORD (32-bit) Value，命名为RealTimeIsUniversal，键值为1。
+
+备注：如果是通过系统镜像创建的Windows虚拟机，平台会自动向注册表注入该配置。
+
+
 #### 禁用快速启动
 
 （可选）若是Windows 10操作系统的虚拟机需要禁用快速启动。请参考[禁用方法](https://jingyan.baidu.com/article/ca00d56c7a40e6e99febcf4f.html)。
