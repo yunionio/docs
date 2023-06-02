@@ -92,7 +92,7 @@ time_format_blog = "02.01.2006"
 
 [[languages.zh.menu.main]]
     name = "API"
-    url = "https://apifox.com/apidoc/shared-f917f6a6-db9f-4d6a-bbc3-ea58c945d7fd"
+    url = "docs/swagger"
     weight = 70
 
 [languages.en]
