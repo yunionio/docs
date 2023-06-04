@@ -16,7 +16,7 @@ description: >
 以下命令用来查看各个服务的日志表的情况：
 
 ```bash
-climc logs-splitable --service <service_name>
+climc logs-show --service <service_name> splitable
 ```
 
 其中，service可以是：
@@ -26,9 +26,17 @@ climc logs-splitable --service <service_name>
 * identity
 * log
 * cloudevent
+* monitor
+* notify
 
 以下命令清理各个服务的过期日志表（默认drop清理6个月之前的日志表）：
 
 ```bash
-climc logs-purge --service <service_name>
+climc logs-purge [--tables tb1,tb2,...] --service <service_name>
+```
+
+例如：
+
+```
+climc logs-purge-splitable --tables opslog_tbl_1676464622 --service compute
 ```
