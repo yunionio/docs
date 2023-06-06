@@ -69,3 +69,18 @@ ee-build: setup
 # OEM=OEMCLOUD OEM_NAME=OEM云平台 make ee-build-offline
 ee-build-offline: setup
 	make -f ./Makefile.ee offline-build
+
+gpt:
+	perl -0777 -pe 's/^title: "?([^"]+)"?.*?description:[\s\n>]+(.*?)$$/## $$1 $$2/gms' -i $$(find . -name '*.md')
+	perl -0777 -pe 's/!\[\]\([^()]+\)//gms' -i $$(find . -name '*.md')
+	perl -0777 -pe 's/<img[^<>]+>//gms' -i $$(find . -name '*.md')
+	perl -0777 -pe 's/\{\{<oem_name>\}\}/云联壹云/gms' -i $$(find . -name '*.md')
+	perl -0777 -pe 's#\{\{% /?alert[^%}]*%\}\}##gms' -i $$(find . -name '*.md')
+
+	@for file in $$(find content/zh/docs/ -name '*.md'); do \
+		new_name=$$(echo $$file|tr '/' '-'); \
+		cp -fv $$file data/$$new_name; \
+	done
+	rm -f data/*-release-*.md
+	git checkout .
+
