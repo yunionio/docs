@@ -251,6 +251,8 @@ https://www.bilibili.com/video/BV19g411e7Eh/
 2. 在控制节点查看host pod日志信息。
 
     ```bash
+    # 先确保启用host-agent，否则不会有host的pod，启用host-agent命令如下
+    $ for node in `kubectl get nodes | awk 'NR>1 {print $1}'`; do ocadm node enable-host-agent --node $node; done
     # 查看host pod状态
     $ kubectl get pods -n onecloud |grep host
     # 查看host的日志
