@@ -39,3 +39,4 @@ _output
 # python
 *.pyc
 __pycache__
+data/
