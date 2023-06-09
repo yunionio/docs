@@ -40,7 +40,7 @@ BLACKLIST_RPC=guest-file-open,guest-file-close,guest-file-read,guest-file-write,
 
 ### windows 安装启动
 
-  windows 需要挂载 virtio-win 的 iso, 打开 iso 找到 guest-agent 目录 安装对应的 guest-agent.
+  windows 需要挂载 [virtio-win](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/) 的 iso, 打开 iso 找到 guest-agent 目录 安装对应的 guest-agent.
 
 ## 使用介绍
 
