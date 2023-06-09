@@ -61,6 +61,7 @@ $ ssh root@10.168.26.216 "hostname"
 
 {{< tabs name="ocboot_install" >}}
 {{% tab name="CentOS 7" %}}
+
 ```bash
 # 本地安装 ansible 和 git
 $ yum install -y epel-release git python3-pip
@@ -78,13 +79,27 @@ $ python3 -m pip install --upgrade ansible
 ```
 {{% /tab %}}
 
-{{% tab name="Debian 10" %}}
+{{% tab name="Debian 10/11" %}}
+
+如果提示`locale`相关的报错，请先执行：
+
+```bash
+if ! grep -q '^en_US.UTF-8' /etc/locale.gen; then
+    echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
+    locale-gen
+    echo 'LANG="en_US.UTF-8"' >> /etc/default/locale
+    source /etc/default/locale
+fi
+```
+
 ```bash
 # 本地安装 ansible 和 git
 $ apt install -y git python3-pip
 $ python3 -m pip install --upgrade pip setuptools wheel
 $ python3 -m pip install --upgrade ansible
 ```
+备注：已知在`debian 11`环境，如果`/proc/cmdline`里找不到启动选项 `systemd.unified_cgroup_hierarchy=0`，ocboot会自动配置相关的`GRUB`选项，重建启动参数，并重启操作系统，以便 `k8s` 能够正常启动。
+
 {{% /tab %}}
 
 {{% tab name="其它操作系统" %}}
