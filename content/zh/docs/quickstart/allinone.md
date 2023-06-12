@@ -247,11 +247,6 @@ Cloudpods自身是一个完整的私有云，同时也可以统一纳管其他�
 
 ![多云管理](../images/cloudaccount.png)
 
-## All in One 部署视频
-
-本视频主要用来帮助大家了解如何使用 ocboot 部署工具快速以 All in One 的方式部署 Cloudpods 服务，链接如下：
-
-https://www.bilibili.com/video/BV19g411e7Eh/
 
 ## FAQ
 
@@ -263,18 +258,11 @@ https://www.bilibili.com/video/BV19g411e7Eh/
 
 
 1. 请确认部署用的yaml文件中是否有`as_host: true`配置项，若没有，则表示该节点只作为控制节点使用，不作为计算节点使用，因此宿主机列表中没有宿主机是正常的；
-2. 在控制节点查看host pod日志信息。
 
-    ```bash
-    # 先确保启用host-agent，否则不会有host的pod，启用host-agent命令如下
-    $ for node in `kubectl get nodes | awk 'NR>1 {print $1}'`; do ocadm node enable-host-agent --node $node; done
-    # 查看host pod状态
-    $ kubectl get pods -n onecloud |grep host
-    # 查看host的日志
-    $ kubectl logs -n onecloud default-host-xxxxxx -c host -f
-    ```
+2. 在控制节点排查 host 问题，请参考：[Host服务问题排障技巧](../../function_principle/onpremise/host/troubleshooting/)
 
-    (1). 若日志报错信息中包含“register failed: try create network: find_matched == false”，则表示未成功创建包含宿主机的IP子网，导致宿主机注册失败，请创建包含宿主机网段的IP子网。
+
+    1. 若日志报错信息中包含“register failed: try create network: find_matched == false”，则表示未成功创建包含宿主机的IP子网，导致宿主机注册失败，请创建包含宿主机网段的IP子网。
 
     ```
     # 创建包含宿主机网段的IP子网
@@ -283,7 +271,7 @@ https://www.bilibili.com/video/BV19g411e7Eh/
 
     ![](../images/iperror.png)
 
-    (2). 若日志报错信息中包含“name starts with letter, and contains letter, number and - only”，则表示宿主机的主机名不合规，应改成以字母开头的hostname
+    2. 若日志报错信息中包含“name starts with letter, and contains letter, number and - only”，则表示宿主机的主机名不合规，应改成以字母开头的hostname
 
     ![](../images/hostnameerror.png)
 
