@@ -12,7 +12,7 @@ cloudpods 平台已经支持透传 GPU, USB, SR-IOV NIC 等类型的设备，对
 添加自定义PCI设备类型之前需要获取设备的 vendor_id 和 device_id
 
 ```
-登陆到有改设备的宿主机执行 lspci找到对应的 pci 设备的 地址：
+登陆到有该设备的宿主机执行 lspci找到对应的 pci 设备的地址：
 eg:
 $ lspci
 00:00.0 Host bridge: Intel Corporation Xeon E7 v2/Xeon E5 v2/Core i7 DMI2 (rev 04)
