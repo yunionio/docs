@@ -1,14 +1,25 @@
 ---
-title: "GPU 相关"
+title: "GPU透传"
 date: 2019-07-19T18:32:40+08:00
-weight: 40
+weight: 10
 description: >
-  介绍如何在虚拟机上使用GPU设备。
+  介绍如何在虚拟机上使用GPU透传设备。
 ---
 
-目前仅支持 {{<oem_name>}} kvm 虚拟机使用 GPU，使用的 PCI Passthrough 的方式将宿主机上的 Nvidia/AMD GPU 透传给虚拟机使用。
+支持 {{<oem_name>}} KVM 虚拟机使用 GPU，使用的 PCI Passthrough 的方式将宿主机上的 Nvidia/AMD GPU 透传给虚拟机使用。
 
-## Climc
+## 宿主机设置
+
+除了常规的PCI/PCIe设备透传设置外，为了避免宿主机Linux内核自带的GPU驱动和vfio争抢设备，需要设置如下额外的内核命令行参数：
+
+```bash
+rdblacklist=nouveau nouveau.modeset=0
+```
+
+同时，需要设置宿主机的 /etc/yunion/host.conf 的 disable_gpu: false（已默认设置）。
+
+
+## GPU相关命令行
 
 ### 创建 GPU 云主机
 

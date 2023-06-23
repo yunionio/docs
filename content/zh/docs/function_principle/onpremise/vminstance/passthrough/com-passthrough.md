@@ -1,6 +1,6 @@
 ---
 title: "串口COM透传"
-weight: 41
+weight: 290
 description: >
   介绍如何把宿主机的串口COM透传给虚拟机使用。
 ---
