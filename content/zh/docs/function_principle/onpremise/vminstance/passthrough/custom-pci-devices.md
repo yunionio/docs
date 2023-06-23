@@ -1,8 +1,8 @@
 ---
-title: "自定义PCI设备类型"
-weight: 50
+title: "自定义PCI设备透传"
+weight: 100
 description: >
-  如何设置自定义PCI设备类型。
+  如何设置自定义PCI设备类型用于透传
 ---
 
 cloudpods 平台已经支持透传 GPU, USB, SR-IOV NIC 等类型的设备，对于这些类型之外的设备通过自定义 PCI 设备类型的方式来支持。

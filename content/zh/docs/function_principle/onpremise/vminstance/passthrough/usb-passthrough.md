@@ -1,6 +1,6 @@
 ---
 title: "USB 透传"
-weight: 41
+weight: 200
 description: >
   介绍如何把宿主机的 USB 设备透传给虚拟机使用。
 ---

@@ -1,5 +1,5 @@
 ---
-title: "网卡卸载"
+title: "网卡SR-IOV卸载"
 weight: 30
 description: >
   介绍 SR-IOV 网卡透传与 OVS Offload 硬件卸载使用方式。
@@ -22,25 +22,11 @@ SR-IOV 中的两种新功能类型是：
 
 ### 宿主机开启 SR-IOV
 
-1. BIOS 中打开设备 SR-IOV 功能(根据机型和设备的型号不同，具体操作方式也可能不一样，具体参考实际机型配置)。
-2. Intel VT-d 或 AMD IOMMU 已在系统的 BIOS 中启用。具体请参阅机器的 BIOS 配置菜单，或其它相关信息。
-3. Intel VT-d 或 AMD IOMMU 已在操作系统中启用：
-```bash
-# 对应编辑 /etc/default/grub, 设置 GRUB_CMDLINE_LINUX=
-$ cat /etc/default/grub
-...
-GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt vfio_iommu_type1.allow_unsafe_interrupts=1"
-# 重新生成 grub 引导配置文件
-$ grub2-mkconfig -o /boot/grub2/grub.cfg
+除了常规的PCI/PCIe设备透传设置外，还需确保SR-IOV在宿主机BIOS启用，并且需要对设备的VF进行必要的内核设置，具体方法如下：
 
-# 将vfio相关 module 设置为开机load
-$ cat /etc/modules-load.d/vfio.conf
-vfio
-vfio_iommu_type1
-vfio_pci
-vfio_virqfd
-```
-4. 在宿主机节点上打开 Virtual Functions
+1. BIOS 中打开设备 SR-IOV 功能(根据机型和设备的型号不同，具体操作方式也可能不一样，具体参考实际机型配置)。
+
+2. 在宿主机节点上打开 Virtual Functions
 ```bash
 # 对于不同的网卡型号打开的方式也不一样，下面以 Intel I350 网卡为例，设置 7 个 Virtual Function(网卡支持的 virtual function 数量也是不一样的，需要根据具体网卡支持的数量来配置)
 # 在 grub cmdline 中加上 igb.max_vfs=7
@@ -108,7 +94,7 @@ $ climc server-attach-network c15a5a99-75ea-4b8c-8c7a-521e5f980db4 \
 
 ## OVS Offload
 
-OVS Offload 是基于 SR-IOV 实现的一种硬件卸载的技术了；如果硬件支持 OVS Offload, 则能够让 OVS 数据面卸载到网卡上，OVS 控制面不用做任何更改。
+OVS Offload 是基于 SR-IOV 实现的一种硬件卸载的技术；如果硬件支持 OVS Offload, 则能够让 OVS 数据面卸载到网卡上，OVS 控制面不用做任何更改。
 OVS Offload 的基础配置依赖于 SR-IOV 的配置，确保宿主机已经打开了 SR-IOV。然后需要安装开启 OVS Offload 必要的依赖，如 Mellanox 网卡需要安装 MLNX_OFED 驱动。
 
 ### host-agent 启用 SR-IOV
@@ -138,3 +124,34 @@ ovs_offload_nics:
 
 Mellanox 配置参考文档：
 > https://docs.nvidia.com/networking/display/MLNXOFEDv471001/OVS+Offload+Using+ASAP2+Direct#OVSOffloadUsingASAP2Direct-Overview
+
+### 常见问题
+
+#### 如何验证一个PCI设备支持SR-IOV？
+
+执行命令如下命令，查看设备的 capabilities 中是否包含了 SR-IOV：
+
+```bash
+# lspci -v -s 01:00.0
+01:00.0 Ethernet controller: Mellanox Technologies MT2894 Family [ConnectX-6 Lx]
+	Subsystem: Mellanox Technologies Device 0001
+	Physical Slot: 4
+	Flags: bus master, fast devsel, latency 0, IRQ 60, NUMA node 0
+	Memory at ea000000 (64-bit, prefetchable) [size=32M]
+	Expansion ROM at f0300000 [disabled] [size=1M]
+	Capabilities: [60] Express Endpoint, MSI 00
+	Capabilities: [48] Vital Product Data
+	Capabilities: [9c] MSI-X: Enable+ Count=64 Masked-
+	Capabilities: [c0] Vendor Specific Information: Len=18 <?>
+	Capabilities: [40] Power Management version 3
+	Capabilities: [100] Advanced Error Reporting
+	Capabilities: [150] Alternative Routing-ID Interpretation (ARI)
+	Capabilities: [180] Single Root I/O Virtualization (SR-IOV)
+	Capabilities: [1c0] #19
+	Capabilities: [230] Access Control Services
+	Capabilities: [320] #27
+	Capabilities: [370] #26
+	Capabilities: [420] #25
+	Kernel driver in use: mlx5_core
+	Kernel modules: mlx5_core
+```
