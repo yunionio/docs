@@ -52,3 +52,24 @@ optional arguments:
 - `--light`是否为轻量备份。默认为`否`，即，全量备份。轻量备份与全量备份的区别是某些（通常可以自由删除的）业务日志。建议日常只选轻量备份，以节约磁盘、加速备份过程。
 - `--max-backups`保留的备份次数。默认保留最新的10次备份。
 
+## 手工恢复备份的数据库和k8s配置
+
+ssh登陆控制节点，进入备份目录，以2023-05-28的备份为例，恢复命令如下
+
+```bash
+[root@controller ~]# cd /opt/yunion/backup/
+[root@controller backup]# tar -xzvf onecloud.bkup.20230528-000001.tar.gz
+[root@controller backup]# cd 20230528-000001/
+[root@controller 20230528-000001]# ll
+total 181548
+-rw------- 1 root root 185819168 May 28 00:00 etcd_snapshot_20230528-000001.db
+-rw-r--r-- 1 root root     74493 May 28 00:00 oc.20230528-000001.yml
+-rw-r--r-- 1 root root      3241 May 28 00:00 onecloud-operator.20230528-000001.yml
+
+# 恢复数据库
+[root@controller 20230528-000001]# pv onecloud.sql.20230528-000001.gz | gunzip | mysql -uroot -p$MYSQL_PASSWD -h $MYSQL_HOST
+
+# 恢复k8s各组件服务
+[root@controller 20230528-000001]# kubectl apply -f oc.20230528-000001.yml
+[root@controller 20230528-000001]# kubectl apply -f onecloud-operator.20230528-000001.yml
+```
