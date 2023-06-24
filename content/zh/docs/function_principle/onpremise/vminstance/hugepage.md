@@ -15,7 +15,7 @@ description: >
 
 * native：开启原生大页内存支持，这种模式需要显式地分配大页内存池，并且虚拟机使用的内存需要预先从大页内存池中预留分配，并作为参数传递给虚拟机使用。这种方式能够保证内存的连续性，可以分配1G的大页内存，提供最佳的性能。
 
-使用透明大页支持比较方便，只需要设置 hugepages_option 为 transparent。但这种方式无法使用1G的大页，并且并不保证虚拟机总是使用大页内存。
+使用透明大页支持比较方便，只需要设置 hugepages_option 为 transparent。但这种方式无法使用1G的大页，且并不保证虚拟机总是使用大页内存。
 
 ## 开启native大页内存
 
@@ -29,7 +29,7 @@ description: >
   # 虚拟机强行作为 OneCloud 私有云计算节点（默认为 false）。开启此项时，请确保as_host: true
   as_host_on_vm: true
   # 是否宿主机开启大页内存(宿主机为 x86_64 架构非控制节点默认开启，且内存超过 30G 时生效，预留内存为总内存的20%，最大预留32G内存)
-  enable_hugepage: false
+  enable_hugepage: true
 ```
 
 ### 部署完成后想开启大页

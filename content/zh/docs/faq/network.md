@@ -32,7 +32,7 @@ description: >
 
 自CentOS 7、Ubuntu 14.04LTS之后为了让网卡名称在硬件变更（例如增加网卡或减少网卡）前后持久化显示，将使用网卡的BIOS地址命名网卡，这样网卡名称将不再为eth0、eth1…，而是显示为ens192、enp1s等名称。下面以CentOS 7为例介绍如何关闭网卡的持久化命名的功能。
 
-1. 修改/etc/default/grub文件，在GRUB_CMDLINE_LINUX增加“net.ifnames = 0 biosdevname = 0”的参数。
+1. 修改/etc/default/grub文件，在GRUB_CMDLINE_LINUX增加“net.ifnames = 0 biosdevname = 0”的参数，例如:
 
     ```bash
     GRUB_TIMEOUT=5
