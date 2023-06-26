@@ -1,7 +1,7 @@
 ---
 title: "设备透传"
 date: 2023-06-21T10:26:40+08:00
-weight: 1
+weight: 1000
 description: >
   本章介绍虚拟机设备透传相关的原理和操作。
 ---
@@ -65,7 +65,7 @@ host服务会负责设置待透传设备的 vfio-pci 接管。
 
 5. 启用大页内存(可选)
 
-建议启用宿主机大页内存（hugepage），具体参见[内存大页(Hugepage)](../../hugepage)。
+建议启用宿主机大页内存（hugepage），具体参见[内存大页(Hugepage)](../hugepage)。
 
 注：从3.10开始，新部署的x86计算节点会自动开启大页。
 
@@ -85,7 +85,7 @@ host服务会负责设置待透传设备的 vfio-pci 接管。
 
 ### SR-IOV网卡透传
 
-参见: [网卡SR-IOV卸载] (./sriov)
+参见: [网卡SR-IOV卸载](./sriov)
 
 ### NVME透传
 
@@ -93,7 +93,7 @@ TODO (NVME透传以及设置基于NVME的存储防范)
 
 ### 其他通用PCI/PCIe设备透传
 
-参见：[定义PCI设备透传](./custom-pci-devices)
+参见：[自定义PCI设备透传](./custom-pci-devices)
 
 ## 其他低速设备透传
 
@@ -166,3 +166,4 @@ BOOT_IMAGE=/vmlinuz-5.4.130-1.yn20221208.el7.x86_64 root=UUID=6f96c2be-434d-405e
 	Kernel driver in use: vfio-pci
 	Kernel modules: snd_hda_intel
 ```
+
