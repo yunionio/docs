@@ -31,20 +31,20 @@ table tr th, table tr td  { border:1px solid #808080; }
         <th>天翼云</th>
         <th>移动云</th>
         <th>京东云</th>
-        <th>阿里飞天</th>
+        <th>阿里飞天 (3.12+)</th>
         <th>HCSO</th>
-        <th>HCS</th>
-        <th>ZStack</th>
-        <th>OpenStack</th>
-        <th>VMware</th>
+        <th>HCS (8.0.3+)</th>
+        <th>ZStack (3.4.0+)</th>
+        <th>OpenStack (M+)</th>
+        <th>VMware (6.5+)</th>
         <th>{{<oem_name>}}</th>
         <th>DStack</th>
-        <th>Nutanix</th>
+        <th>Nutanix (6.5.2+)</th>
         <th>BingoCloud</th>
-        <th>inCloud Sphere</th>
+        <th>inCloud Sphere (6.5.1+)</th>
         <th>外部数据</th>
-        <th>Proxmox</th>
-        <th>H3C</th>
+        <th>Proxmox (6.3+)</th>
+        <th>H3C (CloudOS 5.0+)</th>
     </tr>
     <tr>
         <th rowspan="7">主机</th>
