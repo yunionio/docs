@@ -10,7 +10,7 @@ description: >
 
 ## 如何添加本地存储目录？
 
-1. 修改/etc/yunion/host.conf，则 local_image_path 的字符串数组中添加新的本地磁盘：
+1. 修改/etc/yunion/host.conf，在 local_image_path 的字符串数组中添加新的本地磁盘：
 
 ```yaml
 local_image_path:
