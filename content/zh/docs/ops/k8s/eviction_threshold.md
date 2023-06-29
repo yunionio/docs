@@ -1,7 +1,9 @@
 ---
-title: "调整Kubernetes节点驱逐的阈值"
+title: "调整驱逐的阈值"
 date: 2022-12-05T10:34:27+08:00
-weight: 32
+weight: 100
+description: >
+    调整Kubernetes节点驱逐的阈值
 ---
 
 Kubernetes 有一个节点驱逐的机制，比如当节点的根分区使用空间大于 85% 就会把节点变成 NotReady 状态，然后驱逐上面的 Pod 。下面介绍如何调整节点的相关配置的阈值，可根据自己的环境适当调整。
