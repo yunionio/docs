@@ -1,7 +1,7 @@
 ---
-title: "排查Pod内DNS异常"
+title: "排查Pod网络问题"
 date: 2022-12-02T16:02:27+08:00
-weight: 31
+weight: 50
 description: >
     排查Pod内DNS解析失败原因
 ---
@@ -16,11 +16,29 @@ description: >
 
 ## 基本原理
 
-Pod内通过集群的coredns进行域名解析。CoreDNS配置了10.96.0.10的service IP。访问coredns时，首先由kubeproxy实现service IP到Pod IP的NAT转换，如果Pod在本节点，则直接访问Pod。否则通过tunl0以IP-in-IP隧道发送到对端Pod所在节点，进而解封装投递到目标Pod。
+Pod内通过集群的coredns进行域名解析。CoreDNS配置了10.96.0.10的service IP。访问coredns时，首先由kubeproxy实现service IP到Pod IP的NAT转换，如果Pod在本节点，则直接访问Pod。否则通过tunl0以IP-in-IP或VXLAN隧道发送到对端Pod所在节点，进而解封装投递到目标Pod。
 
 {{<oem_name>}} 在每个节点采用IPVS作为Service IP到Pod IP的NAT转换。需确保节点的IPVS规则表有对应10.96.0.10的NAT规则。
 
-{{<oem_name>}} 采用calico作为容器网络的插件，采用IP-in-IP隧道作为Pod之间报文的封装。在每个节点上都有一个tunl0的虚拟网络接口，该接口作为该节点IP-in-IP隧道的端点。Pod的IP从10.40.0.0/16随机分配。每个节点上都会为集群中其他节点的Pod所在的/26网段（含64个IP地址）配置通过tunl0且下一跳为该Pod所在节点IP的静态路由。如果缺少对应Pod的路由，则也会出现Pod之间网络不通。
+{{<oem_name>}} 采用calico作为容器网络的插件，采用IP-in-IP或VXLAN隧道作为Pod之间报文的封装协议。
+
+如果采用IP-in-IP隧道，则在每个节点上都有一个 tunl0 的虚拟网络接口，该接口作为该节点IP-in-IP隧道的端点。
+
+如果采用VXLAN睡到，则在每个节点上都有一个 vxlan.calico 的虚拟网络接口，该接口作为该节点 VXLAN 隧道的端点。
+
+Pod的IP从10.40.0.0/16随机分配。每个节点上都会为集群中其他节点的Pod所在的/26网段（含64个IP地址）配置通过tunl0且下一跳为该Pod所在节点IP的静态路由。如果缺少对应Pod的路由，则也会出现Pod之间网络不通。
+
+### Calico隧道协议的切换
+
+{{<oem_name>}}默认采用IP-in-IP隧道协议，可以在Kubernetes控制节点执行以下命令将Calico隧道协议切换为 VXLAN。常见切换原因为底层网络不支持IP-in-IP协议。
+
+```bash
+calicoctl patch felixconfig default -p '{"spec":{"vxlanEnabled":true}}'
+calicoctl patch ippool default-ipv4-ippool -p '{"spec":{"ipipMode":"Never", "vxlanMode":"Always"}}'   ## wait for the vxlan.calico interface to be created and traffic to be routed through it
+calicoctl patch felixconfig default -p '{"spec":{"ipipEnabled":false}}'
+```
+
+
 
 ## 原因排查
 
@@ -92,6 +110,7 @@ IP_AUTODETECTION_METHOD 还可以配置为其他的值，可以参考 calico 官
 
 如上一步确认无误，则需要确认calico的报文能够正常发送到对端节点，可通过tcpdump在源和目的节点抓包确认。
 
+如果采用IP-in-IP隧道协议，则采用如下命令抓包：
 ```bash
 # 格式为
 # tcpdump -i <if_of_calico_node> -nnn "ip proto 4" and host <ip_of_dst_node>
@@ -99,6 +118,16 @@ IP_AUTODETECTION_METHOD 还可以配置为其他的值，可以参考 calico 官
 # 比如要在控制节点的 br0 上抓来自于计算节点(IP: 10.130.0.13) 的 ip-in-ip 包，命令如下：
 $ tcpdump -i br0 -nnn "ip proto 4" and host 10.130.0.13
 ```
+
+如果采用VXLAN隧道协议，则采用如下命令抓包：
+```bash
+# 格式为
+# tcpdump -i <if_of_calico_node> -nnn udp and port 4789 and host <ip_of_dst_node>
+
+# 比如要在控制节点的 br0 上抓来自于计算节点(IP: 10.130.0.13) 的 VXLAN 包，命令如下：
+$ tcpdump -i br0 -nnn udp and port 4789 and host 10.130.0.13
+```
+
 
 ## 常见故障原因
 
