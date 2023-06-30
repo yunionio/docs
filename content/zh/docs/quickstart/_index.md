@@ -1,7 +1,7 @@
 ---
 title: "快速开始"
 linkTitle: "快速开始"
-weight: 10
+weight: 2
 edition: ce
 oem_ignore: true
 description: >
