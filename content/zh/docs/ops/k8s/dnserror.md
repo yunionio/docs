@@ -22,22 +22,22 @@ Pod内通过集群的coredns进行域名解析。CoreDNS配置了10.96.0.10的se
 
 {{<oem_name>}} 采用calico作为容器网络的插件，采用IP-in-IP或VXLAN隧道作为Pod之间报文的封装协议。
 
-如果采用IP-in-IP隧道，则在每个节点上都有一个 tunl0 的虚拟网络接口，该接口作为该节点IP-in-IP隧道的端点。
+如果采用IP-in-IP隧道，则在每个节点上都有一个 tunl0 的三层虚拟网络接口，该接口作为该节点IP-in-IP隧道的端点。
 
-如果采用VXLAN睡到，则在每个节点上都有一个 vxlan.calico 的虚拟网络接口，该接口作为该节点 VXLAN 隧道的端点。
+如果采用VXLAN隧道，则在每个节点上都有一个 vxlan.calico 的二层虚拟网络接口，该接口作为该节点 VXLAN 隧道的端点。
 
-Pod的IP从10.40.0.0/16随机分配。每个节点上都会为集群中其他节点的Pod所在的/26网段（含64个IP地址）配置通过tunl0且下一跳为该Pod所在节点IP的静态路由。如果缺少对应Pod的路由，则也会出现Pod之间网络不通。
+Pod的IP从10.40.0.0/16 (该网络前缀可以在ocboot初始化时配置) 随机分配。每个节点上都会为集群中其他节点的Pod所在的/26网段（含64个IP地址）配置通过tunl0且下一跳为该Pod所在节点IP的静态路由。如果缺少对应Pod的路由，则也会出现Pod之间网络不通。
 
 ### Calico隧道协议的切换
 
 {{<oem_name>}}默认采用IP-in-IP隧道协议，可以在Kubernetes控制节点执行以下命令将Calico隧道协议切换为 VXLAN。常见切换原因为底层网络不支持IP-in-IP协议。
 
 ```bash
+export DATASTORE_TYPE=kubernetes
 calicoctl patch felixconfig default -p '{"spec":{"vxlanEnabled":true}}'
 calicoctl patch ippool default-ipv4-ippool -p '{"spec":{"ipipMode":"Never", "vxlanMode":"Always"}}'   ## wait for the vxlan.calico interface to be created and traffic to be routed through it
 calicoctl patch felixconfig default -p '{"spec":{"ipipEnabled":false}}'
 ```
-
 
 
 ## 原因排查
