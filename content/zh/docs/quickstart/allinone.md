@@ -18,7 +18,7 @@ description: >
 ### 机器配置要求
 
 - 操作系统: 根据 CPU 架构不同，支持的发行版也不一样
-    - X86_64: [CentOS 7](http://isoredirect.centos.org/centos/7/isos/x86_64/)
+    - X86_64: [CentOS 7.6~7.9](http://isoredirect.centos.org/centos/7/isos/x86_64/)
     - ARM64: [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 或者 [统信 UOS](https://www.chinauos.com/)
     - 操作系统需要是干净的版本，因为部署工具会重头搭建指定版本的 kubernetes 集群，所以确保系统没有安装 kubernetes, docker 等容器管理工具，否则会出现冲突导致安装异常
 - 最低配置要求: CPU 4核, 内存 8GiB, 存储 100GiB
