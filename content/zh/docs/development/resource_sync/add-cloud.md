@@ -20,12 +20,12 @@ description: >
     - 为了屏蔽各个云的差异, 我们分离出 [Cloudmux](https://github.com/yunionio/cloudmux) 仓库, 将各个云的资源操作统一放到这个仓库里面
     - 每一类资源都在 [Resource](https://github.com/yunionio/cloudmux/blob/master/pkg/cloudprovider/resources.go) 可以找到对应的接口
     - 对于每一个云来说基本实现**Resource**里面定义的接口，就完成了80%的云平台接入
-    - 这里的实现文件列表为 pkg/multicloud/testcloud/
+    - 资源接口的实现文件列表对应路径应该在 pkg/multicloud/testcloud/ 中
 - 云账号接入
     - 云账号接入类似于资源接口, 接口定义在[ICloudProvider](https://github.com/yunionio/cloudmux/blob/master/pkg/cloudprovider/cloudprovider.go), 需要实现**ICloudProviderFactory**和**ICloudProvider**
     - **ICloudProviderFactory** 是校验云账号及云账号属性的接口
     - **ICloudProvider** 是云账号真正获取及操作云平台资源的入口
-    - 这里的实现文件在 pkg/multicloud/testcloud/provider/
+    - 云账号接入的实现文件对应路径应该在 pkg/multicloud/testcloud/provider/ 中
 - 快捷操作
     - 为了快捷调试各个云的接口, 每个云平台会有一个对应云平台的cli命令实现, 例如[aliyuncli](https://github.com/yunionio/cloudmux/blob/master/cmd/aliyuncli/main.go)
     - aliyuncli启动时会导入[Shell](https://github.com/yunionio/cloudmux/tree/master/pkg/multicloud/aliyun/shell)里面的子命令, 例如: aliyuncli instance-list
@@ -68,7 +68,7 @@ $ ./_output/bin/testcli --debug region-list
 
 ### 添加各个资源接口实现
 
-资源的实现类似于数的生长，自根到枝到叶, 越发扩散，region类似于树根, region底下有vpc, zone..., zone底下有host, storage...可依照这个顺序依次实现对应资源的接口
+资源的实现类似于树的生长，自根到枝到叶, 越发扩散，region类似于树根, region底下有vpc, zone..., zone底下有host, storage...可依照这个顺序依次实现对应资源的接口
 
 - 添加各个资源的shell命令
 - 根据资源接口定义实现各个资源相应的接口
