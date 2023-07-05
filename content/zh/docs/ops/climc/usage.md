@@ -128,18 +128,28 @@ climc --debug <Resource>-<Action>
 - CURL 使用蓝绿色
 - 根据状态码显示不同颜色，可参考代码: https://github.com/yunionio/pkg/blob/master/util/httputils/httputils.go#L754
 
-#### 在bash或zsh下的命令行参数提示补全
+### 开启climc 自动补全
 
 climc支持bash或zsh的命令行参数自动提示补全。
 
-下面以bash为例说明，在使用climc之前，执行如下命令初始化环境。
+#### bash
+
+bash 下请事先安装`bash-completion`软件包。
 
 ```bash
-# 启用bash命令行参数自动补全
-source <(climc --completion bash)
+source <(climc --completion bash)  # 开启命令行自动补全
+echo "source <(climc --completion bash)" >> ~/.bashrc # 固化配置
 ```
 
-之后在bash中可以在输入climc命令后，通过tab获得命令行参数的提示。
+#### zsh
 
-为了方便使用，推荐将该命令放到$HOME/.bashrc或$HOME/.bash_profile中自动初始化环境。
+```zsh
+source <(climc --completio zsh)  # 开启自动补全
+echo 'source <(climc --completio zsh)' >> ~/.zshrc # 固化配置
+```
 
+如果出错`command not found: compdef`，请事先加载`compinit`：
+```zsh
+# 在 .zshrc 开头添加
+autoload -U compinit && compinit
+```
