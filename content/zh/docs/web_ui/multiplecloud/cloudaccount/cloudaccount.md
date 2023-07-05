@@ -199,7 +199,7 @@ description: >
 
 ##### 通过平台管理AWS资源，需要云账号具备哪些权限？
 
-| 权限备注                                              | 只读权限                                          | 读可权限                                 |
+| 权限备注                                              | 只读权限                                          | 读写权限                                 |
 | :----------                                       | :--------                                         | :----------                                  |
 | 管理所有AWS资源的权限                                      | ReadOnlyAccess                                    | AdministratorAccess                          |
 | 管理云服务器服务(Amazon EC2)的权限      | AmazonEC2ReadOnlyAccess                           | AmazonEC2FullAccess                          |
