@@ -17,13 +17,22 @@ description: >
 
 ### 机器配置要求
 
-- 操作系统: 根据 CPU 架构不同，支持的发行版也不一样
-    - X86_64: [CentOS 7](http://isoredirect.centos.org/centos/7/isos/x86_64/)
-    - ARM64: [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 或者 [统信 UOS](https://www.chinauos.com/)
+- 操作系统: CentOS 7.6-7.9 Minimal(X86_64和ARM64)、Debian 10-11(X86_64和ARM64)、UOS V20(X86_64和ARM64)和Kylin V10 sp2(X86_64和ARM64)等主流操作系统安装，下面是操作系统镜像常见下载地址
+    - X86_64: [CentOS 7.9 Minimal](http://isoredirect.centos.org/centos/7/isos/x86_64/)
+    - ARM64: [CentOS 7.9 Minimal](http://isoredirect.centos.org/altarch/7/isos/aarch64/)，[Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 或者 [统信 UOS](https://www.chinauos.com/)
     - 操作系统需要是干净的版本，因为部署工具会重头搭建指定版本的 kubernetes 集群，所以确保系统没有安装 kubernetes, docker 等容器管理工具，否则会出现冲突导致安装异常
 - 最低配置要求: CPU 4核, 内存 8GiB, 存储 100GiB
 - 虚拟机和服务使用的存储路径都在 **/opt** 目录下，所以理想环境下建议单独给 **/opt** 目录设置挂载点
     - 比如把 /dev/sdb1 单独分区做 ext4 然后通过 /etc/fstab 挂载到 /opt 目录
+
+### 数据库要求
+
+cloudpods会默认部署MariaDB，也可以用yaml文件使用已有MariaDB安装
+- Centos 7.6-7.9  Minimal(X86_64和ARM64) 默认安装MariaDB 5.5.68
+- Debian 10-11(X86_64和ARM64) 默认安装MariaDB 10.3.1
+- UOS V20(X86_64和ARM64) 默认安装MariaDB 10.3.1
+- Kylin V10 sp2(X86_64和ARM64) 默认安装MariaDB 10.3.4
+
 
 以下为待部署机器的环境:
 
@@ -57,7 +66,7 @@ $ ssh root@10.168.26.216 "hostname"
 
 #### 安装ansible和git
 
-首先需要安装ansible和git
+首先需要安装ansible和git，ansible版本要求最低2.9.27，其中2.11.12测试较多
 
 {{< tabs name="ocboot_install" >}}
 {{% tab name="CentOS 7" %}}
