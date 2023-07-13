@@ -132,10 +132,10 @@ description: >
 1. 以阿里云主账号为例，以主账号登录阿里云控制台，单击顶部[费用]菜单的下拉菜单 **_"用户中心"_** 菜单项，进入费用用户中心页面。
    ![](../../../../faq/image/aliyunusercenter.png)
 
-2. 单击 **_"账单数据存储"_** 按钮，进入账单数据存储页面。
+2. 单击 **_"设置账单数据存储"_** 按钮，进入账单数据存储页面。
    ![](../../../../faq/image/aliyunusercenterhome.png)
 
-3. 查看并记录计费项消费明细和分账账单按天汇总的bucket名称，如未设置，需要在该页面添加存储文件的订阅上述两个账单到同一bucket，设置完成后，每天的增量账单数据将同步存储到对应的OSS上。建议该bucket中仅存放账单文件。
+3. 查看并记录计费项明细账单（BillingItemDetail）和分账账单按天汇总（SplitItemDetailDaily）的bucket名称，如未设置，需要在该页面订阅上述两个账单到同一个bucket，设置完成后，每天的增量账单数据将同步存储到对应的OSS上。建议该bucket中仅存放账单文件。
    ![](../../../../faq/image/aliyunossbucket1.png)
 
 {{% alert title="说明" %}}
