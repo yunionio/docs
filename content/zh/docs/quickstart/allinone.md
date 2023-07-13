@@ -139,10 +139,17 @@ $ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./o
 如果待部署的主机是一台虚拟机，默认是不会在虚拟机里面部署内置私有云虚拟化相关组件的，如果需要在虚拟机里面使用内置私有云（相当于嵌套虚拟化），请使用[自定义配置部署](#自定义配置部署)。
 {{% /alert %}}
 
+{{< tabs name="ocboot_install_region" >}}
+{{% tab name="中国大陆" %}}
+
 ```bash
 # 直接部署，会从 registry.cn-beijing.aliyuncs.com 拉取容器镜像
 $ ./run.py <host_ip>
 ```
+
+{{% /tab %}}
+
+{{% tab name="其他地区" %}}
 
 对于某些网络环境，registry.cn-beijing.aliyuncs.com 访问缓慢或不可达，在版本 `v3.9.5`之后（含），可指定镜像源：[docker.io](http://docker.io) 来安装。命令如下：
 
@@ -151,6 +158,8 @@ IMAGE_REPOSITORY=docker.io/yunion ./run.py <host_ip>
 ```
 
 这种方式其实是自动在当前目录生成一个名为config-allinone-current.yaml的配置文件，基于该配置文件的参数来执行部署。
+
+{{% /tab %}}
 
 ### 自定义配置部署
 
