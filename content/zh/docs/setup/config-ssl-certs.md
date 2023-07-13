@@ -7,7 +7,7 @@ description: >
 
 默认部署完成后，访问前端界面，浏览器会提示不安全的 SSL 连接，原因是前端默认使用的是自签发的证书。本文介绍如何使用自定义证书替换掉前端默认的证书。
 
-## 操作步骤
+## 更换前端证书操作步骤
 
 假设已经准备好的证书文件为：`cert.pem` 和 `cert.key`，域名为 `foo.bar.com` 。
 
@@ -53,3 +53,46 @@ default:
 ```
 
 配置完成后就可以通过 `https://foo.bar.com` 访问前端了。
+
+## 更改前端HTTPS 443端口为其它端口的方法步骤
+假设平台登陆地址为https://10.127.90.221，更改443端口为8443
+
+```bash
+# 编辑 traefik-ingress-lb 的configmap，找到address = ":443"，把443改为8443
+$ kubectl edit cm -n kube-system traefik-ingress-lb
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+data:
+  traefik.toml: |
+    logLevel = "info"
+    insecureSkipVerify = true
+    defaultEntryPoints = ["http", "https"]
+
+    [api]
+      entryPoint = "traefik"
+      dashboard = false
+
+    [kubernetes]
+
+    [entryPoints]
+      [entryPoints.traefik]
+        address=":8091"
+      [entryPoints.http]
+        address = ":80"
+        [entryPoints.http.redirect]
+        entryPoint = "https"
+      [entryPoints.https]
+        address = ":8443"
+
+# 重启traefik-ingress-controller的pods
+$ kubectl get pods -n kube-system |grep traefik-ingress | awk '{print $1}' |xargs kubectl delete pods -n kube-system
+
+# 等新的traefik-ingress-controller pods状态为Running，修改8443端成功
+$ kubectl get pods  -n kube-system  | grep  traefik-ingress  
+traefik-ingress-controller-49fmk             1/1     Running   0          42s
+
+# 浏览器输入https://10.127.90.221:8443访问控制台，ip为原控制台的地址
+```
