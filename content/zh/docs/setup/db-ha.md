@@ -12,6 +12,12 @@ description: >
 
 keepalived 的主要作用是为 Mariadb 提供 vip，在2个 Mariadb 实例之间切换，不间断的提供服务。
 
+下文示例中：
+
+- DB VIP：192.168.199.97
+- 主节点IP：192.168.199.98
+- 备节点IP：192.168.199.99
+
 ### 部署配置 Mariadb 主主复制
 
 安装并启动 Mariadb
