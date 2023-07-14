@@ -18,7 +18,7 @@ img: /images/icons/icon-introduce.svg
 
 {{% /alert %}}
 
-![](../introduce/images/intro.png)
+![](../introduce/images/intro1.png)
 
 ## 2 产品特色
 
@@ -39,13 +39,22 @@ img: /images/icons/icon-introduce.svg
 ## 3 界面展示
 
 
-![](../introduce/images/interface.gif)
+![](../introduce/images/interface1.gif)
 
 ## 4 功能列表
 
 {{% alert title="" color="warning" %}}
 
-[{{<oem_name>}}功能列表](https://www.yunion.cn/comparison/index.html)
+ - 资源纳管，含阿里云、腾讯云、华为云等公有云；
+ - 资源纳管，含OpenStack、ZStack等私有云；
+ - 资源纳管，含VMware、裸机等
+ - 内置私有云
+ - k8s容器集群管理
+ - 监控与运维
+ - 多云SSO
+ - RBAC与IAM
+ - 命令行工具climc
+ - API与SDK
 
 {{% /alert %}}
 
@@ -69,12 +78,11 @@ img: /images/icons/icon-introduce.svg
 
 {{% alert title="" color="warning" %}}
 
-[新一代企业级产品花云原生私有云](https://www.yunion.cn/private/index.html)
+[新一代企业级产品化云原生私有云](https://www.yunion.cn/private/index.html)
 
 [新一代产品化云原生多云管理平台](https://www.yunion.cn/cmp/index.html)
 
 [公有云账单管理与优化（FinOps）](https://www.yunion.cn/finops/index.html)
-
 
 {{% /alert %}}
 

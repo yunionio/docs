@@ -10,7 +10,7 @@ description: >
 {{% alert title="注意" color="warning" %}}
 本章内容是通过手动在 CentOS 7 上一步一步部署 Cloudpods 服务，已经不建议这么做，本文只是保留作为参考，提供给想要了解部署流程的用户查看。
 
-实际环境中部署请根据自己使用需求参考: [All in One 安装](../../quickstart/allinone) 或者 [高可用安装](../../quickstart/ha) 部署。
+实际环境中部署请根据自己使用需求参考: [All in One 融合云安装](../../quickstart/allinone-converge) 或者 [高可用安装](../../setup/ha-ce) 部署。
 {{% /alert %}}
 
 ## 环境准备
