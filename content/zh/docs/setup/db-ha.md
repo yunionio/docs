@@ -242,6 +242,10 @@ mysql -u root -p$MYSQL_PASSWD -e "SHOW SLAVE STATUS\G" | grep Running
 
 设置相关的环境变量，根据不同的环境自行配置。
 
+以下keepalived为非抢占模式，即原master 崩溃后，将vip 漂移到backup 选出新master。当原master恢复（例如自动宕机重启等）后，vip 保持在新master 上，不自动切回。
+这种模式，有利于当切换发生后，检查崩溃节点的数据库服务，再恢复，更加稳妥。
+
+
 ```bash
 # keepalived vip 地址
 export DB_VIP=192.168.199.97
@@ -285,7 +289,7 @@ vrrp_script chk_mysql {
 }
   
 vrrp_instance VI_1 {
-    state MASTER
+    state BACKUP
     interface $DB_NETIF         
     virtual_router_id 99
     priority 100
@@ -314,7 +318,7 @@ EOF
 $ chmod +x /etc/keepalived/chk_mysql
 ```
 
-启动 keepalived
+启动 keepalived，先在主节点启动，再在备节点启动。
 
 ```bash
 $ systemctl enable --now keepalived
