@@ -27,7 +27,9 @@ description: >
 
 ### 数据库要求
 
-cloudpods会默认部署MariaDB，也可以用yaml文件使用已有MariaDB安装
+Cloudpods 会默认部署 MariaDB ，也可以用yaml文件使用已有 MariaDB 安装。
+注意事项：在公有云上部署环境时，建议部署 MariaDB 数据库，不要使用 MySQL 5.6及以下版本，防止索引长度 bug： Index column size too large. The maximum column size is 767 bytes.
+
 - Centos 7.6-7.9  Minimal(X86_64和ARM64) 默认安装MariaDB 5.5.68
 - Debian 10-11(X86_64和ARM64) 默认安装MariaDB 10.3.1
 - UOS V20(X86_64和ARM64) 默认安装MariaDB 10.3.1
