@@ -204,3 +204,7 @@ $ climc endpoint-list --details | grep webconsole | grep public
 $ climc webconsole-server testvm01
 https://console.yunion.cn/web-console?access_token=FI-VXQSAonhzfSnxVTKCCbwHinp7swlRkmi-4p6s-4OfZpg6TG9YhWuwbHEUA1D7XoKu_w%3D%3D&api_server=https%3A%2F%2F10.168.222.216%3A8899&password=65xB2kaE&protocol=vnc
 ```
+
+## 常见问题
+### 存储介质识别不准，例如机械盘识别成固态
+例如用户使用SSD 做lvmcache 等情况，可能造成宿主机本地存储介质识别不准，可自行前往对应宿主机->存储->对应存储介质 修改属性，选择介质类型修改即可。
