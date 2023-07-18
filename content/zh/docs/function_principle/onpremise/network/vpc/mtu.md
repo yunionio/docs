@@ -1,5 +1,5 @@
 ---
-title: "MTU"
+title: "VPC MTU"
 weight: 74
 description: >
   介绍修改VPC内虚拟机MTU

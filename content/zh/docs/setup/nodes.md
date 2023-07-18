@@ -2,6 +2,7 @@
 title: "多节点安装(已废弃)"
 linkTitle: "多节点安装(已废弃)"
 edition: ce
+draft: true
 weight: 4
 description: >
   使用 ocboot 部署工具在多个节点部署 Cloudpods 服务
