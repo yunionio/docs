@@ -34,6 +34,8 @@ Cloudpods服务内置了golang的profile工具(https://pkg.go.dev/net/http/pprof
 | POST     | /debug/pprof/symbol  | pprof.Symbol  |
 | GET      | /debug/pprof/trace   | pprof.Trace   |
 
+从v3.10.4开始，profiling接口默认不启用。如需要开启，请修改对应服务的选项 enable_app_profiling 为 true，并重启服务。
+
 ### 获取调用栈
 
 可以通过给服务进程发送SIGUSR1信号，触发服务进程打印当前调用栈。该方法有助于发现程序Block的函数调用栈，找到阻塞的函数方法。
