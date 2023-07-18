@@ -163,6 +163,8 @@ IMAGE_REPOSITORY=docker.io/yunion ./run.py <host_ip>
 
 {{% /tab %}}
 
+{{< /tabs >}}
+
 ### 自定义配置部署
 
 也可以我们手工编辑一个配置文件，基于该配置文件，采用run.py来实现部署。
