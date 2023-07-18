@@ -8,22 +8,6 @@ description: >
 
 根据平台安装方式，卸载方式各有不同
 
-## Kubernetes Helm 安装
-
-使用如下命令卸载：
-
-```bash
-TODO
-```
-
-## Docker Compose 安装
-
-使用如下命令卸载：
-
-```bash
-TODO
-````
-
 ## All in One 安装
 
 All in One 安装本质是在服务器上安装了一个Kubernets集群，进而在集群中部署了Cloudpods。因此卸载Cloupods只需要卸载安装的Kubernetes集群，以及在服务器上安装的相关rpm即可。
@@ -49,3 +33,19 @@ systemctl stop openvswitch && systemctl disable openvswitch
 ```bash
 rm -fr /etc/kubernetes /var/lib/etcd /opt/yunion /opt/cloud /etc/openvswitch
 ```
+
+## Kubernetes Helm 安装
+
+使用如下命令卸载：
+
+```bash
+helm uninstall -n onecloud  default
+```
+
+## Docker Compose 安装
+
+使用如下命令卸载：
+
+```bash
+docker compose down
+````
