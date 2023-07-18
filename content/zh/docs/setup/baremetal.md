@@ -1,5 +1,5 @@
 ---
-title: "物理机管理服务"
+title: "启用物理机管理服务"
 edition: ce
 weight: 11
 description: >
