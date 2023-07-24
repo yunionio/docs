@@ -1,5 +1,5 @@
 ---
-title: "物理机服务"
+title: "物理机服务原理"
 weight: 1
 date: 2019-07-19T20:28:13+08:00
 description: >

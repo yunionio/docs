@@ -1,6 +1,6 @@
 ---
 title: "qga 使用介绍"
-weight: 30
+weight: 4
 description: >
   qemu guest agent 使用介绍。
 ---

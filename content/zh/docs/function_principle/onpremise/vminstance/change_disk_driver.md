@@ -1,6 +1,6 @@
 ---
 title: "修改磁盘驱动"
-weight: 45
+weight: 7
 description: >
   介绍如何修改虚拟机磁盘的驱动。
 ---
