@@ -171,6 +171,19 @@ policy:
 
 其中，为了使用web控制台，用户需要具备一些特殊权限，预定义到了这几个预置权限策略中：sys-dashboard, domain-doshboard, project-dashboard，分别对应系统视图，域视图和项目视图的web控制台权限。如果一个角色需要访问web控制台，需要给该角色增加对应的权限策略。
 
+以下为常用预置权限：
+
+| 权限名称	      | 权限范围  |	权限内容                                                   |
+|----------------|---------|-----------------------------------------------------------|
+| sysadmin       |	全局	  | 全局管理员                                                 |
+| syseditor      |	全局    |	全局操作员，具有sysadmin除了不具备创建和删除资源的权限外的所有权限 |
+| sysviewer      |	全局	  | 全局只读管理员，具有全局列表和获取资源信息的权限                 |
+| domain-admin   |	域	    | 用户加入项目所在域的管理员权限                                |
+| domain-editor  |	域	    | 用户加入项目所在域的所有操作权限，不具备创建和删除资源权限         |
+| domain-viewer  |	域	    | 用户加入项目所在域的所有只读权限                              |
+| project-admin  |	项目	  |  用户加入项目的管理员权限                                    |
+| project-editor |	项目	  | 用户加入项目的操作员权限，不具备创建和删除资源权限               |
+| project-viewer |  项目	  | 用户加入项目的所有只读权限                                   |
 
 ### 角色与权限
 
@@ -181,18 +194,12 @@ policy:
 role_id    | string  | 是           | 角色ID
 policy_id  | string  | 是           | 权限策略ID
 project_id | string  | 否           | 如果设置了项目，则只有用户以指定角色加入该项目，才具备对应的权限
-auth       | boolean | 否           | 是否需要认证，不需要认证
-ips        | string  | 否           | 如果设置了IPS，则只有用户通过匹配IP登录的才具备对应的权限
-
-例如，sysadmin的权限和admin角色关联，project_id为system项目的ID，auth为true，则要求用户以admin角色加入system项目，才具备sysadmin的权限。
-
-### 限制
-
-启用(enabled=true)的权限无法删除
-共享的权限无法删除
+ips        | string  | 否           | 指定权限生效的IP白名单，如果设置了IPS，则只有用户通过匹配IP登录的才具备对应的权限
+valid_since | time   | 否           | 指定权限生效的开始时间，如果设置，则该时间点之后权限才生效
+valid_until | time   | 否           | 指定权限生效的截止时间，如果设置，则该时间点之前权限有效，之后则无效
 
 
-### 权限的名字空间
+例如，sysadmin的权限和admin角色关联，project_id为system项目的ID，则要求用户以admin角色加入system项目，才具备sysadmin的权限。
 
-权限的名字空间为全局，也就是权限的名称全局唯一
+
 
