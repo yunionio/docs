@@ -1,7 +1,7 @@
 ---
-title: "宕机自动迁移"
+title: "宿主机宕机自动迁移"
 date: 2022-02-07T18:24:26+08:00
-weight: 30
+weight: 4
 description: >
     宿主机宕机自动迁移介绍
 ---

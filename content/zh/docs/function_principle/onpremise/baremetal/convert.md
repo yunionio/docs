@@ -1,6 +1,6 @@
 ---
 title: "物理机与宿主机互相转换"
-weight: 5
+weight: 9
 description: >
   介绍物理机与宿主机之间如何互相转换
 ---

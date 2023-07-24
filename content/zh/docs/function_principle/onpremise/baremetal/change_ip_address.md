@@ -1,6 +1,6 @@
 ---
-title: "更改 IP"
-weight: 3
+title: "物理机更改 IP"
+weight: 6
 description: >
   介绍如何更改平台里面物理机的 IPMI 、PXE 以及安装好操作系统的 IP 地址。
 ---

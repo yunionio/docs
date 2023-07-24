@@ -1,7 +1,7 @@
 ---
 title: "查看宿主机列表"
 date: 2022-02-07T18:24:15+08:00
-weight: 10
+weight: 2
 description: >
     查看宿主机列表信息
 ---
