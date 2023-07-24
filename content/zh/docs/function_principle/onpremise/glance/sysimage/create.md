@@ -24,7 +24,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
 - 推荐使用CentOS Minimal操作系统。
 - Ubuntu/Debian镜像在安装过程中建议选择“No automatic updates”并安装OpenSSH Server软件。
 {{% /alert %}}
-    
+
 3. 根据镜像的操作系统类型进行不同的优化配置。
     - CentOS镜像：请参考[CentOS镜像优化](#centos镜像优化)章节。
     - Ubuntu/Debian镜像：请参考[Ubuntu/Debian镜像优化](#ubuntu-debian镜像优化)章节。
@@ -60,7 +60,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
 
     # 重启使配置生效
     $ reboot
-    ```  
+    ```
 
 3. 将必要的kernel module加入启动initram.img。（centos8的内核已经安装了virtio所以需要在列表删除）
     ```bash
@@ -256,7 +256,7 @@ https://github.com/yunionio/service-images 仓库包含了一些我们使用 pac
 2. 在虚拟机中打开挂载的驱动文件夹，根据虚拟机的操作系统版本（如本例为Windows server 2016），在驱动文件夹页面的搜索框中搜索“2k16”，并将所有包含2k16的文件夹复制到虚拟机的其他文件夹中（如文档文件夹）。
 
    ![](../images/image/search2k16.png)
-   
+
 3. 在文档文件夹中打开“2k16>amd64”文件夹，该文件夹中包含所有Windows Server 2016中的驱动文件。在该文件夹的地址显示框中输入cmd或同时按“shift”键和鼠标右键，在此处打开命令窗口，打开命令提示符对话框。
 4. 使用以下命令安装全部驱动。
 
@@ -310,11 +310,11 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation
             <AutoLogon>
                 <Password>
                     <Value>123@yunion</Value>
-                    <PlainText>true</PlainText> 
+                    <PlainText>true</PlainText>
                 </Password>
-                <Username>Administrator</Username> 
-                <Enabled>true</Enabled> 
-                <LogonCount>5</LogonCount> 
+                <Username>Administrator</Username>
+                <Enabled>true</Enabled>
+                <LogonCount>5</LogonCount>
             </AutoLogon>
             <UserAccounts>
                 <AdministratorPassword>
@@ -388,7 +388,7 @@ $ yum install cloud-init
 ```
 {{% /tab %}}
 
-{{% tab name="Ubuntu/Debian 10" %}}
+{{% tab name="Ubuntu/Debian 10/11" %}}
 ```bash
 $ apt install cloud-init
 ```
@@ -412,4 +412,3 @@ ssh_pwauth:   1
 ### Windows系统安装配置Cloudbase-init（可选）
 
 请参考[腾讯云文档中心-Windows操作系统安装Cloudbase-Init](https://cloud.tencent.com/document/product/213/30000)。
-
