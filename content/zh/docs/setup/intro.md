@@ -7,7 +7,7 @@ description: >
   了解各个组件的用途和部署运行方式
 ---
 
-Cloudpods目前支持在 CentOS 7 (x86_64 或 arm64) 和 Debian 10 (x86_64 或 arm64) 上运行，待部署组件/服务如下:
+Cloudpods目前支持在 CentOS 7 (x86_64 或 arm64) 和 Debian 10/11 (x86_64 或 arm64) 上运行，待部署组件/服务如下:
 
 |  服务组件 |         用途        |    安装方式    |  运行方式 |
 |:---------:|:-------------------:|:--------------:|:---------:|
@@ -20,9 +20,9 @@ Cloudpods目前支持在 CentOS 7 (x86_64 或 arm64) 和 Debian 10 (x86_64 或 a
 | cloudevent	| 云上日志和裸金属日志收集服务 | k8s deployment	| container |
 | cloudid       | 公有云SAML SSO服务 | k8s deployment | container |
 | cloudmon      | 公有云监控指标采集服务 | k8s deployment | container |
-| devtool       | 运维工具服务           | k8s deployment | container |	
+| devtool       | 运维工具服务           | k8s deployment | container |
 | esxi-agent    | VMware ESXi管理服务代理 | k8s deployment | container |
-| etcd	        | 基础服务，存储服务间推送消息，分布式锁等等信息 | k8s deployment | container |	
+| etcd	        | 基础服务，存储服务间推送消息，分布式锁等等信息 | k8s deployment | container |
 |   glance  |       镜像存储      | k8s deployment | container |
 |    host   |      管理虚拟机     |       k8s daemonset      |  container  |
 |  sdnagent |    管理虚拟机流表规则，实现网络安全组和限速等功能  |  k8s daemonset      |  container |
