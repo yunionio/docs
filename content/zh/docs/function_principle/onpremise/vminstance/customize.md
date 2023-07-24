@@ -1,7 +1,7 @@
 ---
 title: "调试QEMU参数"
 date: 2019-07-19T18:32:40+08:00
-weight: 60
+weight: 11
 description: >
   介绍如何调试修改QEMU虚拟机的命令行参数。
 ---

@@ -1,9 +1,9 @@
 ---
-title: "升级内核"
+title: "宿主机升级内核"
 edition: ce
-weight: 91
+weight: 3
 description: >-
-     升级内核.
+     介绍宿主机如何升级内核
 ---
 
 ## 宿主机内核从yn20191203升级yn20201125
