@@ -12,7 +12,8 @@ description: >
 
 - OS: Depending on the CPU architecture, the supported distributions are different
     - X86_64: [CentOS 7](http://isoredirect.centos.org/centos/7/isos/x86_64/)
-    - ARM64: [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) or [China UOS](https://www.chinauos.com/)
+    - ARM64: [Debian 10(buster)](https://www.debian.org/releases/buster/arm64/)
+    - ARM64: [Debian 11(bullseye)](https://www.debian.org/releases/bullseye/arm64/)
 - Minimum Configuration Requirements: CPU 4 cores, Memory 8GiB, Storage 100GiB
 
 As an example, the following is the environment of the Linux box to be deployed:
