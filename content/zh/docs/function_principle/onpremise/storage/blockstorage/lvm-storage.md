@@ -1,7 +1,8 @@
 ---
-title: "使用 LVM 本地存储"
+title: "本地LVM存储"
 weight: 30
 description: >
+  如何配置和使用本地LVM存储
 ---
 
 ## LVM 是什么
