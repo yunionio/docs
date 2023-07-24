@@ -1,6 +1,6 @@
 ---
 title: "纳管物理机"
-weight: 1
+weight: 3
 description: >
   介绍如何把物理服务器纳管到云平台的物理机资源池。
 ---

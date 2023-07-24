@@ -1,6 +1,6 @@
 ---
 title: "Host服务问题排障技巧"
-weight: 10
+weight: 7
 description: >
 ---
 

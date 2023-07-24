@@ -1,6 +1,6 @@
 ---
-title: "更换网卡"
-weight: 4
+title: "物理机更换网卡"
+weight: 5
 description: >
   介绍如何更换物理机的网卡。
 ---

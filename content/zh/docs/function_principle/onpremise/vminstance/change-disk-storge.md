@@ -1,6 +1,6 @@
 ---
 title: "迁移磁盘存储"
-weight: 42
+weight: 5
 description: >
   介绍如何把虚拟机的磁盘迁移到另一个存储。
 ---

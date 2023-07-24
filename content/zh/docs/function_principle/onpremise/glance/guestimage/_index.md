@@ -1,7 +1,7 @@
 ---
 title: "主机镜像"
 date: 2023-03-14T10:48:49+08:00
-weight: 10
+weight: 2
 description: >
     介绍主机镜像相关内容
 ---

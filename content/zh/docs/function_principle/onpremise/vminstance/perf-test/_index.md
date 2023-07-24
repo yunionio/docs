@@ -1,7 +1,7 @@
 ---
 title: "性能测试"
 date: 2019-07-19T17:38:36+08:00
-weight: 50
+weight: 9
 description: >
   测试 var_oem_name 内置私有云虚拟机的性能
 ---

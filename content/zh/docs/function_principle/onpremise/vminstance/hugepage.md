@@ -1,6 +1,6 @@
 ---
 title: "内存大页(Hugepage)"
-weight: 50
+weight: 10
 description: >
   介绍如何在宿主机启用内存大页给虚拟机使用。
 ---
