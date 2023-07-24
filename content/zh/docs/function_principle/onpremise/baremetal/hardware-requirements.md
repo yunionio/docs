@@ -1,6 +1,6 @@
 ---
 title: "物理机硬件规格要求"
-weight: 4
+weight: 10
 ---
 
 ## CPU 架构
