@@ -8,17 +8,17 @@ description: >
 
 ## 简介
 
-从 v3.6.10 版本开始，可以将”Cloudpods“部署到 ARM(AArch64) 架构的机器上，目前我们适配的 Linux 发行版是 [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 和 [统信 UOS](https://www.chinauos.com/) 。
+从 v3.6.10 版本开始，可以将”Cloudpods“部署到 ARM(AArch64) 架构的机器上，目前我们适配的 Linux 发行版是 [Debian 10(buster)](https://www.debian.org/releases/buster/arm64/) 和[Debian 11(bullseye)](https://www.debian.org/releases/bullseye/arm64/) 。
 
 因为服务是容器化运行在 Kubernetes 之上的，为了在 ARM 架构的机器上运行容器，我们使用了 [docker buildx](https://github.com/docker/buildx/) 和交叉编译的技术编译打包了同时支持 x86_64 和 arm64 的统一容器镜像。这样的可以让 Kubernetes 屏蔽 CPU 架构的差异性，我们制作的支持多架构的容器镜像可以在不同架构的机器上运行服务，实现 X86 和 ARM 机器混合部署的效果。
 
 ## 部署
 
-部署方式和原来的 X86 部署并没有太大差别，唯一的区别是我们 X86 上使用的 Linux 发行版是 CentOS 7 ，但在 ARM 架构的机器上需要安装 [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 或者 [统信 UOS](https://www.chinauos.com/) 发行版。其它部署方式是一致的，使用我们编写的 https://github.com/yunionio/ocboot 部署工具来统一部署，这个工具里面包含了在 Debian 和 UOS 上部署的 ansible playbook 。
+部署方式和原来的 X86 部署并没有太大差别，唯一的区别是我们 X86 上使用的 Linux 发行版是 CentOS 7 ，但在 ARM 架构的机器上需要安装 [Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) 或 和[Debian 11(bullseye)](https://www.debian.org/releases/bullseye/arm64/) 发行版。其它部署方式是一致的，使用我们编写的 https://github.com/yunionio/ocboot 部署工具来统一部署，这个工具里面包含了在 Debian 上部署的 ansible playbook 。
 
 ### 前提条件
 
-- ARM 机器必须提前安装好 Debian 10 或者 UOS 操作系统
+- ARM 机器必须提前安装好 Debian 10/11 操作系统
 - ARM 机器能够访问公网
 - ARM 机器开启 ssh 服务，保证运行 ocboot 的节点能够免密登录待部署的 ARM 机器
 
@@ -33,7 +33,7 @@ description: >
 | 架构   | 操作系统  | IP            | 登录用户 | 角色                               |
 |--------|-----------|---------------|----------|------------------------------------|
 | X86_64 | CentOS 7  | 10.127.40.252 | root     | mariadb_node & primary_master_node |
-| ARM64  | Debian 10 | 10.127.100.8  | root     | worker_nodes                       |
+| ARM64  | Debian 10/11 | 10.127.100.8  | root     | worker_nodes                       |
 
 编写如下部署配置:
 
