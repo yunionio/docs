@@ -1,6 +1,6 @@
 ---
-title: "迁移相关"
-weight: 30
+title: "虚拟机迁移相关"
+weight: 6
 description: >
   介绍如何迁移虚拟机，以及迁移虚拟机相关的注意事项。
 ---

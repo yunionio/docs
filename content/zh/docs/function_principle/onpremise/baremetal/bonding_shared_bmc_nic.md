@@ -1,7 +1,7 @@
 ---
 title: "Bonding模式共享BMC网口"
 date: 2021-09-20T22:25:05+08:00
-weight: 3
+weight: 8
 ---
 
 ## 双网卡Bonding模式下共享BMC网口不工作怎么办？

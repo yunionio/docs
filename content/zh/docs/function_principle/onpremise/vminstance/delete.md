@@ -1,7 +1,7 @@
 ---
-title: "删除"
+title: "删除虚拟机"
 date: 2019-07-19T17:32:09+08:00
-weight: 20
+weight: 3
 description: >
   介绍如何删除虚拟机。
 ---
