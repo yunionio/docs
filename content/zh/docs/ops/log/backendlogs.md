@@ -12,13 +12,20 @@ description: >
 
 ### 访问Grafana
 
-1. 访问Grafana的地址默认为 `https://控制节点IP地址/grafana`，默认登录密码为`admin / admin@123`。
+1. 访问Grafana的地址默认为 `https://控制节点IP地址/grafana`。
 
-![](../images/grafanahome.png)
+- 默认登录用户: `admin`
+- 密码通过登陆管理节点执行以下命令获取: (注意该密码如果通过 grafana 前端修改后将会失效)
+```bash
+$ kubectl get oc -n onecloud default -o=jsonpath='{.spec.monitorStack.grafana.adminPassword}'
+G6uD2dy82twGFbkj # 默认管理员登陆的密码
+```
+
+![](../../images/grafanahome.png)
 
 2. 点击上图中的2 explore 按钮，进入Loki日志查询页面。如在该页面可查询某节点的host pod日志等。在查询条件中输入`{app="host",hostname="testhost"}`，在下方将会显示出该节点上的host pod日志。
 
-![](../images/explore.png)
+![](../../images/explore.png)
 
 ### 查询条件
 
@@ -46,4 +53,4 @@ loki 的日志服务查询是按标签进行过滤的，常用的标签 "app" �
 
 查询条件可设置为`{app="region"}`，时间过滤设置为“Last 3 hours” 。
 
-![](../images/explore-region.png)
+![](../../images/explore-region.png)
