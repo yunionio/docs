@@ -180,6 +180,13 @@ $ climc isolated-device-list  --host oc-node-1-192-168-121-21
 ***  Total: 1 Pages: 1 Limit: 20 Offset: 0 Page: 1  ***
 ```
 
+### WebUI动态刷新USB设备
+
+为了方便用户使用，WebUI会在以下场景自动刷新指定宿主机的透传USB设备列表：
+
+1. 访问宿主机-详情-透传设备，会自动刷新指定宿主机的透传设备
+2. 访问虚拟机-设置USB透传
+
 ## 指定USB控制器
 
 默认采用qemu-xhci的USB控制器，该控制器支持版本为USB 3.0，向下兼容2.0。对于老版本的操作系统，例如 Windows Server 2008 R2，不识别USB 3.0的控制器，此时需要改为USB 2.0的控制器 usb-ehci。可以通过一下climc命令行更改虚拟机使用的USB控制器：
