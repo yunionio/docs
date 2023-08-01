@@ -5,7 +5,14 @@ description: >
   如何设置自定义PCI设备类型用于透传
 ---
 
-cloudpods 平台已经支持透传 GPU, USB, SR-IOV NIC 等类型的设备，对于这些类型之外的设备通过自定义 PCI 设备类型的方式来支持。
+{{<oem_name>}} 已经支持透传 GPU, USB, SR-IOV NIC，NVME 等类型的设备，对于这些类型之外的设备，例如通过自定义 PCI 设备类型的方式来支持。
+
+使用自定义PCI透传设备的步骤如下：
+1. 获取该类型PCI设备的vendor_id与device_id
+2. 在平台添加自定义PCI设备类型
+3. 探测挂载在宿主机上的自定义PCI设备
+4. 在平台将PCI设备和虚拟机绑定，在虚拟机内使用该设备
+
 
 ## 获取 PCI 设备 vendor_id 与 device_id
 
@@ -61,6 +68,24 @@ eg:
 climc isolated-device-model-create --hosts host1 Atlas-800 NPU 1a03 2000
 ```
 
+## 探测自定义PCI设备
+
+定义自定义PCI设备类型后，需要在指定宿主机探测并上报该宿主机上挂载的自定义PCI设备，具体方法有：
+
+* 使用如下climc命令
+
+```bash
+$ climc isolated-device-list  --host oc-node-1-192-168-121-21
+```
+
+* 访问前端WebUI，指定指定宿主机的详情-透传设备列表
+
+* 重启该宿主机上的default-host容器
+
+执行以上任意操作后，如果配置正确，则可以在该宿主机的透传设备列表查看到上报的透传设备
+
+## 使用自定义PCI设备
+
 添加自定义 PCI 设备类型完成后，可以在创建虚机选择自定义设备类型。
 ```
 climc server-create --isolated-device 'Atlas-800' ......
@@ -71,8 +96,11 @@ climc server-create --isolated-device 'Atlas-800' ......
 climc isolated-device-model-list
 ```
 
-## 宿主机禁用 custom pci devices
+## 宿主机禁用自定义PCI设备
 
 在 /etc/yunion/host.conf 中添加
-- disable_custom_device: true
+
+```yaml
+disable_custom_device: true
+```
 
