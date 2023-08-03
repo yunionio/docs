@@ -101,3 +101,26 @@ $ bash readonly-config.sh
 ```
 
 然后把生成的 kubeconfig 内容从前端导入即可，这样只有只读的操作可以执行，其他写操作都会被 Kubernetes 集群那边拒绝。
+
+## 更新已有集群的 kubeconfig
+
+如果是已经导入的集群，可以通过下面的命令更新对应 Kubernetes 集群的 kubeconfig：
+
+```bash
+# 把 readonly-config.sh 生成的 kubeconfig 内容保存到文件
+$ bash readonly-config.sh > kubeconfig-ro.conf
+
+# 先列出所有的 K8s 集群
+$ climc k8s-cluster-list --scope system --limit 0
++----------+--------------------------------------+---------+--------------+----------------+---------+---------------+---------+-----------+----------+-------------+
+|   Name   |                  Id                  | Status  | Cluster_Type | Cloudregion_Id | Vpc_Id  | Resource_Type | Version |   Mode    | Provider | Sync_Status |
++----------+--------------------------------------+---------+--------------+----------------+---------+---------------+---------+-----------+----------+-------------+
+| t3       | 66bf3f7e-5ddd-4fef-8905-b4c380942352 | running | default      | default        | default | guest         | v1.17.0 | customize | onecloud | idle        |
+| test122  | 2c136bb7-aab8-42f6-89d4-ed921278456c | running | default      | default        | default | guest         | v1.22.9 | customize | onecloud | idle        |
+| lzx-test | a83fdc32-586f-4fad-82c6-51af34e2be76 | running | default      | default        | default | guest         | v1.17.0 | customize | onecloud | idle        |
++----------+--------------------------------------+---------+--------------+----------------+---------+---------------+---------+-----------+----------+-------------+
+***  Total: 3 Pages: 1 Limit: 2048 Offset: 0 Page: 1  ***
+
+# 假设要更新集群 test122 的 kubeconfig
+$ climc k8s-cluster-set-kubeconfig 2c136bb7-aab8-42f6-89d4-ed921278456c ./kubeconfig-ro.conf
+```
