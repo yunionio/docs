@@ -34,6 +34,43 @@ GRUB_CMDLINE_LINUX="...... igb.max_vfs=7"
 # 重新生成 grub 引导配置文件
 $ grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
+
+#### Mellanox 网卡配置
+Mellanox 网卡需要安装 MLNX_OFED 驱动，参考他们的官方文档：
+- https://enterprise-support.nvidia.com/s/article/howto-install-mlnx-ofed-driver
+- https://docs.nvidia.com/networking/display/MLNXOFEDv461000/Installing+Mellanox+OFED
+- https://network.nvidia.com/products/infiniband-drivers/linux/mlnx_ofed/
+```
+# 注意要使用 gcc 高版本
+$ yum install centos-release-scl
+$ yum install -y devtoolset-9
+$ scl enable devtoolset-9 bash
+# 下载对应操作系统版本的 iso，注意区分 centos7.x
+# 可在 nvidia 提供的驱动网站上下载: https://network.nvidia.com/products/infiniband-drivers/linux/mlnx_ofed/
+# 可在 nvidia 提供的驱动网站上下载: https://network.nvidia.com/products/infiniband-drivers/linux/mlnx_ofed/
+$ wget https://content.mellanox.com/ofed/MLNX_OFED-5.8-1.1.2.1/MLNX_OFED_LINUX-5.8-1.1.2.1-rhel7.9-x86_64.iso
+$ mount -o loop MLNX_OFED_LINUX-5.8-1.1.2.1-rhel7.9-x86_64.iso /mnt
+$ cd /mnt
+# 等待编译
+$ ./mlnxofedinstall --add-kernel-support
+Restart needed for updates to take effect.
+Log File: /tmp/ZXf5cnZzxo
+Real log file: /tmp/MLNX_OFED_LINUX.62574.logs/fw_update.log
+You may need to update your initramfs before next boot. To do that, run:
+ 
+   dracut -f
+To load the new driver, run:
+/etc/init.d/openibd restart
+ 
+$ dracut -f
+$ /etc/init.d/openibd restart
+
+$ mst start
+# 配置SRIOV VF数量, 重启生效, 具体设备名称查看 mst status -v
+$ mlxconfig -d /dev/mst/mt4119_pciconf0 set SRIOV_EN=1 NUM_OF_VFS=64
+$ reboot
+```
+
 5. 设置好后重启宿主机，查看 /proc/cmdline 确认配置生效。
 
 ### host-agent 启用 SR-IOV
@@ -97,14 +134,56 @@ $ climc server-attach-network c15a5a99-75ea-4b8c-8c7a-521e5f980db4 \
 OVS Offload 是基于 SR-IOV 实现的一种硬件卸载的技术；如果硬件支持 OVS Offload, 则能够让 OVS 数据面卸载到网卡上，OVS 控制面不用做任何更改。
 OVS Offload 的基础配置依赖于 SR-IOV 的配置，确保宿主机已经打开了 SR-IOV。然后需要安装开启 OVS Offload 必要的依赖，如 Mellanox 网卡需要安装 MLNX_OFED 驱动。
 
+### 安装 OFED驱动，配置 SRIOV VF
+```
+# 注意要使用 gcc 高版本
+$ yum install centos-release-scl
+$ yum install -y devtoolset-9
+$ scl enable devtoolset-9 bash
+# 下载对应操作系统版本的 iso，注意区分 centos7.x
+# 可在 nvidia 提供的驱动网站上下载: https://network.nvidia.com/products/infiniband-drivers/linux/mlnx_ofed/
+$ wget https://content.mellanox.com/ofed/MLNX_OFED-5.8-1.1.2.1/MLNX_OFED_LINUX-5.8-1.1.2.1-rhel7.9-x86_64.iso
+$ mount -o loop MLNX_OFED_LINUX-5.8-1.1.2.1-rhel7.9-x86_64.iso /mnt
+$ cd /mnt
+# 等待编译
+$ ./mlnxofedinstall --add-kernel-support
+Restart needed for updates to take effect.
+Log File: /tmp/ZXf5cnZzxo
+Real log file: /tmp/MLNX_OFED_LINUX.62574.logs/fw_update.log
+You may need to update your initramfs before next boot. To do that, run:
+ 
+   dracut -f
+To load the new driver, run:
+/etc/init.d/openibd restart
+ 
+$ dracut -f
+$ /etc/init.d/openibd restart
+
+$ mst start
+# 配置SRIOV VF数量, 重启生效, 具体设备名称查看 mst status -v
+$ mlxconfig -d /dev/mst/mt4119_pciconf0 set SRIOV_EN=1 NUM_OF_VFS=64
+$ reboot
+```
+Mellanox 网卡安装 MLNX_OFED 驱动参考：
+- https://enterprise-support.nvidia.com/s/article/howto-install-mlnx-ofed-driver
+- https://docs.nvidia.com/networking/display/MLNXOFEDv461000/Installing+Mellanox+OFED
+- https://network.nvidia.com/products/infiniband-drivers/linux/mlnx_ofed/
+
+Mellanox 配置参考文档：
+> https://docs.nvidia.com/networking/display/MLNXOFEDv471001/OVS+Offload+Using+ASAP2+Direct#OVSOffloadUsingASAP2Direct-Overview
+
 ### host-agent 启用 SR-IOV
 
-由于 ovs offload 对 connection tracking 支持的不好，所以需要关闭安全组：
+安装好 OFED驱动后配置 cloudpods 平台启用 offload 网卡
+
+#### Mellanox CX6 以下(CX5/CX4) 关闭安全组
+Mellanox CX6 以下 ovs offload 对 connection tracking 支持的不好，所以需要关闭安全组：
 ```bash
 $ kubectl -n onecloud edit cm default-host
 disable_security_group: true # 改为 true
 ```
 
+### 配置 host.conf
 登陆到对应的宿主机节点
 ```bash
 # SR-IOV 默认是不启用的，需要修改 host-agent 配置
@@ -122,8 +201,26 @@ ovs_offload_nics:
 
 修改完成后重启 host-agent 服务: `kubectl rollout restart ds default-host`,在使用上与 SR-IOV 一致。
 
-Mellanox 配置参考文档：
-> https://docs.nvidia.com/networking/display/MLNXOFEDv471001/OVS+Offload+Using+ASAP2+Direct#OVSOffloadUsingASAP2Direct-Overview
+### offload 网卡配置 bond
+
+Mellanox 网卡支持的 bond 模式为:
+- Active-Backup (mode 1)
+- XOR           (mode 2)
+- LACP          (mode 4)
+
+在 offload 模式下，来自两个 PF 的数据包可以转发到任何一个VF，来自 VF 的流量可以根据 bond 状态转发到两个端口。
+这意味着，在 Active-Backup 模式下，只要有一个 PF active，来自任何 VF 的流量都可以通过这个 PF 发送。
+在 XOR 或 LACP 模式下，如果两个 PF 都 active，来自 VF 的流量将在这两个 PF 之间分配。
+
+网卡配置好 bond 后修改 host.conf 配置文件：
+```bash
+$ vi /etc/yunion/host.conf
+networks:
+- bond0/br1/bcast0 # bond0 为bond口名称
+......
+ovs_offload_nics:
+- bond0
+```
 
 ### 常见问题
 
