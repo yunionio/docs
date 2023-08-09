@@ -59,6 +59,25 @@ GPU卡预留的资源是宿主机CPU、内存、存储超售后的预留的资�
 1. 在列表中选择一个或多个透传设备，单击列表上方 **_"设置预留资源"_** 按钮，弹出设置预留资源对话框。
 2. 设置预留宿主机资源，分别设置CPU、内存、硬盘大小，单击 **_"确定"_** 按钮。
 
+## 设置 GPU 设备类型
+
+GPU 设备支持的设备类型有：GPU-HPC，GPU-VGA
+- GPU-HPC: 高性能计算卡（High-Performance Computing），主要用于进行科学计算、数据分析、机器学习等需要大规模并行计算的任务。
+- GPU-VGA: 视频图形处理卡（Video Graphics Array），用于图形渲染和显示的目的。
+
+**注意事项**
+GPU-VGA 类型的 GPU 卡透传给虚机使用时，不在提供模拟的 VGA 设备，需要在镜像内提前安装好显卡驱动。
+
+### 设置 GPU 卡类型
+```
+$ climc isolated-device-update
+Usage: climc isolated-device-update [--reserved-mem RESERVED_MEM] [--reserved-storage RESERVED_STORAGE] [--dev-type {GPU-HPC,GPU-VGA}] [--help] [--reserved-cpu RESERVED_CPU] <ID> ...
+
+# example: 
+$ climc isolated-device-update --dev-type GPU-VGA b46a7374-6da2-46a4-8eda-abd16c502e0b
+```
+
+
 ## 查看透传设备详情
 
 该功能用于查看透传设备的详细信息。
