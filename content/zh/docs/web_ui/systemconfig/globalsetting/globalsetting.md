@@ -109,3 +109,4 @@ description: 主要用于设置全局的主机、多云管理、费用、认证�
 - 外部日志服务地址：以syslog协议实时将操作日志导出到外部syslog日志服务器，地址格式为：proto://<ip>:<port>@idstr，例如：tcp://192.168.2.100:514@cloud
 - 开启Syslog WebService：开启Syslog Webservice，使得外部审计系统可以从该Web Service获取系统日志，用于外部审计。
 - 错误详情隐藏开关：关闭后，可以查看操作操作的详细信息，开启后无法查看。
+- CloudShell开关：关闭后，云管CloudShell入口隐藏，用户无法使用。
