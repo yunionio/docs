@@ -43,6 +43,23 @@ server-create 中的 `--isolated-device` 参数指定透传的设备到云主机
 $ climc server-create --hypervisor kvm --isolated-device 273f4f72-06b6-49aa-8456-4beceec44997 ...
 ```
 
+### 设置 GPU 设备类型
+
+GPU 设备支持的设备类型有：GPU-HPC，GPU-VGA
+- GPU-HPC: 高性能计算卡（High-Performance Computing），主要用于进行科学计算、数据分析、机器学习等需要大规模并行计算的任务。
+- GPU-VGA: 视频图形处理卡（Video Graphics Array），用于图形渲染和显示的目的。
+
+**注意事项**
+GPU-VGA 类型的 GPU 卡透传给虚机使用时，不在提供模拟的 VGA 设备，需要在镜像内提前安装好显卡驱动。
+
+#### 设置 GPU 卡类型
+```
+$ climc isolated-device-update
+Usage: climc isolated-device-update [--reserved-mem RESERVED_MEM] [--reserved-storage RESERVED_STORAGE] [--dev-type {GPU-HPC,GPU-VGA}] [--help] [--reserved-cpu RESERVED_CPU] <ID> ...
+# example: 
+$ climc isolated-device-update --dev-type GPU-VGA b46a7374-6da2-46a4-8eda-abd16c502e0b
+```
+
 ### 查询 GPU 云主机
 
 ```bash
@@ -64,3 +81,4 @@ $ climc server-attach-isolated-device <server_id> <device_id>
 ```bash
 $ climc server-detach-isolated-device <server_id> <device_id>
 ```
+
