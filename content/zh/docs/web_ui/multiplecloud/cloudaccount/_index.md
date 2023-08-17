@@ -9,116 +9,51 @@ description: >
 {{<oem_name>}}平台对多云资源的支持情况如下表：
 
 <style> 
-table tr th, table tr td  { border:1px solid #808080; }
+    table tr th, table tr td  { border-left: 1px solid #dee2e6 }
+    table { border-collapse: collapse; table-layout:fixed; width:100%; height: 700px; }
+    .fixed-row-1 { position:sticky; top: 0; background-color: #FFFFFF; z-index: 2 }
+    .fixed-row-2 { position:sticky; top: 48px; background-color: #fff; z-index: 2 }
+    .fixed-col-1 { position:sticky; left: 0; background-color: #FFFFFF; z-index: 1 }
+    .fixed-col-2 { position:sticky; left: 40px; background-color: #fff; z-index: 1 }
+    .fixed-row-1:before { content: ''; position: absolute; width: 100%; height: 1px; left: 0; bottom: 0; background: #dee2e6 }
+    .fixed-col-1:before { content: ''; position: absolute; width: 0.5px; height: 100%; left: 0; bottom: 0; background: #dee2e6 }
+    .fixed-row-1:after { content: ''; position: absolute; height: 1px; width: 100%; left: 0; top: 0; background: #dee2e6 }
+    .fixed-col-2:after { content: ''; position: absolute; width: 0.5px; height: 100%; left: 0; bottom: 0; background: #dee2e6 }
 </style>
 
 <table>
     <tr>
-        <th rowspan="2"> 分类 </th>
-        <th rowspan="2">云资源类型</th>
-        <th style="text-align: center;" colspan="11">公有云</th>
-        <th style="text-align: center;" colspan="11">私有云</th>
+         <th rowspan="2" class="fixed-row-1 fixed-col-1" style="z-index: 3"> 分类 </th>
+        <th rowspan="2" class="fixed-row-1 fixed-col-2" style="z-index: 3">云资源类型</th>
+        <th style="text-align: center;" class="fixed-row-1" colspan="11">公有云</th>
+        <th style="text-align: center;" class="fixed-row-1" colspan="14">私有云</th>
     </tr>
     <tr>
-        <th>阿里云</th>
-        <th>阿里金融云</th>
-        <th>腾讯云</th>
-        <th>华为云</th>
-        <th>AWS</th>
-        <th>Azure</th>
-        <th>GCP</th>
-        <th>UCloud</th>
-        <th>天翼云</th>
-        <th>移动云</th>
-        <th>京东云</th>
-        <th>阿里飞天</th>
-        <th>HCSO</th>
-        <th>ZStack</th>
-        <th>OpenStack</th>
-        <th>VMware</th>
-        <th>{{<oem_name>}}</th>
-        <th>DStack</th>
-        <th>Nutanix</th>
-        <th>BingoCloud</th>
-        <th>inCloud Sphere</th>
+        <th class="fixed-row-2">阿里云</th>
+        <th class="fixed-row-2">阿里金融云</th>
+        <th class="fixed-row-2">腾讯云</th>
+        <th class="fixed-row-2">华为云</th>
+        <th class="fixed-row-2">AWS</th>
+        <th class="fixed-row-2">Azure</th>
+        <th class="fixed-row-2">GCP</th>
+        <th class="fixed-row-2">UCloud</th>
+        <th class="fixed-row-2">天翼云</th>
+        <th class="fixed-row-2">移动云</th>
+        <th class="fixed-row-2">京东云</th>
+        <th class="fixed-row-2">阿里飞天</th>
+        <th class="fixed-row-2">HCSO</th>
+        <th class="fixed-row-2">ZStack</th>
+        <th class="fixed-row-2">OpenStack</th>
+        <th class="fixed-row-2">VMware</th>
+        <th class="fixed-row-2">{{<oem_name>}}</th>
+        <th class="fixed-row-2">DStack</th>
+        <th class="fixed-row-2">Nutanix</th>
+        <th class="fixed-row-2">BingoCloud</th>
+        <th class="fixed-row-2">inCloud Sphere</th>
     </tr>
     <tr>
-        <th rowspan="7">主机</th>
-        <th>虚拟机</th>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-    </tr>
-    <tr>
-        <th>弹性伸缩组</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <th>系统镜像</th>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td>Y</td>
-        <td>Y</td>
-    </tr>
-    <tr>
-        <th>硬盘</th>
+        <th rowspan="7" class="fixed-col-1">主机</th>
+        <th class="fixed-col-2">虚拟机</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -143,37 +78,13 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
     </tr>
     <tr>
-        <th>快照</th>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <th>自动快照策略</th>
-        <td>Y</td>
-        <td></td>
-        <td>Y</td>
+        <th class="fixed-col-2">弹性伸缩组</th>
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
         <td></td>
         <td></td>
         <td></td>
@@ -191,56 +102,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>安全组</th>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <th rowspan="9">网络</th>
-        <th>专有网络VPC</th>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td>Y</td>
-        <td>Y</td>
-    </tr>
-    <tr>
-        <th>IP子网</th>
+        <th class="fixed-col-2">系统镜像</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -265,7 +127,154 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
     </tr>
     <tr>
-    <th>弹性公网IP</th>
+        <th class="fixed-col-2">硬盘</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <th class="fixed-col-2">快照</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th class="fixed-col-2">自动快照策略</th>
+        <td>Y</td>
+        <td></td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th class="fixed-col-2">安全组</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th rowspan="9" class="fixed-col-1">网络</th>
+        <th class="fixed-col-2">专有网络VPC</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td>Y</td>
+        <td>Y</td>
+    </tr>
+    <tr>
+        <th class="fixed-col-2">IP子网</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td>Y</td>
+        <td>Y</td>
+    </tr>
+    <tr>
+    <th class="fixed-col-2">弹性公网IP</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -289,7 +298,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>NAT网关</th>
+        <th class="fixed-col-2">NAT网关</th>
         <td>Y</td>
         <td>Y</td>
         <td></td>
@@ -313,7 +322,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>DNS解析</th>
+        <th class="fixed-col-2">DNS解析</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -338,7 +347,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>负载均衡LB</th>
+        <th class="fixed-col-2">负载均衡LB</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -362,7 +371,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>CDN</th>
+        <th class="fixed-col-2">CDN</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -387,7 +396,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>WAF</th>
+        <th class="fixed-col-2">WAF</th>
         <td>Y</td>
         <td>Y</td>
         <td></td>
@@ -412,82 +421,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>IPv6网关</th>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <th rowspan="3">存储</th>
-        <th>对象存储</th>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <th>NAS文件存储</th>
-        <td>Y</td>
-        <td>Y</td>
-        <td></td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <th>表格存储</th>
+        <th class="fixed-col-2">IPv6网关</th>
         <td>Y</td>
         <td>Y</td>
         <td></td>
@@ -512,8 +446,83 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th rowspan="3">数据库</th>
-        <th>RDS</th>
+        <th rowspan="3" class="fixed-col-1">存储</th>
+        <th class="fixed-col-2">对象存储</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th class="fixed-col-2">NAS文件存储</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th class="fixed-col-2">表格存储</th>
+        <td>Y</td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th rowspan="3" class="fixed-col-1">数据库</th>
+        <th class="fixed-col-2">RDS</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -538,7 +547,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>Redis</th>
+        <th class="fixed-col-2">Redis</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -562,33 +571,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>MongoDB</th>
-        <td></td>
-        <td></td>
-        <td>Y</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <th rowspan="2">中间件</th>
-        <th>Kafka</th>
+        <th class="fixed-col-2">MongoDB</th>
         <td></td>
         <td></td>
         <td>Y</td>
@@ -613,7 +596,8 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>Elasticsearch</th>
+        <th rowspan="2" class="fixed-col-1">中间件</th>
+        <th class="fixed-col-2">Kafka</th>
         <td></td>
         <td></td>
         <td>Y</td>
@@ -638,8 +622,33 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th rowspan="2">容器</th>
-        <th>Kubernetes集群纳管</th>
+        <th class="fixed-col-2">Elasticsearch</th>
+        <td></td>
+        <td></td>
+        <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th rowspan="2" class="fixed-col-1">容器</th>
+        <th class="fixed-col-2">Kubernetes集群纳管</th>
         <td>Y</td>
         <td></td>
         <td>Y</td>
@@ -664,7 +673,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>Kubernetes集群新建</th>
+        <th class="fixed-col-2">Kubernetes集群新建</th>
         <td></td>
         <td></td>
         <td></td>
@@ -688,8 +697,8 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>监控</th>
-        <th>监控告警</th>
+        <th class="fixed-col-1">监控</th>
+        <th class="fixed-col-2">监控告警</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -713,8 +722,8 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th>费用</th>
-        <th>公有云账单分析/私有云计费服务</th>
+        <th class="fixed-col-1">费用</th>
+        <th class="fixed-col-2">公有云账单分析/私有云计费服务</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -738,8 +747,8 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
     </tr>
     <tr>
-        <th rowspan="2">其他</th>
-        <th>公有云子账号</th>
+        <th rowspan="2" class="fixed-col-1">其他</th>
+        <th class="fixed-col-2">公有云子账号</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -764,7 +773,7 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
     </tr>
     <tr>
-        <th>免密登录云平台</th>
+        <th class="fixed-col-2">免密登录云平台</th>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
