@@ -25,7 +25,7 @@ description: >
     <tr>
         <th rowspan="2" class="fixed-row-1 fixed-col-1" style="z-index: 3"> 分类 </th>
         <th rowspan="2" class="fixed-row-1 fixed-col-2" style="z-index: 3">云资源类型</th>
-        <th style="text-align: center;" class="fixed-row-1" colspan="11">公有云</th>
+        <th style="text-align: center;" class="fixed-row-1" colspan="15">公有云</th>
         <th style="text-align: center;" class="fixed-row-1" colspan="14">私有云</th>
     </tr>
     <tr>
@@ -40,6 +40,10 @@ description: >
         <th class="fixed-row-2">天翼云</th>
         <th class="fixed-row-2">移动云</th>
         <th class="fixed-row-2">京东云</th>
+        <th class="fixed-row-2">百度云</th>
+        <th class="fixed-row-2">联通云</th>
+        <th class="fixed-row-2">金山云</th>
+        <th class="fixed-row-2">青云</th>
         <th class="fixed-row-2">阿里飞天 (3.12+)</th>
         <th class="fixed-row-2">HCSO</th>
         <th class="fixed-row-2">HCS (8.0.3+)</th>
@@ -69,6 +73,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -103,6 +111,10 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td></td>
         <td></td>
@@ -125,6 +137,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -153,6 +169,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -181,6 +201,10 @@ description: >
         <td></td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -201,6 +225,10 @@ description: >
         <td>Y</td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -237,6 +265,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -266,6 +298,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -294,6 +330,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -322,6 +362,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -343,6 +387,10 @@ description: >
         <td>Y</td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -391,6 +439,10 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td> 
     </tr>
     <tr>
@@ -402,6 +454,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -426,6 +482,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -475,12 +535,20 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td> 
     </tr>
     <tr>
         <th class="fixed-col-2">IPv6网关</th>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -515,6 +583,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -559,12 +631,20 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td> 
     </tr>
     <tr>
         <th class="fixed-col-2">表格存储</th>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -603,6 +683,10 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -631,6 +715,10 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -651,6 +739,10 @@ description: >
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -702,12 +794,20 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th class="fixed-col-2">Elasticsearch</th>
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -759,9 +859,21 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th class="fixed-col-2">Kubernetes集群新建</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -802,6 +914,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td></td>
@@ -827,6 +943,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -861,6 +981,10 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td></td>
         <td></td>
@@ -883,6 +1007,10 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
