@@ -140,6 +140,17 @@ return buf.String()
     - 简单类型优先于复杂类型
     - 尽可能将同种类型的参数放在相邻位置，则只需写一次类型
 
+函数禁止同时返回结果为nil, error也为nil, 例如:
+```go
+func FetcNicByMac(mac string) (*SNic, error) {
+    ...
+        return nil, nil // 禁止有这种返回
+    ...
+    return &SNic{}, nil
+}
+```
+
+
 以下声明语句，User 类型要复杂于 string 类型，但由于 Repository 是 User 的附属品，首先确定 User 才能继而确定 Repository。因此，User 的顺序要优先于 repoName。
 ```go
 func IsRepositoryExist(user *User, repoName string) (bool, error) { ...
