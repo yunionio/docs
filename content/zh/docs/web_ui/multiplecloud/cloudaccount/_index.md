@@ -16,7 +16,7 @@ table tr th, table tr td  { border:1px solid #808080; }
     <tr>
         <th rowspan="2"> 分类 </th>
         <th rowspan="2">云资源类型</th>
-        <th style="text-align: center;" colspan="11">公有云</th>
+        <th style="text-align: center;" colspan="15">公有云</th>
         <th style="text-align: center;" colspan="14">私有云</th>
     </tr>
     <tr>
@@ -31,6 +31,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <th>天翼云</th>
         <th>移动云</th>
         <th>京东云</th>
+        <th>百度云</th>
+        <th>联通云</th>
+        <th>金山云</th>
+        <th>青云</th>
         <th>阿里飞天 (3.12+)</th>
         <th>HCSO</th>
         <th>HCS (8.0.3+)</th>
@@ -60,6 +64,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -94,6 +102,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td></td>
         <td></td>
@@ -116,6 +128,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -144,6 +160,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -172,6 +192,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -192,6 +216,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -228,6 +256,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -257,6 +289,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -285,6 +321,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -313,6 +353,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -334,6 +378,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -382,6 +430,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td> 
     </tr>
     <tr>
@@ -393,6 +445,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -417,6 +473,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -466,12 +526,20 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td> 
     </tr>
     <tr>
         <th>IPv6网关</th>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -506,6 +574,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -550,12 +622,20 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td> 
     </tr>
     <tr>
         <th>表格存储</th>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -594,6 +674,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -622,6 +706,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -642,6 +730,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -693,12 +785,20 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>Elasticsearch</th>
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -750,9 +850,21 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr>
         <th>Kubernetes集群新建</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -793,6 +905,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td></td>
@@ -818,6 +934,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -852,6 +972,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Y</td>
         <td></td>
         <td></td>
@@ -874,6 +998,10 @@ table tr th, table tr td  { border:1px solid #808080; }
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
