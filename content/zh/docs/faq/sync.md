@@ -34,3 +34,7 @@ $ climc service-config --config skip_server_by_sys_tag_keys=other-tag region2
 # 同时可以检查下skip_server_by_user_tag_keys设置
 # 此参数含义是若有公有云虚拟机带有特定自定义标签, 则跳过此虚拟机同步
 ```
+
+## 阿里云WAF同步
+
+阿里云waf是属于杭州和新加坡的资源，若阿里云WAF未同步，需要检查这两个区域的同步是否关闭
