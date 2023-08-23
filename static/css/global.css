@@ -261,3 +261,35 @@ a {
     background-color: #fff!important;
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 10%);
 }
+
+/* 固定表格 */
+.fixed-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.fixed-table thead tr th,
+.fixed-table tbody tr td {
+    border-left: 1px solid #dee2e6;
+}
+
+.table-fixed-col1 thead tr th:nth-child(1),
+.table-fixed-col1 tbody tr td:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: #fff;
+}
+
+.table-fixed-row1 thead tr th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #fff;
+}
+
+.table-fixed-col1 thead tr th:nth-child(1),
+.table-fixed-row1 thead tr th:nth-child(1) {
+    z-index: 2;
+}
