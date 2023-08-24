@@ -45,5 +45,12 @@ $ climc image-show CentOS-7-x86_64-GenericCloud-1711.qcow2 | grep status
 ```
 使用 `climc image-upload --help` 获取各个参数解释。
 
+### 关闭自动转换vmdk镜像
+上传之后，平台支持多云镜像，除ISO格式的镜像外，其他格式镜像导入到Cloudpods平台时都会转换成3份不同格式的镜像。
+如果镜像较大，转换会耗时较长。如果您不使用vmware，可以`climc service-config-edit glance` 命令，将target_image_formats 修改为qcow2 即可。
 
+```
+  target_image_formats:
+  - qcow2
+```
 
