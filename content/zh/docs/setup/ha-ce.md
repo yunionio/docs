@@ -9,7 +9,7 @@ description: >
 
 ## 环境准备
 
-关于环境的准备和不同架构 CPU 操作系统的要求，请参考 [All in One 安装/机器配置要求](../../quickstart/allinone#机器配置要求)。
+关于环境的准备和不同架构 CPU 操作系统的要求，请参考 [All in One 融合云安装/机器配置要求](../../quickstart/allinone-converge#机器配置要求)。
 
 假设准备好了 3 台 CentOS7 机器，以及 1 台 Mariadb/MySQL 的机器，规划如下：
 
@@ -27,7 +27,7 @@ DB            | 10.127.190.11 | -            | pswd="0neC1oudDB#",  port=3306|
 
 ### 下载 ocboot
 
-参考 [All in One 安装/下载 ocboot](../../quickstart/allinone/#下载-ocboot)。
+参考 [All in One 融合云安装/下载 ocboot](../../quickstart/allinone-converge/#下载-ocboot)。
 
 ### 编写部署配置
 
