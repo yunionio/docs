@@ -25,7 +25,7 @@ description: >
 
 ### 单节点 All in One 部署
 
-单节点 All in One 部署是指把整个”Cloudpods“全部部署到一个节点，ARM 的部署和 X86 的部署没有任何区别，准备好环境后，直接参考 [All in One 安装](../../quickstart/allinone) 的部署流程即可。
+单节点 All in One 部署是指把整个”Cloudpods“全部部署到一个节点，ARM 的部署和 X86 的部署没有任何区别，准备好环境后，直接参考 [All in One 融合云安装](../../quickstart/allinone-converge) 的部署流程即可。
 
 ### 多节点混合部署
 
@@ -95,7 +95,7 @@ Password: admin@123
 
 ## 创建 ARM 虚拟机
 
-基于 ARM 的机器部署完服务后，请先阅读 [All in One/FAQ](../../quickstart/allinone/#faq) 和 [All in One/创建第一台虚拟机](../../quickstart/allinone/#创建第一台虚拟机) 了解创建虚拟机需要创建网络、启用宿主机和导入镜像等步骤。
+基于 ARM 的机器部署完服务后，请先阅读 [All in One 融合云安装/FAQ](../../quickstart/allinone-converge/#faq) 和 [All in One 融合云安装/创建第一台虚拟机](../../quickstart/allinone-converge/#创建第一台虚拟机) 了解创建虚拟机需要创建网络、启用宿主机和导入镜像等步骤。
 
 ### 导入镜像
 
