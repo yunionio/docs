@@ -48,6 +48,13 @@ az role assignment create --role Owner --assignee-object-id 5b744b52-4215-4cc7-b
 ![](../images/az_assign_role.png)
 
 
+{{% alert title="说明" %}}
+
+若创建订阅时报 **EntitlementNotFound** 的错误，需要根据文档到ea上开启[创建订阅权限](https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/ea-portal-administration#enterprise-devtest-offer)
+
+{{% /alert %}}
+
 ## 参考文档
 - [编程创建订阅](https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/programmatically-create-subscription-preview?tabs=azure-cli)
 - [赋权文档](https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/grant-access-to-create-subscription?tabs=rest%2Crest-2)
+- [开启创建订阅权限](https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/ea-portal-administration#enterprise-devtest-offer)
