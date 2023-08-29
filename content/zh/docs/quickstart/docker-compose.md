@@ -1,7 +1,7 @@
 ---
 title: "Docker Compose 安装"
 linkTitle: "Docker Compose 安装"
-weight: 4
+weight: 5
 edition: ce
 description: >
   使用 [Docker Compose](https://docs.docker.com/compose/) 快速部署 Cloudpods CMP 多云管理版本
@@ -14,7 +14,7 @@ description: >
 
 该部署方法仅适用于多云管理功能的使用，比如管理公有云(aws, 阿里云, 腾讯云等)或者其它私有云(zstack, openstack 等)，无法使用内置私有云相关功能(因为内置私有云需要节点上面安装配置 qemu, openvswitch 等各种虚拟化软件)
 
-如果需要使用内置私有云，请使用 [All in One 安装](../allinone) 的方式部署。
+如果需要使用内置私有云，请使用 [All in One 私有云安装](../../quickstart/allinone-private) 的方式部署。
 {{% /alert %}}
 
 ## 环境准备
