@@ -293,3 +293,14 @@ a {
 .table-fixed-row1 thead tr th:nth-child(1) {
     z-index: 2;
 }
+
+.td-content .section-tip {
+    margin-bottom: 1rem;
+    border-left: 6px solid var(--main-color);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 12px 0px;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+}
+.td-content .section-tip .section-tip-title {
+    color: var(--main-color);
+}
