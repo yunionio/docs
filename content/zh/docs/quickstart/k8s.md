@@ -1,7 +1,7 @@
 ---
 title: "Kubernetes Helm 安装"
 linkTitle: "Kubernetes Helm 安装"
-weight: 3
+weight: 4
 description: >
   使用 [Helm](https://helm.sh/) 在 Kubernetes 上部署 Cloudpods CMP 多云管理版本
 ---
@@ -11,7 +11,7 @@ description: >
 {{% alert title="注意" color="warning" %}}
 该方案通过 Helm 在已有的 Kubernetes 集群上自动部署 Cloudpods 多云管理版本。
 
-该部署方法可能会因为不同 Kubernetes 发行版的 CSI，CNI 和 Ingress controller 配置不同出现兼容性错误，如果部署失败，又想快速体验产品功能，建议还是使用 [All in One 安装](../allinone) 的方式部署。
+该部署方法可能会因为不同 Kubernetes 发行版的 CSI，CNI 和 Ingress controller 配置不同出现兼容性错误，如果部署失败，又想快速体验产品功能，建议还是使用 [All in One 多云管理平台安装](../../quickstart/allinone-multicloud) 的方式部署。
 
 已经验证过的Kubernetes发行版本包括：
 - 阿里云 ACK

@@ -47,14 +47,14 @@ img: /images/icons/icon-introduce.svg
 
  - 资源纳管，含阿里云、腾讯云、华为云等公有云；
  - 资源纳管，含OpenStack、ZStack等私有云；
- - 资源纳管，含VMware、裸机等
- - 内置私有云
- - k8s容器集群管理
- - 监控与运维
- - 多云SSO
- - RBAC与IAM
- - 命令行工具climc
- - API与SDK
+ - 资源纳管，含VMware、裸机等；
+ - 内置私有云；
+ - k8s容器集群管理；
+ - 监控与运维；
+ - 多云SSO；
+ - RBAC与IAM；
+ - 命令行工具climc；
+ - API与SDK；
 
 {{% /alert %}}
 
@@ -77,6 +77,8 @@ img: /images/icons/icon-introduce.svg
 ## 6 商业产品
 
 {{% alert title="" color="warning" %}}
+
+[新一代企业级产品化融合云](https://www.yunion.cn/)
 
 [新一代企业级产品化云原生私有云](https://www.yunion.cn/private/index.html)
 
