@@ -145,7 +145,7 @@ $ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./o
 
 ```bash
 # 直接部署，会从 registry.cn-beijing.aliyuncs.com 拉取容器镜像
-$ ./run.py <host_ip> --stack Edge
+$ ./run.py <host_ip> --stack edge
 ```
 
 {{% /tab %}}
@@ -155,7 +155,7 @@ $ ./run.py <host_ip> --stack Edge
 对于某些网络环境，registry.cn-beijing.aliyuncs.com 访问缓慢或不可达，在版本 `v3.9.5`之后（含），可指定镜像源：[docker.io](http://docker.io) 来安装。命令如下：
 
 ```bash
-IMAGE_REPOSITORY=docker.io/yunion ./run.py <host_ip> --stack Edge
+IMAGE_REPOSITORY=docker.io/yunion ./run.py <host_ip> --stack edge
 ```
 
 这种方式其实是自动在当前目录生成一个名为config-allinone-current.yaml的配置文件，基于该配置文件的参数来执行部署。
@@ -216,7 +216,7 @@ EOF
 
 ```bash
 # 开始部署
-$ ./run.py ./config-allinone.yml
+$ ./run.py ./config-allinone.yml --stack edge
 ```
 
 ## 部署完成
