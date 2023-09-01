@@ -160,7 +160,7 @@ $ climc server-live-migrate \
     vm1
 ```
 
-- 指定 vm1 热迁移到目标宿主机 host1 ，并且绕过 CPU 检查，并且限制热迁移带宽(最低 100 MB/s)
+- 指定 vm1 热迁移到目标宿主机 host1 ，并且绕过 CPU 检查，并且限制热迁移带宽(最高为 100 MB/s)
 
 ```bash
 $ climc server-live-migrate \
