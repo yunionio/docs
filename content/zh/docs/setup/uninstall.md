@@ -23,15 +23,37 @@ kubeadm reset --force
 停止并禁用相关服务：
 
 ```bash
-systemctl stop kubelet && systemctl disable kubelet
-systemctl stop yunion-executor && systemctl disable yunion-executor
-systemctl stop openvswitch && systemctl disable openvswitch
+systemctl disable --now docker.socket docker kubelet yunion-executor
 ```
 
-进一步地，可以卸载kubelet, yunion-executor, openvswitch等rpm，并清除相关的数据目录：
+卸载kubelet, yunion-executor等rpm，并清除相关的数据目录：
 
 ```bash
-rm -fr /etc/kubernetes /var/lib/etcd /opt/yunion /opt/cloud /etc/openvswitch
+rpm -qa |grep kube |xargs -I {} yum -y remove {} 
+rpm -qa |grep yunion |xargs -I {} yum -y remove {}
+rm -rf /etc/kubernetes/ /var/lib/etcd/ /root/.kube/ /opt/cloud/
+```
+
+卸载数据库:
+
+```bash
+yum -y remove mariadb*
+rm -rf /var/lib/mysql  # 保留原始数据执行 mv  -f /var/lib/mysql /var/lib/mysql.$(date +"%Y%m%d-%H%M").bak
+rm -rf /etc/my.conf
+```
+
+机器重启，恢复之前的网络:
+
+```bash
+reboot
+```
+
+卸载openvswitch:
+
+```bash
+systemctl disable --now openvswitch
+yum -y remove openvswitch-*
+rm -rf /etc/openvswitch
 ```
 
 ## Kubernetes Helm 安装
