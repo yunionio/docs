@@ -34,3 +34,21 @@ description: >
 - 若创建资源时使用了local-A项目, 根据映射表, local-A映射至云上cloud-A项目, 创建资源将归属于云上cloud-A项目
 - 若创建资源时使用了local-B项目, 根据映射表, cloud-B cloud-C 都可以选择，但cloud-B优先级最高, 创建资源将归属于云上cloud-B项目
 - 若创建资源时使用了local-D项目，未在映射表中找到映射关系，则在云上创建同名的local-D项目，创建的资源将归属于云上的local-D项目
+
+## 项目自动重命名
+
+v3.11版本开始支持此功能, 云上更改名称后,本地项目同时变更名称, 且云上项目删除后, 本地项目会跟随删除(资源不会直接删除)
+
+前提条件:
+- 云账号开启自动创建项目
+- 云账号未绑定同步策略
+- region服务开启自动重名功能(默认关闭)
+- 本地项目仅仅映射到某一个云账号的某一个云上项目
+
+region服务开关自动重命名方法:
+```shell
+# 关闭自动重名
+$ climc service-config region2 --config 'enable_auto_rename_project=false'
+# 开启自动重命名
+$ climc service-config region2 --config 'enable_auto_rename_project=true'
+```
