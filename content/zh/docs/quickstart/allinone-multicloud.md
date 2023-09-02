@@ -196,7 +196,7 @@ primary_master_node:
   # 选择产品版本属于['Fullstack','CMP','Edge']
   product_version: 'CMP'
   # 虚拟机强行作为 Cloudpods 内置私有云计算节点（默认为 false）。开启此项时，请确保as_host: true
-  as_host_on_vm: true
+  as_host_on_vm: false
   # 设置镜像仓库，如果待部署的机器处于海外，可以用 dockerhub 的镜像仓库：docker.io/yunion
   image_repository: registry.cn-beijing.aliyuncs.com/yunion
 EOF
@@ -206,7 +206,7 @@ EOF
 
 ```bash
 # 开始部署
-$ ./run.py ./config-allinone.yml
+$ ./run.py ./config-allinone.yml --stack cmp
 ```
 
 ## 部署完成

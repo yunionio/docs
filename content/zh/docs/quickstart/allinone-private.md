@@ -216,7 +216,7 @@ EOF
 
 ```bash
 # 开始部署
-$ ./run.py ./config-allinone.yml
+$ ./run.py ./config-allinone.yml --stack edge
 ```
 
 ## 部署完成
