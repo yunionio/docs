@@ -261,3 +261,12 @@ a {
     background-color: #fff!important;
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 10%);
 }
+
+/* 全局图片 */
+.td-content img {
+    margin-bottom: 1rem;
+    /* padding: 0.5rem; */
+    box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 10px 3px;
+    border-radius: 10px;
+    border: 1px solid rgba(50, 50, 50, 0.1);
+}
