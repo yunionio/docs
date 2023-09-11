@@ -123,6 +123,10 @@ description: >
    ![](../../../../faq/image/aliyun_ram_user_access_control.png)
 
 ##### 如何获取账单存储桶URL？
+
+{{% alert title="说明" %}}
+阿里国际账号没有账单存储桶配置，需要联系阿里云客服协助推送。
+{{% /alert %}}
     
 1. 以阿里云主账号为例，以主账号登录阿里云控制台，单击顶部[费用]菜单的下拉菜单 **_"用户中心"_** 菜单项，进入费用用户中心页面。
    ![](../../../../faq/image/aliyunusercenter.png)
