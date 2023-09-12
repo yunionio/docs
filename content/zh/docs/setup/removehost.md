@@ -36,7 +36,7 @@ rm -fr /etc/openvswitch/*
 其次，在控制节点执行：
 
 ```bash
-$ kubectl -n onecloude exec -it default-ovn-north-xxxxx /bin/sh # 进入ovn-northd容器执行以下命令
+$ kubectl -n onecloud exec -it default-ovn-north-xxxxx /bin/sh # 进入ovn-northd容器执行以下命令
 / # ovn-sbctl show # 找到该宿主机对应的chassis id，通过hostname和ip确认
 ...
 Chassis "e6268b2e-4311-4f6d-a6e2-ddd09f49beef"
