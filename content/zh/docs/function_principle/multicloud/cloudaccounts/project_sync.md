@@ -52,3 +52,8 @@ $ climc service-config region2 --config 'enable_auto_rename_project=false'
 # 开启自动重命名
 $ climc service-config region2 --config 'enable_auto_rename_project=true'
 ```
+
+{{% alert title="注意" color="warning" %}}
+若本地项目删除,云账号在同步时会重新建立以云上名称为主的映射关系
+{{% /alert %}}
+ 
