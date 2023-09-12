@@ -124,18 +124,18 @@ The frame buffer size in Mbytes
 The maximum resolution per display head
 The maximum number of vGPU instances per physical GPU
 For example:
-# cat description
+$ cat description
 num_heads=4, frl_config=60, framebuffer=2048M, max_resolution=4096x2160, max_instance=4
 - device_api
 This file contains the string vfio_pci to indicate that a vGPU is a PCI device.
 - devices
 This directory contains all the mdev devices that are created for the vGPU type. For example:
-# ll devices
+$ ll devices
 total 0
 lrwxrwxrwx 1 root root 0 Dec  6 01:52 aa618089-8b16-4d01-a136-25a0f3c73123 -> ../../../aa618089-8b16-4d01-a136-25a0f3c73123
 - name
 This file contains the name of the vGPU type. For example:
-# cat name
+$ cat name
 GRID M10-2Q
 
 可以根据自己的需求配置 vGPU，eg:
