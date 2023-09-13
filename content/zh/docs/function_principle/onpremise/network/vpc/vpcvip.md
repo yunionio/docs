@@ -50,7 +50,7 @@ climc instancegroup-dissociate-eip <instancegroup>
 ### 为反亲和组解绑VIP
 
 限制：
-1. 只有反亲和组没有绑定EIP的前提下，才能解绑该反亲和组的EIP
+1. 只有反亲和组没有绑定EIP的前提下，才能解绑该反亲和组的VIP
 
 ```bash
 climc instancegroup-detachnetwork [--ip-addr IP_ADDR] <ID>
