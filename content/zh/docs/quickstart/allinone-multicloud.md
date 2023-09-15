@@ -263,56 +263,8 @@ Cloudpods自身是一个完整的私有云，同时也可以统一纳管其他�
 
 ## FAQ
 
-### 1. 在 All in One 部署完成后宿主机列表没有宿主机？
 
-如下图所示，若发现环境部署完成后宿主机列表中没有宿主机，可按照以下方式进行排查
-
-  ![](../images/nohost.png)
-
-
-1. 请确认部署用的yaml文件中是否有`as_host: true`配置项，若没有，则表示该节点只作为控制节点使用，不作为计算节点使用，因此宿主机列表中没有宿主机是正常的；
-
-2. 在控制节点排查 host 问题，请参考：[Host服务问题排障技巧](../../function_principle/onpremise/host/troubleshooting/)
-
-
-    1. 若日志报错信息中包含“register failed: try create network: find_matched == false”，则表示未成功创建包含宿主机的IP子网，导致宿主机注册失败，请创建包含宿主机网段的IP子网。
-
-    ```
-    # 创建包含宿主机网段的IP子网
-    $ climc network-create bcast0  adm0 <start_ip> <end_ip> mask
-    ```
-
-    ![](../images/iperror.png)
-
-    2. 若日志报错信息中包含“name starts with letter, and contains letter, number and - only”，则表示宿主机的主机名不合规，应改成以字母开头的hostname
-
-    ![](../images/hostnameerror.png)
-
-### 2. 在 All in One 中找不到虚拟机界面？
-
-All in One 部署的节点会部署 Cloudpods host 计算服务，作为宿主机，具有创建和管理私有云虚拟机的能力。没有虚拟机界面应该是 Cloudpods 环境中没有启用宿主机。
-
-请到 `管理后台` 界面，点击 `主机/基础资源/宿主机` 查看宿主机列表，启用相应的宿主机，刷新界面就会出现虚拟机界面。
-
-{{% alert title="注意" color="warning" %}}
-如果要使用 Cloudpods 私有云虚拟机，需要宿主机使用 Cloudpods 编译的内核，可使用以下命令查看宿主机是否使用 Cloudpods 内核(包含 yn 关键字)。
-
-```bash
-# 查看是否使用 yn 内核
-$ uname -a | grep yn
-Linux office-controller 3.10.0-1160.6.1.el7.yn20201125.x86_64
-# 如果内核不是带有 yn 关键字的版本，可能是第一次使用 ocboot 安装，重启即可进入 yn 内核
-$ reboot
-```
-{{% /alert %}}
-
-![宿主机](../images/host.png)
-
-### 3. 修改节点的 hostname ，有些服务启动失败
-
-k8s 管理节点，依赖于 hostname，请改回去。
-
-### 4. 如何重装
+### 1. 如何重装
 
 1. 执行 `kubeadm reset -f` 删除 kubernetes 集群
 
@@ -322,8 +274,8 @@ k8s 管理节点，依赖于 hostname，请改回去。
 
 ![](../images/oo_syncuser.png)
 
-4. 第2步的修改，会影响 onecloud-operator 的性能，所以等所有服务启动，可以将第2步的参数恢复。
+2. 第2步的修改，会影响 onecloud-operator 的性能，所以等所有服务启动，可以将第2步的参数恢复。
 
-### 5. 其它问题？
+### 2. 其它问题？
 
 其它问题欢迎在 Cloudpods github issues 界面提交: https://github.com/yunionio/cloudpods/issues , 我们会尽快回复。
