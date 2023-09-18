@@ -1,6 +1,6 @@
 ---
 title: "项目"
-weight: 3
+weight: 4
 description: 项目是资源的拥有者，var_oem_name平台上的资源都是以项目向用户提供服务。
 ---
 

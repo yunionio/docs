@@ -1,6 +1,6 @@
 ---
 title: "用户"
-weight: 5
+weight: 6
 description: 用户是资源的管理者和直接使用者。
 ---
 
