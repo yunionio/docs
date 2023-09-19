@@ -1,6 +1,6 @@
 ---
 title: "域"
-weight: 2
+weight: 3
 docscope: system
 description: 域是云管平台的基于多租户而划分的逻辑概念。一个域包含一套完整的逻辑自治的体系。
 ---

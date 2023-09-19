@@ -1,6 +1,6 @@
 ---
 title: "权限"
-weight: 7
+weight: 8
 description: 权限定义了对平台上资源的操作权限。
 ---
 

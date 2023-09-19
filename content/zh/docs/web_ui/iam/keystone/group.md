@@ -1,6 +1,6 @@
 ---
 title: "组"
-weight: 4
+weight: 5
 description: 组是一类用户的集合。
 ---
 
