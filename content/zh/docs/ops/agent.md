@@ -109,7 +109,7 @@ $ climc proxy-forward-create --proxy-endpoint-id dba57f12-4f9f-4d60-8789-7dc0fe4
 
 ### 安装监控Agent
 
-监控Agent安装包：[下载路径](https://yunioniso.oss-cn-beijing.aliyuncs.com/rpms/telegraf/)
+监控Agent安装包：[下载路径](https://yunioniso.oss-cn-beijing.aliyuncs.com/rpms/telegraf/index.html)
 
 不同操作系统的安装包名称不同，请根据具体系统下载对应的Agent安装包。
 
