@@ -16,8 +16,8 @@ description: >
 
 ### linux 安装启动
 
-```
-安装：
+```bash
+# 安装：
 Debian     : apt-get install qemu-guest-agent
 Ubuntu     : apt-get install qemu-guest-agent
 Alpine     : apk add qemu-guest-agent
@@ -26,16 +26,31 @@ Kali Linux : apt-get install qemu-guest-agent
 Fedora     :dnf install qemu-guest-agent-2
 Raspbian   : apt-get install qemu-guest-agent
 
-systemd 启动或其他启动方式:
-systemctl enable --now qemu-guest-agent
+# systemd 启动或其他启动方式:
+$ systemctl enable --now qemu-guest-agent
 
-启动完成后可以在虚机内查看到 qemu-ga 的进程
-例如 centos7 下，ps 可以看到 qemu-ga进程启动，并且禁用了一下命令:
-/usr/bin/qemu-ga --method=virtio-serial --path=/dev/virtio-ports/org.qemu.guest_agent.0 --blacklist=guest-file-open,guest-file-close,guest-file-read,guest-file-write,guest-file-seek,guest-file-flush,guest-exec,guest-exec-status -F/etc/qemu-ga/fsfreeze-hook
+# 启动完成后可以在虚机内查看到 qemu-ga 的进程
+# 例如 centos7 下，ps 可以看到 qemu-ga进程启动，并且禁用了一下命令:
+$ /usr/bin/qemu-ga --method=virtio-serial --path=/dev/virtio-ports/org.qemu.guest_agent.0 --blacklist=guest-file-open,guest-file-close,guest-file-read,guest-file-write,guest-file-seek,guest-file-flush,guest-exec,guest-exec-status -F/etc/qemu-ga/fsfreeze-hook
 
-centos7 下 blacklist 配置是在 /etc/sysconfig/qemu-ga 下面
+# centos7 下 blacklist 配置是在 /etc/sysconfig/qemu-ga 下面
 $ cat /etc/sysconfig/qemu-ga | grep BLACKLIST_RPC
 BLACKLIST_RPC=guest-file-open,guest-file-close,guest-file-read,guest-file-write,guest-file-seek,guest-file-flush,guest-exec,guest-exec-status
+
+# 也可以使用以下命令查看 blacklist 配置
+$ ps -ef|grep qemu-ga|grep -E "blacklist=|b="
+```
+
+#### 修改黑名单配置
+```bash
+# 修改黑名单，编辑 /etc/sysconfig/qemu-ga 配置文件，将需要的命令从BLACKLIST_RPC中删除
+$ vi /etc/sysconfig/qemu-ga
+
+# 编辑完成后保存，重新启动 qemu-ga 服务：
+$ systemctl restart qemu-guest-agent
+
+# 重新查看qga的黑名单，确认是否配置成功
+$ ps -ef|grep qemu-ga|grep -E "blacklist=|b="
 ```
 
 ### windows 安装启动
@@ -202,3 +217,96 @@ Optional arguments:
 climc server-qga-set-password test-server root testPassword@1234
 ```
 
+## qga 获取虚拟机的网卡信息
+```bash
+$ climc server-qga-get-network --help
+Usage: climc server-qga-get-network [--help] <ID>
+
+Qga-Get-Network server
+
+Positional arguments:
+    <ID>
+        ID or name of the server
+
+Optional arguments:
+    [--help]
+        Print usage and this help message and exit.
+
+# eg:
+$ climc server-qga-get-network test-server
+- hardware-address: "00:00:00:00:00:00"
+  ip-addresses:
+  - ip-address: 127.0.0.1
+    ip-address-type: ipv4
+    prefix: 8
+  - ip-address: ::1
+    ip-address-type: ipv6
+    prefix: 128
+  name: lo
+  statistics:
+    rx-bytes: 0
+    rx-dropped: 0
+    rx-errs: 0
+    rx-packets: 0
+    tx-bytes: 0
+    tx-dropped: 0
+    tx-errs: 0
+    tx-packets: 0
+- hardware-address: 00:22:c8:10:5a:1c
+  ip-addresses:
+  - ip-address: 192.168.100.45
+    ip-address-type: ipv4
+    prefix: 24
+  - ip-address: fe80::222:c8ff:fe10:5a1c
+    ip-address-type: ipv6
+    prefix: 64
+  name: eth0
+  statistics:
+    rx-bytes: 6703
+    rx-dropped: 0
+    rx-errs: 0
+    rx-packets: 62
+    tx-bytes: 9460
+    tx-dropped: 0
+    tx-errs: 0
+    tx-packets: 65
+```
+
+## qga 修改运行虚拟机的网络地址
+
+#### 配置需求：
+- qga 版本 ≥ 2.11.1
+- 支持 guest-ping、guest-network-get-interfaces、guest-get-osinfo、guest-exec命令
+
+#### 版本号查看：
+qga 的版本号可以通过 guest-info 命令查看
+
+#### 黑名单配置：
+手动安装的 qga 默认的黑名单为空，即所有命令均可使用，不用进行额外配置，跳过该步骤。
+centos7 版本之后系统自带 qga ，默认在部署虚拟机时已经对黑名单已经进行了处理，如果没有处理成功，可按照[修改黑名单配置](#修改黑名单配置)修改黑名单。
+
+#### 使用方法
+这里以 centos7 为例，介绍修改运行虚拟机的 IP 地址
+
+虚拟机之前的网络地址和路由如图所示
+![](images/prev_net.png)
+
+在虚拟机管理页面选择 网络——更多——更换IP 修改虚拟机的 IP 地址
+![](images/change_ip.png)
+
+指定需要修改的 IP 地址，这里需要指定子网内的 IP 地址，因为要在运行状态下修改虚拟机的 IP ，需要勾选重启网卡按钮(默认勾选)
+![](images/change_ip_detail.png)
+
+点击确定后，虚拟机进入配置阶段，等待虚拟机状态变为运行中，表示修改 IP 地址成功
+![](images/change_ip_dashboard.png)
+
+虚拟机的 IP 地址和路由表都发生了修改
+![](images/curr_net.png)
+
+如果虚拟机使用 qga 修改网络配置失败，会调用ansible 修改网络配置
+
+#### 注意事项：
+- 使用 qga 修改网络配置时第一次可能会失败，但其实 qga 的状态是正常的，因此在第一次执行出错后会自动执行第二次，此时第二次的执行结果才是最终执行结果。
+- 修改网络配置后的路由会变为静态路由
+- windows 执行时间会相对长一点
+- 使用 qga 修改网络配置失败可能是因为没有安装 qga、qga 版本过低或 qga 执行失败，需要逐步排查
