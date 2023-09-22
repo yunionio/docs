@@ -15,7 +15,9 @@ description: 告警策略即针对监控指标设置阈值，当资源的指标�
 - disk.inodes_free/inodes_total：检测磁盘inode空闲率过低时告警。
 - disk.free/total：检测磁盘空闲率过低时告警。
 - cpu.usage_active：检测宿主机CPU利用率过高时告警。
-- host_raid.adapter：检测磁盘状态异常时告警。
+- host_raid.adapter：检测整列磁盘状态异常时告警。
+  - 默认不开启，需要手动执行`kubectl edit oc -n onecloud default`, 将enableRaidPlugin 改成 true，才会使用megacli获取状态；
+  - 注意：有一定概率会导致部分型号机器 raid 驱动报错，导致系统卡住，请谨慎开启；
 - cloudaccount_balance.balance：检测云账号余额不足时告警。
 
 **入口**：在云管平台单击左上角![](../../../images/intro/nav.png)导航菜单，在弹出的左侧菜单栏中单击 **_"监控/监控/告警策略"_** 菜单项，进入告警策略页面。
