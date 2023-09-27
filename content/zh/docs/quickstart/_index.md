@@ -14,11 +14,11 @@ img: /images/icons/icon-quickstart.svg
 
 请根据功能使用场景选择要部署的Cloudpods服务：
 
-* 融合云：融合云包含了企业级私有云和多云管理平台的功能。
+* 融合云：融合云部署方式包含了私有云和多云管理的功能。
 
-* 企业级私有云：企业级私有云是一款简单、可靠的企业IaaS资源管理软件。帮助未云化企业全面云化IDC物理资源，提升企业IT管理效率。
+* 私有云：私有云部署方式包含本地IDC基础设施管理的功能，主要是KVM虚拟化以及裸金属管理。
 
-* 多云管理平台：多云管理平台简称云管，帮助客户在一个地方管理所有云计算资源。统一管理异构IT基础设施资源，极大简化多云架构复杂度和难度，帮助企业轻松驾驭多云环境。
+* 多云管理：多云管理部署方式包含了纳管私有云和公有云的功能，帮助企业统一管理异构IT基础设施资源。
 
 {{< tabs name="install" >}}
 
@@ -32,7 +32,7 @@ img: /images/icons/icon-quickstart.svg
 
 {{% /tab %}}
 
-{{% tab name="企业级私有云" %}}
+{{% tab name="私有云" %}}
 
 <!-- <div style="border-left:solid 5px red">xxx</div> -->
 <div class='section-tip'>
@@ -42,7 +42,7 @@ img: /images/icons/icon-quickstart.svg
 
 {{% /tab %}}
 
-{{% tab name="多云管理平台" %}}
+{{% tab name="多云管理" %}}
 
 <!-- <div style="border-left:solid 5px red">xxx</div> -->
 <div class='section-tip'>
