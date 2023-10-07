@@ -29,8 +29,9 @@ climc 请求云平台后端服务的流程如下:
 
 {{% /alert %}}
 
+#### 通过用户名／密码认证
 
-#### 控制节点认证配置
+##### 控制节点认证配置
 
 在控制节点上可直接通过以下命令认证配置。
 
@@ -50,7 +51,7 @@ $ source <(ocadm cluster rcadmin)
 ```
 注意: 如果执行 climc 时出现 *Error: Missing OS_AUTH_URL* 的错误提示时，请重新执行 `source <(ocadm cluster rcadmin)` 命令。
 
-#### 非控制节点认证配置
+##### 非控制节点认证配置
 
 在非控制节点做认证配置上首先需要在对应的控制节点上执行`ocadm cluster rcadmin`；
 将输出的认证信息保存到本地的文件中，通过source命令认证配置。
@@ -86,6 +87,56 @@ export OS_REGION_NAME=region0
 export OS_ENDPOINT_TYPE=publicURL
 EOF
 ```
+#### token认证
+
+可以使用临时获得的token进行认证，配置文件模板如下所示。
+```bash
+# 临时TOKEN
+export OS_AUTH_TOKEN=gAAAAABlG_bcoWRX6BV0B5Sb3jN0Maoi......UOyDVGCy4-6_AglLh
+# 项目名称
+export OS_PROJECT_NAME=system
+# 项目归属域名称
+export OS_PROJECT_DOMAIN=Default
+# 认证接口
+export OS_AUTH_URL=https://192.168.0.246:5000/v3
+# 使用服务的Endpoint类型
+export OS_ENDPOINT_TYPE=public
+# 是否缓存token
+export YUNION_USE_CACHED_TOKEN=false
+# 是否不验证TLS证书
+export YUNION_INSECURE=true
+
+```
+
+临时token可以通过如下climc命令获取：
+
+```bash
+$ climc session-show
++-------------------+---------------------------------------------------------------------------------------------------------------------------+
+|       Field       |                                                           Value                                                           |
++-------------------+---------------------------------------------------------------------------------------------------------------------------+
+| context           | {"ip":"192.168.0.246","source":"cli"}                                                                                     |
+| domain            | Yunion                                                                                                                    |
+| domain_id         | a0fc05a5ac5...c8d612c9631a1c                                                                                              |
+| domain_policies   | ["domain-admin"]                                                                                                          |
+| endpoint_type     | public                                                                                                                    |
+| expires           | 2023-10-04T13:35:25.485534Z                                                                                               |
+| project_domain    | Default                                                                                                                   |
+| project_domain_id | default                                                                                                                   |
+| project_policies  | []                                                                                                                        |
+| region            | YunionHQ                                                                                                                  |
+| role_ids          | 5fc1e5c088984e2....cb,e40d785012...682e3a0c647f340b5                                                                      |
+| roles             | admin,domainadmin                                                                                                         |
+| system_policies   | ["sysadmin"]                                                                                                              |
+| tenant            | system                                                                                                                    |
+| tenant_id         | a7f2e2a81a1e4850a41eae5f140ceb14                                                                                          |
+| token             | gAAAAABlHBidVk6AT58hAHjN3E6tYtliGE061xRSVARWtdW7Z.................................fIeJY3ToKLz-A19rSYql8RKzzG4EkrnKuYD_4NY |
+| user              | qiujian                                                                                                                   |
+| user_id           | 0d48cd5032970fe....c0d9022f9c2346fd                                                                                       |
++-------------------+---------------------------------------------------------------------------------------------------------------------------+
+```
+
+#### 通过Access Key／Secret认证
 
 以下为Access Key/Secret认证的配置文件模板，通过OS_ACCESS_KEY, OS_SECRET_KEY等两个字段指定用户的Access Key/secret。
 
@@ -128,7 +179,9 @@ export OS_REGION_NAME=region0
 EOF
 ```
 
-模板配置完成后，通过以下名称认证环境变量。
+### 验证
+
+模板配置完成后，通过以下方式验证认证环境变量配置成功。
 
 ```bash
 # source 认证环境变量
