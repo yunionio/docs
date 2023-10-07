@@ -19,7 +19,7 @@ Cloudpods 所有相关的 issues 都在 [https://github.com/yunionio/cloudpods/i
 - 如果 issue 超过 30 天没有更新：
     - 打上 stale 标签，表示已经长期没有进展了
     - 如果 issue 有 announcement 标签，就算超过 30 天没有更新，也不会打上 stale 标签
-- 如果 issue 超过 37 天没有更新:
+- 如果有 'state/awaiting user feedback' 标签的 issue 超过 37 天没有更新:
     - 自动关闭 issue
 - 如果 issue 被关闭：
     - 在 issue 没有 stale 标签的情况下，会删掉 'state/awaiting user feedback' 和 'state/awaiting processing' 的标签
@@ -53,23 +53,25 @@ is:open is:issue label:"state/awaiting processing" -label:stale
 
 [https://github.com/yunionio/cloudpods/issues?page=1&q=is%3Aopen+is%3Aissue+label%3A%22state%2Fawaiting+processing%22+-label%3Astale](https://github.com/yunionio/cloudpods/issues?page=1&q=is%3Aopen+is%3Aissue+label%3A%22state%2Fawaiting+processing%22+-label%3Astale)
 
-### 查询过期即将关闭的问题
+### 查询过期但等待处理的问题
 
-只用查询状态为打开，并且有 'stale' 标签的 issues。
+这类问题是需要关注的，通常为我们超过30天都没有处理的问题。
+
+只用查询状态为打开，并且有 'state/awaiting processing' 和 'stale' 标签的 issues。
 
 Github 前端可以用以下的表达式过滤:
 
 ```
-is:open is:issue label:stale
+is:open is:issue label:"state/awaiting processing" label:stale
 ```
 
 对应到 Cloudpods issues 页面：
 
-[https://github.com/yunionio/cloudpods/issues?q=is%3Aopen+is%3Aissue+label%3Astale+](https://github.com/yunionio/cloudpods/issues?q=is%3Aopen+is%3Aissue+label%3Astale+)
+[https://github.com/yunionio/cloudpods/issues?q=is%3Aopen+is%3Aissue+label%3A%22state%2Fawaiting+processing%22+label%3Astale](https://github.com/yunionio/cloudpods/issues?q=is%3Aopen+is%3Aissue+label%3A%22state%2Fawaiting+processing%22+label%3Astale)
 
 ### 查询过期但被关闭的问题
 
-这一类问题通常是用户长期没有回复，或者没有及时解决的问题，这类问题是有查询价值的，有时候需要找到这类问题，并且重新打开。
+这一类问题通常是用户长期没有回复，这类问题是有查询价值的，有时候需要找到这类问题，并且重新打开。
 
 查询状态为关闭，并且有 'stale' 标签的 issues。
 
