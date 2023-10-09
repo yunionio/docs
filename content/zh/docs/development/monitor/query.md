@@ -86,6 +86,45 @@ WHERE ("vm_id" = '49d1f759-138e-4495-8e35-94c2128374f1' OR "hostname" = 'vm1') a
 GROUP BY "vm_id", time(1m) fill(none)
 ```
 
+更多支持的查询举例：
+
+可以参考：[https://github.com/yunionio/cloudpods/blob/v3.10.0-rc2/pkg/monitor/tsdb/driver/influxdb/query_test.go](https://github.com/yunionio/cloudpods/blob/v3.10.0-rc2/pkg/monitor/tsdb/driver/influxdb/query_test.go)
+
+```
+# 下面的请求 body 对应 influxdb sql 为："SELECT mean(\"free\") / mean(\"total\") FROM \"disk\" WHERE (\"path\" = '/') AND time > now() - 1h GROUP BY *, time(2m) fill(none)"
+
+{
+	"database": "telegraf",
+	"measurement": "disk",
+	"select": [
+		[
+			{
+				"type": "field",
+				"params": [
+					"free"
+				]
+			},
+			{
+				"type": "mean"
+			},
+			{
+				"type": "math",
+				"params": [
+					"/ mean(\"total\")"
+				]
+			}
+		]
+	],
+	"tags": [
+		{
+			"key": "path",
+			"value": "/",
+			"operator": "="
+		}
+	]
+}
+```
+
 2. 自定义查询时间段
 
 通过设置 from 和 to 两个参数，可以定义查询时间段，influxdb 里面的指标会默认保留 30 天。
