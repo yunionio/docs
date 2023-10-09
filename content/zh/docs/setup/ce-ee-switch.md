@@ -2,6 +2,7 @@
 title: "切换到企业版/开源版"
 date: 2020-02-12T12:55:46+08:00
 weight: 12
+draft: true
 edition: ce
 description: >
   介绍从开源版本切换为企业版本或从企业版本切换到开源版本

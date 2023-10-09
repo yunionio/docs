@@ -102,7 +102,7 @@ $ helm install --name-template default --namespace onecloud --debug  . -f values
    # edition choose from:
    # - ce: community edition
    # - ee: enterprise edition
-+  # 选择部署 ce(开源) 或者 ee(企业) 版本
++  # 选择部署 ce(开源) 版本
    edition: ce
    # storageClass for stateful component
 +  # 有状态服务使用的 storageClass，如果不设置就会使用 local-path CSI
@@ -288,31 +288,7 @@ $ helm delete -n onecloud default
 
 ## 其它问题
 
-### 1. 如何切换成开源/企业版本？
-
-现在默认 k8s 部署的集群是开源版本(ee)，可以通过下面的操作切换成企业版本(ce)：
-
-通过修改对应的 values yaml 文件，修改里面的 cluster.edition 为 ce(开源) 或者 ee(企业) ，然后使用 helm upgrade 升级：
-
-```diff
---- a/charts/cloudpods/values-prod.yaml
-+++ b/charts/cloudpods/values-prod.yaml
-@@ -104,7 +104,7 @@ cluster:
-   # - ce: community edition
-   # - ee: enterprise edition
-   # 选择部署 ce(开源) 或者 ee(企业) 版本
--  edition: ce
-+  edition: ee
-   # storageClass for stateful component
-   # 有状态服务使用的 storageClass，如果不设置就会使用 local-path CSI
-   # 这个可根据 k8s 集群情况自行调节
-```
-
-```bash
-$ helm upgrade -n onecloud default . -f values-prod.yaml
-```
-
-### 2. onecloud namespace 缺少 keystone, glance, region 等 pod
+### 1. onecloud namespace 缺少 keystone, glance, region 等 pod
 
 如果执行 `helm install` 后，执行 `kubectl get pods -n onecloud` 发现只有 operator 这个 pod，而没有出现 keystone, glance, region 这些平台相关服务的 pod ，可以使用下面的命令查看 operator pod 的日志排查问题。
 
