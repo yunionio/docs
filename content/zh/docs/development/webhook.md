@@ -16,6 +16,27 @@ description:
 ⽬前⽐较统⼀的是配置
 “资源创建、删除发送通知”,“资源调整配置发送通知”以及“资源同步发送通知”（也可能叫做“resource sync”）。
 
+关于header,body,msg_key字段的说明：
+```
+
+  header: 特指额外附加的webhook请求头，可为空。
+  body: 特指额外附加的webhook报文，可为空。
+  msg_key: 特指对于所需报文的key，可为空，为空时默认key为Msg
+
+  注: 当body与msg_key同名时，body优先，会导致主体信息丢失，故msg_key与body不得同名。
+
+```
+例：
+
+webhook配置: 
+
+![](../images/webhook_config.jpg)
+
+webhook结果: 
+
+![](../images/webhook_result.jpg)
+
+
 ## 支持Webhook时间通知的资源
 
 * 云管平台⽀持创建、删除、更新、删除的资源：虚拟机、硬盘、RDS、Redis、LB、EIP、VPC、IP⼦⽹、安全组、证书、DNS、NAT、对象存储OSS、NAS；
@@ -69,3 +90,9 @@ Body:
  "Msg": "This is a validate message."
 }
 ```
+
+### 模板启用
+
+目前还可通过climc命令调整webhook是否启用模板: climc notify-robot-update <robot-id> --use-template true
+
+启用模板后，发出的报文将与常规机器人通知一致，将不再返回json数据，而是返回文案信息。
