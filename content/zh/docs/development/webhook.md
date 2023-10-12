@@ -96,3 +96,37 @@ Body:
 目前还可通过climc命令调整webhook是否启用模板: climc notify-robot-update <robot-id> --use-template true
 
 启用模板后，发出的报文将与常规机器人通知一致，将不再返回json数据，而是返回文案信息。
+
+
+## 如何启用Webhook通知
+
+### 1. 创建webhook机器人
+
+在认证与安全->消息中心->机器人管理页面中点击新建按钮，按需求配置相关配置项。确保机器人已启用。
+
+
+![](../images/webhook_config.jpg)
+
+
+### 2. 启用消息订阅并指定接受人
+
+在认证与安全->消息中心->消息订阅设置页面中，查找所需订阅，确定订阅后进入详情页面，点击接受管理，新建，选择类型为机器人，指定所需的机器人后确认。确保消息订阅已启用。
+
+![](../images/subscriber.jpg)
+
+
+## 消息没有正常发送的可能原因
+
+1、确认消息订阅、接受人、机器人是否启用，若为接受人，确保通知渠道是否正常。
+
+2、确认资源是否在消息订阅的范围内。
+
+3、确认是否模板异常导致通知失败
+```
+查看操作日志：climc action-show --type notification --fail
+
+若出现template关键字，可通过删除notify.topic_tbl表后重启notify服务，重新覆盖模板文案（注：会导致丢失所有消息订阅关联关系）。
+或修改notify.topic_tbl中的title_cn,title_en,content_cn,content_en字段，相关语法可参考go-template。
+```
+
+其他异常情况可通过issue反馈
