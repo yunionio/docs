@@ -171,7 +171,7 @@ Body:
 ```
 查看操作日志：climc action-show --type notification --fail
 
-若出现template关键字，可通过删除notify.topic_tbl表后重启notify服务，重新覆盖模板文案（注：会导致丢失所有消息订阅关联关系）。
+若出现template关键字，可通过删除notify.topic_tbl,notify.subscriber_tbl表后重启notify服务，重新覆盖模板文案（注：会导致丢失所有消息订阅关联关系）。
 或修改notify.topic_tbl中的title_cn,title_en,content_cn,content_en字段，相关语法可参考go-template。
 ```
 
