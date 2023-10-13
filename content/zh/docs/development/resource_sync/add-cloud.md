@@ -40,6 +40,14 @@ description: >
     - 创建 pkg/multicloud/testcloud/region.go 并定义SRegion结构体，实现 GetClient 方法
     - 实现绑定 GetRegions 方法到 STestCloudClient, 私有云region一般是模拟的, 可以找已经试下的私有云参考
 
+{{% alert title="说明" color="warning" %}}
+
+在接入过程中需要用到一次错误的aksk,根据返回的错误信息，将错误转换为 **cloudprovider.ErrInvalidAccessKey** 错误, 用以区分错误类型
+
+{{% /alert %}}
+
+
+
 - 创建 pkg/multicloud/testcloud/shell/region.go
     - 实现 region-list 命令, 可参考pkg/multicloud/aliyun/shell/region.go
 
