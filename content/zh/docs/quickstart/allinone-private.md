@@ -17,10 +17,13 @@ description: >
 
 ### 机器配置要求
 
-- 操作系统: CentOS 7.6-7.9 Minimal(X86_64和ARM64)、Debian 10-11(X86_64和ARM64)、Kylin V10 sp2(X86_64和ARM64)等主流操作系统安装，下面是操作系统镜像常见下载地址
-    - X86_64: [CentOS 7.9 Minimal](http://isoredirect.centos.org/centos/7/isos/x86_64/)
-    - ARM64: [CentOS 7.9 Minimal](http://isoredirect.centos.org/altarch/7/isos/aarch64/)，[Debian 10(buster)](https://www.debian.org/releases/stable/arm64/) ，[Debian 11(bullseye)](https://www.debian.org/releases/bullseye/arm64/)
-    - 操作系统需要是干净的版本，因为部署工具会重头搭建指定版本的 kubernetes 集群，所以确保系统没有安装 kubernetes, docker 等容器管理工具，否则会出现冲突导致安装异常
+- 操作系统: 根据 CPU 架构不同，支持的发行版也不一样，目前支持的发行版情况如下：
+    - [CentOS 7](http://isoredirect.centos.org/centos/7/isos): 支持 x86_64 和 arm64
+    - [Debian 10/11](https://www.debian.org/distrib/): 支持 x86_64 和 arm64
+    - [Ubuntu 22.04](https://releases.ubuntu.com/jammy/): 仅支持 x86_64
+    - [银河麒麟V10 SP2/SP3](https://www.kylinos.cn/scheme/server/1.html): 支持 x86_64 和 arm64
+    - [统信 UOS kongzi](https://www.chinauos.com/): 支持 x86_64 和 arm64
+- 操作系统需要是干净的版本，因为部署工具会重头搭建指定版本的 kubernetes 集群，所以确保系统没有安装 kubernetes, docker 等容器管理工具，否则会出现冲突导致安装异常
 - 最低配置要求: CPU 4核, 内存 8GiB, 存储 100GiB
 - 虚拟机和服务使用的存储路径都在 **/opt** 目录下，所以理想环境下建议单独给 **/opt** 目录设置挂载点
     - 比如把 /dev/sdb1 单独分区做 ext4 然后通过 /etc/fstab 挂载到 /opt 目录
