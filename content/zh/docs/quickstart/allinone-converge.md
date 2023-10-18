@@ -37,10 +37,7 @@ description: >
 
 ### 本地环境配置要求
 
-本地环境即用户进行实际操作部署的环境。本次测试的本地环境为 MAC 操作系统的笔记本，也可在待部署机器上进行操作。
-
-- ssh: 开启 ssh 免密登录
-- 本地环境安装部署 ansbile（Windows操作系统不支持安装 ansible）
+登陆待部署机器上进行操作，开启 ssh 免密登录
 
 #### 配置 ssh 免密登录
 
@@ -136,6 +133,10 @@ $ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./o
 ```bash
 # 直接部署，会从 registry.cn-beijing.aliyuncs.com 拉取容器镜像
 $ ./run.py <host_ip>
+
+# 如果遇到 pip 安装包下载过慢的问题，可以用 -m 参数指定 pip 源
+# 比如下面使用: https://mirrors.aliyun.com/pypi/simple/ 源
+$ ./run.py <host_ip> -m https://mirrors.aliyun.com/pypi/simple/
 ```
 
 {{% /tab %}}
