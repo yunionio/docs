@@ -18,7 +18,7 @@ description: >
 ### 机器配置要求
 
 - 操作系统: 根据 CPU 架构不同，支持的发行版也不一样，目前支持的发行版情况如下：
-    - [CentOS 7](http://isoredirect.centos.org/centos/7/isos): 支持 x86_64 和 arm64
+    - [CentOS 7.6~7.9 Minimal](http://isoredirect.centos.org/centos/7/isos): 支持 x86_64 和 arm64
     - [Debian 10/11](https://www.debian.org/distrib/): 支持 x86_64 和 arm64
     - [Ubuntu 22.04](https://releases.ubuntu.com/jammy/): 仅支持 x86_64
     - [银河麒麟V10 SP2/SP3](https://www.kylinos.cn/scheme/server/1.html): 支持 x86_64 和 arm64
