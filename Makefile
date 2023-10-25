@@ -56,9 +56,12 @@ ce-build-offline:
 		--edition=ce \
 
 ######### For EE ####################
-# OEM=OEMCLOUD OEM_NAME=OEM云平台 make ee-image
 ee-image: setup
 	make -f ./Makefile.ee image
+
+# OEM=OEMCLOUD OEM_NAME=OEM云平台 make ee-image
+ee-image-oem: setup
+	make -f ./Makefile.ee image-oem
 
 ee-local-serve: 
 	hugo serve --bind 0.0.0.0 --config ./config-ee.toml
