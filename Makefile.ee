@@ -17,6 +17,11 @@ offline-build: clean
 		--mode=offline \
 		--edition=ee
 
+offline-oem-build: clean
+	./scripts/build.py \
+		--mode=oem \
+		--edition=ee
+
 image-step:
 	REGISTRY=${REGISTRY} ARCH=${ARCH} DEBUG=${DEBUG} TAG=${TAG} NAME=docs-ee $(CURDIR)/scripts/docker-push.sh
 
