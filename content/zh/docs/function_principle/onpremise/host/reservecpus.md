@@ -1,6 +1,7 @@
 ---
 title: "宿主机 CPU 预留"
 weight: 5
+oem_ignore: true
 description: > 
   预留宿主机上的 CPU 给非虚拟机进程使用
 ---

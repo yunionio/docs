@@ -29,6 +29,9 @@ class BaseDriver(object):
     def get_mode(self):
         return self._mode
 
+    def is_oem(self):
+        return self.get_mode() == MODE_OEM
+
     def get_scopes(self):
         return [
             [processor.SCOPE_SYSTEM, '', 'public'],
@@ -51,7 +54,7 @@ class BaseDriver(object):
             p = processor.DirProcess(content_dir, out_dir)
             p.\
                 include_by_scope(scope).\
-                include_by_oem(False). \
+                include_by_oem(self.is_oem()). \
                 include_by_edition(args.edition).\
                 start()
             ret.append([out_dir, base_url_prefix, dest_dir])
@@ -138,3 +141,13 @@ class OfflineDriver(BaseDriver):
 
 
 __register_driver(MODE_OFFLINE, OfflineDriver())
+
+
+class OfflineOEMDriver(OfflineDriver):
+
+    def __init__(self):
+        super().__init__()
+        self._mode = MODE_OEM
+
+
+__register_driver(MODE_OEM, OfflineOEMDriver())
