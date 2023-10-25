@@ -26,3 +26,5 @@ image-step:
 	REGISTRY=${REGISTRY} ARCH=${ARCH} DEBUG=${DEBUG} TAG=${TAG} NAME=docs-ee $(CURDIR)/scripts/docker-push.sh
 
 image: offline-build image-step
+
+image-oem: offline-oem-build image-step
