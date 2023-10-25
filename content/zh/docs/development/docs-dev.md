@@ -1,6 +1,8 @@
 ---
 title: "贡献文档"
 weight: 103
+oem_ignore: true
+edition: ce
 description:
   介绍搭建 Cloudpods 文档编写开发环境，以及如何贡献文档
 ---

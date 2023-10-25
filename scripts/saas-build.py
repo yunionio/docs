@@ -9,7 +9,6 @@ from converter import processor
 
 
 def is_oem_mode():
-    import os
     return os.getenv("OEM", False) or os.getenv("OEM_NAME", False)
 
 

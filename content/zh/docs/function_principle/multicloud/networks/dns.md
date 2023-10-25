@@ -2,6 +2,7 @@
 title: "DNS设计介绍"
 date: 2023-08-31T16:16:34+08:00
 weight: 10
+edition: ce
 description: >
     介绍DNS设计相关说明
 ---

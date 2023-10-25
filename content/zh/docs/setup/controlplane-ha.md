@@ -2,6 +2,7 @@
 title: "高可用环境(已废弃)"
 date: 2019-04-13T13:01:57+08:00
 draft: true
+edition: ce
 weight: 2
 description: >
   部署高可用负载均衡集群

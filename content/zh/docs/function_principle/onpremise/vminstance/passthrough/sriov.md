@@ -174,7 +174,7 @@ Mellanox 配置参考文档：
 
 ### host-agent 启用 SR-IOV
 
-安装好 OFED驱动后配置 cloudpods 平台启用 offload 网卡
+安装好 OFED驱动后配置 {{<oem_name>}} 平台启用 offload 网卡
 
 #### Mellanox CX6 以下(CX5/CX4) 关闭安全组
 Mellanox CX6 以下 ovs offload 对 connection tracking 支持的不好，所以需要关闭安全组：
