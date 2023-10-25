@@ -7,6 +7,21 @@ description: >
   展示常用镜像的下载链接
 ---
 
+## 公共镜像
+
+常见操作系统提供的镜像下载地址：
+
+### CentOS: https://cloud.centos.org/
+### Ubuntu Server: https://cloud-images.ubuntu.com/
+### Debian: https://cloud.debian.org/images/cloud/
+### OpenSUSE: https://download.opensuse.org/repositories/Cloud:/Images:/
+### OpenEuler: https://www.openeuler.org/zh/download/
+### OpenAnonis: https://openanolis.cn/download
+### OpenCloudOS: https://opencloudos.org/ospages/downloadISO
+### OpenKylin: https://www.openkylin.top/downloads/index-cn.html
+### RockyLinux: https://rockylinux.org/cloud-images/
+
+
 ## 常用镜像百度网盘提取链接及提取码
 
 ### x86 centos7流：
