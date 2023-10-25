@@ -1,6 +1,7 @@
 ---
 title: "只读导入"
 weight: 81
+edition: ce
 description: >
   创建只读的 kubeconfig ，导入集群
 ---

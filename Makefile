@@ -66,7 +66,6 @@ ee-local-serve:
 ee-build: setup
 	make -f ./Makefile.ee online-build
 
-# OEM=OEMCLOUD OEM_NAME=OEM云平台 make ee-build-offline
 ee-build-offline: setup
 	make -f ./Makefile.ee offline-build
 
@@ -89,3 +88,6 @@ gpt:
 	rm -f data/*-release-*.md
 	git checkout .
 
+# OEM=OEMCLOUD OEM_NAME=OEM云平台 make ee-build-offline
+ee-build-offline-oem: setup
+	make -f ./Makefile.ee offline-oem-build

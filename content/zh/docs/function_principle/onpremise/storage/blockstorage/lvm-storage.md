@@ -10,7 +10,7 @@ description: >
 LVM（Logical Volume Manager）是一种逻辑卷管理器，可以将一个或多个物理存储设备抽象为一个或多个逻辑卷，并将逻辑卷分配给文件系统和其他应用程序使用。
 
 
-## cloudpods 如何添加 LVM 存储
+## 如何添加 LVM 存储
 
 1. 修改/etc/yunion/host.conf，在 lvm_volume_groups 的字符串数组中添加新的 VG：
 

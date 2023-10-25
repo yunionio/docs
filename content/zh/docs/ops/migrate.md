@@ -1,6 +1,7 @@
 ---
 title: "将其他KVM平台虚拟机镜像迁移到平台"
 date: 2021-11-11T15:58:12+08:00
+edition: ce
 weight: 60
 description: >
     将其他KVM平台虚拟机镜像迁移到平台
@@ -32,14 +33,14 @@ description: >
 导出镜像位于 /mnt/vm-101-disk-0，由于开启压缩，文件会小一些。
 >  '-c' indicates that target image must be compressed (qcow format only)
 
-在当前目录，python3 -m http.server 9999 开启http server，或者传到nginx 等http 服务，在cloudpods 系统镜像中，导入镜像，创建虚拟机即可。
+在当前目录，python3 -m http.server 9999 开启http server，或者传到nginx 等http 服务，在 cloudpods 系统镜像中，导入镜像，创建虚拟机即可。
 
 若虚拟机存在多块磁盘，按上文方式，将多个disk 导出为qcow2，再导入为系统镜像，使用`climc guest-image-create` 将多个系统镜像合并创建为主机镜像，
 ```
 climc guest-image-create <name> --image <id_of_root_image> --image <id_of_data_image> --image ...
 ```
 
-注意严格保证`--image`镜像顺序和pve 内顺序一致，ID为导入cloudpods 的系统镜像UUID。
+注意严格保证`--image`镜像顺序和pve 内顺序一致，ID为导入 cloudpods 的系统镜像UUID。
 
 创建主机镜像成功后，使用主机镜像创建虚拟机即可，参考：[制作主机镜像](https://www.cloudpods.org/zh/docs/function_principle/onpremise/glance/guestimage/create/)
 
