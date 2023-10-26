@@ -47,7 +47,7 @@ VMware中有以下基本网络概念：
 | 端口组（portgroup） | 二层网络              | 通过端口组的ID关联     | 一对一         |
 | 无                 | IP子网               | NA                  | NA            |
 
-<img src="./vmwarenet.png" width="600">
+<img src="../vmwarenet.png" width="600">
 
 纳管 VMware 云账号时，平台会同步端口组的信息，并自动为每个端口组创建一个一一对应的二层网络。因VMware不负责虚拟机的IP地址管理，因此同步后二层网络上的IP子网信息需要管理员在{{<oem_name>}}上维护。
 
