@@ -278,13 +278,15 @@ $ yum install -y keepalived nc
 
 添加配置
 
+以下为主节点的配置：
+
 ```bash
 # 请确保 virtual_router_id 不会和局域网内的其他 keepalived 集群冲突
 $ cat <<EOF >/etc/keepalived/keepalived.conf
 global_defs {
     router_id onecloud
 }
-  
+
 vrrp_script chk_mysql {
     script "/etc/keepalived/chk_mysql"
     interval 1
@@ -320,7 +322,51 @@ EOF
 $ chmod +x /etc/keepalived/chk_mysql
 ```
 
-启动 keepalived
+以下为备节点的配置：
+
+```bash
+# 请确保备节点 virtual_router_id 和主节点一致
+$ cat <<EOF >/etc/keepalived/keepalived.conf
+global_defs {
+    router_id onecloud
+}
+
+vrrp_script chk_mysql {
+    script "/etc/keepalived/chk_mysql"
+    interval 1
+}
+  
+vrrp_instance VI_1 {
+    state BACKUP
+    interface $DB_NETIF         
+    virtual_router_id 99
+    priority 99
+    advert_int 1
+    nopreempt
+    authentication {
+        auth_type PASS
+        auth_pass $DBHA_KA_AUTH
+    }
+  
+    track_script {
+        chk_mysql
+    }
+  
+    virtual_ipaddress {
+        $DB_VIP
+    }
+}
+EOF
+
+$ cat <<EOF > /etc/keepalived/chk_mysql
+#!/bin/bash
+echo | nc 127.0.0.1 3306 &>/dev/null
+EOF
+  
+$ chmod +x /etc/keepalived/chk_mysql
+```
+
+配置后，在主备节点分别启动 keepalived
 
 ```bash
 $ systemctl enable --now keepalived
