@@ -134,7 +134,7 @@ $ diff -u cluster.yaml cluster-env.yaml
 
 请根据自己的节点环境配置，参考 diff 修改，需要注意的地方如下：
 
-- spec.image: 改为 registry.cn-beijing.aliyuncs.com/yunionio/ceph:v14.2.22 ，这里需要用 v14 版本的镜像，对应的 ceph 版本为 nautilus，更高的版本可能会出现 cloudpods 不兼容的情况
+- spec.image: 改为 registry.cn-beijing.aliyuncs.com/yunionio/ceph:v14.2.22 ，这里需要用 v14 版本的镜像，对应的 ceph 版本为 nautilus。如果要使用更高版本 v16 版本ceph，请参考下文 [使用 Pacific (v16) Ceph]。
 - spec.network.provider: 改为 host ，表示 ceph 相关容器使用 hostNetwork ，这样才能给 Kubernetes 集群之外的服务使用
 - spec.placement: 修改了里面的 Kubernetes 调度策略，表示把 ceph pod 调度到 role=storage-node 的节点上
 - spec.storage: 表示存储的配置
@@ -399,3 +399,49 @@ $ climc server-list --details --search ceph-test-vm
 ## 其它操作
 
 - 删除 Rook 部署的 Ceph 集群请参考：[Cleaning up a Cluster](https://rook.io/docs/rook/v1.7/ceph-teardown.html)
+
+## 使用 Pacific (v16) Ceph
+
+上文介绍的流程适合部署 v14 版本的ceph，为了部署 v16 版本的ceph，首先需要把待部署的 ceph 镜像改为：
+
+```
+registry.cn-beijing.aliyuncs.com/yunionio/ceph:v16.2.14
+```
+
+另外，每个计算节点默认部署的是CentOS 7自带的ceph-common，版本为 v10.2.5。该版本的 ceph-common 已经无法访问 v16 ceph。为此，还需要升级每个计算节点的 ceph-common 版本。具体方法如下：
+
+配置 ceph rpm repo 文件 /etc/yum.repos.d/ceph.repo, 内容为：
+
+```
+[ceph]
+name=Ceph packages for $basearch
+baseurl=https://download.ceph.com/rpm-15.2.17/el7/$basearch
+enabled=1
+priority=2
+gpgcheck=1
+gpgkey=https://download.ceph.com/keys/release.asc
+
+[ceph-noarch]
+name=Ceph noarch packages
+baseurl=https://download.ceph.com/rpm-15.2.17/el7/noarch
+enabled=1
+priority=2
+gpgcheck=1
+gpgkey=https://download.ceph.com/keys/release.asc
+
+[ceph-source]
+name=Ceph source packages
+baseurl=https://download.ceph.com/rpm-15.2.17/el7/SRPMS
+enabled=0
+priority=2
+gpgcheck=1
+gpgkey=https://download.ceph.com/keys/release.asc
+```
+
+保存 ceph.repo 后，执行如下命令安装 v15.2.17 的 ceph-common:
+
+```bash
+yum install -y ceph-common
+```
+
+注：因为ceph官方rpm未提供v16的CentOS 7 rpms，因此安装v15的rpms，该版本兼容v16的ceph-common。
