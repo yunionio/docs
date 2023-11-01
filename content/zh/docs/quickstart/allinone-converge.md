@@ -135,11 +135,11 @@ $ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./o
 
 ```bash
 # 直接部署，会从 registry.cn-beijing.aliyuncs.com 拉取容器镜像
-$ ./run.py <host_ip>
+$ ./run.py full <host_ip>
 
 # 如果遇到 pip 安装包下载过慢的问题，可以用 -m 参数指定 pip 源
 # 比如下面使用: https://mirrors.aliyun.com/pypi/simple/ 源
-$ ./run.py <host_ip> -m https://mirrors.aliyun.com/pypi/simple/
+$ ./run.py -m https://mirrors.aliyun.com/pypi/simple/ full <host_ip>
 ```
 
 {{% /tab %}}
@@ -205,7 +205,7 @@ primary_master_node:
 EOF
 ```
 
-当填写完 config-allinone.yml 部署配置文件后，便可以执行 ocboot 里面的 `./run.py ./config-allinone.yml` 部署集群了。
+当填写完 config-allinone.yml 部署配置文件后，便可以执行 ocboot 里面的 `./run.py full ./config-allinone.yml` 部署集群了。
 
 ```bash
 # 开始部署
