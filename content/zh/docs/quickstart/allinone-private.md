@@ -216,7 +216,7 @@ primary_master_node:
 EOF
 ```
 
-当填写完 config-allinone.yml 部署配置文件后，便可以执行 ocboot 里面的 `./run.py ./config-allinone.yml` 部署集群了。
+当填写完 config-allinone.yml 部署配置文件后，便可以执行 ocboot 里面的 `./run.py virt ./config-allinone.yml` 部署集群了。
 
 ```bash
 # 开始部署
