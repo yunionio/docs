@@ -6,11 +6,11 @@ edition: ce
 IgnoreChildLink: true
 oem_ignore: true
 description: >
-  介绍如何快速部署体验 var_oem_name 服务
+  介绍如何快速部署体验平台功能
 img: /images/icons/icon-quickstart.svg
 ---
 
-   <img src="images/quickstarthomepage.png#pic_center" width="1000">
+<img src="images/quickstarthomepage.png#pic_center" width="1000">
 
 请根据功能使用场景选择要部署的Cloudpods服务：
 
@@ -65,6 +65,3 @@ img: /images/icons/icon-quickstart.svg
 {{% /tab %}}
 
 {{< /tabs >}}
-
-
- 
