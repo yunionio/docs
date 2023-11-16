@@ -3,6 +3,8 @@ title: "Docker Compose 安装"
 linkTitle: "Docker Compose 安装"
 weight: 2
 edition: ce
+aliases:
+- /zh/docs/quickstart/docker-compose/
 description: >
   使用 [Docker Compose](https://docs.docker.com/compose/) 快速部署 Cloudpods CMP 多云管理版本
 ---

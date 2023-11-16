@@ -2,6 +2,8 @@
 title: "Kubernetes Helm 安装"
 linkTitle: "Kubernetes Helm 安装"
 weight: 3
+aliases:
+- /zh/docs/quickstart/k8s/
 description: >
   使用 [Helm](https://helm.sh/) 在 Kubernetes 上部署 Cloudpods CMP 多云管理版本
 ---

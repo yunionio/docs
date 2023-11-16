@@ -155,9 +155,9 @@ Password: admin@123
 
 #### 2. 创建网络（VPC和IP子网）
 
-[新建VPC] 在 `网络` 菜单，选择 `VPC` 子菜单，选择 `新建`。输入名称，例如 `vpc0`，选择目标网段，例如 `192.168.0.0/16`。点击 `新建`。
+- 新建VPC]: 在 `网络` 菜单，选择 `VPC` 子菜单，选择 `新建`。输入名称，例如 `vpc0`，选择目标网段，例如 `192.168.0.0/16`。点击 `新建`。
 
-[新建IP子网] VPC创建完成后，选择 `IP子网` 子菜单，选择 `新建`。输入名称，例如 `vnet0`，选择VPC为刚才创建的VPC `vpc0`，选择可用区，输入 `子网网段`，例如 `192.168.100.0/24`。点击 `新建`。
+- 新建IP子网: VPC创建完成后，选择 `IP子网` 子菜单，选择 `新建`。输入名称，例如 `vnet0`，选择VPC为刚才创建的VPC `vpc0`，选择可用区，输入 `子网网段`，例如 `192.168.100.0/24`。点击 `新建`。
 
 [典型网络配置](../../function_principle/onpremise/network/examples)提供了几种常见的宿主机网络配置，请参考。
 
@@ -222,4 +222,4 @@ Cloudpods 底层使用了 Kubernetes 管理节点，Kubernetes 节点名称依�
 
 ### 5. 其它问题？
 
-其它问题欢迎在 Cloudpods github issues 界面提交: https://github.com/yunionio/cloudpods/issues , 我们会尽快回复。
+其它问题欢迎在 Cloudpods github issues 界面提交: [https://github.com/yunionio/cloudpods/issues](https://github.com/yunionio/cloudpods/issues) , 我们会尽快回复。
