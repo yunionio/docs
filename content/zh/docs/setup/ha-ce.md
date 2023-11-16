@@ -9,19 +9,26 @@ description: >
 
 ## 环境准备
 
-关于环境的准备和不同架构 CPU 操作系统的要求，请参考 [All in One 融合云安装/机器配置要求](../../quickstart/allinone-converge#机器配置要求)。
+关于环境的准备和不同架构 CPU 操作系统的要求，请参考 [融合云安装/机器配置要求](../../quickstart/allinone-full#机器配置要求)。
 
 假设准备好了 3 台 CentOS7 机器，以及 1 台 Mariadb/MySQL 的机器，规划如下：
 
-| role         | ip            | interface    | note
-| ------------ | ------------- | ------------ | ------------------------------
-| k8s primary  | 10.127.90.101 | eth0         | 第1个控制节点                                               |
-| k8s master 1 | 10.127.90.102 | eth0         | 第2个控制节点                                               |
-| k8s master 2 | 10.127.90.103 | eth0         | 第3个控制节点                                               |
-| k8s VIP      | 10.127.190.10 | -            | keepalived 使用的 vip ，会优先绑定在 3 个控制节点中的第一个 |
-| DB           | 10.127.190.11 | -            | 数据库独立节点 pswd="0neC1oudDB#",  port=3306               |
+| role         | ip            | interface | note                                                        |
+| ------------ | ------------- | --------- | ----------------------------------------------------------- |
+| k8s primary  | 10.127.90.101 | eth0      | 第1个控制节点                                               |
+| k8s master 1 | 10.127.90.102 | eth0      | 第2个控制节点                                               |
+| k8s master 2 | 10.127.90.103 | eth0      | 第3个控制节点                                               |
+| k8s VIP      | 10.127.190.10 | -         | keepalived 使用的 vip ，会优先绑定在 3 个控制节点中的第一个 |
+| DB           | 10.127.190.11 | -         | 数据库独立节点 pswd="0neC1oudDB#",  port=3306               |
 
-其中 DB 的部署目前是不归 ocboot 部署工具管理的，需要提前手动部署，高可用的数据库部署可以参考文档 [部署 DB HA 环境](../db-ha) 。
+其中 DB 的部署目前是不归 ocboot 部署工具管理的，需要提前手动部署。 建议使用 MariaDB 数据库，不要使用 MySQL 5.6及以下版本，防止出现索引长度 bug： Index column size too large. The maximum column size is 767 bytes. 的问题。各发行版对应 MariaDB 版本如下：
+
+- Centos 7.6-7.9  Minimal(X86_64和ARM64) 默认安装MariaDB 5.5.68
+- Debian 10-11(X86_64和ARM64) 默认安装MariaDB 10.3.1
+- Kylin V10 sp2(X86_64和ARM64) 默认安装MariaDB 10.3.4
+
+另外高可用的数据库部署也可以参考文档 [部署 DB HA 环境](../db-ha) 。
+
 
 ## 开始安装
 
@@ -48,30 +55,48 @@ MASTER_2_INTERFACE="eth0"
 MASTER_2_IP=10.127.90.103
 
 cat > config-k8s-ha.yml <<EOF
+# primary_master_node 表示运行 k8s 和 Cloudpods 服务的节点
 primary_master_node:
+  # ansible ssh 登录 ip
   hostname: $PRIMARY_IP
+  # 不使用本地登录方式
   use_local: false
+  # ansible ssh 登录用户
   user: root
+  # cloudpods 版本
   onecloud_version: "{{<release_version>}}"
+  # 数据库连接地址
   db_host: $DB_IP
+  # 数据库用户
   db_user: "$DB_USER"
+  # 数据库密码
   db_password: "$DB_PSWD"
+  # 数据库端口
   db_port: "$DB_PORT"
-  skip_docker_config: true
-  image_repository: registry.cn-beijing.aliyuncs.com/yunionio
-  ha_using_local_registry: false
+  # 节点 IP
   node_ip: "$PRIMARY_IP"
+  # 对应 Kubernetes calico 插件默认网卡选择规则
   ip_autodetection_method: "can-reach=$PRIMARY_IP"
+  # k8s 控制节点的 ip
   controlplane_host: $K8S_VIP
+  # k8s 控制节点的端口
   controlplane_port: "6443"
+  # 该节点作为 Cloudpods 私有云计算节点
   as_host: true
+  # 虚拟机强行作为 Cloudpods 内置私有云计算节点（默认为 false）。开启此项时，请确保 as_host: true
+  as_host_on_vm: true
+  # 产品版本，从 ['Fullstack','CMP','Edge'] 选择一个，FullStack 会安装融合云，CMP 安装多云管理版本，Edge 安装私有云
+  product_version: 'Fullstack'
+  # 设置镜像仓库，如果待部署的机器处于海外，可以用 dockerhub 的镜像仓库：docker.io/yunion
+  image_repository: registry.cn-beijing.aliyuncs.com/yunionio
+  # 启用高可用模式
   high_availability: true
   use_ee: false
+  # 使用 minio 作为后端虚拟机镜像存储
   enable_minio: true
-  registry_mirrors:
-  - https://lje6zxpk.mirror.aliyuncs.com
   insecure_registries:
   - $PRIMARY_IP:5000
+  ha_using_local_registry: false
   host_networks: "$PRIMARY_INTERFACE/br0/$PRIMARY_IP"
 
 master_nodes:
@@ -80,8 +105,6 @@ master_nodes:
   as_controller: true
   as_host: true
   ntpd_server: "$PRIMARY_IP"
-  registry_mirrors:
-  - https://lje6zxpk.mirror.aliyuncs.com
   high_availability: true
   hosts:
   - user: root
