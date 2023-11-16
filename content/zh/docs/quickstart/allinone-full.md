@@ -1,10 +1,12 @@
 ---
-title: "All in One 私有云安装"
-linkTitle: "All in One 私有云安装"
+title: "融合云安装"
+linkTitle: "融合云安装"
 edition: ce
-weight: 2
+weight: 3
+aliases:
+- /zh/docs/quickstart/allinone-converge
 description: >
-  使用 ocboot 部署工具快速以 All in One 的方式部署 Cloudpods 私有云版本
+  使用 ocboot 部署工具以 All in One 的方式部署融合云版本。
 ---
 
 ## 前提
@@ -28,46 +30,9 @@ description: >
 - 虚拟机和服务使用的存储路径都在 **/opt** 目录下，所以理想环境下建议单独给 **/opt** 目录设置挂载点
     - 比如把 /dev/sdb1 单独分区做 ext4 然后通过 /etc/fstab 挂载到 /opt 目录
 
-### 数据库要求
+## 安装ansible和git
 
-Cloudpods 会默认部署 MariaDB ，也可以用yaml文件使用已有 MariaDB 安装。
-注意事项：在公有云上部署环境时，建议部署 MariaDB 数据库，不要使用 MySQL 5.6及以下版本，防止索引长度 bug： Index column size too large. The maximum column size is 767 bytes.
-
-- Centos 7.6-7.9  Minimal(X86_64和ARM64) 默认安装MariaDB 5.5.68
-- Debian 10-11(X86_64和ARM64) 默认安装MariaDB 10.3.1
-- Kylin V10 sp2(X86_64和ARM64) 默认安装MariaDB 10.3.4
-
-
-以下为待部署机器的环境:
-
-| IP   | 登录用户 |
-|:----:|:--------:|
-|10.168.26.216| root |
-
-{{% alert title="提示" %}}
-> 10.168.26.216 是本次测试环境的 IP, 请根据自己的环境做相应修改, 若在公有云部署，请使用内网IP地址。
-{{% /alert %}}
-
-### 本地环境配置要求
-
-登陆待部署机器上进行操作，开启 ssh 免密登录
-
-#### 配置 ssh 免密登录
-
-```bash
-# 生成本机的 ssh 秘钥 (如果本地已有 ~/.ssh/id_rsa.pub 则跳过此步骤)
-$ ssh-keygen
-
-# 将生成的 ~/.ssh/id_rsa.pub 公钥拷贝到待部署机器
-$ ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.168.26.216
-
-# 尝试免密登录待部署机器，应该不需要输入登录密码即可拿到部署机器的 hostname
-$ ssh root@10.168.26.216 "hostname"
-```
-
-#### 安装ansible和git
-
-首先需要安装ansible和git，ansible版本要求最低2.9.27，其中2.11.12测试较多
+首先需要安装ansible和git，ansible版本要求最低2.9.27，其中2.11.12测试较多。
 
 {{< tabs name="ocboot_install" >}}
 {{% tab name="CentOS 7" %}}
@@ -124,111 +89,54 @@ $ python3 -m pip install --upgrade ansible
 
 ## 安装Cloudpods
 
-部署的工具是 https://github.com/yunionio/ocboot , 然后根据需要部署机器的配置， 利用 ansbile 远程登录到待部署的机器安装配置 Cloudpods 服务，以下操作都在本地环境上进行操作。操作步骤如下:
+部署的工具在 [https://github.com/yunionio/ocboot](https://github.com/yunionio/ocboot)，需要把该工具使用 `git clone` 下来，然后运行 `run.py` 脚本部署服务。操作步骤如下:
 
 ```bash
 # 下载 ocboot 工具到本地
 $ git clone -b {{<release_branch>}} https://github.com/yunionio/ocboot && cd ./ocboot
 ```
 
-### 快速部署
-
-可以直接执行run.py来快速部署一个AllInOne的Cloudpods实例，其中<host_ip>为部署所在主机的主IP地址。
-
-
-{{% alert title="注意" color="warning" %}}
-如果待部署的主机是一台虚拟机，默认是不会在虚拟机里面部署内置私有云虚拟化相关组件的，如果需要在虚拟机里面使用内置私有云（相当于嵌套虚拟化），请使用[自定义配置部署](#自定义配置部署)。
-{{% /alert %}}
+执行 run.py 部署服务。其中 **<host_ip>** 为部署节点的 IP 地址，该参数为可选项。如果不指定则选择默认路由出去的那张网卡部署服务。如果你的节点有多张网卡，可以通过指定 **<host_ip>** 选择对应网卡监听服务。
 
 {{< tabs name="ocboot_install_region" >}}
 {{% tab name="中国大陆" %}}
 
 ```bash
 # 直接部署，会从 registry.cn-beijing.aliyuncs.com 拉取容器镜像
-$ ./run.py virt <host_ip> 
+$ ./run.py full <host_ip>
 
 # 如果遇到 pip 安装包下载过慢的问题，可以用 -m 参数指定 pip 源
 # 比如下面使用: https://mirrors.aliyun.com/pypi/simple/ 源
-$ ./run.py -m https://mirrors.aliyun.com/pypi/simple/ virt <host_ip> 
+$ ./run.py -m https://mirrors.aliyun.com/pypi/simple/ full <host_ip>
 ```
 
 {{% /tab %}}
 
 {{% tab name="其他地区" %}}
 
+
 对于某些网络环境，registry.cn-beijing.aliyuncs.com 访问缓慢或不可达，在版本 `v3.9.5`之后（含），可指定镜像源：[docker.io](http://docker.io) 来安装。命令如下：
 
 ```bash
-IMAGE_REPOSITORY=docker.io/yunion ./run.py virt <host_ip>
+IMAGE_REPOSITORY=docker.io/yunion ./run.py full <host_ip>
 ```
-
-这种方式其实是自动在当前目录生成一个名为config-allinone-current.yaml的配置文件，基于该配置文件的参数来执行部署。
 
 {{% /tab %}}
 
 {{< /tabs >}}
 
-### 自定义配置部署
+**./run.py** 脚本会调用 ansible 部署服务，如果部署过程中遇到问题导致脚本退出，可以重复执行该脚本进行重试。
 
-也可以我们手工编辑一个配置文件，基于该配置文件，采用run.py来实现部署。
-
-```bash
-# 编写 config-allinone.yml 文件
-$ cat <<EOF >./config-allinone.yml
-# mariadb_node 表示需要部署 mariadb 服务的节点
-mariadb_node:
-  # 待部署节点 ip
-  hostname: 10.168.26.216
-  # 待部署节点登录用户
-  user: root
-  # mariadb 的用户
-  db_user: root
-  # mariadb 用户密码
-  db_password: your-sql-password
-# primary_master_node 表示运行 k8s 和 Cloudpods 服务的节点
-primary_master_node:
-  hostname: 10.168.26.216
-  user: root
-  # 数据库连接地址
-  db_host: 10.168.26.216
-  # 数据库用户
-  db_user: root
-  # 数据库密码
-  db_password: your-sql-password
-  # k8s 控制节点的 ip
-  controlplane_host: 10.168.26.216
-  # k8s 控制节点的端口
-  controlplane_port: "6443"
-  # Cloudpods 版本
-  onecloud_version: {{<release_version>}}
-  # Cloudpods 登录用户
-  onecloud_user: admin
-  # Cloudpods 登录用户密码
-  onecloud_user_password: admin@123
-  # 该节点作为 Cloudpods 私有云计算节点
-  as_host: true
-  # 选择产品版本属于['Fullstack','CMP','Edge']
-  product_version: 'Edge'
-  # 虚拟机强行作为 Cloudpods 内置私有云计算节点（默认为 false）。开启此项时，请确保as_host: true
-  as_host_on_vm: true
-  # 设置镜像仓库，如果待部署的机器处于海外，可以用 dockerhub 的镜像仓库：docker.io/yunion
-  image_repository: registry.cn-beijing.aliyuncs.com/yunion
-EOF
-```
-
-当填写完 config-allinone.yml 部署配置文件后，便可以执行 ocboot 里面的 `./run.py virt ./config-allinone.yml` 部署集群了。
-
-```bash
-# 开始部署
-$ ./run.py virt ./config-allinone.yml
-```
+{{% alert title="注意" color="warning" %}}
+如果是基于 CentOS 7 发行版部署，会因为安装内核导致一次重启。./run.py 脚本会中断，请等待操作系统重启后，重新执行一次 ./run.py 脚本，进行后续步骤的安装。
+{{% /alert %}}
 
 ## 部署完成
 
 ```bash
 ....
 # 部署完成后会有如下输出，表示运行成功
-# 浏览器打开 https://10.168.26.216
+# 浏览器打开 https://10.168.26.216 ，该 ip 为之前设置 <host_ip>
 # 使用 admin/admin@123 用户密码登录就能访问前端界面
 Initialized successfully!
 Web page: https://10.168.26.216
@@ -284,9 +192,7 @@ Cloudpods自身是一个完整的私有云，同时也可以统一纳管其他�
   ![](../images/nohost.png)
 
 
-1. 请确认部署用的yaml文件中是否有`as_host: true`配置项，若没有，则表示该节点只作为控制节点使用，不作为计算节点使用，因此宿主机列表中没有宿主机是正常的；
-
-2. 在控制节点排查 host 问题，请参考：[Host服务问题排障技巧](../../function_principle/onpremise/host/troubleshooting/)
+1. 在控制节点排查 host 问题，请参考：[Host服务问题排障技巧](../../function_principle/onpremise/host/troubleshooting/)
 
 
     1. 若日志报错信息中包含“register failed: try create network: find_matched == false”，则表示未成功创建包含宿主机的IP子网，导致宿主机注册失败，请创建包含宿主机网段的IP子网。
@@ -309,7 +215,7 @@ All in One 部署的节点会部署 Cloudpods host 计算服务，作为宿主�
 请到 `管理后台` 界面，点击 `主机/基础资源/宿主机` 查看宿主机列表，启用相应的宿主机，刷新界面就会出现虚拟机界面。
 
 {{% alert title="注意" color="warning" %}}
-如果要使用 Cloudpods 私有云虚拟机，需要宿主机使用 Cloudpods 编译的内核，可使用以下命令查看宿主机是否使用 Cloudpods 内核(包含 yn 关键字)。
+如果要使用 Cloudpods 私有云虚拟机，并且宿主机是 CentOS 7 的发行版。需要宿主机使用 Cloudpods 编译的内核，可使用以下命令查看宿主机是否使用 Cloudpods 内核(包含 yn 关键字)。
 
 ```bash
 # 查看是否使用 yn 内核
@@ -322,21 +228,15 @@ $ reboot
 
 ![宿主机](../images/host.png)
 
-### 3. 修改节点的 hostname ，有些服务启动失败
+### 3. 为什么修改了节点的 hostname ，服务启动不了了？
 
-k8s 管理节点，依赖于 hostname，请改回去。
+Cloudpods 底层使用了 Kubernetes 管理节点，Kubernetes 节点名称依赖 hostname，改了 hostname 会导致节点无法注册到 Kubernetes 集群，所以不要修改 hostname ，如果修改了，请改之前的名称，服务就会自动恢复了。
 
-### 4. 如何重装
+### 4. 如何重装?
 
 1. 执行 `kubeadm reset -f` 删除 kubernetes 集群
 
-2. 重新运行 ocboot 的脚本
-
-3. 等待运行完毕，使用`kubectl edit deployment onecloud-operator -n onecloud`加入下列参数，然后保存关闭。
-
-![](../images/oo_syncuser.png)
-
-4. 第2步的修改，会影响 onecloud-operator 的性能，所以等所有服务启动，可以将第2步的参数恢复。
+2. 重新运行 ocboot 的 run.py 脚本
 
 ### 5. 其它问题？
 
