@@ -240,4 +240,4 @@ Cloudpods 底层使用了 Kubernetes 管理节点，Kubernetes 节点名称依�
 
 ### 5. 其它问题？
 
-其它问题欢迎在 Cloudpods github issues 界面提交: https://github.com/yunionio/cloudpods/issues , 我们会尽快回复。
+其它问题欢迎在 Cloudpods github issues 界面提交: [https://github.com/yunionio/cloudpods/issues](https://github.com/yunionio/cloudpods/issues) , 我们会尽快回复。
