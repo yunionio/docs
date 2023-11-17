@@ -55,7 +55,9 @@ Reload privilege tables now? [Y/n] y
  ... ...
 ```
 
-修改 Mariadb 配置文件，准备配置主主复制
+修改 Mariadb 配置文件，准备配置主主复制。
+
+备注：主、从区别是`confserver-id`、`auto_increment_offset`两个字段。
 
 ```bash
 # 主节点
@@ -76,7 +78,7 @@ expire_logs_days=30
 innodb_file_per_table=ON
 max_connections = 300
 max_allowed_packet=20M
- 
+
 server-id = 1
 auto_increment_offset = 1
 auto_increment_increment = 2
@@ -91,18 +93,18 @@ max_connect_errors = 0
 max_allowed_packet = 1G
 slave-net-timeout=10
 master-retry-count=0
- 
+
 slow_query_log = 1
 long_query_time = 2
 slow_query_log_file = /var/log/mariadb/slow-query.log
- 
+
 [mysql]
 no-auto-rehash
- 
+
 [mysqld_safe]
 log-error=/var/log/mariadb/mariadb.log
 pid-file=/var/run/mariadb/mariadb.pid
- 
+
 #
 # include all files from the config directory
 #
@@ -127,7 +129,7 @@ expire_logs_days=30
 innodb_file_per_table=ON
 max_connections = 300
 max_allowed_packet=20M
- 
+
 server-id = 2
 auto_increment_offset = 2
 auto_increment_increment = 2
@@ -142,18 +144,18 @@ max_connect_errors = 0
 max_allowed_packet = 1G
 slave-net-timeout=10
 master-retry-count=0
- 
+
 slow_query_log = 1
 long_query_time = 2
 slow_query_log_file = /var/log/mariadb/slow-query.log
- 
+
 [mysql]
 no-auto-rehash
- 
+
 [mysqld_safe]
 log-error=/var/log/mariadb/mariadb.log
 pid-file=/var/run/mariadb/mariadb.pid
- 
+
 #
 # include all files from the config directory
 #
@@ -240,6 +242,10 @@ mysql -u root -p$MYSQL_PASSWD -e "CHANGE MASTER TO MASTER_HOST='192.168.199.98',
 mysql -u root -p$MYSQL_PASSWD -e "SHOW SLAVE STATUS\G" | grep Running
              Slave_IO_Running: Yes
             Slave_SQL_Running: Yes
+
+# 如果这一步不成功，例如Slave_SQL_Running为 connecting，极大概率是防火墙没关闭。请执行如下命令，关闭防火墙，然后重新执行上一步的2个Yes的检测。
+systemctl is-active firewalld >/dev/null && systemctl disable --now firewalld
+
 ```
 
 至此，DB 主主复制部署完成，可以测试在任一节点进行数据库操作，另一节点验证。不过对外提供服务还是需要通过 vip，不然发生切换还需要业务端切换 ip，下面配置 keepalived 对外提供服务。
@@ -284,15 +290,15 @@ $ cat <<EOF >/etc/keepalived/keepalived.conf
 global_defs {
     router_id onecloud
 }
-  
+
 vrrp_script chk_mysql {
     script "/etc/keepalived/chk_mysql"
     interval 1
 }
-  
+
 vrrp_instance VI_1 {
     state MASTER
-    interface $DB_NETIF         
+    interface $DB_NETIF
     virtual_router_id 99
     priority 100
     advert_int 1
@@ -301,11 +307,11 @@ vrrp_instance VI_1 {
         auth_type PASS
         auth_pass $DBHA_KA_AUTH
     }
-  
+
     track_script {
         chk_mysql
     }
-  
+
     virtual_ipaddress {
         $DB_VIP
     }
@@ -316,11 +322,55 @@ $ cat <<EOF > /etc/keepalived/chk_mysql
 #!/bin/bash
 echo | nc 127.0.0.1 3306 &>/dev/null
 EOF
-  
+
 $ chmod +x /etc/keepalived/chk_mysql
 ```
 
-启动 keepalived
+以下为备节点的配置：
+
+```bash
+# 请确保备节点 virtual_router_id 和主节点一致
+$ cat <<EOF >/etc/keepalived/keepalived.conf
+global_defs {
+    router_id onecloud
+}
+
+vrrp_script chk_mysql {
+    script "/etc/keepalived/chk_mysql"
+    interval 1
+}
+
+vrrp_instance VI_1 {
+    state BACKUP
+    interface $DB_NETIF
+    virtual_router_id 99
+    priority 99
+    advert_int 1
+    nopreempt
+    authentication {
+        auth_type PASS
+        auth_pass $DBHA_KA_AUTH
+    }
+
+    track_script {
+        chk_mysql
+    }
+
+    virtual_ipaddress {
+        $DB_VIP
+    }
+}
+EOF
+
+$ cat <<EOF > /etc/keepalived/chk_mysql
+#!/bin/bash
+echo | nc 127.0.0.1 3306 &>/dev/null
+EOF
+
+$ chmod +x /etc/keepalived/chk_mysql
+```
+
+配置后，在主备节点分别启动 keepalived
 
 ```bash
 $ systemctl enable --now keepalived
@@ -333,6 +383,60 @@ $ ip addr show $DB_NETIF
        valid_lft forever preferred_lft forever
     inet6 fe80::222:cfff:fe40:1e29/64 scope link
        valid_lft forever preferred_lft forever
+```
+
+### 配置 keepalived 自动切换网卡
+
+本方案中，`k8s` 与 `mysql`共用网卡。如果`k8s`启用了`host`功能，会自动启用`br0`网卡。在`host` 启动、网卡切换时，有一定概率影响`mysql`的高可用稳定性。以下是辅助脚本，来提升`k8s+mysql`的稳定性。
+
+以下脚本分别在 db 的主节点、备节点执行。注意替换第一行的`node_ip`变量为本机`ip`。
+
+```bash
+node_ip=					 					# 注意替换这里的 DB_NODE_IP 为本机 Ip
+[[ -z "$node_ip" ]] && echo "please export variable 'node_ip' first! "
+
+cat <<EOF_CK1 >/etc/keepalived/check_interface.sh
+#!/usr/bin/env bash
+
+datestr="\$(date +"%F %T")"
+env_interface=\$(cat /etc/keepalived/keepalived.conf| grep -w interface |awk '{print \$2}')
+echo "[\$datestr] 目前keepalived监听的网卡: \$env_interface"
+router_interface=\$(/usr/sbin/ip a show | grep $node_ip | awk '{ print \$NF}')
+echo "[\$datestr] ip所在网卡名称: [\$router_interface]"
+
+if [[ -n "\$router_interface" ]] && [[ "\$router_interface" != "\$env_interface" ]]; then
+    echo "[\$datestr] update keepalived.conf interface"
+    sed -i -e "s#\$env_interface#\$router_interface#g" /etc/keepalived/keepalived.conf
+    systemctl restart keepalived
+else
+    echo "[\$datestr] No need to update interface. "
+fi
+EOF_CK1
+
+cat <<EOF_CK2 >/etc/keepalived/check_interface2.sh
+#!/usr/bin/env bash
+for i in {1..3}; do
+    /etc/keepalived/check_interface.sh >> /var/log/keepalived.log
+    sleep 20
+done
+EOF_CK2
+
+cat <<EOF_CRON >/etc/cron.d/update_keepalived_interface
+* * * * * root /etc/keepalived/check_interface2.sh >/dev/null 2>&1
+EOF_CRON
+systemctl restart crond
+
+chmod +x /etc/keepalived/chk_mysql
+chmod +x /etc/keepalived/check_interface.sh
+chmod +x /etc/keepalived/check_interface2.sh
+
+systemctl enable --now keepalived
+systemctl restart keepalived
+chmod +x /etc/rc.d/rc.local
+if ! grep -q /etc/keepalived/check_interface.sh /etc/rc.d/rc.local; then
+    sed -i '$a bash /etc/keepalived/check_interface.sh >> /var/log/keepalived.log' /etc/rc.d/rc.local
+fi
+
 ```
 
 至此，DB 高可用部署完成，任一节点的 Mariadb 或 keepalived 服务异常，或者任一节点宕机，都不影响对外服务。
