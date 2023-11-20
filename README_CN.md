@@ -6,8 +6,9 @@
 
 ## 安装依赖
 
-文档的编译开发使用 [docker](https://docs.docker.com/get-started/overview/) 运行 [hugo](https://gohugo.io/) 容器来进行，这样的好处是不需要在本地安装配置 hugo ，保证开发环境的统一。
-
+- hugo v0.120.0:
+    - Linux: https://github.com/gohugoio/hugo/releases/download/v0.120.0/hugo_extended_0.120.0_Linux-64bit.tar.gz
+    - MacOS: https://github.com/gohugoio/hugo/releases/download/v0.120.0/hugo_extended_0.120.0_darwin-universal.tar.gz
 - docker: 安装 docker 请参考文档 [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
 
 ## 查看文档网站

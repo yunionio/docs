@@ -10,6 +10,7 @@ description: 多维度分析支持从平台、云账号、订阅、区域、计�
 
 {{% alert title="注意" color="warning" %}}
 聚合中的主账号与关联账号仅支持阿里云、AWS。
+{{% /alert %}}
 
   ![](../../../images/bill/analysis1.png)
 

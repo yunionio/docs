@@ -16,7 +16,7 @@ defaultContentLanguageInSubdir = true
 # Useful when translating.
 enableMissingTranslationPlaceholders = true
 
-disableKinds = ["taxonomy", "taxonomyTerm"]
+disableKinds = ["taxonomy"]
 
 # Highlighting config
 pygmentsCodeFences = true
@@ -54,11 +54,12 @@ id = "UA-00000000-0"
 [languages]
 [languages.zh]
 title = "Cloudpods"
-version_menu = "版本"
-view_text = "点击查看"
-description = "Cloudpods文档"
 languageName ="中文"
 contentDir = "content/zh"
+[languages.zh.params]
+view_text = "点击查看"
+version_menu = "版本"
+description = "Cloudpods文档"
 time_format_default = "02.01.2006"
 time_format_blog = "02.01.2006"
 
@@ -96,10 +97,11 @@ time_format_blog = "02.01.2006"
     weight = 70
 
 [languages.en]
-version_menu = "Version"
-description = "Documentation for Cloudpods"
 languageName = "English"
 contentDir = "content/en"
+[languages.en.params]
+version_menu = "Version"
+description = "Documentation for Cloudpods"
 time_format_default = "02.01.2006"
 time_format_blog = "02.01.2006"
 
