@@ -29,6 +29,20 @@ description: >
 
 另外高可用的数据库部署也可以参考文档 [部署 DB HA 环境](../db-ha) 。
 
+## 高可用集群 ntp 一致性
+
+请在安装之前，确保集群的时间一致。否则在签发证书步骤失败。
+
+如果是联网安装，可以参考下面的命令，确保集群内每台服务器都与互联网时间保持一致：
+
+```bash
+# 您可以选择更方便、可达的授时服务器
+# 如果提示没有ntpdate 命令，请使用 os 对应的包管理器自行安装
+# 例如在centos 上： yum install -y ntp && systemctl enable ntpd --now
+ntpdate -u edu.ntp.org.cn && hwclock -w && ntpdate -u -q edu.ntp.org.cn
+```
+
+如果是离线安装，请确保集群的服务器彼此之间的时间保持一致(不强求与互联网保持一致，但集群机器之间确保时间同步)。
 
 ## 开始安装
 
