@@ -6,11 +6,9 @@ This repository contains [Cloudpods](https://github.com/yunionio/cloudpods) rela
 
 ## Installing Dependencies
 
-- hugo v0.83.0:
-    - Linux: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_Linux-64bit.tar.gz
-    - MacOS:
-        - x86_64: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_macOS-64bit.tar.gz
-        - arm64: https://github.com/gohugoio/hugo/releases/download/v0.83.1/hugo_extended_0.83.1_macOS-ARM64.tar.gz
+- hugo v0.120.0:
+    - Linux: https://github.com/gohugoio/hugo/releases/download/v0.120.0/hugo_extended_0.120.0_Linux-64bit.tar.gz
+    - MacOS: https://github.com/gohugoio/hugo/releases/download/v0.120.0/hugo_extended_0.120.0_darwin-universal.tar.gz
 - docker: To install docker, please refer to the documentation at [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/).
 
 ## View Document Website
