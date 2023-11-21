@@ -11,74 +11,18 @@ description: >
 
 常见操作系统提供的镜像下载地址：
 
-### CentOS: https://cloud.centos.org/
-### Ubuntu Server: https://cloud-images.ubuntu.com/
-### Debian: https://cloud.debian.org/images/cloud/
-### OpenSUSE: https://download.opensuse.org/repositories/Cloud:/Images:/
-### OpenEuler: https://www.openeuler.org/zh/download/
-### OpenAnonis: https://openanolis.cn/download
-### OpenCloudOS: https://opencloudos.org/ospages/downloadISO
-### OpenKylin: https://www.openkylin.top/downloads/index-cn.html
-### RockyLinux: https://rockylinux.org/cloud-images/
+### CentOS: [https://cloud.centos.org/](https://cloud.centos.org/)
+### Ubuntu Server: [https://cloud-images.ubuntu.com/](https://cloud-images.ubuntu.com/)
+### Debian: [https://cloud.debian.org/images/cloud/](https://cloud.debian.org/images/cloud/)
+### OpenSUSE: [https://download.opensuse.org/repositories/Cloud:/Images:/](https://download.opensuse.org/repositories/Cloud:/Images:/)
+### OpenEuler: [https://www.openeuler.org/zh/download/](https://www.openeuler.org/zh/download/)
+### OpenAnonis: [https://openanolis.cn/download](https://openanolis.cn/download)
+### OpenCloudOS: [https://opencloudos.org/ospages/downloadISO](https://opencloudos.org/ospages/downloadISO)
+### OpenKylin: [https://www.openkylin.top/downloads/index-cn.html](https://www.openkylin.top/downloads/index-cn.html)
+### RockyLinux: [https://rockylinux.org/cloud-images/](https://rockylinux.org/cloud-images/)
 
 
 ## 常用镜像百度网盘提取链接及提取码
-
-### x86 centos7流：
-
-链接：https://pan.baidu.com/s/1qDXu6xwJe2z9_OYjXMkviA?pwd=spc3 
-提取码：spc3
-
-链接：https://pan.baidu.com/s/1eyczm6_a_Oj__WrZvYKn6Q?pwd=ffmo 
-提取码：ffmo
-
-### x86 centos8流：
-
-链接：https://pan.baidu.com/s/1LlOdu3vkzzCN8OUlBOypqw 
-提取码：s3lk 
-
-链接：https://pan.baidu.com/s/1F_55r54wf_AujEZojR_vGg 
-提取码：v7oc     
-
-链接：https://pan.baidu.com/s/1tQWO7E5YiOv1oXyYTSeZaw 
-提取码：hu0w     
-
-链接：https://pan.baidu.com/s/11PgrOSxnLv2LjJH3dUr4PA 
-提取码：8wyq     
-
-链接：https://pan.baidu.com/s/1yPRKFf5cya2GqpvF8SUM8w 
-提取码：ksj0     
-
-链接：https://pan.baidu.com/s/1xywnvT6Kj7WGwBaIVse68Q 
-提取码：xcrk    
-
-链接：https://pan.baidu.com/s/1V65oWvP61Hw58ul0XMN1LA 
-提取码：qqpg   
-
-链接：https://pan.baidu.com/s/1ZRQ6ZAozF6NWWYf5z2gaZQ?pwd=5ghr 
-提取码：5ghr
-
-
-### x86 centos9
-
-链接：https://pan.baidu.com/s/1E1ZYgHhmkb0zjb9TVhWm1Q?pwd=75mv
-提取码：75mv
-
-### centos8 iso
-
-链接：https://pan.baidu.com/s/1KmqPd03CTQcYtU6_mfnY3g?pwd=k0ak 
-提取码：k0ak
-
-### centos9 iso
-
-链接：https://pan.baidu.com/s/1dYhXTGqGdPTb1lXOOoP4XQ?pwd=yxl4 
-提取码：yxl4
-
-
-### ubuntu 20.04：
-
-链接：https://pan.baidu.com/s/1i2cx6NnKaid3cx9R-sKyYg?pwd=ah7t 
-提取码：ah7t     
 
 ### win10 iso：
 
@@ -93,70 +37,9 @@ description: >
 ### windows server 2012-R2：
 
 链接：https://pan.baidu.com/s/1A_xI3Fe5pMnvoOmPp1ea2g?pwd=01ox 
-提取码：01ox     
+提取码：01ox
 
 ### windows server 2016：
 
 链接：https://pan.baidu.com/s/1gQE4TfsdAWf-90zg6Hdosw?pwd=d8pt 
-提取码：d8pt     
-
-### centos9 arm
-
-链接：https://pan.baidu.com/s/1AOxbJHNojsh4BSgFklfcLA?pwd=hkf7 
-提取码：hkf7     
-
-### centos7 arm：
-
-链接：https://pan.baidu.com/s/1hVoKd0unMnHw_8gjVmHjrg?pwd=4ghq 
-提取码：4ghq 
-
-链接：https://pan.baidu.com/s/1Qzo7rKgvEZjXdQo4h6nYAw?pwd=oio4 
-提取码：oio4 
-
-链接：https://pan.baidu.com/s/17q1Rv8SOxfKGx2GSlXvlyA?pwd=bwkb 
-提取码：bwkb   
-
-链接：https://pan.baidu.com/s/1NTIRJTc0W4M4n6bRSqA7Mg?pwd=v7qz 
-提取码：v7qz     
-
-链接：https://pan.baidu.com/s/1DvM8uHgSwrd1WOD5EYDt7A?pwd=bp6n 
-提取码：bp6n     
-
-### centos8流 ppc64le：
-
-链接：https://pan.baidu.com/s/1sS8NyezPRmkNUTrtu2OeOw 
-提取码：jthc     
-
-链接：https://pan.baidu.com/s/1Vwb_lIUkyAICeTZ29-BrVw 
-提取码：j4pd     
-
-链接：https://pan.baidu.com/s/1q1PydimwkZRUXkQeYx9_yg 
-提取码：0qj7     
-
-链接：https://pan.baidu.com/s/1QJ-oMfPcxVmXZhiMMwk1lQ 
-提取码：1yka     
-
-### aarch64 centos8流：
-
-链接：https://pan.baidu.com/s/1BMD1cgOJhfiPY5kpfvZJuw 
-提取码：vhtk     
-
-链接：https://pan.baidu.com/s/1UfjE5JBSGauDRyPpzBNJKw 
-提取码：67hz     
-
-链接：https://pan.baidu.com/s/1EhcPtJg-F_GuY_1LJ1h_3A 
-提取码：58or     
-
-链接：https://pan.baidu.com/s/1De7ZQL8CSnBC8Ae8COQnwQ 
-提取码：xiuc     
-
-链接：https://pan.baidu.com/s/1w_PlmSdmdZIF8-RBsUDteA 
-提取码：j8y7     
-链接：https://pan.baidu.com/s/1D-RhMLKojYpgzhK-P4YMVA 
-提取码：rzfa     
-
-链接：https://pan.baidu.com/s/1DOa1Vwd7Esi-s_ZP3pN3zw 
-提取码：w69v     
-
-链接：https://pan.baidu.com/s/1OIroN8XKbPXOP3820AL1AQ   
-提取码：bksp     
+提取码：d8pt
