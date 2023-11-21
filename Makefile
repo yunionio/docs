@@ -1,4 +1,4 @@
-HUGO_VERSION = 0.83.1
+HUGO_VERSION = 0.120.0
 IMAGE_VERSION=$(shell scripts/hash-files.sh Dockerfile | cut -c 1-12)
 #CONTAINER_IMAGE = registry.cn-beijing.aliyuncs.com/yunionio/docs-hugo:v$(HUGO_VERSION)-$(IMAGE_VERSION)
 CONTAINER_IMAGE = registry.cn-beijing.aliyuncs.com/yunionio/docs-hugo:v$(HUGO_VERSION)
