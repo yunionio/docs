@@ -3,7 +3,7 @@ name: Release github pages
 on:
   push:
     branches:
-      - release/3.9  # Set a branch to deploy
+      - release/3.10  # Set a branch to deploy
       # - release/*  # Set a branch to deploy
       # - master  # Set a branch to deploy
 
@@ -19,7 +19,7 @@ jobs:
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
       with:
-        hugo-version: '0.83.1'
+        hugo-version: '0.120.0'
         extended: true
 
     - name: Setup Node
