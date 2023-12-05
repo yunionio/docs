@@ -23,7 +23,7 @@ description: >
     - [CentOS 7.6~7.9 Minimal](http://isoredirect.centos.org/centos/7/isos): 支持 x86_64 和 arm64
     - [Debian 10/11](https://www.debian.org/distrib/): 支持 x86_64 和 arm64
     - [Ubuntu 22.04](https://releases.ubuntu.com/jammy/): 仅支持 x86_64
-    - [银河麒麟V10 SP2/SP3](https://www.kylinos.cn/scheme/server/1.html): 支持 x86_64 和 arm64
+    - [银河麒麟V10 SP2](https://www.kylinos.cn/scheme/server/1.html): 支持 x86_64 和 arm64
     - [统信 UOS kongzi](https://www.chinauos.com/): 支持 x86_64 和 arm64
 - 操作系统需要是干净的版本，因为部署工具会重头搭建指定版本的 kubernetes 集群，所以确保系统没有安装 kubernetes, docker 等容器管理工具，否则会出现冲突导致安装异常
 - 最低配置要求: CPU 4核, 内存 8GiB, 存储 100GiB
