@@ -41,7 +41,8 @@ description: >
 # 本地安装 ansible 和 git
 $ yum install -y epel-release git python3-pip
 $ python3 -m pip install --upgrade pip setuptools wheel
-$ python3 -m pip install --upgrade ansible
+# 注意：请保留下面命令里的引号
+$ python3 -m pip install 'ansible<=9.0.0'
 ```
 {{% /tab %}}
 
@@ -50,7 +51,8 @@ $ python3 -m pip install --upgrade ansible
 # 本地安装 ansible 和 git
 $ yum install -y git python3-pip
 $ python3 -m pip install --upgrade pip setuptools wheel
-$ python3 -m pip install --upgrade ansible
+# 注意：请保留下面命令里的引号
+$ python3 -m pip install 'ansible<=9.0.0'
 ```
 {{% /tab %}}
 
@@ -71,7 +73,8 @@ fi
 # 本地安装 ansible 和 git
 $ apt install -y git python3-pip
 $ python3 -m pip install --upgrade pip setuptools wheel
-$ python3 -m pip install --upgrade ansible
+# 注意：请保留下面命令里的引号
+$ python3 -m pip install 'ansible<=9.0.0'
 ```
 备注：已知在`debian 11`环境，如果`/proc/cmdline`里找不到启动选项 `systemd.unified_cgroup_hierarchy=0`，ocboot会自动配置相关的`GRUB`选项，重建启动参数，并重启操作系统，以便 `k8s` 能够正常启动。
 
@@ -81,7 +84,8 @@ $ python3 -m pip install --upgrade ansible
 ```bash
 # 本地安装 ansible
 $ python3 -m pip install --upgrade pip setuptools wheel
-$ python3 -m pip install --upgrade ansible
+# 注意：请保留下面命令里的引号
+$ python3 -m pip install 'ansible<=9.0.0'
 ```
 {{% /tab %}}
 
