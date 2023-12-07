@@ -73,18 +73,33 @@ jobs:
         AWS_REGION: 'ap-east-1'
         SOURCE_DIR: 'public'
 
-    - name: Publish site to Aliyun OSS
-      uses: Menci/upload-to-oss@beta-v1
-      # https://github.com/marketplace/actions/upload-files-to-aliyun-oss-incremental
-      with:
-        # Use Access Key
-        access-key-id: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
-        access-key-secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
-        bucket: ${{ secrets.ALIYUN_OSS_BUCKET }}
-        endpoint: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
-        local-path: public
-        remote-path: ''
-        # Retry 5 times on failure of each OSS operation
-        retry: 5
-        # Use increment or not
-        increment: true
+    - name: Publish site to Aliyun OSS use aliyuncli
+      env:
+        ALIYUN_CLOUD_ENV: "InternationalCloud"
+        ALIYUN_ACCESS_KEY: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+        ALIYUN_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+        # ALIYUN_REGION: ${{ secrets.ALIYUN_REGION }}
+        ALIYUN_REGION: "cn-beijing"
+        BUCKET: ${{ secrets.ALIYUN_OSS_BUCKET }}
+      shell: bash
+      run: |
+        set -o xtrace
+        wget https://github.com/zexi/cloudmux/releases/download/v3.11-20231207.0/aliyuncli-amd64 && chmod a+x aliyuncli-amd64
+        ./aliyuncli-amd64 oss-upload --acl public-read $BUCKET '' public
+
+
+    # - name: Publish site to Aliyun OSS
+    #   uses: Menci/upload-to-oss@beta-v1
+    #   # https://github.com/marketplace/actions/upload-files-to-aliyun-oss-incremental
+    #   with:
+    #     # Use Access Key
+    #     access-key-id: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+    #     access-key-secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+    #     bucket: ${{ secrets.ALIYUN_OSS_BUCKET }}
+    #     endpoint: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
+    #     local-path: public
+    #     remote-path: ''
+    #     # Retry 5 times on failure of each OSS operation
+    #     retry: 5
+    #     # Use increment or not
+    #     increment: true
