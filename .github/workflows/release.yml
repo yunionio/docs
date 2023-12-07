@@ -72,3 +72,19 @@ jobs:
         # deploy config
         AWS_REGION: 'ap-east-1'
         SOURCE_DIR: 'public'
+
+    - name: Publish site to Aliyun OSS
+      uses: Menci/upload-to-oss@beta-v1
+      # https://github.com/marketplace/actions/upload-files-to-aliyun-oss-incremental
+      with:
+        # Use Access Key
+        access-key-id: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+        access-key-secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+        bucket: ${{ secrets.ALIYUN_OSS_BUCKET }}
+        endpoint: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
+        local-path: public
+        remote-path: ''
+        # Retry 5 times on failure of each OSS operation
+        retry: 5
+        # Use increment or not
+        increment: true
