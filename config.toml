@@ -96,6 +96,11 @@ time_format_blog = "02.01.2006"
     url = "docs/swagger"
     weight = 70
 
+[[languages.zh.menu.main]]
+    name = "新版文档"
+    url = "https://v2.cloudpods.org/"
+    weight = 2000
+
 [languages.en]
 languageName = "English"
 contentDir = "content/en"
