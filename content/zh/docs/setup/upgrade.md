@@ -142,5 +142,5 @@ $ kubectl get pods -n onecloud | grep operator
 onecloud-operator-5557d86d74-7s5sl                   1/1     Running   0          2s
 
 # 再回退 onecloudcluster 就可以了
-$ kubectl apply -f oc.yaml
+$ kubectl apply -f oc.yml
 ```
