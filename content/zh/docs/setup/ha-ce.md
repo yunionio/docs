@@ -100,7 +100,7 @@ primary_master_node:
   # 虚拟机强行作为 Cloudpods 内置私有云计算节点（默认为 false）。开启此项时，请确保 as_host: true
   as_host_on_vm: true
   # 产品版本，从 ['Fullstack','CMP','Edge'] 选择一个，FullStack 会安装融合云，CMP 安装多云管理版本，Edge 安装私有云
-  product_version: 'Fullstack'
+  product_version: 'FullStack'
   # 设置镜像仓库，如果待部署的机器处于海外，可以用 dockerhub 的镜像仓库：docker.io/yunion
   image_repository: registry.cn-beijing.aliyuncs.com/yunionio
   # 启用高可用模式
