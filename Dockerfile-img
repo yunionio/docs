@@ -1,6 +1,10 @@
 # ref: https://github.com/m3ng9i/ran
-FROM registry.cn-beijing.aliyuncs.com/yunionio/ran:v0.1
+FROM registry.cn-beijing.aliyuncs.com/yunionio/ran:v0.1 as ran
 
+FROM registry.cn-beijing.aliyuncs.com/yunionio/onecloud-base:v0.3.5-1
+
+COPY --from=ran /ran /ran
+RUN mkdir /web
 COPY ./public /web
 WORKDIR /web
 ENTRYPOINT ["/ran", "-port=8081"]
