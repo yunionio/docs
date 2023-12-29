@@ -98,7 +98,7 @@ time_format_blog = "02.01.2006"
 
 [[languages.zh.menu.main]]
     name = "新版文档"
-    url = "https://v2.cloudpods.org/"
+    url = "https://www.cloudpods.org/"
     weight = 2000
 
 [languages.en]
