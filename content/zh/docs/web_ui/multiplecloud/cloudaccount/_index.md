@@ -25,7 +25,7 @@ description: >
     <tr>
         <th rowspan="2" class="fixed-row-1 fixed-col-1" style="z-index: 3"> 分类 </th>
         <th rowspan="2" class="fixed-row-1 fixed-col-2" style="z-index: 3">云资源类型</th>
-        <th style="text-align: center;" class="fixed-row-1" colspan="15">公有云</th>
+        <th style="text-align: center;" class="fixed-row-1" colspan="16">公有云</th>
         <th style="text-align: center;" class="fixed-row-1" colspan="14">私有云</th>
     </tr>
     <tr>
