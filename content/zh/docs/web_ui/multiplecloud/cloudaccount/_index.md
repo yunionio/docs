@@ -25,7 +25,7 @@ description: >
     <tr>
         <th rowspan="2" class="fixed-row-1 fixed-col-1" style="z-index: 3"> 分类 </th>
         <th rowspan="2" class="fixed-row-1 fixed-col-2" style="z-index: 3">云资源类型</th>
-        <th style="text-align: center;" class="fixed-row-1" colspan="15">公有云</th>
+        <th style="text-align: center;" class="fixed-row-1" colspan="16">公有云</th>
         <th style="text-align: center;" class="fixed-row-1" colspan="14">私有云</th>
     </tr>
     <tr>
@@ -36,6 +36,7 @@ description: >
         <th class="fixed-row-2">AWS</th>
         <th class="fixed-row-2">Azure</th>
         <th class="fixed-row-2">GCP</th>
+        <th class="fixed-row-2">火山引擎</th>
         <th class="fixed-row-2">UCloud</th>
         <th class="fixed-row-2">天翼云</th>
         <th class="fixed-row-2">移动云</th>
@@ -62,6 +63,7 @@ description: >
     <tr>
         <th rowspan="7" class="fixed-col-1">主机</th>
         <th class="fixed-col-2">虚拟机</th>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -115,6 +117,7 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
         <td>Y</td>
         <td></td>
         <td></td>
@@ -126,6 +129,7 @@ description: >
     </tr>
     <tr>
         <th class="fixed-col-2">系统镜像</th>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -169,6 +173,7 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td>Y</td>
         <td></td>
         <td></td>
         <td></td>
@@ -190,6 +195,7 @@ description: >
     </tr>
     <tr>
         <th class="fixed-col-2">快照</th>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -243,6 +249,7 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
         <td>Y</td>
         <td></td>
         <td></td>
@@ -254,6 +261,7 @@ description: >
     </tr>
     <tr>
         <th class="fixed-col-2">安全组</th>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -298,6 +306,7 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td>Y</td>
         <td></td>
         <td></td>
         <td></td>
@@ -319,6 +328,7 @@ description: >
     </tr>
     <tr>
         <th class="fixed-col-2">IP子网</th>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -362,6 +372,7 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td>Y</td>
         <td></td>
         <td></td>
         <td></td>
@@ -387,6 +398,7 @@ description: >
         <td>Y</td>
         <td></td>
         <td>Y</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -443,6 +455,7 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
         <td></td> 
     </tr>
     <tr>
@@ -454,6 +467,7 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -482,6 +496,7 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -539,12 +554,14 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
         <td></td> 
     </tr>
     <tr>
         <th class="fixed-col-2">IPv6网关</th>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -575,6 +592,7 @@ description: >
     <tr>
         <th rowspan="3" class="fixed-col-1">存储</th>
         <th class="fixed-col-2">对象存储</th>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -635,12 +653,14 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
         <td></td> 
     </tr>
     <tr>
         <th class="fixed-col-2">表格存储</th>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -687,6 +707,7 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -719,6 +740,7 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -739,6 +761,7 @@ description: >
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -798,12 +821,14 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
     </tr>
     <tr>
         <th class="fixed-col-2">Elasticsearch</th>
         <td></td>
         <td></td>
         <td>Y</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -863,9 +888,11 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
     </tr>
     <tr>
         <th class="fixed-col-2">Kubernetes集群新建</th>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -910,6 +937,7 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td>Y</td>
         <td></td>
         <td>Y</td>
         <td>Y</td>
@@ -936,6 +964,7 @@ description: >
     <tr>
         <th class="fixed-col-1">费用</th>
         <th class="fixed-col-2">公有云账单分析/私有云计费服务</th>
+        <td>Y</td>
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
@@ -985,6 +1014,7 @@ description: >
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
         <td>Y</td>
         <td></td>
         <td></td>
@@ -1007,6 +1037,7 @@ description: >
         <td>Y</td>
         <td>Y</td>
         <td>Y</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
