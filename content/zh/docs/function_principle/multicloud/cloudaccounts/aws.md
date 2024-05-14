@@ -17,6 +17,24 @@ description: >
 
 2. 该IAM user的最小权限要求为：sts:AssumeRole
 
+
+#### AWS中国
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRole",
+            "Resource": "arn:aws-cn:iam::*:role/OrganizationAccountAccessRole"
+ 
+        }
+    ]
+}
+```
+#### AWS国际
+
 ```json
 {
     "Version": "2012-10-17",
@@ -30,7 +48,6 @@ description: >
     ]
 }
 ```
-
 3. 每个成员账号内都有 Role：OrganizationAccountAccessRole
 
 对于在AWS组织（Organization）下新建的AWS成员账号，都自动有一个Role：OrganizationAccountAccessRole，该role的权限等同于 AdministratorAccess
