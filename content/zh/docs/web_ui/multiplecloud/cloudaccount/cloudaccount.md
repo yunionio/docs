@@ -52,7 +52,6 @@ description: >
 6. 配置成功后，单击  **_"下一步：账单文件访问信息（可选）"_** 按钮，进入账单文件访问信息页面配置云账号的账单参数以便用户可以在费用中查看云账号的账单信息。账单文件访问信息页面选填，如不需要在{{<oem_name>}}平台查看云账号账单信息，可直接单击 **_跳过_** 按钮。如需要在{{<oem_name>}}平台中查看账单信息等，请配置相关参数，配置完成且测试成功后，单击 **_"确定"_** 按钮，并进入定时同步任务设置页面配置云账号的同步任务使得云账号自动同步行为更加可控。
 {{% alert title="注意" color="warning" %}}
 如果添加的阿里云账号是新账号，请先在阿里云平台上开通OSS服务。
-若阿里云账号开启资源目录, 且录入的账号是ram子账号下的aksk(至少需要有AliyunSTSAssumeRole,AccessAliyunOSSReadOnlyAccess,AliyunResourceDirectoryReadOnlyAccess权限), 默认会将整个资源目录底下的子账号同步下来
 {{% /alert %}}
    - 云账号类型：包括主账号和关联账号，使用关联账号之前请确保主账号已导入{{<oem_name>}}平台，并在使用关联账号时选择该主账号。
    - 存储桶URL：账单文件所在存储桶的URL。具体请参考[如何获取账单存储桶URL？](#如何获取账单存储桶url)。
@@ -61,7 +60,7 @@ description: >
        - 本平台纳管账号：即采集主账号及主账号关联的子账号的账单信息。如该主账号仅作为其他账号的付款账号时，采集到的其他账号的账单文件将会被丢弃。
    - 立即采集账单：{{<oem_name>}}平台默认每天凌晨4点自动采集账单。开启该项后，配置完账单文件访问信息后，将会立即采集账单。
    - 时间范围：当启用立即采集账单后，支持设置时间范围，立即采集时间范围内的账单，请确保在选择的时间范围内有账单数据。建议采集1~6个月内的账单，否则会因为数据太多，造成系统压力多大影响日常采集账单的任务。
-7. 定时同步任务设置页面选填，如不需要在{{<oem_name>}}平台设置自动同步任务，可直接单击 **_"跳过"_** 按钮。如需要在{{<oem_name>}}平台中设置云账号自动同步的时间，请配置相关参数，配置完成且测试通过后，单击 **_"确定"_** 按钮，创建阿里云账号。
+1. 定时同步任务设置页面选填，如不需要在{{<oem_name>}}平台设置自动同步任务，可直接单击 **_"跳过"_** 按钮。如需要在{{<oem_name>}}平台中设置云账号自动同步的时间，请配置相关参数，配置完成且测试通过后，单击 **_"确定"_** 按钮，创建阿里云账号。
  
 
 #### 阿里云相关参数获取方式
@@ -89,7 +88,8 @@ description: >
    ![](../../../../faq/image/aliyun_ram_access_key_get.png)
 
 {{% alert title="注意" color="warning" %}}
-已创建的AccessKey，无法再查看AccessKeySecret。
+- 已创建的AccessKey，无法再查看AccessKeySecret。
+- 若要同步阿里云资源目录信息，需额外添加 AliyunSTSAssumeRoleAccess（调用STS服务AssumeRole接口的权限）和 AliyunResourceDirectoryReadOnlyAccess （资源目录服务只读）权限
 {{% /alert %}}
  
 ##### 通过平台管理阿里云资源，需要云账号拥有哪些权限
@@ -117,6 +117,7 @@ description: >
 | 管理云解析(DNS)的权限                                | AliyunDNSReadOnlyAccess | AliyunDNSFullAccess|
 | 管理企业财务管理(EFC)的权限                     | AliyunFinanceConsoleReadOnlyAccess                | AliyunFinanceConsoleFullAccess               |
 | 管理云监控(CloudMonitor)的权限                               | AliyunCloudMonitorReadOnlyAccess                  | AliyunCloudMonitorFullAccess                 |
+| 管理资源目录服务（ResourceDirectory）的权限                               | AliyunCloudMonitorReadOnlyAccess                  | AliyunResourceDirectoryReadOnlyAccess                 |
 
 ##### 如何给子账号授权
 
